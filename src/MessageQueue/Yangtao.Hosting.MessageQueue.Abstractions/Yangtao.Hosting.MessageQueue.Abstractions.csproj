@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<ImportGroup>
+		<Import Project="..\..\..\props\Hosting.Publish.props"/>
+		<Import Project="..\..\..\props\Hosting.Version.props"/>
+	</ImportGroup>
+	
 </Project>

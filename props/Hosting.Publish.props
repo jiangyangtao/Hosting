@@ -1,0 +1,8 @@
+<Project>
+
+  <PropertyGroup>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageOutputPath >D:\publish\nuget\Yangtao.Hosting</PackageOutputPath>
+  </PropertyGroup>
+
+</Project>

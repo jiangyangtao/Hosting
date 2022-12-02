@@ -6,6 +6,10 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0F8D7355-F530-40C9-A64D-ABA3CFA6C79F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{FE5006F7-3EF9-4265-8387-96C1E24D5660}"
+	ProjectSection(SolutionItems) = preProject
+		props\Hosting.Publish.props = props\Hosting.Publish.props
+		props\Hosting.Version.props = props\Hosting.Version.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{E54AF2F8-8C5F-4A19-BD6E-E63DEC4CA1AD}"
 EndProject
@@ -27,7 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.MessageQueu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Cache.Abstractions", "src\Cache\Yangtao.Hosting.Cache.Abstractions\Yangtao.Hosting.Cache.Abstractions.csproj", "{B073EDDA-8822-4139-B87F-AA066817482B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.Cache.Redis", "src\Yangtao.Hosting.Cache.Redis\Yangtao.Hosting.Cache.Redis.csproj", "{CA5F67C3-A969-4640-8C79-11B3C245C8DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Cache.Redis", "src\Cache\Yangtao.Hosting.Cache.Redis\Yangtao.Hosting.Cache.Redis.csproj", "{F945F9AE-E2D3-47A2-8AF6-55FF7CAEB3C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.Cache.Memory", "src\Cache\Yangtao.Hosting.Cache.Memory\Yangtao.Hosting.Cache.Memory.csproj", "{1F57065D-022C-4B4C-AA0C-022D10E39608}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,10 +69,14 @@ Global
 		{B073EDDA-8822-4139-B87F-AA066817482B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B073EDDA-8822-4139-B87F-AA066817482B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B073EDDA-8822-4139-B87F-AA066817482B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CA5F67C3-A969-4640-8C79-11B3C245C8DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CA5F67C3-A969-4640-8C79-11B3C245C8DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CA5F67C3-A969-4640-8C79-11B3C245C8DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CA5F67C3-A969-4640-8C79-11B3C245C8DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F945F9AE-E2D3-47A2-8AF6-55FF7CAEB3C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F945F9AE-E2D3-47A2-8AF6-55FF7CAEB3C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F945F9AE-E2D3-47A2-8AF6-55FF7CAEB3C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F945F9AE-E2D3-47A2-8AF6-55FF7CAEB3C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F57065D-022C-4B4C-AA0C-022D10E39608}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F57065D-022C-4B4C-AA0C-022D10E39608}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F57065D-022C-4B4C-AA0C-022D10E39608}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F57065D-022C-4B4C-AA0C-022D10E39608}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,7 +91,8 @@ Global
 		{ADA18BB6-6BDE-4E16-BBD1-0BFEE5DDDF45} = {AD7CF780-FBA8-436D-B141-EADB8AEAD28B}
 		{C924E65F-4E7A-4E11-B349-49477BC9E623} = {AD7CF780-FBA8-436D-B141-EADB8AEAD28B}
 		{B073EDDA-8822-4139-B87F-AA066817482B} = {7A1579E9-5D3B-4E55-9567-A9C3360A56CA}
-		{CA5F67C3-A969-4640-8C79-11B3C245C8DA} = {7A1579E9-5D3B-4E55-9567-A9C3360A56CA}
+		{F945F9AE-E2D3-47A2-8AF6-55FF7CAEB3C4} = {7A1579E9-5D3B-4E55-9567-A9C3360A56CA}
+		{1F57065D-022C-4B4C-AA0C-022D10E39608} = {7A1579E9-5D3B-4E55-9567-A9C3360A56CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28EDA54C-950D-459F-AFC9-092C65E8B3D9}
