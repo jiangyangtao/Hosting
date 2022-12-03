@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using StackExchange.Redis;
 using Yangtao.Hosting.Cache.Abstractions;
+using Yangtao.Hosting.Cache.Redis.Abstracts;
 using Yangtao.Hosting.Extensions;
 
 namespace Yangtao.Hosting.Cache.Redis

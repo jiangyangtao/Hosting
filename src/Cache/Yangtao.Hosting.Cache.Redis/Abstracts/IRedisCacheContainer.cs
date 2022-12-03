@@ -1,6 +1,6 @@
 ﻿using Yangtao.Hosting.Cache.Abstractions;
 
-namespace Yangtao.Hosting.Cache.Redis
+namespace Yangtao.Hosting.Cache.Redis.Abstracts
 {
     public interface IRedisCacheContainer : ICacheContainer
     {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Yangtao.Hosting.Cache.Redis.Abstracts;
 
 namespace Yangtao.Hosting.Cache.Redis
 {

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
 using Yangtao.Hosting.Cache.Abstractions;
+using Yangtao.Hosting.Cache.Redis.Abstracts;
 
 namespace Yangtao.Hosting.Cache.Redis
 {

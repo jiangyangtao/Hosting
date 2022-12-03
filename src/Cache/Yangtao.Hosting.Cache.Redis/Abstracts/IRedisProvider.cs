@@ -1,6 +1,6 @@
 ﻿using StackExchange.Redis;
 
-namespace Yangtao.Hosting.Cache.Redis
+namespace Yangtao.Hosting.Cache.Redis.Abstracts
 {
     public interface IRedisProvider
     {
@@ -88,7 +88,7 @@ namespace Yangtao.Hosting.Cache.Redis
 
         Task ListClearAsync(string redisKey);
 
-        
+
 
         #region 哈希表操作
 
