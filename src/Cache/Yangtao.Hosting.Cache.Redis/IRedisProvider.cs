@@ -1,6 +1,6 @@
 ﻿using StackExchange.Redis;
 
-namespace Yangtao.Hosting.Cache.Abstractions
+namespace Yangtao.Hosting.Cache.Redis
 {
     public interface IRedisProvider
     {
