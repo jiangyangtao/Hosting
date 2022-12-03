@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -6,9 +6,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Yangtao.Hosting.Extensions\Yangtao.Hosting.Extensions.csproj" />
+	</ItemGroup>
+	
 	<ImportGroup>
-		<Import Project="..\..\..\props\Hosting.Publish.props"/>
-		<Import Project="..\..\..\props\Hosting.Version.props"/>
+		<Import Project="..\..\..\props\Hosting.Publish.props" />
+		<Import Project="..\..\..\props\Hosting.Version.props" />
 	</ImportGroup>
 	
 </Project>

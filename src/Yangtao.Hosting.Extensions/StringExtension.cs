@@ -1,4 +1,6 @@
-﻿namespace Papaya.Hosting.Extensions
+﻿using Newtonsoft.Json;
+
+namespace Yangtao.Hosting.Extensions
 {
     public static class StringExtension
     {
@@ -15,5 +17,12 @@
         /// <param name="value"></param>
         /// <returns>如果Value参数不为NULL且不为空字符串(“”)，则为True；否则为False</returns>
         public static bool NotNullAndEmpty(this string value) => value.IsNullOrEmpty() == false;
+
+        public static T Deserialize<T>(this string value)
+        {
+            if (value.IsNullOrEmpty()) return default(T);
+
+            return JsonConvert.DeserializeObject<T>(value);
+        }
     }
 }

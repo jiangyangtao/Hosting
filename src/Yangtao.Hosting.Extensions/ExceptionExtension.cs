@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Papaya.Hosting.Extensions
+namespace Yangtao.Hosting.Extensions
 {
     public static class ExceptionExtension
     {

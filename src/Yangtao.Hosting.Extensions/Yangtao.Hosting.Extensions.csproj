@@ -6,6 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+	</ItemGroup>
+	
 	<ImportGroup>
 		<Import Project="..\..\props\Hosting.Publish.props"/>
 		<Import Project="..\..\props\Hosting.Version.props"/>

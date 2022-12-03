@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Papaya.Hosting.Extensions
+namespace Yangtao.Hosting.Extensions
 {
     public static class TypeExtensions
     {
