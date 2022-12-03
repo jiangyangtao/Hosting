@@ -7,8 +7,16 @@
   </PropertyGroup>
 
 	<ImportGroup>
-		<Import Project="..\..\..\props\Hosting.Publish.props"/>
-		<Import Project="..\..\..\props\Hosting.Version.props"/>
+		<Import Project="..\..\..\props\Hosting.Publish.props" />
+		<Import Project="..\..\..\props\Hosting.Version.props" />
 	</ImportGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Yangtao.Hosting.Abstractions\Yangtao.Hosting.Abstractions.csproj" />
+	</ItemGroup>
 	
 </Project>
