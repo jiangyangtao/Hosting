@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Cache.Abstr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Cache.Redis", "src\Cache\Yangtao.Hosting.Cache.Redis\Yangtao.Hosting.Cache.Redis.csproj", "{F945F9AE-E2D3-47A2-8AF6-55FF7CAEB3C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.Cache.Memory", "src\Cache\Yangtao.Hosting.Cache.Memory\Yangtao.Hosting.Cache.Memory.csproj", "{1F57065D-022C-4B4C-AA0C-022D10E39608}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Cache.Memory", "src\Cache\Yangtao.Hosting.Cache.Memory\Yangtao.Hosting.Cache.Memory.csproj", "{1F57065D-022C-4B4C-AA0C-022D10E39608}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
