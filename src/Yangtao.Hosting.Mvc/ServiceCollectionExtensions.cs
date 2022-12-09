@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Yangtao.Hosting.Extensions;
+using Yangtao.Hosting.Mvc.HttpResponseResult.HttpResult;
 
 namespace Yangtao.Hosting.Mvc
 {
@@ -14,18 +16,7 @@ namespace Yangtao.Hosting.Mvc
         {
             services.Configure<ApiBehaviorOptions>(options =>
             {
-                // 模型校验失败处理
-                options.InvalidModelStateResponseFactory = (context) =>
-                {
-                    var errorMessage = context.ModelState.GetValidationSummary();
-                    return new JsonResult(new MessageModel<string>()
-                    {
-                        Success = false,
-                        Status = 400,
-                        Msg = errorMessage,
-                        Data = null,
-                    });
-                };
+                options.InvalidModelStateResponseFactory = ModelValidationFailHandle;
             });
 
             return services;
@@ -35,20 +26,16 @@ namespace Yangtao.Hosting.Mvc
         {
             mvcBuilder.ConfigureApiBehaviorOptions(options =>
             {
-                // 模型校验失败处理
-                options.InvalidModelStateResponseFactory = (context) =>
-                {
-                    var errorMessage = context.ModelState.GetValidationSummary();
-                    var resultContent = new { Code = 400, Message = errorMessage, };
-                    var result = new JsonResult(resultContent)
-                    {
-                        StatusCode = 400,
-                    };
-                    return result;
-                };
+                options.InvalidModelStateResponseFactory = ModelValidationFailHandle;
             });
 
             return mvcBuilder;
+        }
+
+        private static IActionResult ModelValidationFailHandle(ActionContext context)
+        {
+            var errorMessage = context.ModelState.GetValidationSummary();
+            return new HttpBadRequestResult(errorMessage);
         }
     }
 }

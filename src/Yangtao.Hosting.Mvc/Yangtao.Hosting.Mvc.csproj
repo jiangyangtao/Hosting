@@ -12,10 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Yangtao.Hosting.Abstractions\Yangtao.Hosting.Abstractions.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Filters\" />
+    <ProjectReference Include="..\Yangtao.Hosting.Extensions\Yangtao.Hosting.Extensions.csproj" />
   </ItemGroup>
 
 </Project>
