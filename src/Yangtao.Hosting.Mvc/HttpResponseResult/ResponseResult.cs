@@ -1,5 +1,4 @@
-﻿
-namespace Yangtao.Hosting.Mvc.HttpResponseFormat
+﻿namespace Yangtao.Hosting.Mvc.HttpResponseResult
 {
     public class ResponseResult
     {
