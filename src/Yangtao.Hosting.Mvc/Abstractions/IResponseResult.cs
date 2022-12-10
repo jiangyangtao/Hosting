@@ -1,12 +1,7 @@
 ﻿namespace Yangtao.Hosting.Mvc.Abstractions
 {
-    public interface IResponseResult
+    public interface IResponseResult: IStatusResult
     {
-        /// <summary>
-        /// 状态码
-        /// </summary>
-        int Code { get; }
-
         /// <summary>
         /// 数据
         /// </summary>
@@ -16,10 +11,5 @@
         /// 数据量
         /// </summary>
         long Count { get; }
-
-        /// <summary>
-        /// 错误信息 / 提示
-        /// </summary>
-        string Message { get; }
     }
 }
