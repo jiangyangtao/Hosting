@@ -19,6 +19,7 @@
         public static void ResponseForbid(int code, string message) => throw new HttpErrorResult(403, code, message);
 
 
+
         public static void ResponseNotFound(string message) => throw new HttpErrorResult(404, message);
 
         public static void ResponseNotFound(int code, string message) => throw new HttpErrorResult(404, code, message);
