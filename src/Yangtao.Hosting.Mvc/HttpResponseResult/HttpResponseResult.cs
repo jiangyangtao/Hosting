@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
-using Yangtao.Hosting.Mvc.Abstractions;
+using Yangtao.Hosting.Abstractions.IResult;
+
+
 
 namespace Yangtao.Hosting.Mvc.HttpResponseResult
 {

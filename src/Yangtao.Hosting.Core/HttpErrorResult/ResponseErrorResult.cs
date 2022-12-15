@@ -1,4 +1,5 @@
-﻿namespace Yangtao.Hosting.Mvc.HttpErrorResult
+﻿
+namespace Yangtao.Hosting.Core.HttpErrorResult
 {
     public static class ResponseErrorResult
     {

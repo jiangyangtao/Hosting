@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net.Mime;
+using Yangtao.Hosting.Core.HttpErrorResult;
 
 namespace Yangtao.Hosting.Mvc.Filters
 {
@@ -14,19 +15,19 @@ namespace Yangtao.Hosting.Mvc.Filters
             context.Result = new ActionErrorResult(errorResult);
         }
 
-        private static HttpErrorResult.HttpErrorResult GetErrorResponse(Exception exception)
+        private static HttpErrorResult GetErrorResponse(Exception exception)
         {
-            if (exception is HttpErrorResult.HttpErrorResult error) return error;
+            if (exception is HttpErrorResult error) return error;
 
-            return new HttpErrorResult.HttpErrorResult(500, -1, exception.Message);
+            return new HttpErrorResult(500, -1, exception.Message);
         }
     }
 
     internal class ActionErrorResult : IActionResult
     {
-        private readonly HttpErrorResult.HttpErrorResult HttpErrorResult;
+        private readonly HttpErrorResult HttpErrorResult;
 
-        public ActionErrorResult(HttpErrorResult.HttpErrorResult errorResult)
+        public ActionErrorResult(HttpErrorResult errorResult)
         {
             HttpErrorResult = errorResult;
         }

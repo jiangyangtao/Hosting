@@ -1,4 +1,6 @@
-﻿using Yangtao.Hosting.Mvc.Abstractions;
+﻿using Yangtao.Hosting.Abstractions.IResult;
+
+
 
 namespace Yangtao.Hosting.Mvc.HttpResponseResult
 {

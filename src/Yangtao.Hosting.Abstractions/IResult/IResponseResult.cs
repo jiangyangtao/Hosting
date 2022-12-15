@@ -1,4 +1,5 @@
-﻿namespace Yangtao.Hosting.Mvc.Abstractions
+﻿
+namespace Yangtao.Hosting.Abstractions.IResult
 {
     public interface IResponseResult: IStatusResult
     {

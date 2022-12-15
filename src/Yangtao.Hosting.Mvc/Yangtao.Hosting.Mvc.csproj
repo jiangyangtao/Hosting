@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Yangtao.Hosting.Abstractions\Yangtao.Hosting.Abstractions.csproj" />
+    <ProjectReference Include="..\Yangtao.Hosting.Core\Yangtao.Hosting.Core.csproj" />
     <ProjectReference Include="..\Yangtao.Hosting.Extensions\Yangtao.Hosting.Extensions.csproj" />
   </ItemGroup>
 

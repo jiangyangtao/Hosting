@@ -1,10 +1,9 @@
 ﻿
 using Newtonsoft.Json;
-using Yangtao.Hosting.Mvc.Abstractions;
 
-namespace Yangtao.Hosting.Mvc.HttpErrorResult
+namespace Yangtao.Hosting.Core.HttpErrorResult
 {
-    internal class HttpErrorResult : Exception
+    public class HttpErrorResult : Exception
     {
         public HttpErrorResult(int httpStatusCode, string message) : base(message)
         {
@@ -12,7 +11,7 @@ namespace Yangtao.Hosting.Mvc.HttpErrorResult
             ErrorResult = ErrorResult.CreateErrorResult(message);
         }
 
-        internal HttpErrorResult(int httpStatusCode, int code, string message) : base(message)
+        public HttpErrorResult(int httpStatusCode, int code, string message) : base(message)
         {
             HttpStatusCode = httpStatusCode;
             ErrorResult = ErrorResult.CreateErrorResult(code, message);
@@ -21,6 +20,8 @@ namespace Yangtao.Hosting.Mvc.HttpErrorResult
         public int HttpStatusCode { get; private set; }
 
         private ErrorResult ErrorResult { get; set; }
+
+        public ErrorResult GetErrorResult() => ErrorResult;
 
         public string GetErrorResultContent() => JsonConvert.SerializeObject(ErrorResult);
     }
