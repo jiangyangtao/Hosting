@@ -1,14 +1,12 @@
 ﻿using Grpc.Core;
 using Grpc.Core.Interceptors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Yangtao.Hosting.Core.HttpErrorResult;
 
 namespace Yangtao.Hosting.GrpcServer.Interceptors
 {
+    /// <summary>
+    /// GRPC 全局侦听器
+    /// </summary>
     internal class GrpcGlobalInterceptor : Interceptor
     {
         public GrpcGlobalInterceptor()
