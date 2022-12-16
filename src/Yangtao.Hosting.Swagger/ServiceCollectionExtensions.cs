@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
+using System.Runtime.InteropServices;
 
 namespace Yangtao.Hosting.Swagger
 {
@@ -8,7 +10,13 @@ namespace Yangtao.Hosting.Swagger
         {
             services.AddSwaggerGen(options =>
             {
-                
+                options.SwaggerDoc("", new OpenApiInfo
+                {
+                    //Version = version,
+                    //Title = $"{ApiName} 接口文档——{RuntimeInformation.FrameworkDescription}",
+                    //Description = $"{ApiName} HTTP API " + version,
+                });
+                options.OrderActionsBy(o => o.RelativePath);
             });
             return services;
         }
