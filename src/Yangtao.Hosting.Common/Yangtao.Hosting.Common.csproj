@@ -7,8 +7,12 @@
   </PropertyGroup>
 
 	<ImportGroup>
-		<Import Project="..\..\props\Hosting.Publish.props"/>
-		<Import Project="..\..\props\Hosting.Version.props"/>
+		<Import Project="..\..\props\Hosting.Publish.props" />
+		<Import Project="..\..\props\Hosting.Version.props" />
 	</ImportGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Yangtao.Hosting.Extensions\Yangtao.Hosting.Extensions.csproj" />
+	</ItemGroup>
 	
 </Project>
