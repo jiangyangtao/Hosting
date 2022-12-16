@@ -43,7 +43,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Mvc", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.GrpcServer", "src\Yangtao.Hosting.GrpcServer\Yangtao.Hosting.GrpcServer.csproj", "{FCBA7309-EE75-40A4-9DAC-995A635E22F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.Swagger", "src\Yangtao.Hosting.Swagger\Yangtao.Hosting.Swagger.csproj", "{0A7B4314-6B61-4727-958F-284A0F092C3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Swagger", "src\Yangtao.Hosting.Swagger\Yangtao.Hosting.Swagger.csproj", "{0A7B4314-6B61-4727-958F-284A0F092C3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
