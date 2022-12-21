@@ -10,4 +10,10 @@
     <ProjectReference Include="..\Yangtao.Hosting.Extensions\Yangtao.Hosting.Extensions.csproj" />
   </ItemGroup>
 
+
+	<ImportGroup>
+		<Import Project="..\..\props\Hosting.Publish.props" />
+		<Import Project="..\..\props\Hosting.Version.props" />
+	</ImportGroup>
+	
 </Project>
