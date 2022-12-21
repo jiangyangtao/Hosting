@@ -6,7 +6,7 @@ namespace Yangtao.Hosting.GrpcServer
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddGrpcServer(this ServiceCollection services, Action<GrpcServiceOptions> action)
+        public static IServiceCollection AddGrpcServer(this IServiceCollection services, Action<GrpcServiceOptions> action)
         {
             services.AddGrpc(options =>
             {
