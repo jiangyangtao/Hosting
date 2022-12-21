@@ -1,6 +1,7 @@
 <Project>
 
   <PropertyGroup>
+    <Authors>Yangtao</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageOutputPath >D:\publish\nuget\Yangtao.Hosting</PackageOutputPath>
   </PropertyGroup>
