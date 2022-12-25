@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Yangtao.Hosting.Extensions
 {
     public static class TypeExtensions
@@ -37,6 +32,20 @@ namespace Yangtao.Hosting.Extensions
             if (type == null) return false;
 
             return HasInterface(type, typeof(T));
+        }
+
+        public static bool BaseTypeEquals(this Type type, Type baseType)
+        {
+            if (type.BaseType == null) return false;
+
+            return type.BaseType == baseType;
+        }
+
+        public static bool BaseTypeEquals<T>(this Type type)
+        {
+            if (type.BaseType == null) return false;
+
+            return type.BaseType == typeof(T);
         }
     }
 }
