@@ -19,7 +19,7 @@ namespace Yangtao.Hosting.Extensions
         /// <returns>如果Value参数不为NULL且不为空字符串(“”)，则为True；否则为False</returns>
         public static bool NotNullAndEmpty(this string value) => value.IsNullOrEmpty() == false;
 
-        public static T Deserialize<T>(this string value)
+        public static T DeserializeToObject<T>(this string value)
         {
             if (value.IsNullOrEmpty()) return default;
 
@@ -43,5 +43,93 @@ namespace Yangtao.Hosting.Extensions
             var emailReg = new Regex(emailStr);
             return emailReg.IsMatch(value.Trim());
         }
+
+        #region 中文数字转换
+
+        /// <summary>
+        /// 将中文数字转换成 int
+        /// </summary>
+        /// <param name="chineseNumerals"></param>
+        /// <returns></returns>
+        public static int ChineseNumeralsToInt32(this string chineseNumerals)
+        {
+            var i = chineseNumerals.ChineseNumeralsToInt64();
+            return Convert.ToInt32(i);
+        }
+
+        /// <summary>
+        /// 将中文数字转换成 long
+        /// </summary>
+        /// <param name="chineseNumerals"></param>
+        /// <returns></returns>
+        public static long ChineseNumeralsToInt64(this string chineseNumerals)
+        {
+            chineseNumerals = Regex.Replace(chineseNumerals, "\\s+", "");
+            long firstUnit = 1;
+            long secondUnit = 1;
+            long result = 0;
+            for (var i = chineseNumerals.Length - 1; i > -1; --i)
+            {
+                var tmpUnit = CharToUnit(chineseNumerals[i]);
+                if (tmpUnit > firstUnit)
+                {
+                    firstUnit = tmpUnit;
+                    secondUnit = 1;
+                    if (i == 0)
+                    {
+                        result += firstUnit * secondUnit;
+                    }
+                    continue;
+                }
+
+                if (tmpUnit > secondUnit)
+                {
+                    secondUnit = tmpUnit;
+                    continue;
+                }
+
+                result += firstUnit * secondUnit * CharToNumber(chineseNumerals[i]);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 转换数字
+        /// </summary>
+        private static long CharToNumber(char c)
+        {
+            return c switch
+            {
+                '一' => 1,
+                '二' => 2,
+                '三' => 3,
+                '四' => 4,
+                '五' => 5,
+                '六' => 6,
+                '七' => 7,
+                '八' => 8,
+                '九' => 9,
+                '零' => 0,
+                _ => (long)-1,
+            };
+        }
+
+        /// <summary>
+        /// 转换单位
+        /// </summary>
+        private static long CharToUnit(char c)
+        {
+            return c switch
+            {
+                '十' => 10,
+                '百' => 100,
+                '千' => 1000,
+                '万' => 10000,
+                '亿' => 100000000,
+                _ => (long)1,
+            };
+        }
+
+        #endregion
     }
 }

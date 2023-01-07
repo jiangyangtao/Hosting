@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using StackExchange.Redis;
-using Yangtao.Hosting.Cache.Abstractions;
 using Yangtao.Hosting.Cache.Redis.Abstracts;
 using Yangtao.Hosting.Extensions;
 
@@ -114,7 +113,7 @@ namespace Yangtao.Hosting.Cache.Redis
             if (value.HasValue)
             {
                 //需要用的反序列化，将Redis存储的Byte[]，进行反序列化
-                return value.ToString().Deserialize<TEntity>();
+                return value.ToString().DeserializeToObject<TEntity>();
             }
             else
             {
