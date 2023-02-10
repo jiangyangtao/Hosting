@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
+using Yangtao.Hosting.Extensions;
 
 namespace Yangtao.Hosting.Core
 {
@@ -14,6 +11,20 @@ namespace Yangtao.Hosting.Core
     public class Endpoint
     {
         public int Port { set; get; }
+
+        public string IPAddress { set; get; }
+
+        public IPAddress Address
+        {
+            get
+            {
+                if (IPAddress.IsNullOrEmpty()) return null;
+                if (IPAddress.Equals("Any", StringComparison.OrdinalIgnoreCase)) return System.Net.IPAddress.Any;
+                if (IPAddress.Equals("Loopback", StringComparison.OrdinalIgnoreCase)) return System.Net.IPAddress.Loopback;
+
+                return System.Net.IPAddress.Parse(IPAddress);
+            }
+        }
 
         public Certificate Certificate { set; get; }
     }

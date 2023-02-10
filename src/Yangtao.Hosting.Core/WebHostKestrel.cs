@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
-using System.Net;
 using System.Security.Authentication;
 
 namespace Yangtao.Hosting.Core
@@ -22,11 +21,11 @@ namespace Yangtao.Hosting.Core
                         {
                             var basePath = Directory.GetCurrentDirectory();
                             var certPath = Path.Combine(basePath!, endpoint.Certificate.Path, endpoint.Certificate.FileName);
-                            listenOptions.UseHttps(certPath, endpoint.Certificate.Password, adapterOptions => adapterOptions.SslProtocols = SslProtocols.Tls13);
+                            listenOptions.UseHttps(certPath, endpoint.Certificate.Password, adapterOptions => adapterOptions.SslProtocols = SslProtocols.Tls12);
                         };
                     }
 
-                    serverOptions.Listen(IPAddress.Loopback, endpoint.Port, action);
+                    serverOptions.Listen(endpoint.Address, endpoint.Port, action);
                 }
             }
         }
