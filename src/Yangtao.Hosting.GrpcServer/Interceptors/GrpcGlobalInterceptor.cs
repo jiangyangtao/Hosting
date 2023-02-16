@@ -1,6 +1,7 @@
 ﻿using Grpc.Core;
 using Grpc.Core.Interceptors;
 using Yangtao.Hosting.Core.HttpErrorResult;
+using Yangtao.Hosting.Extensions;
 
 namespace Yangtao.Hosting.GrpcServer.Interceptors
 {
@@ -33,7 +34,7 @@ namespace Yangtao.Hosting.GrpcServer.Interceptors
         private static (int code, string message) GetErrorResult(Exception exception)
         {
             var code = -1;
-            var message = exception.Message;
+            var message = exception.GetInnerException().Message;
             if (exception is HttpErrorResult httpError)
             {
                 var result = httpError.GetErrorResult();
