@@ -19,6 +19,14 @@ namespace Yangtao.Hosting.Extensions
         /// <returns>如果Value参数不为NULL且不为空字符串(“”)，则为True；否则为False</returns>
         public static bool NotNullAndEmpty(this string value) => value.IsNullOrEmpty() == false;
 
+        public static string Value(this string? value, string defaultValue = "")
+        {
+            if (value == null) return defaultValue;
+            if (value.IsNullOrEmpty()) return defaultValue;
+
+            return value;
+        }
+
         public static T DeserializeToObject<T>(this string value)
         {
             if (value.IsNullOrEmpty()) return default;
