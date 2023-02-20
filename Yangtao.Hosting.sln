@@ -45,6 +45,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.GrpcServer"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Swagger", "src\Yangtao.Hosting.Swagger\Yangtao.Hosting.Swagger.csproj", "{0A7B4314-6B61-4727-958F-284A0F092C3E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestExtensionsConsole", "test\TestExtensionsConsole\TestExtensionsConsole.csproj", "{C8C820F5-38D6-4540-9957-F5D3CD17339A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,10 @@ Global
 		{0A7B4314-6B61-4727-958F-284A0F092C3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A7B4314-6B61-4727-958F-284A0F092C3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A7B4314-6B61-4727-958F-284A0F092C3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8C820F5-38D6-4540-9957-F5D3CD17339A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8C820F5-38D6-4540-9957-F5D3CD17339A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8C820F5-38D6-4540-9957-F5D3CD17339A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8C820F5-38D6-4540-9957-F5D3CD17339A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -128,6 +134,7 @@ Global
 		{4C15B921-E29A-4A36-99A1-40E0FBF286A3} = {0F8D7355-F530-40C9-A64D-ABA3CFA6C79F}
 		{FCBA7309-EE75-40A4-9DAC-995A635E22F5} = {0F8D7355-F530-40C9-A64D-ABA3CFA6C79F}
 		{0A7B4314-6B61-4727-958F-284A0F092C3E} = {0F8D7355-F530-40C9-A64D-ABA3CFA6C79F}
+		{C8C820F5-38D6-4540-9957-F5D3CD17339A} = {E54AF2F8-8C5F-4A19-BD6E-E63DEC4CA1AD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28EDA54C-950D-459F-AFC9-092C65E8B3D9}

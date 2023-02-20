@@ -22,6 +22,11 @@ namespace Yangtao.Hosting.Mvc
             return services;
         }
 
+        /// <summary>
+        /// 添加模型验证
+        /// </summary>
+        /// <param name="mvcBuilder"></param>
+        /// <returns></returns>
         public static IMvcBuilder AddModelValidation(this IMvcBuilder mvcBuilder)
         {
             mvcBuilder.ConfigureApiBehaviorOptions(options =>
