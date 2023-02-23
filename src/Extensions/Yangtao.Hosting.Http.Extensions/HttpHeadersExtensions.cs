@@ -1,9 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Yangtao.Hosting.Extensions
 {
@@ -29,5 +24,7 @@ namespace Yangtao.Hosting.Extensions
 
             return headers[key].ToString();
         }
+
+        public static string Authentication(this IHeaderDictionary headers) => headers.GetValue("Authentication");
     }
 }

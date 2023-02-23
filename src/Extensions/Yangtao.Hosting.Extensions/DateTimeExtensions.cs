@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Yangtao.Hosting.Extensions
 {
     public static class DateTimeExtensions
@@ -24,5 +23,14 @@ namespace Yangtao.Hosting.Extensions
             return new DateTime(date.Year, date.Month, date.Day, 23, 59, 59, 999);
         }
 
+        public static string ToFormatDate(this DateTime dateTime, string format = "yyyy-MM-dd")
+        {
+            return dateTime.ToString(format);
+        }
+
+        public static string ToFormatDateTime(this DateTime dateTime, string format = "yyyy-MM-dd HH:mm:ss")
+        {
+            return dateTime.ToString(format);
+        }
     }
 }

@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Extensions\Yangtao.Hosting.Mvc.Extensions\Yangtao.Hosting.Mvc.Extensions.csproj" />
     <ProjectReference Include="..\Yangtao.Hosting.Core\Yangtao.Hosting.Core.csproj" />
-    <ProjectReference Include="..\Yangtao.Hosting.Extensions\Yangtao.Hosting.Extensions.csproj" />
   </ItemGroup>
 
 

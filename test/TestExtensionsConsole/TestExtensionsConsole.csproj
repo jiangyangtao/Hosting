@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Yangtao.Hosting.Extensions\Yangtao.Hosting.Extensions.csproj" />
+    <ProjectReference Include="..\..\src\Extensions\Yangtao.Hosting.Extensions\Yangtao.Hosting.Extensions.csproj" />
   </ItemGroup>
 
 </Project>

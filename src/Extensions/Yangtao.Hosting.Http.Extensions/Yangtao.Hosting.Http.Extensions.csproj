@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,10 +7,14 @@
   </PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Extensions\Yangtao.Hosting.Extensions\Yangtao.Hosting.Extensions.csproj" />
-	  <ProjectReference Include="..\..\Yangtao.Hosting.Abstractions\Yangtao.Hosting.Abstractions.csproj" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 	</ItemGroup>
 	
+  <ItemGroup>
+    <ProjectReference Include="..\Yangtao.Hosting.Extensions\Yangtao.Hosting.Extensions.csproj" />
+  </ItemGroup>
+
+
 	<ImportGroup>
 		<Import Project="..\..\..\props\Hosting.Publish.props" />
 		<Import Project="..\..\..\props\Hosting.Version.props" />
