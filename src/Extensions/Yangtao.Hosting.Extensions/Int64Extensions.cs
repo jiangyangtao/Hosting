@@ -9,6 +9,11 @@ namespace Yangtao.Hosting.Extensions
 {
     public static class Int64Extensions
     {
+        public static long Value(this long? value, long defaultValue = 0)
+        {
+            if (value.HasValue == false) return defaultValue;
 
+            return value.Value;
+        }
     }
 }
