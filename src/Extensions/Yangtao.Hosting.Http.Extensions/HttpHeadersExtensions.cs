@@ -25,6 +25,6 @@ namespace Yangtao.Hosting.Extensions
             return headers[key].ToString();
         }
 
-        public static string Authentication(this IHeaderDictionary headers) => headers.GetValue("Authentication");
+        public static string Authorization(this IHeaderDictionary headers) => headers.GetValue("authorization");
     }
 }
