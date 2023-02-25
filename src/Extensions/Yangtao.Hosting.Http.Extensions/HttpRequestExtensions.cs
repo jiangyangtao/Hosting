@@ -35,12 +35,12 @@ namespace Yangtao.Hosting.Extensions
                 .ToString();
         }
 
-        public static string Authorization(this HttpRequest request)
+        public static string GetAuthorization(this HttpRequest request)
         {
             if (request == null) return string.Empty;
             if (request.Headers.IsNullOrEmpty()) return string.Empty;
 
-            return request.Headers.Authorization();
+            return request.Headers.GetAuthorization();
         }
     }
 }
