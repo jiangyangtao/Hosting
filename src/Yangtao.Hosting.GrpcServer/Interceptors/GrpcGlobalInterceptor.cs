@@ -24,7 +24,7 @@ namespace Yangtao.Hosting.GrpcServer.Interceptors
             {
                 var (code, message) = GetErrorResult(e);
                 var response = CreateErrorResponse(continuation, code, message);
-                if (response == null) throw new RpcException(Status.DefaultCancelled, e.Message);
+                if (response == null) throw;
 
                 return (TResponse)response;
             }
