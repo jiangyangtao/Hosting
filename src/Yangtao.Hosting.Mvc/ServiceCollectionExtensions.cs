@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Yangtao.Hosting.Extensions;
-using Yangtao.Hosting.Mvc.HttpResponseResult.HttpResult;
 
 namespace Yangtao.Hosting.Mvc
 {
@@ -16,31 +14,23 @@ namespace Yangtao.Hosting.Mvc
         {
             services.Configure<ApiBehaviorOptions>(options =>
             {
-                options.InvalidModelStateResponseFactory = ModelValidationFailHandle;
+                options.InvalidModelStateResponseFactory = ModelValidationHandler.FailHandle;
             });
 
             return services;
         }
 
-        /// <summary>
-        /// 添加模型验证
-        /// </summary>
-        /// <param name="mvcBuilder"></param>
-        /// <returns></returns>
-        public static IMvcBuilder AddModelValidation(this IMvcBuilder mvcBuilder)
+        public static IServiceCollection AddAllowAnyCors(this IServiceCollection services)
         {
-            mvcBuilder.ConfigureApiBehaviorOptions(options =>
+            services.AddCors(options =>
             {
-                options.InvalidModelStateResponseFactory = ModelValidationFailHandle;
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.SetIsOriginAllowed(_ => true).AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+                });
             });
 
-            return mvcBuilder;
-        }
-
-        private static IActionResult ModelValidationFailHandle(ActionContext context)
-        {
-            var errorMessage = context.ModelState.GetValidationSummary();
-            return new HttpBadRequestResult(errorMessage);
+            return services;
         }
     }
 }
