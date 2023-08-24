@@ -10,4 +10,8 @@
 		<PackageReference Include="NLog.Web.AspNetCore" Version="5.2.2" />
 	</ItemGroup>
 
+	<ImportGroup>
+		<Import Project="..\..\props\Hosting.Publish.props" />
+		<Import Project="..\..\props\Hosting.Version.props" />
+	</ImportGroup>
 </Project>
