@@ -49,9 +49,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Extensions", "src\Extensions\Yangtao.Hosting.Extensions\Yangtao.Hosting.Extensions.csproj", "{876FF916-57AA-4082-9599-3F480A9D3FCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.Http.Extensions", "src\Extensions\Yangtao.Hosting.Http.Extensions\Yangtao.Hosting.Http.Extensions.csproj", "{16BD791A-A46C-4611-85FD-8AD6D28D4C9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Http.Extensions", "src\Extensions\Yangtao.Hosting.Http.Extensions\Yangtao.Hosting.Http.Extensions.csproj", "{16BD791A-A46C-4611-85FD-8AD6D28D4C9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.Mvc.Extensions", "src\Extensions\Yangtao.Hosting.Mvc.Extensions\Yangtao.Hosting.Mvc.Extensions.csproj", "{3B28870B-232C-468A-A4FD-77B928D8C9C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Mvc.Extensions", "src\Extensions\Yangtao.Hosting.Mvc.Extensions\Yangtao.Hosting.Mvc.Extensions.csproj", "{3B28870B-232C-468A-A4FD-77B928D8C9C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.NLog", "src\Yangtao.Hosting.NLog\Yangtao.Hosting.NLog.csproj", "{B9FF1077-D74D-4A3C-B985-C7A2AE737B78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -127,6 +129,10 @@ Global
 		{3B28870B-232C-468A-A4FD-77B928D8C9C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B28870B-232C-468A-A4FD-77B928D8C9C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B28870B-232C-468A-A4FD-77B928D8C9C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9FF1077-D74D-4A3C-B985-C7A2AE737B78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9FF1077-D74D-4A3C-B985-C7A2AE737B78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9FF1077-D74D-4A3C-B985-C7A2AE737B78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9FF1077-D74D-4A3C-B985-C7A2AE737B78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -152,6 +158,7 @@ Global
 		{876FF916-57AA-4082-9599-3F480A9D3FCF} = {6A3CAB3C-590D-45E6-9283-EB00D4D39FD8}
 		{16BD791A-A46C-4611-85FD-8AD6D28D4C9F} = {6A3CAB3C-590D-45E6-9283-EB00D4D39FD8}
 		{3B28870B-232C-468A-A4FD-77B928D8C9C2} = {6A3CAB3C-590D-45E6-9283-EB00D4D39FD8}
+		{B9FF1077-D74D-4A3C-B985-C7A2AE737B78} = {0F8D7355-F530-40C9-A64D-ABA3CFA6C79F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28EDA54C-950D-459F-AFC9-092C65E8B3D9}
