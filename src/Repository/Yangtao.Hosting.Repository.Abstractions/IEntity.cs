@@ -1,4 +1,5 @@
-﻿namespace Yangtao.Hosting.Repository.Abstractions
+﻿
+namespace Yangtao.Hosting.Repository.Abstractions
 {
     public interface IEntity
     {
