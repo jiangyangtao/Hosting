@@ -53,7 +53,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Http.Extens
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Mvc.Extensions", "src\Extensions\Yangtao.Hosting.Mvc.Extensions\Yangtao.Hosting.Mvc.Extensions.csproj", "{3B28870B-232C-468A-A4FD-77B928D8C9C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.NLog", "src\Yangtao.Hosting.NLog\Yangtao.Hosting.NLog.csproj", "{B9FF1077-D74D-4A3C-B985-C7A2AE737B78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.NLog", "src\Yangtao.Hosting.NLog\Yangtao.Hosting.NLog.csproj", "{B9FF1077-D74D-4A3C-B985-C7A2AE737B78}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository", "Repository", "{5DCCF932-8F01-47AF-833C-F16B5EFD353C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.Repository.Abstractions", "src\Repository\Yangtao.Hosting.Repository.Abstractions\Yangtao.Hosting.Repository.Abstractions.csproj", "{8C15E582-A58E-4EF2-B741-B78CAC99C697}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.Repository.Core", "src\Repository\Yangtao.Hosting.Repository.Core\Yangtao.Hosting.Repository.Core.csproj", "{AA7A5CB3-6543-4F27-BBDC-5C0A59FEDB9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -133,6 +139,14 @@ Global
 		{B9FF1077-D74D-4A3C-B985-C7A2AE737B78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9FF1077-D74D-4A3C-B985-C7A2AE737B78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9FF1077-D74D-4A3C-B985-C7A2AE737B78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C15E582-A58E-4EF2-B741-B78CAC99C697}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C15E582-A58E-4EF2-B741-B78CAC99C697}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C15E582-A58E-4EF2-B741-B78CAC99C697}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C15E582-A58E-4EF2-B741-B78CAC99C697}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA7A5CB3-6543-4F27-BBDC-5C0A59FEDB9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA7A5CB3-6543-4F27-BBDC-5C0A59FEDB9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA7A5CB3-6543-4F27-BBDC-5C0A59FEDB9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA7A5CB3-6543-4F27-BBDC-5C0A59FEDB9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -159,6 +173,9 @@ Global
 		{16BD791A-A46C-4611-85FD-8AD6D28D4C9F} = {6A3CAB3C-590D-45E6-9283-EB00D4D39FD8}
 		{3B28870B-232C-468A-A4FD-77B928D8C9C2} = {6A3CAB3C-590D-45E6-9283-EB00D4D39FD8}
 		{B9FF1077-D74D-4A3C-B985-C7A2AE737B78} = {0F8D7355-F530-40C9-A64D-ABA3CFA6C79F}
+		{5DCCF932-8F01-47AF-833C-F16B5EFD353C} = {0F8D7355-F530-40C9-A64D-ABA3CFA6C79F}
+		{8C15E582-A58E-4EF2-B741-B78CAC99C697} = {5DCCF932-8F01-47AF-833C-F16B5EFD353C}
+		{AA7A5CB3-6543-4F27-BBDC-5C0A59FEDB9F} = {5DCCF932-8F01-47AF-833C-F16B5EFD353C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28EDA54C-950D-459F-AFC9-092C65E8B3D9}
