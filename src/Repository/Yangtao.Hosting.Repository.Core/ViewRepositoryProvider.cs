@@ -1,22 +1,26 @@
-﻿using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using Yangtao.Hosting.Repository.Abstractions;
 
 namespace Yangtao.Hosting.Repository.Core
 {
     internal class ViewRepositoryProvider<TView> : IViewRepositoryProvider<TView> where TView : BaseView
     {
-        public ViewRepositoryProvider()
+        private readonly DbContext _dbContext;
+
+        public ViewRepositoryProvider(DefaultDbContext dbContext)
         {
+            _dbContext = dbContext;
         }
 
         public IQueryable<TView> Get()
         {
-            throw new NotImplementedException();
+            return _dbContext.Set<TView>();
         }
 
         public IQueryable<TView> Get(Expression<Func<TView, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _dbContext.Set<TView>().Where(predicate);
         }
     }
 }
