@@ -10,4 +10,9 @@
     <ProjectReference Include="..\..\Yangtao.Hosting.Common\Yangtao.Hosting.Common.csproj" />
   </ItemGroup>
 
+
+	<ImportGroup>
+		<Import Project="..\..\..\props\Hosting.Publish.props" />
+		<Import Project="..\..\..\props\Hosting.Version.props" />
+	</ImportGroup>
 </Project>
