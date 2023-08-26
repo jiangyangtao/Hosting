@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.Extensions.Options;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
@@ -12,7 +11,7 @@ using Yangtao.Hosting.Repository.Abstractions;
 
 namespace Yangtao.Hosting.Repository.Core
 {
-    internal class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
+    internal class EntityRepositoryProvider<TEntity> : IEntityRepositoryProvider<TEntity> where TEntity : BaseEntity
     {
         public const string UserIdPreperty = "UserId";
 
@@ -23,7 +22,7 @@ namespace Yangtao.Hosting.Repository.Core
         private readonly Type TEntityType;
         private readonly PropertyInfo[] EntityProperties;
 
-        public Repository(IHttpContextAccessor httpContextAccessor, DefaultDbContext dbContext)
+        public EntityRepositoryProvider(IHttpContextAccessor httpContextAccessor, DefaultDbContext dbContext)
         {
             _httpContextAccessor = httpContextAccessor;
             _dbContext = dbContext;

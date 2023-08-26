@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Yangtao.Hosting.Repository.Core
 {
@@ -11,7 +10,8 @@ namespace Yangtao.Hosting.Repository.Core
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.AddEntities();
+            modelBuilder.MapEntities();
+            modelBuilder.MapViews();
             base.OnModelCreating(modelBuilder);
         }
     }
