@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -13,5 +13,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Yangtao.Hosting.Repository.Core\Yangtao.Hosting.Repository.Core.csproj" />
   </ItemGroup>
+
+	<ImportGroup>
+		<Import Project="..\..\..\props\Hosting.Publish.props" />
+		<Import Project="..\..\..\props\Hosting.Version.props" />
+	</ImportGroup>
 
 </Project>

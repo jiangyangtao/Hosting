@@ -63,6 +63,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.Repository.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.Repository.MySql", "src\Repository\Yangtao.Hosting.Repository.MySql\Yangtao.Hosting.Repository.MySql.csproj", "{191415A7-706F-4A17-B915-8962AFF6D671}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.Repository.SqlServer", "src\Repository\Yangtao.Hosting.Repository.SqlServer\Yangtao.Hosting.Repository.SqlServer.csproj", "{A862AE04-7B1C-48D0-831B-49D976970CDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.Repository.Sqlite", "src\Repository\Yangtao.Hosting.Repository.Sqlite\Yangtao.Hosting.Repository.Sqlite.csproj", "{078E28EA-4CC8-4425-99F5-246050EA3B78}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,6 +157,14 @@ Global
 		{191415A7-706F-4A17-B915-8962AFF6D671}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{191415A7-706F-4A17-B915-8962AFF6D671}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{191415A7-706F-4A17-B915-8962AFF6D671}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A862AE04-7B1C-48D0-831B-49D976970CDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A862AE04-7B1C-48D0-831B-49D976970CDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A862AE04-7B1C-48D0-831B-49D976970CDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A862AE04-7B1C-48D0-831B-49D976970CDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{078E28EA-4CC8-4425-99F5-246050EA3B78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{078E28EA-4CC8-4425-99F5-246050EA3B78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{078E28EA-4CC8-4425-99F5-246050EA3B78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{078E28EA-4CC8-4425-99F5-246050EA3B78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -183,6 +195,8 @@ Global
 		{8C15E582-A58E-4EF2-B741-B78CAC99C697} = {5DCCF932-8F01-47AF-833C-F16B5EFD353C}
 		{AA7A5CB3-6543-4F27-BBDC-5C0A59FEDB9F} = {5DCCF932-8F01-47AF-833C-F16B5EFD353C}
 		{191415A7-706F-4A17-B915-8962AFF6D671} = {5DCCF932-8F01-47AF-833C-F16B5EFD353C}
+		{A862AE04-7B1C-48D0-831B-49D976970CDB} = {5DCCF932-8F01-47AF-833C-F16B5EFD353C}
+		{078E28EA-4CC8-4425-99F5-246050EA3B78} = {5DCCF932-8F01-47AF-833C-F16B5EFD353C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28EDA54C-950D-459F-AFC9-092C65E8B3D9}
