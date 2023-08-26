@@ -23,10 +23,10 @@ namespace Yangtao.Hosting.Repository.Core
         private readonly Type TEntityType;
         private readonly PropertyInfo[] EntityProperties;
 
-        public Repository(IHttpContextAccessor httpContextAccessor, IOptions<RepositoryOptions> options)
+        public Repository(IHttpContextAccessor httpContextAccessor, DefaultDbContext dbContext)
         {
             _httpContextAccessor = httpContextAccessor;
-            _dbContext = options.Value.DbContext;
+            _dbContext = dbContext;
 
             TEntityType = typeof(TEntity);
             EntityProperties = TEntityType.GetProperties(BindingFlags.Public | BindingFlags.Instance);

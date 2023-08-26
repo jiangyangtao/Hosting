@@ -7,10 +7,11 @@ namespace Yangtao.Hosting.Repository.Core
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddRepository(this IServiceCollection services, DbContext dbContext)
+        public static IServiceCollection AddRepository(this IServiceCollection services, Action<DbContextOptionsBuilder> optionsAction)
         {
             services.AddHttpContextAccessor();
-            services.Configure<RepositoryOptions>(a => a.DbContext = dbContext);
+
+            services.AddDbContext<DefaultDbContext>(optionsAction);
 
             var registerMethod = typeof(ServiceCollectionExtensions).GetMethod(nameof(RegisterRepository), BindingFlags.Static | BindingFlags.NonPublic);
             var entityTypes = EntityTypeBuilder.GetEntityTypes();
