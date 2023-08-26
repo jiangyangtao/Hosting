@@ -61,6 +61,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.Repository.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.Repository.Core", "src\Repository\Yangtao.Hosting.Repository.Core\Yangtao.Hosting.Repository.Core.csproj", "{AA7A5CB3-6543-4F27-BBDC-5C0A59FEDB9F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.Repository.MySql", "src\Repository\Yangtao.Hosting.Repository.MySql\Yangtao.Hosting.Repository.MySql.csproj", "{191415A7-706F-4A17-B915-8962AFF6D671}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -147,6 +149,10 @@ Global
 		{AA7A5CB3-6543-4F27-BBDC-5C0A59FEDB9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA7A5CB3-6543-4F27-BBDC-5C0A59FEDB9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA7A5CB3-6543-4F27-BBDC-5C0A59FEDB9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{191415A7-706F-4A17-B915-8962AFF6D671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{191415A7-706F-4A17-B915-8962AFF6D671}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{191415A7-706F-4A17-B915-8962AFF6D671}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{191415A7-706F-4A17-B915-8962AFF6D671}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -176,6 +182,7 @@ Global
 		{5DCCF932-8F01-47AF-833C-F16B5EFD353C} = {0F8D7355-F530-40C9-A64D-ABA3CFA6C79F}
 		{8C15E582-A58E-4EF2-B741-B78CAC99C697} = {5DCCF932-8F01-47AF-833C-F16B5EFD353C}
 		{AA7A5CB3-6543-4F27-BBDC-5C0A59FEDB9F} = {5DCCF932-8F01-47AF-833C-F16B5EFD353C}
+		{191415A7-706F-4A17-B915-8962AFF6D671} = {5DCCF932-8F01-47AF-833C-F16B5EFD353C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28EDA54C-950D-459F-AFC9-092C65E8B3D9}
