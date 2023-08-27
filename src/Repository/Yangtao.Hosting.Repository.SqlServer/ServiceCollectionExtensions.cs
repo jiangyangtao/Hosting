@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Yangtao.Hosting.Repository.Core;
+using Yangtao.Hosting.Repository.Core.Builders;
 
 namespace Yangtao.Hosting.Repository.SqlServer
 {

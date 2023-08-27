@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.Repository.Abstractions;
+using Yangtao.Hosting.Repository.Core.Builders;
+using Yangtao.Hosting.Repository.Core.Providers;
 
 namespace Yangtao.Hosting.Repository.Core
 {

@@ -10,7 +10,7 @@ using System.Reflection;
 using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.Repository.Abstractions;
 
-namespace Yangtao.Hosting.Repository.Core
+namespace Yangtao.Hosting.Repository.Core.Providers
 {
     internal class EntityRepositoryProvider<TEntity> : IEntityRepositoryProvider<TEntity> where TEntity : BaseEntity
     {

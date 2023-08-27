@@ -2,7 +2,7 @@
 using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.Repository.Abstractions;
 
-namespace Yangtao.Hosting.Repository.Core
+namespace Yangtao.Hosting.Repository.Core.Builders
 {
     public class ModelTypeBuilder
     {

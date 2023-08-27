@@ -3,7 +3,7 @@ using System.Data;
 using System.Linq.Expressions;
 using Yangtao.Hosting.Repository.Abstractions;
 
-namespace Yangtao.Hosting.Repository.Core
+namespace Yangtao.Hosting.Repository.Core.Providers
 {
     internal class ViewRepositoryProvider<TView> : IViewRepositoryProvider<TView> where TView : BaseView
     {

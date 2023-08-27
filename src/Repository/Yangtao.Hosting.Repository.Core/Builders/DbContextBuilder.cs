@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Yangtao.Hosting.Repository.Core
+namespace Yangtao.Hosting.Repository.Core.Builders
 {
     public class DbContextBuilder : IDbContextOptionsExtension
     {
