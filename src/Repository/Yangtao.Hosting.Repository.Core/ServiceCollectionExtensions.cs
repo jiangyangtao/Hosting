@@ -8,13 +8,25 @@ namespace Yangtao.Hosting.Repository.Core
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddRepository(this IServiceCollection services, Action<DbContextOptionsBuilder> optionsAction)
+        public static IServiceCollection AddRepositoryCore(this IServiceCollection services, Action<DbContextOptionsBuilder> optionsAction)
         {
             services.AddHttpContextAccessor();
             services.AddDbContext<DefaultDbContext>(optionsAction);
             services.RegisterModelRepository();
 
             return services;
+        }
+
+        public static IServiceCollection AddRepositoryCore(this IServiceCollection services, Action<DbContextOptionsBuilder> optionsAction, Action<DbContextBuilder> builderAction)
+        {
+            return services.AddRepositoryCore(optionsBuilder =>
+            {
+                var contextBuilder = new DbContextBuilder();
+                builderAction(contextBuilder);
+                optionsBuilder.Options.WithExtension(contextBuilder);
+
+                optionsAction(optionsBuilder);
+            });
         }
 
         private static void RegisterModelRepository(this IServiceCollection services)

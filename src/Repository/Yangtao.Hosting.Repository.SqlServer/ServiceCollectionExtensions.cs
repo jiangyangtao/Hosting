@@ -8,11 +8,17 @@ namespace Yangtao.Hosting.Repository.SqlServer
     {
         public static IServiceCollection AddRepository(this IServiceCollection services, string connectionString)
         {
-            services.AddRepository(options =>
+            services.AddRepositoryCore(options =>
             {
                 options.UseLazyLoadingProxies().UseSqlServer(connectionString);
             });
 
+            return services;
+        }
+
+        public static IServiceCollection AddRepository(this IServiceCollection services, string connectionString, Action<DbContextBuilder> builderAction)
+        {
+            services.AddRepositoryCore(options => options.UseLazyLoadingProxies().UseSqlServer(connectionString), builderAction);
             return services;
         }
     }

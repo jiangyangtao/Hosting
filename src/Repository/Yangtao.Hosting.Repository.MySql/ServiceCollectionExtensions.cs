@@ -8,12 +8,13 @@ namespace Yangtao.Hosting.Repository.MySql
     {
         public static IServiceCollection AddRepository(this IServiceCollection services, string connectionString)
         {
-            services.AddRepository(options =>
-            {
-                var serverVersion = ServerVersion.AutoDetect(connectionString);
-                options.UseLazyLoadingProxies().UseMySql(connectionString, serverVersion);
-            });
+            services.AddRepositoryCore(options => options.UseLazyLoadingProxies().UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+            return services;
+        }
 
+        public static IServiceCollection AddRepository(this IServiceCollection services, string connectionString, Action<DbContextBuilder> builderAction)
+        {
+            services.AddRepositoryCore(options => options.UseLazyLoadingProxies().UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)), builderAction);
             return services;
         }
     }

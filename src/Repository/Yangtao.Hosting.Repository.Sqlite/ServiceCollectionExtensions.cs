@@ -8,11 +8,13 @@ namespace Yangtao.Hosting.Repository.Sqlite
     {
         public static IServiceCollection AddRepository(this IServiceCollection services, string connectionString)
         {
-            services.AddRepository(options =>
-            {
-                options.UseLazyLoadingProxies().UseSqlite(connectionString);
-            });
+            services.AddRepositoryCore(options => options.UseLazyLoadingProxies().UseSqlite(connectionString));
+            return services;
+        }
 
+        public static IServiceCollection AddRepository(this IServiceCollection services, string connectionString, Action<DbContextBuilder> builderAction)
+        {
+            services.AddRepositoryCore(options => options.UseLazyLoadingProxies().UseSqlite(connectionString), builderAction);
             return services;
         }
     }
