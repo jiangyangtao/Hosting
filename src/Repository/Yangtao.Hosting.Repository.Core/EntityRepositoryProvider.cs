@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
@@ -439,15 +440,9 @@ namespace Yangtao.Hosting.Repository.Core
             return true;
         }
 
-        public IEntityColumns<TEntity> CreateEntityColumnExpressions()
-        {
-            return new EntityColumns<TEntity>();
-        }
-
         private TEntity Clone(TEntity entity)
         {
             if (entity == null) return default;
-
             var type = entity.GetType();
             var newObject = Activator.CreateInstance(type);
 
@@ -463,5 +458,14 @@ namespace Yangtao.Hosting.Repository.Core
 
             return (TEntity)newObject;
         }
+
+        public IEntityColumns<TEntity> CreateEntityColumnExpressions()
+        {
+            return new EntityColumns<TEntity>();
+        }
+
+        public IQueryable<TEntity> SqlQuery(FormattableString sql) => _dbContext.Database.SqlQuery<TEntity>(sql);
+
+        public IQueryable<TEntity> SqlQueryRaw(string sql, params object[] parameters) => _dbContext.Database.SqlQueryRaw<TEntity>(sql, parameters);
     }
 }

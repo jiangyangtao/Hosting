@@ -11,7 +11,7 @@ namespace Yangtao.Hosting.Repository.Abstractions
 
     }
 
-    public interface ICloneableView<TView> where TView : IView
+    public interface ICloneableView<TView> : ICloneable<TView> where TView : IView
     {
 
     }

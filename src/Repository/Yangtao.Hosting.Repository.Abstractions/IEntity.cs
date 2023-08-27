@@ -1,7 +1,7 @@
 ﻿
 namespace Yangtao.Hosting.Repository.Abstractions
 {
-    public interface IEntity
+    public interface IEntity : IModel
     {
         public string Id { get; set; }
 

@@ -14,6 +14,7 @@ namespace Yangtao.Hosting.Repository.Core
             services.AddDbContext<DefaultDbContext>(optionsAction);
             services.RegisterModelRepository();
 
+            services.AddScoped<IDataBaseProvider, DataBaseProvider>();
             return services;
         }
 

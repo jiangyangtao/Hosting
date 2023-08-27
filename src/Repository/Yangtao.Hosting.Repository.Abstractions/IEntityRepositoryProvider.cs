@@ -2,7 +2,7 @@
 
 namespace Yangtao.Hosting.Repository.Abstractions
 {
-    public interface IEntityRepositoryProvider<TEntity> where TEntity : BaseEntity
+    public interface IEntityRepositoryProvider<TEntity> : ISqlQueryProvider<TEntity> where TEntity : BaseEntity
     {
         IEntityColumns<TEntity> CreateEntityColumnExpressions();
 
