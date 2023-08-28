@@ -8,7 +8,6 @@ namespace Yangtao.Hosting.NLog
         public static ILoggingBuilder ConfigNLog(this ILoggingBuilder loggingBuilder)
         {
             loggingBuilder.ClearProviders();
-
             var loggingConfiguration = LoggingConfigurationBuilder.BuildLoggingConfiguration();
             loggingBuilder.AddNLog(loggingConfiguration);
 
