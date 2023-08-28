@@ -7,22 +7,22 @@ namespace Yangtao.Hosting.Endpoint
 {
     public static class EndpointRouteBuilderExtensions
     {
-        public static IEndpointRouteBuilder UseEnumConfiguration(this IEndpointRouteBuilder endpointRouteBuilder)
+        public static IEndpointRouteBuilder UseEnumConfigurationEndpoint(this IEndpointRouteBuilder endpointRouteBuilder)
         {
             var options = new EnumConfigurationOptions();
 
-            return UseEnumConfiguration(endpointRouteBuilder, options);
+            return UseEnumConfigurationEndpoint(endpointRouteBuilder, options);
         }
 
-        public static IEndpointRouteBuilder UseEnumConfiguration(this IEndpointRouteBuilder endpointRouteBuilder, Action<EnumConfigurationOptions> optionAction)
+        public static IEndpointRouteBuilder UseEnumConfigurationEndpoint(this IEndpointRouteBuilder endpointRouteBuilder, Action<EnumConfigurationOptions> optionAction)
         {
             var options = new EnumConfigurationOptions();
             optionAction(options);
 
-            return UseEnumConfiguration(endpointRouteBuilder, options);
+            return UseEnumConfigurationEndpoint(endpointRouteBuilder, options);
         }
 
-        private static IEndpointRouteBuilder UseEnumConfiguration(this IEndpointRouteBuilder endpointRouteBuilder, EnumConfigurationOptions options)
+        private static IEndpointRouteBuilder UseEnumConfigurationEndpoint(this IEndpointRouteBuilder endpointRouteBuilder, EnumConfigurationOptions options)
         {
             var enumConfiguration = new EnumConfigurationBuilder(options).GetEnumConfiguration();
             var routeHandlerBuilder = endpointRouteBuilder.MapGet(options.EnumConfigurationEndpoint, async (HttpResponse response) =>
