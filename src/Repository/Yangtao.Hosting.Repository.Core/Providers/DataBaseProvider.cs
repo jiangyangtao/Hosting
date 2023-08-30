@@ -8,9 +8,9 @@ namespace Yangtao.Hosting.Repository.Core.Providers
 {
     internal class DataBaseProvider : IDataBaseProvider
     {
-        private readonly DbContext _dbContext;
+        private readonly DefaultDbContext _dbContext;
 
-        public DataBaseProvider(DbContext dbContext)
+        public DataBaseProvider(DefaultDbContext dbContext)
         {
             _dbContext = dbContext;
         }

@@ -17,7 +17,7 @@ namespace Yangtao.Hosting.Repository.Core.Providers
         public const string UserIdPreperty = "UserId";
 
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly DbContext _dbContext;
+        private readonly DefaultDbContext _dbContext;
 
         private readonly Type BaseModelType = typeof(TEntity);
         private readonly Type TEntityType;
