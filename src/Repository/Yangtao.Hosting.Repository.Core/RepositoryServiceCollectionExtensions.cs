@@ -8,7 +8,7 @@ using Yangtao.Hosting.Repository.Core.Providers;
 
 namespace Yangtao.Hosting.Repository.Core
 {
-    public static class ServiceCollectionExtensions
+    public static class RepositoryServiceCollectionExtensions
     {
         public static IServiceCollection AddRepositoryCore(this IServiceCollection services, Action<DbContextOptionsBuilder> optionsAction)
         {
@@ -62,6 +62,6 @@ namespace Yangtao.Hosting.Repository.Core
             services.AddScoped<IViewRepositoryProvider<TView>, ViewRepositoryProvider<TView>>();
         }
 
-        private static MethodInfo BuildRegisterRepositoryMethod(string methodName) => typeof(ServiceCollectionExtensions).GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic);
+        private static MethodInfo BuildRegisterRepositoryMethod(string methodName) => typeof(RepositoryServiceCollectionExtensions).GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic);
     }
 }
