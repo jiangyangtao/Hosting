@@ -8,7 +8,7 @@ namespace Yangtao.Hosting.Cache.Redis.Abstracts
         /// </summary>
         /// <param name="name">缓存容器名称</param>
         /// <returns>缓存容器</returns>
-        IRedisProvider CreateRedisProvider(string name = "");
+        IRedisCacheProvider CreateRedisCacheProvider(string name = "");
 
         /// <summary>
         /// 容器名

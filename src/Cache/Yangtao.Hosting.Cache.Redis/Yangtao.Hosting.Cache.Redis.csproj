@@ -8,11 +8,9 @@
 
 	<ItemGroup>	
 		<PackageReference Include="StackExchange.Redis" Version="2.6.70" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Extensions\Yangtao.Hosting.Extensions\Yangtao.Hosting.Extensions.csproj" />
 	  <ProjectReference Include="..\..\Yangtao.Hosting.Abstractions\Yangtao.Hosting.Abstractions.csproj" />
 	</ItemGroup>
 	

@@ -2,7 +2,7 @@
 
 namespace Yangtao.Hosting.Cache.Redis.Abstracts
 {
-    public interface IRedisProvider
+    public interface IRedisCacheProvider
     {
 
         IEnumerable<RedisKey> GetAllKeys();

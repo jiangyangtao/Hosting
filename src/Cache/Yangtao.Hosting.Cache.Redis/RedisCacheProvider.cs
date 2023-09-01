@@ -6,14 +6,14 @@ using Yangtao.Hosting.Extensions;
 
 namespace Yangtao.Hosting.Cache.Redis
 {
-    internal class RedisProvider : IRedisProvider
+    internal class RedisCacheProvider : IRedisCacheProvider
     {
-        private readonly ILogger<RedisProvider> _logger;
+        private readonly ILogger<RedisCacheProvider> _logger;
         private readonly ConnectionMultiplexer _connectionMultiplexer;
         private readonly IDatabase _database;
         private readonly string _prefix;
 
-        public RedisProvider(ILogger<RedisProvider> logger,
+        public RedisCacheProvider(ILogger<RedisCacheProvider> logger,
             ConnectionMultiplexer connectionMultiplexer, string prefix)
         {
             _logger = logger;
