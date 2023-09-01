@@ -27,8 +27,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.MessageQueu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.MessageQueue.BufferQueue", "src\MessageQueue\Yangtao.Hosting.MessageQueue.BufferQueue\Yangtao.Hosting.MessageQueue.BufferQueue.csproj", "{C924E65F-4E7A-4E11-B349-49477BC9E623}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Cache.Abstractions", "src\Cache\Yangtao.Hosting.Cache.Abstractions\Yangtao.Hosting.Cache.Abstractions.csproj", "{B073EDDA-8822-4139-B87F-AA066817482B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Cache.Redis", "src\Cache\Yangtao.Hosting.Cache.Redis\Yangtao.Hosting.Cache.Redis.csproj", "{F945F9AE-E2D3-47A2-8AF6-55FF7CAEB3C4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Cache.Memory", "src\Cache\Yangtao.Hosting.Cache.Memory\Yangtao.Hosting.Cache.Memory.csproj", "{1F57065D-022C-4B4C-AA0C-022D10E39608}"
@@ -69,7 +67,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Repository.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Endpoint", "src\Yangtao.Hosting.Endpoint\Yangtao.Hosting.Endpoint.csproj", "{FD938199-E6F7-4CF0-862E-E5E10B2EAF0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.HostedService", "src\Yangtao.Hosting.HostedService\Yangtao.Hosting.HostedService.csproj", "{34F1C889-CAEC-4F85-A5DA-CFD5C622FD7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.HostedService", "src\Yangtao.Hosting.HostedService\Yangtao.Hosting.HostedService.csproj", "{34F1C889-CAEC-4F85-A5DA-CFD5C622FD7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,10 +95,6 @@ Global
 		{C924E65F-4E7A-4E11-B349-49477BC9E623}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C924E65F-4E7A-4E11-B349-49477BC9E623}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C924E65F-4E7A-4E11-B349-49477BC9E623}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B073EDDA-8822-4139-B87F-AA066817482B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B073EDDA-8822-4139-B87F-AA066817482B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B073EDDA-8822-4139-B87F-AA066817482B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B073EDDA-8822-4139-B87F-AA066817482B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F945F9AE-E2D3-47A2-8AF6-55FF7CAEB3C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F945F9AE-E2D3-47A2-8AF6-55FF7CAEB3C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F945F9AE-E2D3-47A2-8AF6-55FF7CAEB3C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -189,7 +183,6 @@ Global
 		{AD7CF780-FBA8-436D-B141-EADB8AEAD28B} = {0F8D7355-F530-40C9-A64D-ABA3CFA6C79F}
 		{ADA18BB6-6BDE-4E16-BBD1-0BFEE5DDDF45} = {AD7CF780-FBA8-436D-B141-EADB8AEAD28B}
 		{C924E65F-4E7A-4E11-B349-49477BC9E623} = {AD7CF780-FBA8-436D-B141-EADB8AEAD28B}
-		{B073EDDA-8822-4139-B87F-AA066817482B} = {7A1579E9-5D3B-4E55-9567-A9C3360A56CA}
 		{F945F9AE-E2D3-47A2-8AF6-55FF7CAEB3C4} = {7A1579E9-5D3B-4E55-9567-A9C3360A56CA}
 		{1F57065D-022C-4B4C-AA0C-022D10E39608} = {7A1579E9-5D3B-4E55-9567-A9C3360A56CA}
 		{FE1FF875-EF49-4143-A084-40186DED180B} = {0F8D7355-F530-40C9-A64D-ABA3CFA6C79F}
