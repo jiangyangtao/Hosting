@@ -89,5 +89,10 @@ namespace Yangtao.Hosting.Repository.Core
         public IEnumerator<Expression<Func<TEntity, object>>> GetEnumerator() => ColumnExpressions.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+        }
     }
 }

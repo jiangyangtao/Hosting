@@ -2,7 +2,7 @@
 
 namespace Yangtao.Hosting.Repository.Abstractions
 {
-    public interface IEntityColumns<TEntity> : IEnumerable<Expression<Func<TEntity, object>>> where TEntity : BaseEntity
+    public interface IEntityColumns<TEntity> : IEnumerable<Expression<Func<TEntity, object>>>, IDisposable where TEntity : BaseEntity
     {
         public void Add(Expression<Func<TEntity, object>> expression);
 
