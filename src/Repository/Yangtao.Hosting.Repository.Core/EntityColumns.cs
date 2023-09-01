@@ -7,11 +7,13 @@ namespace Yangtao.Hosting.Repository.Core
 {
     internal class EntityColumns<TEntity> : IEntityColumns<TEntity> where TEntity : BaseEntity
     {
-        private readonly IList<string> Columns = new List<string>();
-        private readonly IList<Expression<Func<TEntity, object>>> ColumnExpressions = new List<Expression<Func<TEntity, object>>>();
+        private readonly IList<string> Columns;
+        private readonly IList<Expression<Func<TEntity, object>>> ColumnExpressions;
 
         internal EntityColumns()
         {
+            Columns = new List<string>();
+            ColumnExpressions = new List<Expression<Func<TEntity, object>>>();
         }
 
         public void Add(Expression<Func<TEntity, object>> expression)

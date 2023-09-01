@@ -12,9 +12,6 @@
 	</ImportGroup>
 
 	<ItemGroup>
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\Yangtao.Hosting.Abstractions\Yangtao.Hosting.Abstractions.csproj" />
 	</ItemGroup>
 	
