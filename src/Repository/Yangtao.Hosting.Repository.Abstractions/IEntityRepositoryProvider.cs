@@ -112,7 +112,7 @@ namespace Yangtao.Hosting.Repository.Abstractions
         /// <typeparam name="TSource"></typeparam>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        Task<TEntity> GetByIdAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity?> GetByIdAsync(Expression<Func<TEntity, bool>> predicate);
 
         /// <summary>
         /// 获取一条数据
@@ -120,7 +120,7 @@ namespace Yangtao.Hosting.Repository.Abstractions
         /// <typeparam name="TSource"></typeparam>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<TEntity> GetByIdAsync(string id);
+        Task<TEntity?> GetByIdAsync(string id);
 
         /// <summary>
         /// 获取一个 IQueryable

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
@@ -141,12 +140,12 @@ namespace Yangtao.Hosting.Repository.Core.Providers
             return _dbContext.Set<TEntity>().Where(predicate);
         }
 
-        public async Task<TEntity> GetByIdAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<TEntity?> GetByIdAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await _dbContext.Set<TEntity>().Where(predicate).FirstOrDefaultAsync();
         }
 
-        public async Task<TEntity> GetByIdAsync(string id)
+        public async Task<TEntity?> GetByIdAsync(string id)
         {
             var r = await _dbContext.Set<TEntity>().FirstOrDefaultAsync(a => a.Id == id);
             if (r == null) return null;
