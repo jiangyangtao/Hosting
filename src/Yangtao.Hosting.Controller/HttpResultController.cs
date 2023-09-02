@@ -13,7 +13,8 @@ namespace Yangtao.Hosting.Controller
 
 
 
-
+        [NonAction]
+        public HttpConflictResult ResponseConflict() => new();
 
         [NonAction]
         public HttpConflictResult ResponseConflict(string message) => new(message);
@@ -23,7 +24,8 @@ namespace Yangtao.Hosting.Controller
 
 
 
-
+        [NonAction]
+        public HttpForbidResult ResponseForbid() => new();
 
         [NonAction]
         public HttpForbidResult ResponseForbid(string message) => new(message);
@@ -34,6 +36,8 @@ namespace Yangtao.Hosting.Controller
 
 
 
+        [NonAction]
+        public HttpNotFoundResult ResponseNotFound() => new();
 
         [NonAction]
         public HttpNotFoundResult ResponseNotFound(string message) => new(message);
@@ -55,7 +59,8 @@ namespace Yangtao.Hosting.Controller
 
 
 
-
+        [NonAction]
+        public HttpUnauthorizedResult ResponseUnauthorized() => new();
 
         [NonAction]
         public HttpUnauthorizedResult ResponseUnauthorized(string message) => new(message);

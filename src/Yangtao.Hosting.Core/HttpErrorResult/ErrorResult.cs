@@ -13,22 +13,23 @@ namespace Yangtao.Hosting.Core.HttpErrorResult
 
         public string Message { get; private set; }
 
-        public static ErrorResult CreateErrorResult(string message)
+        public static ErrorResult CreateErrorResult() => new()
         {
-            return new ErrorResult
-            {
-                Code = -1,
-                Message = message
-            };
-        }
+            Code = -1,
+            Message = string.Empty,
+        };
 
-        public static ErrorResult CreateErrorResult(int code, string message)
+        public static ErrorResult CreateErrorResult(string message) => new()
         {
-            return new ErrorResult
-            {
-                Code = code,
-                Message = message
-            };
-        }
+            Code = -1,
+            Message = message
+        };
+
+
+        public static ErrorResult CreateErrorResult(int code, string message) => new()
+        {
+            Code = code,
+            Message = message
+        };
     }
 }

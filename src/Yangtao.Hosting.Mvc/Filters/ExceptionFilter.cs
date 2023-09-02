@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net.Mime;
 using Yangtao.Hosting.Core.HttpErrorResult;
+using Yangtao.Hosting.Extensions;
 
 namespace Yangtao.Hosting.Mvc.Filters
 {
@@ -36,9 +37,15 @@ namespace Yangtao.Hosting.Mvc.Filters
         {
             context.HttpContext.Response.Clear();
             context.HttpContext.Response.StatusCode = HttpErrorResult.HttpStatusCode;
-            context.HttpContext.Response.ContentType = MediaTypeNames.Application.Json;
 
             var result = HttpErrorResult.GetErrorResultContent();
+            if (result.IsNullOrEmpty())
+            {
+                await context.HttpContext.Response.BodyWriter.FlushAsync().AsTask();
+                return;
+            }
+
+            context.HttpContext.Response.ContentType = MediaTypeNames.Application.Json;
             await context.HttpContext.Response.WriteAsync(result);
         }
     }
