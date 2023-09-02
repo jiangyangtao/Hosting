@@ -2,7 +2,7 @@
 
 namespace Yangtao.Hosting.Repository.Abstractions
 {
-    public interface IViewRepositoryProvider<TView> : ISqlQueryProvider<TView> where TView : BaseView
+    public interface IViewRepositoryProvider<TView> : ISqlQueryProvider<TView>, IEmptyArray<TView> where TView : BaseView
     {
         /// <summary>
         /// 获取一个 IQueryable

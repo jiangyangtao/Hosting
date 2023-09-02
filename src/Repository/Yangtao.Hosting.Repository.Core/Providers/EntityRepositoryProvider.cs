@@ -40,6 +40,8 @@ namespace Yangtao.Hosting.Repository.Core.Providers
             }
         }
 
+        public TEntity[] EmptyArray => Array.Empty<TEntity>();
+
         public async Task<TEntity> AddAsync(TEntity entity, bool isCommit = true)
         {
             if (entity == null) return null;

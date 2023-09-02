@@ -14,6 +14,8 @@ namespace Yangtao.Hosting.Repository.Core.Providers
             _dbContext = dbContext;
         }
 
+        public TView[] EmptyArray => Array.Empty<TView>();
+
         public IQueryable<TView> Get() => _dbContext.Set<TView>();
 
 
