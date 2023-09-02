@@ -130,28 +130,13 @@ namespace Yangtao.Hosting.Repository.Core.Providers
             return entities.Count;
         }
 
-        public IQueryable<TEntity> Get()
-        {
-            return _dbContext.Set<TEntity>();
-        }
+        public IQueryable<TEntity> Get() => _dbContext.Set<TEntity>();
 
-        public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate)
-        {
-            return _dbContext.Set<TEntity>().Where(predicate);
-        }
+        public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate) => _dbContext.Set<TEntity>().Where(predicate);
 
-        public async Task<TEntity?> GetByIdAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            return await _dbContext.Set<TEntity>().Where(predicate).FirstOrDefaultAsync();
-        }
+        public Task<TEntity?> GetByIdAsync(Expression<Func<TEntity, bool>> predicate) => _dbContext.Set<TEntity>().Where(predicate).FirstOrDefaultAsync();
 
-        public async Task<TEntity?> GetByIdAsync(string id)
-        {
-            var r = await _dbContext.Set<TEntity>().FirstOrDefaultAsync(a => a.Id == id);
-            if (r == null) return null;
-
-            return r;
-        }
+        public Task<TEntity?> GetByIdAsync(string id) => _dbContext.Set<TEntity>().FirstOrDefaultAsync(a => a.Id == id);
 
         public async Task<TEntity> UpdateAsync(TEntity entity, bool isCommit = true)
         {
@@ -458,10 +443,7 @@ namespace Yangtao.Hosting.Repository.Core.Providers
             return (TEntity)newObject;
         }
 
-        public IEntityColumns<TEntity> CreateEntityColumnExpressions()
-        {
-            return new EntityColumns<TEntity>();
-        }
+        public IEntityColumns<TEntity> CreateEntityColumnExpressions() => new EntityColumns<TEntity>();
 
         public IQueryable<TEntity> SqlQuery(FormattableString sql) => _dbContext.Database.SqlQuery<TEntity>(sql);
 
