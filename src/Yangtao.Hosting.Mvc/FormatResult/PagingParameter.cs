@@ -5,7 +5,7 @@ namespace Yangtao.Hosting.Mvc.FormatResult
     /// <summary>
     /// 分页参数
     /// </summary>
-    public partial class PagingParameter
+    public class PagingParameter
     {
         /// <summary>
         /// 
