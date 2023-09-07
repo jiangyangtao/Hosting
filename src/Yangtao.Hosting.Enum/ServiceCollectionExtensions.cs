@@ -21,8 +21,8 @@ namespace Yangtao.Hosting.Enum
                 foreach (var enumType in enumTypes)
                 {
                     var method = registerMethod.MakeGenericMethod(enumType);
-                    registerMethod.GetGenericMethodDefinition();
-                    registerMethod.Invoke(null, new object[] { services });
+                    method.GetGenericMethodDefinition();
+                    method.Invoke(null, new object[] { services });
                 }
             }
 
