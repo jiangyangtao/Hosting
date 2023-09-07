@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace Yangtao.Hosting.Enum
 {
-    public interface IEnumProvider<TEnum> where TEnum : struct, System.Enum
+    public class EnumInfo
     {
+        public string Name { set; get; }
 
+        public object ObjectValue { set; get; }
+
+        public int Value { set; get; }
     }
 }

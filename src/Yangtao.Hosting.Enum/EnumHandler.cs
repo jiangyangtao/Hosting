@@ -10,7 +10,7 @@ namespace Yangtao.Hosting.Enum
 
         public static EnumHandler<TEnum> Create() => new();
 
-
+        public IEnumerable<TEnum> GetValues() => System.Enum.GetValues<TEnum>();
 
         public void Dispose()
         {

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Yangtao.Hosting.Enum
 {
-    internal class EnumProvider<TEnum> : EnumHandlerBase, IEnumProvider<TEnum> where TEnum : struct, System.Enum
+    public class EnumProvider<TEnum> : EnumHandlerBase where TEnum : struct, System.Enum
     {
         public EnumProvider() : base(typeof(TEnum))
         {
         }
+
+        public IEnumerable<TEnum> GetValues() => System.Enum.GetValues<TEnum>();
     }
 }
