@@ -29,6 +29,8 @@ namespace Yangtao.Hosting.Enum
 
         public virtual IEnumerable<object> ObjectValues => EnumInfos.Select(a => a.ObjectValue);
 
+        public bool IsDefined(object value) => System.Enum.IsDefined(EnumType, value);
+
         public bool HasName(string name) => Names.Any(a => a == name);
 
         public bool HasValue(int value) => Values.Any(a => a == value);
