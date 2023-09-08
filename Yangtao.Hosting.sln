@@ -69,7 +69,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Endpoint", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.HostedService", "src\Yangtao.Hosting.HostedService\Yangtao.Hosting.HostedService.csproj", "{34F1C889-CAEC-4F85-A5DA-CFD5C622FD7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.Enum", "src\Yangtao.Hosting.Enum\Yangtao.Hosting.Enum.csproj", "{AE32BD80-D693-4D11-861B-FDB59A95FB91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Enum", "src\Yangtao.Hosting.Enum\Yangtao.Hosting.Enum.csproj", "{AE32BD80-D693-4D11-861B-FDB59A95FB91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.Encryption", "src\Yangtao.Hosting.Encryption\Yangtao.Hosting.Encryption.csproj", "{172E59DC-D77D-4737-82E8-567B0A4B62C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -177,6 +179,10 @@ Global
 		{AE32BD80-D693-4D11-861B-FDB59A95FB91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE32BD80-D693-4D11-861B-FDB59A95FB91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE32BD80-D693-4D11-861B-FDB59A95FB91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{172E59DC-D77D-4737-82E8-567B0A4B62C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{172E59DC-D77D-4737-82E8-567B0A4B62C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{172E59DC-D77D-4737-82E8-567B0A4B62C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{172E59DC-D77D-4737-82E8-567B0A4B62C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -211,6 +217,7 @@ Global
 		{FD938199-E6F7-4CF0-862E-E5E10B2EAF0B} = {0F8D7355-F530-40C9-A64D-ABA3CFA6C79F}
 		{34F1C889-CAEC-4F85-A5DA-CFD5C622FD7F} = {0F8D7355-F530-40C9-A64D-ABA3CFA6C79F}
 		{AE32BD80-D693-4D11-861B-FDB59A95FB91} = {0F8D7355-F530-40C9-A64D-ABA3CFA6C79F}
+		{172E59DC-D77D-4737-82E8-567B0A4B62C9} = {0F8D7355-F530-40C9-A64D-ABA3CFA6C79F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28EDA54C-950D-459F-AFC9-092C65E8B3D9}
