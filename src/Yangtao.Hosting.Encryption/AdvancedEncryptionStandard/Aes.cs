@@ -11,6 +11,7 @@ namespace Yangtao.Hosting.Encryption.AdvancedEncryptionStandard
 
         public void Dispose()
         {
+            Aes.Dispose();
             GC.SuppressFinalize(this);
         }
     }

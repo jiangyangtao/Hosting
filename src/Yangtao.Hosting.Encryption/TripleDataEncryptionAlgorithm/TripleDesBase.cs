@@ -6,6 +6,8 @@ namespace Yangtao.Hosting.Encryption.TripleDataEncryptionAlgorithm
 {
     public abstract class TripleDesBase
     {
+        protected readonly TripleDES TripleDES;
+
         protected TripleDesBase(string secretKey, string iv)
         {
             if (secretKey.IsNullOrEmpty()) throw new ArgumentNullException(nameof(secretKey));
@@ -16,6 +18,8 @@ namespace Yangtao.Hosting.Encryption.TripleDataEncryptionAlgorithm
 
             SecretKey = secretKey;
             Iv = iv;
+
+            TripleDES = TripleDES.Create();
         }
 
         public string SecretKey { get; }
@@ -26,11 +30,10 @@ namespace Yangtao.Hosting.Encryption.TripleDataEncryptionAlgorithm
 
         public byte[] IvBytes => Encoding.UTF8.GetBytes(Iv);
 
-
-        #region 将要加密的字符串进行3DES加密
+        protected ICryptoTransform ICryptoTransform => TripleDES.CreateEncryptor(SecretKeyBytes, IvBytes);
 
         /// <summary>
-        /// 将要加密的字符串进行3DES加密
+        /// 将要加密的字符串进行加密
         /// </summary>
         /// <param name="value">要加密的字符串</param>
         /// <returns>
@@ -41,23 +44,13 @@ namespace Yangtao.Hosting.Encryption.TripleDataEncryptionAlgorithm
         {
             if (value.IsNullOrEmpty()) throw new ArgumentNullException(nameof(value));
 
-            var valueBytes = Encoding.UTF8.GetBytes(value);
-            using var tdes = TripleDES.Create();
-            using var memoryStream = new MemoryStream();
-            using var cryptoStream = new CryptoStream(memoryStream, tdes.CreateEncryptor(SecretKeyBytes, IvBytes), CryptoStreamMode.Write);
-            cryptoStream.Write(valueBytes, 0, valueBytes.Length);
-            cryptoStream.FlushFinalBlock();
-            cryptoStream.Close();
-            memoryStream.Close();
-
-            return Convert.ToBase64String(memoryStream.ToArray());
+            var cryptoTransform = TripleDES.CreateEncryptor(SecretKeyBytes, IvBytes);
+            return Handle(value, cryptoTransform);
         }
 
-        #endregion
 
-        #region 将要解密的字符串进行3DES解密
         /// <summary>
-        /// 将要解密的字符串进行3DES解密
+        /// 将要解密的字符串进行解密
         /// </summary>
         /// <param name="value">要解密的字符串</param>
         /// <returns>
@@ -68,10 +61,16 @@ namespace Yangtao.Hosting.Encryption.TripleDataEncryptionAlgorithm
         {
             if (value.IsNullOrEmpty()) throw new ArgumentNullException(nameof(value));
 
+            var cryptoTransform = TripleDES.CreateDecryptor(SecretKeyBytes, IvBytes);
+
+            return Handle(value, cryptoTransform);
+        }
+
+        private static string Handle(string value, ICryptoTransform cryptoTransform)
+        {
             var valueBytes = Convert.FromBase64String(value);
-            using var tdes = TripleDES.Create();
             using var memoryStream = new MemoryStream();
-            using var cryptoStream = new CryptoStream(memoryStream, tdes.CreateDecryptor(SecretKeyBytes, IvBytes), CryptoStreamMode.Write);
+            using var cryptoStream = new CryptoStream(memoryStream, cryptoTransform, CryptoStreamMode.Write);
             cryptoStream.Write(valueBytes, 0, valueBytes.Length);
             cryptoStream.FlushFinalBlock();
             cryptoStream.Close();
@@ -79,6 +78,5 @@ namespace Yangtao.Hosting.Encryption.TripleDataEncryptionAlgorithm
 
             return Encoding.UTF8.GetString(memoryStream.ToArray());
         }
-        #endregion
     }
 }

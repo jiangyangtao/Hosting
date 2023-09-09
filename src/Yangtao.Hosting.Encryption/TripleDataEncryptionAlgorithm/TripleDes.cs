@@ -12,6 +12,7 @@ namespace Yangtao.Hosting.Encryption.TripleDataEncryptionAlgorithm
 
         public void Dispose()
         {
+            TripleDES.Dispose();
             GC.SuppressFinalize(this);
         }
     }
