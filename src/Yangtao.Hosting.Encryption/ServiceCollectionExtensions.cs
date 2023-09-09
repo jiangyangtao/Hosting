@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Yangtao.Hosting.Encryption.AdvancedEncryptionStandard;
+using Yangtao.Hosting.Encryption.RsaAlgorithm;
 using Yangtao.Hosting.Encryption.TripleDataEncryptionAlgorithm;
 
 namespace Yangtao.Hosting.Encryption
@@ -21,6 +22,15 @@ namespace Yangtao.Hosting.Encryption
             actionOptions(options);
 
             services.AddSingleton(new TripleDesProvider(options.SecretKey, options.Iv));
+            return services;
+        }
+
+        public static IServiceCollection AddRsaEncrypt(this IServiceCollection services, Action<RsaSecretKeyOptions> actionOptions)
+        {
+            var options = new RsaSecretKeyOptions();
+            actionOptions(options);
+
+            services.AddSingleton(new RsaEncryptProvider(options.SecretKey, options.RSAKeyType));
             return services;
         }
     }
