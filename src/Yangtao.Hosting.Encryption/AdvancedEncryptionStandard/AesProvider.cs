@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Yangtao.Hosting.Encryption.AdvancedEncryptionStandard
 {
-    public class AdvancedEncryptionStandardProvider : AdvancedEncryptionStandardBase
+    public class AesProvider : AesBase
     {
-        public AdvancedEncryptionStandardProvider(string secretKey, string iv) : base(secretKey, iv)
+        public AesProvider(string secretKey, string iv) : base(secretKey, iv)
         {
         }
     }

@@ -4,9 +4,9 @@ using Yangtao.Hosting.Extensions;
 
 namespace Yangtao.Hosting.Encryption.AdvancedEncryptionStandard
 {
-    public abstract class AdvancedEncryptionStandardBase
+    public abstract class AesBase
     {
-        protected AdvancedEncryptionStandardBase(string secretKey, string iv)
+        protected AesBase(string secretKey, string iv)
         {
             if (secretKey.IsNullOrEmpty()) throw new ArgumentNullException(nameof(secretKey));
             if (secretKey.Length < 16) throw new ArgumentOutOfRangeException(nameof(secretKey));
@@ -39,7 +39,7 @@ namespace Yangtao.Hosting.Encryption.AdvancedEncryptionStandard
 
             var _valueByte = Encoding.UTF8.GetBytes(value);
 
-            using var aes = Aes.Create();
+            using var aes = System.Security.Cryptography.Aes.Create();
             aes.IV = IvBytes;
             aes.Key = SecretKeyBytes;
             aes.Mode = CipherMode.CBC;
@@ -64,7 +64,7 @@ namespace Yangtao.Hosting.Encryption.AdvancedEncryptionStandard
             if (value.IsNullOrEmpty()) return string.Empty;
 
             var _valueByte = Convert.FromBase64String(value);
-            using var aes = Aes.Create();
+            using var aes = System.Security.Cryptography.Aes.Create();
             aes.IV = IvBytes;
             aes.Key = SecretKeyBytes;
             aes.Mode = CipherMode.CBC;
