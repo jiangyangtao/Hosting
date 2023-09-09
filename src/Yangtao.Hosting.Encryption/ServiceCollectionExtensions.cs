@@ -33,5 +33,14 @@ namespace Yangtao.Hosting.Encryption
             services.AddSingleton(new RsaEncryptProvider(options.SecretKey, options.RSAKeyType));
             return services;
         }
+
+        public static IServiceCollection AddRsaDecrypt(this IServiceCollection services, Action<RsaSecretKeyOptions> actionOptions)
+        {
+            var options = new RsaSecretKeyOptions();
+            actionOptions(options);
+
+            services.AddSingleton(new RsaDecryptProvider(options.SecretKey, options.RSAKeyType));
+            return services;
+        }
     }
 }

@@ -6,6 +6,6 @@ namespace Yangtao.Hosting.Encryption.RsaAlgorithm
     {
         public RsaEncryptProvider(string privateKey) : base(privateKey, RSAKeyType.Pkcs1) { }
 
-        public RsaEncryptProvider(string privateKey, RSAKeyType keyType = RSAKeyType.Pkcs1) : base(privateKey, keyType) { }
+        public RsaEncryptProvider(string privateKey, RSAKeyType keyType) : base(privateKey, keyType) { }
     }
 }
