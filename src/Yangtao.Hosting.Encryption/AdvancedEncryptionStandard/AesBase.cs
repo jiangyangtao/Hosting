@@ -33,9 +33,11 @@ namespace Yangtao.Hosting.Encryption.AdvancedEncryptionStandard
         /// 将要加密的字符串进行AES加密(CBC模式)
         /// </summary>
         /// <param name="value">要加密的字符串</param>
+        /// <returns>密文</returns>
+        /// <exception cref="ArgumentNullException">value 参数为空或者为 null</exception>
         public string Encrypt(string value)
         {
-            if (value.IsNullOrEmpty()) return string.Empty;
+            if (value.IsNullOrEmpty()) throw new ArgumentNullException(nameof(value));
 
             var valueBytes = Encoding.UTF8.GetBytes(value);
 
@@ -56,12 +58,12 @@ namespace Yangtao.Hosting.Encryption.AdvancedEncryptionStandard
         /// </summary>
         /// <param name="value">要解密的字符串</param>
         /// <returns>
-        /// 如果 value 参数为 null 或者为空字符串("")，则返回 <see cref="string.Empty"/>；
-        /// 否则返回AES算法解密后的明文。
+        /// 明文
         /// </returns>
+        /// <exception cref="ArgumentNullException">value 参数为空或者为 null</exception>
         public string Decrypt(string value)
         {
-            if (value.IsNullOrEmpty()) return string.Empty;
+            if (value.IsNullOrEmpty()) throw new ArgumentNullException(nameof(value));
 
             var valueBytes = Convert.FromBase64String(value);
             using var aes = System.Security.Cryptography.Aes.Create();

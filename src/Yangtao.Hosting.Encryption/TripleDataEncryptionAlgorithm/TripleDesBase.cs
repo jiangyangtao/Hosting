@@ -34,12 +34,12 @@ namespace Yangtao.Hosting.Encryption.TripleDataEncryptionAlgorithm
         /// </summary>
         /// <param name="value">要加密的字符串</param>
         /// <returns>
-        /// 如果 value 参数为 null 或者为空字符串("")，则返回 <see cref="string.Empty"/>；
-        /// 否则返回3DES算法加密后的密文。
+        /// 密文
         /// </returns>
+        /// <exception cref="ArgumentNullException">value 参数为空或者为 null</exception>
         public string Encrypt(string value)
         {
-            if (value.IsNullOrEmpty()) return string.Empty;
+            if (value.IsNullOrEmpty()) throw new ArgumentNullException(nameof(value));
 
             var valueBytes = Encoding.UTF8.GetBytes(value);
             using var tdes = TripleDES.Create();
@@ -61,12 +61,12 @@ namespace Yangtao.Hosting.Encryption.TripleDataEncryptionAlgorithm
         /// </summary>
         /// <param name="value">要解密的字符串</param>
         /// <returns>
-        /// 如果 value 参数为 null 或者为空字符串("")，则返回 <see cref="string.Empty"/>；
-        /// 否则返回3DES算法解密后的明文。
+        /// 明文
         /// </returns>
+        /// <exception cref="ArgumentNullException">value 参数为空或者为 null</exception>
         public string Decrypt(string value)
         {
-            if (value.IsNullOrEmpty()) return string.Empty;
+            if (value.IsNullOrEmpty()) throw new ArgumentNullException(nameof(value));
 
             var valueBytes = Convert.FromBase64String(value);
             using var tdes = TripleDES.Create();
