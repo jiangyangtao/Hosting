@@ -37,7 +37,7 @@ namespace Yangtao.Hosting.Encryption.AdvancedEncryptionStandard
         {
             if (value.IsNullOrEmpty()) return string.Empty;
 
-            var _valueByte = Encoding.UTF8.GetBytes(value);
+            var valueBytes = Encoding.UTF8.GetBytes(value);
 
             using var aes = System.Security.Cryptography.Aes.Create();
             aes.IV = IvBytes;
@@ -45,7 +45,7 @@ namespace Yangtao.Hosting.Encryption.AdvancedEncryptionStandard
             aes.Mode = CipherMode.CBC;
             aes.Padding = PaddingMode.PKCS7;
             var cryptoTransform = aes.CreateEncryptor();
-            var resultArray = cryptoTransform.TransformFinalBlock(_valueByte, 0, _valueByte.Length);
+            var resultArray = cryptoTransform.TransformFinalBlock(valueBytes, 0, valueBytes.Length);
             return Convert.ToBase64String(resultArray, 0, resultArray.Length);
         }
         #endregion
@@ -63,14 +63,14 @@ namespace Yangtao.Hosting.Encryption.AdvancedEncryptionStandard
         {
             if (value.IsNullOrEmpty()) return string.Empty;
 
-            var _valueByte = Convert.FromBase64String(value);
+            var valueBytes = Convert.FromBase64String(value);
             using var aes = System.Security.Cryptography.Aes.Create();
             aes.IV = IvBytes;
             aes.Key = SecretKeyBytes;
             aes.Mode = CipherMode.CBC;
             aes.Padding = PaddingMode.PKCS7;
             var cryptoTransform = aes.CreateDecryptor();
-            var resultArray = cryptoTransform.TransformFinalBlock(_valueByte, 0, _valueByte.Length);
+            var resultArray = cryptoTransform.TransformFinalBlock(valueBytes, 0, valueBytes.Length);
             return Encoding.UTF8.GetString(resultArray);
         }
         #endregion
