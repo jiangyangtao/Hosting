@@ -33,6 +33,20 @@ namespace Yangtao.Hosting.Encryption.RsaAlgorithm
             return Encoding.UTF8.GetString(result);
         }
 
+        public string SignData(string value) => SignData(value, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+
+        public string SignData(string value, RSASignaturePadding signaturePadding) => SignData(value, HashAlgorithmName.SHA256, signaturePadding);
+
+        public string SignData(string value, HashAlgorithmName algorithmName, RSASignaturePadding signaturePadding)
+        {
+            if (value.IsNullOrEmpty()) throw new ArgumentNullException(nameof(value));
+
+            var format = new RSAPKCS1SignatureFormatter();
+            var bytes = Encoding.UTF8.GetBytes(value);
+            var result = Rsa.SignData(bytes, algorithmName, signaturePadding);
+            return Convert.ToBase64String(result);
+        }
+
         public string DecryptBigData(string ciphertext) => DecryptBigData(ciphertext, RSAEncryptionPadding.Pkcs1);
 
         public string DecryptBigData(string ciphertext, RSAEncryptionPadding padding) => Rsa.DecryptBigData(ciphertext, padding);
