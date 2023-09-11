@@ -48,9 +48,8 @@ namespace Yangtao.Hosting.Encryption.AdvancedEncryptionStandard
             Aes.Mode = cipherMode;
             Aes.Padding = paddingMode;
 
-            var valueBytes = Encoding.UTF8.GetBytes(value);
-            var resultArray = CryptoTransform.TransformFinalBlock(valueBytes, 0, valueBytes.Length);
-            return Convert.ToBase64String(resultArray, 0, resultArray.Length);
+            var cryptoTransform = Aes.CreateEncryptor();
+            return Handle(value, cryptoTransform);
         }
         #endregion
 
@@ -72,10 +71,16 @@ namespace Yangtao.Hosting.Encryption.AdvancedEncryptionStandard
             Aes.Mode = cipherMode;
             Aes.Padding = paddingMode;
 
-            var valueBytes = Convert.FromBase64String(value);
-            var resultArray = CryptoTransform.TransformFinalBlock(valueBytes, 0, valueBytes.Length);
-            return Encoding.UTF8.GetString(resultArray);
+            var cryptoTransform = Aes.CreateDecryptor();
+            return Handle(value, cryptoTransform);
         }
         #endregion
+
+        private static string Handle(string value, ICryptoTransform cryptoTransform)
+        {
+            var valueBytes = Convert.FromBase64String(value);
+            var resultArray = cryptoTransform.TransformFinalBlock(valueBytes, 0, valueBytes.Length);
+            return Convert.ToBase64String(resultArray);
+        }
     }
 }
