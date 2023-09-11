@@ -9,7 +9,7 @@ namespace Yangtao.Hosting.Encryption.RsaAlgorithm
         {
         }
 
-        public static RsaSecretKey Generate(RSAKeyType keyType = RSAKeyType.Pkcs8)
+        public static RsaSecretKey Generate(RSAKeyType keyType = RSAKeyType.Pkcs1)
         {
             using var rsa = RSA.Create();
 

@@ -30,27 +30,27 @@ namespace Yangtao.Hosting.Encryption.RsaAlgorithm
 
             var bytes = Encoding.UTF8.GetBytes(plaintext);
             var result = Rsa.Encrypt(bytes, padding);
-            return Encoding.UTF8.GetString(result);
+            return Convert.ToBase64String(result);
         }
 
         public string EncryptBigData(string plaintext) => EncryptBigData(plaintext, RSAEncryptionPadding.Pkcs1);
 
         public string EncryptBigData(string plaintext, RSAEncryptionPadding padding) => Rsa.EncryptBigData(plaintext, padding);
 
-        public bool VerifyData(string value, string singData) => VerifyData(value, singData, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+        public bool VerifyData(string value, string signature) => VerifyData(value, signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
 
-        public bool VerifyData(string value, string singData, HashAlgorithmName algorithmName) => VerifyData(value, singData, algorithmName, RSASignaturePadding.Pkcs1);
+        public bool VerifyData(string value, string signature, HashAlgorithmName algorithmName) => VerifyData(value, signature, algorithmName, RSASignaturePadding.Pkcs1);
 
-        public bool VerifyData(string value, string singData, RSASignaturePadding signaturePadding) => VerifyData(value, singData, HashAlgorithmName.SHA256, signaturePadding);
+        public bool VerifyData(string value, string signature, RSASignaturePadding signaturePadding) => VerifyData(value, signature, HashAlgorithmName.SHA256, signaturePadding);
 
-        public bool VerifyData(string value, string singData, HashAlgorithmName algorithmName, RSASignaturePadding signaturePadding)
+        public bool VerifyData(string value, string signature, HashAlgorithmName algorithmName, RSASignaturePadding signaturePadding)
         {
             if (value.IsNullOrEmpty()) throw new ArgumentNullException(nameof(value));
-            if (singData.IsNullOrEmpty()) throw new ArgumentNullException(nameof(singData));
+            if (signature.IsNullOrEmpty()) throw new ArgumentNullException(nameof(signature));
 
+            var signatureBytes = Convert.FromBase64String(signature);
             var valueBytes = Encoding.UTF8.GetBytes(value);
-            var singDataBytes = Encoding.UTF8.GetBytes(singData);
-            return Rsa.VerifyData(valueBytes, singDataBytes, algorithmName, signaturePadding);
+            return Rsa.VerifyData(valueBytes, signatureBytes, algorithmName, signaturePadding);
         }
     }
 }

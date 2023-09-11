@@ -28,7 +28,7 @@ namespace Yangtao.Hosting.Encryption.RsaAlgorithm
         {
             if (ciphertext.IsNullOrEmpty()) throw new ArgumentNullException(nameof(ciphertext));
 
-            var bytes = Encoding.UTF8.GetBytes(ciphertext);
+            var bytes = Convert.FromBase64String(ciphertext);
             var result = Rsa.Decrypt(bytes, padding);
             return Encoding.UTF8.GetString(result);
         }
@@ -41,7 +41,6 @@ namespace Yangtao.Hosting.Encryption.RsaAlgorithm
         {
             if (value.IsNullOrEmpty()) throw new ArgumentNullException(nameof(value));
 
-            var format = new RSAPKCS1SignatureFormatter();
             var bytes = Encoding.UTF8.GetBytes(value);
             var result = Rsa.SignData(bytes, algorithmName, signaturePadding);
             return Convert.ToBase64String(result);
