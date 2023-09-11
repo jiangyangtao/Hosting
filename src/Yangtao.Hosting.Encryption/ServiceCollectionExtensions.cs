@@ -25,21 +25,21 @@ namespace Yangtao.Hosting.Encryption
             return services;
         }
 
-        public static IServiceCollection AddRsaEncrypt(this IServiceCollection services, Action<RsaSecretKeyOptions> actionOptions)
+        public static IServiceCollection AddRsaPublic(this IServiceCollection services, Action<RsaSecretKeyOptions> actionOptions)
         {
             var options = new RsaSecretKeyOptions();
             actionOptions(options);
 
-            services.AddSingleton(new RsaEncryptProvider(options.SecretKey, options.RSAKeyType));
+            services.AddSingleton(new RsaPublicProvider(options.SecretKey, options.RSAKeyType));
             return services;
         }
 
-        public static IServiceCollection AddRsaDecrypt(this IServiceCollection services, Action<RsaSecretKeyOptions> actionOptions)
+        public static IServiceCollection AddRsaPrivate(this IServiceCollection services, Action<RsaSecretKeyOptions> actionOptions)
         {
             var options = new RsaSecretKeyOptions();
             actionOptions(options);
 
-            services.AddSingleton(new RsaDecryptProvider(options.SecretKey, options.RSAKeyType));
+            services.AddSingleton(new RsaPrivateProvider(options.SecretKey, options.RSAKeyType));
             return services;
         }
     }

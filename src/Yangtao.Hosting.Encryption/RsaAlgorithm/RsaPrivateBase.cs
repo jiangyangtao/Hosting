@@ -5,13 +5,13 @@ using Yangtao.Hosting.Extensions;
 
 namespace Yangtao.Hosting.Encryption.RsaAlgorithm
 {
-    public class RsaDecryptBase
+    public class RsaPrivateBase
     {
         protected readonly string PrivateKey;
         protected readonly RSAKeyType KeyType;
         protected readonly RSA Rsa;
 
-        public RsaDecryptBase(string privateKey, RSAKeyType keyType = RSAKeyType.Pkcs1)
+        public RsaPrivateBase(string privateKey, RSAKeyType keyType = RSAKeyType.Pkcs1)
         {
             if (privateKey.IsNullOrEmpty()) throw new ArgumentNullException(nameof(privateKey));
 
