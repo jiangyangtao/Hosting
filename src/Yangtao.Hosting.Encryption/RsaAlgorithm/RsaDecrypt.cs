@@ -4,13 +4,13 @@ namespace Yangtao.Hosting.Encryption.RsaAlgorithm
 {
     public class RsaDecrypt : RsaDecryptBase, IDisposable
     {
-        public RsaDecrypt(string publicKey) : base(publicKey, RSAKeyType.Pkcs1) { }
+        public RsaDecrypt(string privateKey) : base(privateKey, RSAKeyType.Pkcs1) { }
 
-        public RsaDecrypt(string publicKey, RSAKeyType keyType) : base(publicKey, keyType) { }
+        public RsaDecrypt(string privateKey, RSAKeyType keyType) : base(privateKey, keyType) { }
 
-        public static RsaEncrypt Create(string publicKey) => new(publicKey);
+        public static RsaEncrypt Create(string privateKey) => new(privateKey);
 
-        public static RsaEncrypt Create(string publicKey, RSAKeyType keyType) => new(publicKey, keyType);
+        public static RsaEncrypt Create(string privateKey, RSAKeyType keyType) => new(privateKey, keyType);
 
         public void Dispose()
         {
