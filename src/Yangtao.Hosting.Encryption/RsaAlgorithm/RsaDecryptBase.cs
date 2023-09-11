@@ -7,15 +7,19 @@ namespace Yangtao.Hosting.Encryption.RsaAlgorithm
 {
     public class RsaDecryptBase
     {
-        protected readonly string PublicKey;
-        protected readonly RSAKeyType KeyType = RSAKeyType.Pkcs1;
-        protected readonly RSA Rsa = RSA.Create();
+        protected readonly string PrivateKey;
+        protected readonly RSAKeyType KeyType;
+        protected readonly RSA Rsa;
 
         public RsaDecryptBase(string privateKey, RSAKeyType keyType = RSAKeyType.Pkcs1)
         {
-            PublicKey = privateKey;
+            if (privateKey.IsNullOrEmpty()) throw new ArgumentNullException(nameof(privateKey));
+
+            PrivateKey = privateKey;
             KeyType = keyType;
-            Rsa.ImportPublicKey(KeyType, PublicKey);
+
+            Rsa = RSA.Create();
+            Rsa.ImportPrivateKey(KeyType, PrivateKey);
         }
 
         public string Decrypt(string ciphertext) => Decrypt(ciphertext, RSAEncryptionPadding.Pkcs1);
