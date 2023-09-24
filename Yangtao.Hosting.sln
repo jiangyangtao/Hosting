@@ -73,11 +73,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Enum", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.Encryption", "src\Yangtao.Hosting.Encryption\Yangtao.Hosting.Encryption.csproj", "{172E59DC-D77D-4737-82E8-567B0A4B62C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.RSA", "test\Test.RSA\Test.RSA.csproj", "{30FDAE2B-CDD1-4752-9E5D-FBD405915C65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.RSA", "test\Test.RSA\Test.RSA.csproj", "{30FDAE2B-CDD1-4752-9E5D-FBD405915C65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.AES", "test\Test.AES\Test.AES.csproj", "{1905B46B-B4CE-4D91-A10A-62CFCF857F36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.AES", "test\Test.AES\Test.AES.csproj", "{1905B46B-B4CE-4D91-A10A-62CFCF857F36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.3DES", "test\Test.3DES\Test.3DES.csproj", "{98530D64-97C2-4940-A062-BAF247AEF5BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.3DES", "test\Test.3DES\Test.3DES.csproj", "{98530D64-97C2-4940-A062-BAF247AEF5BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.Repository.Dapper", "src\Repository\Yangtao.Hosting.Repository.Dapper\Yangtao.Hosting.Repository.Dapper.csproj", "{0F1B4B17-40CE-4D3A-8E72-E1BC75CC23D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -201,6 +203,10 @@ Global
 		{98530D64-97C2-4940-A062-BAF247AEF5BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98530D64-97C2-4940-A062-BAF247AEF5BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98530D64-97C2-4940-A062-BAF247AEF5BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F1B4B17-40CE-4D3A-8E72-E1BC75CC23D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F1B4B17-40CE-4D3A-8E72-E1BC75CC23D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F1B4B17-40CE-4D3A-8E72-E1BC75CC23D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F1B4B17-40CE-4D3A-8E72-E1BC75CC23D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -239,6 +245,7 @@ Global
 		{30FDAE2B-CDD1-4752-9E5D-FBD405915C65} = {E54AF2F8-8C5F-4A19-BD6E-E63DEC4CA1AD}
 		{1905B46B-B4CE-4D91-A10A-62CFCF857F36} = {E54AF2F8-8C5F-4A19-BD6E-E63DEC4CA1AD}
 		{98530D64-97C2-4940-A062-BAF247AEF5BA} = {E54AF2F8-8C5F-4A19-BD6E-E63DEC4CA1AD}
+		{0F1B4B17-40CE-4D3A-8E72-E1BC75CC23D7} = {5DCCF932-8F01-47AF-833C-F16B5EFD353C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28EDA54C-950D-459F-AFC9-092C65E8B3D9}
