@@ -6,31 +6,31 @@ namespace Yangtao.Hosting.Encryption.AdvancedEncryptionStandard
 {
     public abstract class AesBase
     {
-        protected System.Security.Cryptography.Aes Aes;
+        protected readonly System.Security.Cryptography.Aes Aes;
 
-        protected AesBase(string secretKey, string iv)
+        protected AesBase(string securityKey, string iv)
         {
-            if (secretKey.IsNullOrEmpty()) throw new ArgumentNullException(nameof(secretKey));
-            if (secretKey.Length < 16) throw new ArgumentOutOfRangeException(nameof(secretKey));
-            if (secretKey.Length > 32) throw new ArgumentOutOfRangeException(nameof(secretKey));
-            if (secretKey.Length != 16 && secretKey.Length != 24 && secretKey.Length != 32) throw new ArgumentOutOfRangeException(nameof(secretKey));
+            if (securityKey.IsNullOrEmpty()) throw new ArgumentNullException(nameof(securityKey));
+            if (securityKey.Length != 16 ||
+                securityKey.Length != 24 ||
+                securityKey.Length != 32 ||
+                securityKey.Length != 40 ||
+                securityKey.Length != 48) throw new ArgumentOutOfRangeException(nameof(securityKey));
 
             if (iv.IsNullOrEmpty()) throw new ArgumentNullException(nameof(iv));
             if (iv.Length != 16) throw new ArgumentOutOfRangeException(nameof(iv));
 
-            SecretKey = secretKey;
+            SecurityKey = securityKey;
             Iv = iv;
 
             Aes = System.Security.Cryptography.Aes.Create();
             Aes.IV = Encoding.UTF8.GetBytes(Iv);
-            Aes.Key = Encoding.UTF8.GetBytes(SecretKey);
+            Aes.Key = Encoding.UTF8.GetBytes(SecurityKey);
         }
 
-        public string SecretKey { get; }
+        public string SecurityKey { get; }
 
         public string Iv { get; }
-
-        public ICryptoTransform CryptoTransform => Aes.CreateEncryptor();
 
         #region 将要加密的字符串进行AES加密(CBC模式)
         /// <summary>
@@ -48,8 +48,11 @@ namespace Yangtao.Hosting.Encryption.AdvancedEncryptionStandard
             Aes.Mode = cipherMode;
             Aes.Padding = paddingMode;
 
+            var bytes = Encoding.UTF8.GetBytes(value);
             var cryptoTransform = Aes.CreateEncryptor();
-            return Handle(value, cryptoTransform);
+            var resultArray = cryptoTransform.TransformFinalBlock(bytes, 0, bytes.Length);
+
+            return Convert.ToBase64String(resultArray);
         }
         #endregion
 
@@ -71,16 +74,12 @@ namespace Yangtao.Hosting.Encryption.AdvancedEncryptionStandard
             Aes.Mode = cipherMode;
             Aes.Padding = paddingMode;
 
+            var valueBytes = Convert.FromBase64String(value);
             var cryptoTransform = Aes.CreateDecryptor();
-            return Handle(value, cryptoTransform);
+            var resultArray = cryptoTransform.TransformFinalBlock(valueBytes, 0, valueBytes.Length);
+
+            return Encoding.UTF8.GetString(resultArray);
         }
         #endregion
-
-        private static string Handle(string value, ICryptoTransform cryptoTransform)
-        {
-            var valueBytes = Convert.FromBase64String(value);
-            var resultArray = cryptoTransform.TransformFinalBlock(valueBytes, 0, valueBytes.Length);
-            return Convert.ToBase64String(resultArray);
-        }
     }
 }
