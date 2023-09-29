@@ -1,26 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Yangtao.Hosting.SignatureValidation.Server.Abstractions;
+﻿using Yangtao.Hosting.SignatureValidation.Server.Abstractions;
 
 namespace Yangtao.Hosting.SignatureValidation.Server
 {
     internal class ServerSignatureValidationProvider : IServerSignatureValidationProvider
     {
-        public ServerSignatureValidationProvider()
+        private readonly IServerHmacShaProvider _serverHmacShaProvider;
+        private readonly IRsaPrivateProvider _rsaPrivateProvider;
+        private readonly IServerConfigurationProvider _serverConfigurationProvider;
+
+        public ServerSignatureValidationProvider(
+             IServerHmacShaProvider serverHmacShaProvider,
+            IRsaPrivateProvider rsaPrivateProvider,
+            IServerConfigurationProvider serverConfigurationProvider)
         {
+            _serverHmacShaProvider = serverHmacShaProvider;
+            _rsaPrivateProvider = rsaPrivateProvider;
+            _serverConfigurationProvider = serverConfigurationProvider;
         }
 
-        public string Decrypt(string ciphertext)
-        {
-            throw new NotImplementedException();
-        }
+        public string Decrypt(string ciphertext) => _rsaPrivateProvider.Decrypt(ciphertext);
 
         public string SignData(string value)
         {
-            throw new NotImplementedException();
+            if (_serverConfigurationProvider.ServerValidationOptions.IsHmacShaSignature)
+                return _serverHmacShaProvider.SignData(value);
+
+            return _rsaPrivateProvider.SignData(value);
         }
     }
 }

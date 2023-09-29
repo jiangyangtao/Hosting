@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Yangtao.Hosting.SignatureValidation.Server.Abstractions
+﻿namespace Yangtao.Hosting.SignatureValidation.Server.Abstractions
 {
     internal interface IServerHmacShaProvider
     {
+        /// <summary>
+        /// 验证签名
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        string SignData(string value);
     }
 }
