@@ -7,7 +7,20 @@ using Yangtao.Hosting.SignatureValidation.Server.Abstractions;
 
 namespace Yangtao.Hosting.SignatureValidation.Server
 {
-    internal class ServerSignatureValidationProvider: IServerSignatureValidationProvider
+    internal class ServerSignatureValidationProvider : IServerSignatureValidationProvider
     {
+        public ServerSignatureValidationProvider()
+        {
+        }
+
+        public string Decrypt(string ciphertext)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string SignData(string value)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
