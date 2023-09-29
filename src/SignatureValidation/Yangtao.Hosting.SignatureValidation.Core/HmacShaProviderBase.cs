@@ -28,7 +28,7 @@ namespace Yangtao.Hosting.SignatureValidation.Core
             return FormatSignature(resultBytes);
         }
 
-        public bool SignData(string value, string signature)
+        public bool VerifyData(string value, string signature)
         {
             if (signature.IsNullOrEmpty()) throw new ArgumentNullException(nameof(signature));
 
