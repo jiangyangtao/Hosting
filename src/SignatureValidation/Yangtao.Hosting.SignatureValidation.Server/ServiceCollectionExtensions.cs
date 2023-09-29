@@ -1,10 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.SignatureValidation.Core.Configurations;
 using Yangtao.Hosting.SignatureValidation.Core.Enums;
 using Yangtao.Hosting.SignatureValidation.Server.Abstractions;
 using Yangtao.Hosting.SignatureValidation.Server.Configurations;
-using Yangtao.Hosting.Extensions;
-using Yangtao.Hosting.SignatureValidation.Core.Abstractions;
 
 namespace Yangtao.Hosting.SignatureValidation.Server
 {
@@ -15,34 +14,31 @@ namespace Yangtao.Hosting.SignatureValidation.Server
         {
             var hmacShaOptions = new HmacShaOptions();
             optionAction(hmacShaOptions);
-
             if (hmacShaOptions.SecretKey.IsNullOrEmpty()) throw new ArgumentNullException(null, nameof(HmacShaOptions.SecretKey));
+
             return services.AddServerValidation(ValidationType.Signatrue, SignatureAlgorithm.HmacSha, hmacShaOptions);
         }
 
-        public static IServiceCollection AddRsaSignatureValidation(this IServiceCollection services, Action<RsaOptions> optionAction)
+        public static IServiceCollection AddRsaSignatureValidation(this IServiceCollection services, Action<RsaSignatureOptions> optionAction)
         {
-            return services.AddRsaValidation(ValidationType.Signatrue, optionAction);
+            var rsaSignatureOptions = new RsaSignatureOptions();
+            optionAction(rsaSignatureOptions);
+            if (rsaSignatureOptions.PrivateKey.IsNullOrEmpty()) throw new ArgumentNullException(null, nameof(RsaSignatureOptions.PrivateKey));
+
+            return services.AddServerValidation(ValidationType.Signatrue, SignatureAlgorithm.RSA, rsaSignatureOptions: rsaSignatureOptions);
         }
 
-
-        public static IServiceCollection AddEncryptionValidation(this IServiceCollection services, Action<RsaOptions> optionAction)
+        public static IServiceCollection AddEncryptionValidation(this IServiceCollection services, Action<RsaEncryptionOptions> optionAction)
         {
-            return services.AddRsaValidation(ValidationType.Encrypt, optionAction);
-        }
+            var rsaEncryptionOptions = new RsaEncryptionOptions();
+            optionAction(rsaEncryptionOptions);
+            if (rsaEncryptionOptions.PrivateKey.IsNullOrEmpty()) throw new ArgumentNullException(null, nameof(RsaEncryptionOptions.PrivateKey));
 
-        private static IServiceCollection AddRsaValidation(this IServiceCollection services, ValidationType validationType, Action<RsaOptions> optionAction)
-        {
-            var rsaOptions = new RsaOptions();
-            optionAction(rsaOptions);
-
-            if (rsaOptions.PrivateKey.IsNullOrEmpty()) throw new ArgumentNullException(null, nameof(RsaOptions.PrivateKey));
-
-            return services.AddServerValidation(validationType, SignatureAlgorithm.RSA, rsaOptions: rsaOptions);
+            return services.AddServerValidation(ValidationType.Encrypt, SignatureAlgorithm.RSA, rsaEncryptionOptions: rsaEncryptionOptions);
         }
 
         private static IServiceCollection AddServerValidation(this IServiceCollection services, ValidationType validationType, SignatureAlgorithm signatureAlgorithm,
-            HmacShaOptions? hmacShaOptions = null, RsaOptions? rsaOptions = null)
+            HmacShaOptions? hmacShaOptions = null, RsaSignatureOptions? rsaSignatureOptions = null, RsaEncryptionOptions? rsaEncryptionOptions = null)
         {
             services.Configure<ServerValidationOptions>(a =>
             {
@@ -60,19 +56,32 @@ namespace Yangtao.Hosting.SignatureValidation.Server
                 });
             }
 
-            if (rsaOptions != null)
+            if (rsaSignatureOptions != null)
             {
-                services.Configure<RsaOptions>(a =>
+                services.Configure<RsaSignatureOptions>(a =>
                 {
-                    a.RSAKeyType = rsaOptions.RSAKeyType;
-                    a.RSAEncryptionPaddingType = rsaOptions.RSAEncryptionPaddingType;
-                    a.PrivateKey = rsaOptions.PrivateKey;
+                    a.RSAKeyType = rsaSignatureOptions.RSAKeyType;
+                    a.RSASignaturePaddingMode = rsaSignatureOptions.RSASignaturePaddingMode;
+                    a.PrivateKey = rsaSignatureOptions.PrivateKey;
                 });
             }
 
-            services.AddSingleton<IHmacShaProvider, ServerHmacShaProvider>();
+            if (rsaEncryptionOptions != null)
+            {
+                services.Configure<RsaEncryptionOptions>(a =>
+                {
+                    a.RSAKeyType = rsaEncryptionOptions.RSAKeyType;
+                    a.RSAEncryptionPaddingType = rsaEncryptionOptions.RSAEncryptionPaddingType;
+                    a.PrivateKey = rsaEncryptionOptions.PrivateKey;
+                });
+            }
+
+            services.AddSingleton<IServerConfigurationProvider, ServerConfigurationProvider>();
+            services.AddSingleton<IServerSignatureValidationProvider, ServerSignatureValidationProvider>();
+            services.AddSingleton<IServerHmacShaProvider, ServerHmacShaProvider>();
             services.AddSingleton<IRsaPrivateProvider, RsaPrivateProvider>();
             return services;
         }
+
     }
 }

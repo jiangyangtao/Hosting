@@ -4,6 +4,6 @@ namespace Yangtao.Hosting.SignatureValidation.Server.Configurations
 {
     public class RsaEncryptionOptions : RsaEncryptionBase
     {
-        public string PublicKey { set; get; }
+        public string PrivateKey { set; get; }
     }
 }
