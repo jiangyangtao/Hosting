@@ -16,7 +16,7 @@ namespace Yangtao.Hosting.SqlRepository.SqlServer
 
         protected override DbConnection GetDbConnection()
         {
-            var sqlConnection = new SqlConnection();
+            var sqlConnection = new SqlConnection(RepositoryOptions.ConnectionsString);
             sqlConnection.Open();
 
             return sqlConnection;
