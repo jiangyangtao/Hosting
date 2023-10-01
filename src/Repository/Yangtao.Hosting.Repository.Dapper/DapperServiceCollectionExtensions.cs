@@ -12,6 +12,8 @@ namespace Yangtao.Hosting.Repository.Dapper
             {
                 a.DbConnectionString = options.DbConnectionString;
             });
+
+            services.AddSingleton<ISqlRepository, SqlRepository>();
             return services;
         }
     }
