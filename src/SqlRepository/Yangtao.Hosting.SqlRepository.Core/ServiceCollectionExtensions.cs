@@ -5,7 +5,7 @@ namespace Yangtao.Hosting.SqlRepository.Core
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddDapperRepository(this IServiceCollection services, Action<SqlRepositoryOptions> optionAction)
+        public static IServiceCollection AddSqlRepositoryCore(this IServiceCollection services, Action<SqlRepositoryOptions> optionAction)
         {
             var options = new SqlRepositoryOptions();
             optionAction(options);
@@ -14,7 +14,7 @@ namespace Yangtao.Hosting.SqlRepository.Core
                 a.DbConnectionString = options.DbConnectionString;
             });
 
-            services.AddSingleton<ISqlRepository, SqlRepository>();
+            services.AddSingleton<ISqlRepository, SqlRepositoryBase>();
             return services;
         }
     }
