@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Yangtao.Hosting.SqlRepository.Abstractions\Yangtao.Hosting.SqlRepository.Abstractions.csproj" />
+    <ProjectReference Include="..\Yangtao.Hosting.SqlRepository.Core\Yangtao.Hosting.SqlRepository.Core.csproj" />
   </ItemGroup>
 
 </Project>

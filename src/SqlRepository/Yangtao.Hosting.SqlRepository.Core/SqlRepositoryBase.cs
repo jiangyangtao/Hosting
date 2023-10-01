@@ -1,7 +1,8 @@
 ﻿using System.Data.Common;
 using System.Linq.Expressions;
+using Yangtao.Hosting.SqlRepository.Abstractions;
 
-namespace Yangtao.Hosting.SqlRepository.Abstractions
+namespace Yangtao.Hosting.SqlRepository.Core
 {
     public abstract class SqlRepositoryBase : ISqlRepository
     {
