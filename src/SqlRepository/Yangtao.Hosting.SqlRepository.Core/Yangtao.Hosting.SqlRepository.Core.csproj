@@ -14,4 +14,8 @@
     <PackageReference Include="MySqlConnector" Version="2.2.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Yangtao.Hosting.SqlRepository.Abstractions\Yangtao.Hosting.SqlRepository.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>
