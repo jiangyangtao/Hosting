@@ -1,4 +1,4 @@
-﻿namespace Yangtao.Hosting.Repository.Dapper
+﻿namespace Yangtao.Hosting.SqlRepository.Dapper
 {
     public interface ISqlRepository
     {
