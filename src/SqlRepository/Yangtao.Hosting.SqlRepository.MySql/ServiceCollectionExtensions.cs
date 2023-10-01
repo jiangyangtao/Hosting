@@ -2,32 +2,28 @@
 using Microsoft.Extensions.DependencyInjection;
 using Yangtao.Hosting.SqlRepository.Core;
 using Yangtao.Hosting.Extensions;
-
+using Yangtao.Hosting.SqlRepository.Abstractions;
 
 namespace Yangtao.Hosting.SqlRepository.MySql
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddRepositoryCore(this IServiceCollection services)
+        public static IServiceCollection AddSqlRepository(this IServiceCollection services)
         {
             var connectionString = services.GetConnectionString();
 
-            return services.AddRepositoryCore(options => options.ConnectionsString = connectionString);
+            return services.AddSqlRepository(connectionString);
         }
 
-        public static IServiceCollection AddRepositoryCore(this IServiceCollection services, string connectionString)
+        public static IServiceCollection AddSqlRepository(this IServiceCollection services, string connectionString)
         {
-            return services.AddRepositoryCore(options => options.ConnectionsString = connectionString);
+            return services.AddSqlRepository(options => options.ConnectionsString = connectionString);
         }
 
-        public static IServiceCollection AddRepositoryCore(this IServiceCollection services, Action<SqlRepositoryOptions> optionAction)
+        public static IServiceCollection AddSqlRepository(this IServiceCollection services, Action<SqlRepositoryOptions> optionAction)
         {
-            var options = new SqlRepositoryOptions();
-            services.Configure<SqlRepositoryOptions>(a =>
-            {
-                a.ConnectionsString = options.ConnectionsString;
-            });
-            return services;
+            services.AddSingleton<ISqlRepository, MySqlRepository>();
+            return services.AddRepositoryCore(optionAction);
         }
 
         private static string GetConnectionString(this IServiceCollection services)
