@@ -1,4 +1,4 @@
-﻿namespace Yangtao.Hosting.SqlRepository.Dapper
+﻿namespace Yangtao.Hosting.SqlRepository.Core
 {
     public class SqlRepositoryOptions
     {

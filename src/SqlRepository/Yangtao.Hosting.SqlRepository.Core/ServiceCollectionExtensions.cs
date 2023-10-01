@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Yangtao.Hosting.SqlRepository.Abstractions;
 
-namespace Yangtao.Hosting.SqlRepository.Dapper
+namespace Yangtao.Hosting.SqlRepository.Core
 {
     public static class ServiceCollectionExtensions
     {
