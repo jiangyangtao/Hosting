@@ -13,6 +13,8 @@ namespace Yangtao.Hosting.SqlRepository.Core
 
         protected abstract DbConnection GetDbConnection();
 
+        protected abstract Task<DbConnection> GetDbConnectionAsync();
+
         public Task<int> DeleteAsync<TEntity>(TEntity entity)
         {
             throw new NotImplementedException();
