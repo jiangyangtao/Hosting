@@ -83,13 +83,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlRepository", "SqlReposit
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NoSqlRepository", "NoSqlRepository", "{9967B526-D74C-4AEB-A8A3-5236DCA58FFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.SqlRepository.Abstractions", "src\SqlRepository\Yangtao.Hosting.SqlRepository.Abstractions\Yangtao.Hosting.SqlRepository.Abstractions.csproj", "{D2AF94A9-D4F7-49D0-B160-917ED41456F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.SqlRepository.Abstractions", "src\SqlRepository\Yangtao.Hosting.SqlRepository.Abstractions\Yangtao.Hosting.SqlRepository.Abstractions.csproj", "{D2AF94A9-D4F7-49D0-B160-917ED41456F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.SqlRepository.MySql", "src\SqlRepository\Yangtao.Hosting.SqlRepository.MySql\Yangtao.Hosting.SqlRepository.MySql.csproj", "{DB9C1609-AF4E-480C-A6E8-53A7A6900DE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.SqlRepository.MySql", "src\SqlRepository\Yangtao.Hosting.SqlRepository.MySql\Yangtao.Hosting.SqlRepository.MySql.csproj", "{DB9C1609-AF4E-480C-A6E8-53A7A6900DE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.SqlRepository.SqlServer", "src\SqlRepository\Yangtao.Hosting.SqlRepository.SqlServer\Yangtao.Hosting.SqlRepository.SqlServer.csproj", "{583B6BD1-8AD8-4339-83FA-E2E7771C8078}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.SqlRepository.SqlServer", "src\SqlRepository\Yangtao.Hosting.SqlRepository.SqlServer\Yangtao.Hosting.SqlRepository.SqlServer.csproj", "{583B6BD1-8AD8-4339-83FA-E2E7771C8078}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.SqlRepository.Core", "src\SqlRepository\Yangtao.Hosting.SqlRepository.Core\Yangtao.Hosting.SqlRepository.Core.csproj", "{BE128CEC-EE8A-4481-B2CB-016FC927717B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.SqlRepository.Core", "src\SqlRepository\Yangtao.Hosting.SqlRepository.Core\Yangtao.Hosting.SqlRepository.Core.csproj", "{BE128CEC-EE8A-4481-B2CB-016FC927717B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.SqlRepository.Sqlite", "src\SqlRepository\Yangtao.Hosting.SqlRepository.Sqlite\Yangtao.Hosting.SqlRepository.Sqlite.csproj", "{C666B4D1-BF72-480D-8738-68A38FB4ECC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -229,6 +231,10 @@ Global
 		{BE128CEC-EE8A-4481-B2CB-016FC927717B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE128CEC-EE8A-4481-B2CB-016FC927717B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE128CEC-EE8A-4481-B2CB-016FC927717B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C666B4D1-BF72-480D-8738-68A38FB4ECC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C666B4D1-BF72-480D-8738-68A38FB4ECC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C666B4D1-BF72-480D-8738-68A38FB4ECC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C666B4D1-BF72-480D-8738-68A38FB4ECC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -273,6 +279,7 @@ Global
 		{DB9C1609-AF4E-480C-A6E8-53A7A6900DE7} = {25A73F71-02A0-42DD-BE42-628EE6E63799}
 		{583B6BD1-8AD8-4339-83FA-E2E7771C8078} = {25A73F71-02A0-42DD-BE42-628EE6E63799}
 		{BE128CEC-EE8A-4481-B2CB-016FC927717B} = {25A73F71-02A0-42DD-BE42-628EE6E63799}
+		{C666B4D1-BF72-480D-8738-68A38FB4ECC5} = {25A73F71-02A0-42DD-BE42-628EE6E63799}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28EDA54C-950D-459F-AFC9-092C65E8B3D9}
