@@ -1,16 +1,46 @@
-﻿using System.Linq.Expressions;
+﻿using System.Data;
+using System.Linq.Expressions;
 
 namespace Yangtao.Hosting.SqlRepository.Abstractions
 {
     public interface ISqlRepository
     {
-        Task<int> InsertAsync<TEntity>(TEntity entity);
+        #region Transaction
+
+        IDbConnection BeginTransaction();
+
+        IDbConnection BeginTransaction(IsolationLevel isolationLevel);
+
+        Task<IDbConnection> BeginTransactionAsync();
+
+        Task<IDbConnection> BeginTransactionAsync(IsolationLevel isolationLevel);
+
+        #endregion
+
+        #region Insert
+
+        Task<int> InsertAsync<TEntity>(TEntity entity) where TEntity : class;
+
+        Task<int> InsertMultipleAsync<TEntity>(TEntity[] entities) where TEntity : class;
+
+        #endregion
+
+        #region Delete
 
         Task<int> DeleteAsync<TEntity>(TEntity entity);
 
-        Task<int> DeleteAsync<TEntity>(object Id);
+        Task<int> DeleteAsync<TEntity>(long Id);
 
-        Task<int> DeleteRangeAsync<TEntity>(TEntity[] entities);
+        Task<int> DeleteAsync<TEntity>(string Id);
+
+        Task<int> DeleteRangeAsync<TEntity>(long[] ids);
+
+        Task<int> DeleteRangeAsync<TEntity>(string[] ids);
+
+        #endregion
+
+        #region Update
+
 
         Task<int> UpdateAsync<TEntity>(TEntity entity);
 
@@ -32,7 +62,13 @@ namespace Yangtao.Hosting.SqlRepository.Abstractions
 
         Task<int> UpdateRangeAsync<TEntity>(TEntity[] entities);
 
-        Task<TEntity> GetByIdAsync<TEntity>(object id);
+        #endregion
+
+        #region Query
+
+        Task<TEntity> GetByIdAsync<TEntity>(string id);
+
+        Task<TEntity> GetByIdAsync<TEntity>(long id);
 
         Task<TEntity> GetAsync<TEntity>(string sql, params object[] objects);
 
@@ -43,5 +79,7 @@ namespace Yangtao.Hosting.SqlRepository.Abstractions
         Task<long> GetCountAsync(string sql, params object[] objects);
 
         Task<TProperty[]> GetPropertiesAsync<TProperty>(string sql, params object[] objects);
+
+        #endregion
     }
 }
