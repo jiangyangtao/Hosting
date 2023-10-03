@@ -18,12 +18,12 @@ namespace Yangtao.Hosting.SignatureValidation.Client
             return services.AddClientValidation(ValidationType.Signatrue, SignatureAlgorithm.HmacSha, hmacShaOptions);
         }
 
-        public static IServiceCollection AddRsaSignatureValidation(this IServiceCollection services, Action<RsaOptions> optionAction)
+        public static IServiceCollection AddRsaSignatureValidation(this IServiceCollection services, Action<RsaSignatureOptions> optionAction)
         {
             return services.AddRsaValidation(ValidationType.Signatrue, optionAction);
         }
 
-        public static IServiceCollection AddEncryptionValidation(this IServiceCollection services, Action<RsaOptions> optionAction)
+        public static IServiceCollection AddEncryptionValidation(this IServiceCollection services, Action<RsaEncryptionOptions> optionAction)
         {
             return services.AddRsaValidation(ValidationType.Encrypt, optionAction);
         }

@@ -9,22 +9,27 @@ namespace Yangtao.Hosting.SignatureValidation.Client
     {
         private readonly IOptions<ClientValidationOptions> _clientValidationOptions;
         private readonly IOptions<HmacShaOptions> _hmacShaOptions;
-        private readonly IOptions<RsaOptions> _rsaOptions;
+        private readonly IOptions<RsaSignatureOptions> _rsaSignatureOptions;
+        private readonly IOptions<RsaEncryptionOptions> _rsaEncryptionOptions;
 
         public ClientConfigurationProvider(
             IOptions<ClientValidationOptions> clientValidationOptions,
             IOptions<HmacShaOptions> hmacShaOptions,
-            IOptions<RsaOptions> rsaOptions)
+            IOptions<RsaSignatureOptions> rsaSignatureOptions,
+            IOptions<RsaEncryptionOptions> rsaEncryptionOptions)
         {
             _clientValidationOptions = clientValidationOptions;
             _hmacShaOptions = hmacShaOptions;
-            _rsaOptions = rsaOptions;
+            _rsaSignatureOptions = rsaSignatureOptions;
+            _rsaEncryptionOptions = rsaEncryptionOptions;
         }
 
         public ClientValidationOptions ClientValidationOptions => _clientValidationOptions.Value;
 
-        public RsaOptions? RsaPublicOptions => _rsaOptions.Value ?? null;
-
         public HmacShaOptions? HmacShaOptions => _hmacShaOptions.Value ?? null;
+
+        public RsaSignatureOptions? RsaSignatureOptions => _rsaSignatureOptions.Value ?? null;
+
+        public RsaEncryptionOptions? RsaEncryptionOptions => _rsaEncryptionOptions.Value ?? null;
     }
 }

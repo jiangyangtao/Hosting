@@ -1,9 +1,9 @@
 ﻿using RSAExtensions;
 using System.Security.Cryptography;
 using System.Text;
+using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.SignatureValidation.Client.Abstractions;
 using Yangtao.Hosting.SignatureValidation.Client.Configurations;
-using Yangtao.Hosting.Extensions;
 
 namespace Yangtao.Hosting.SignatureValidation.Client
 {
@@ -12,19 +12,29 @@ namespace Yangtao.Hosting.SignatureValidation.Client
         private readonly RSA Rsa;
         private readonly IClientConfigurationProvider _clientConfigurationProvider;
 
-        public RsaPublicProvider(
-                IClientConfigurationProvider clientConfigurationProvider)
+        public RsaPublicProvider(IClientConfigurationProvider clientConfigurationProvider)
         {
             _clientConfigurationProvider = clientConfigurationProvider;
 
-            if (_clientConfigurationProvider.ClientValidationOptions.IsRsa == false) return;
-            if (_clientConfigurationProvider.RsaPublicOptions == null) throw new NullReferenceException(nameof(RsaOptions));
+            if (_clientConfigurationProvider.ClientValidationOptions.IsRsaEncryption)
+            {
+                if (_clientConfigurationProvider.RsaEncryptionOptions == null) throw new NullReferenceException(nameof(RsaEncryptionOptions));
 
-            Rsa = RSA.Create();
-            Rsa.ImportPublicKey(_clientConfigurationProvider.RsaPublicOptions.RSAKeyType, _clientConfigurationProvider.RsaPublicOptions.PublicKey);
+                Rsa = RSA.Create();
+                Rsa.ImportPublicKey(_clientConfigurationProvider.RsaEncryptionOptions.RSAKeyType, _clientConfigurationProvider.RsaEncryptionOptions.PublicKey);
+            }
+
+            if (_clientConfigurationProvider.ClientValidationOptions.IsRsaSignature)
+            {
+                if (_clientConfigurationProvider.RsaSignatureOptions == null) throw new NullReferenceException(nameof(RsaSignatureOptions));
+
+                Rsa = RSA.Create();
+                Rsa.ImportPublicKey(_clientConfigurationProvider.RsaSignatureOptions.RSAKeyType, _clientConfigurationProvider.RsaSignatureOptions.PublicKey);
+            }
+
         }
 
-        public string Encrypt(string plaintext) => Rsa.EncryptBigData(plaintext, _clientConfigurationProvider.RsaPublicOptions.RSAEncryptionPadding);
+        public string Encrypt(string plaintext) => Rsa.EncryptBigData(plaintext, _clientConfigurationProvider.RsaEncryptionOptions.RSAEncryptionPadding);
 
         public bool VerifyData(string value, string signature)
         {
@@ -33,7 +43,7 @@ namespace Yangtao.Hosting.SignatureValidation.Client
 
             var signatureBytes = Convert.FromBase64String(signature);
             var valueBytes = Encoding.UTF8.GetBytes(value);
-            return Rsa.VerifyData(valueBytes, signatureBytes, HashAlgorithmName.SHA256, _clientConfigurationProvider.RsaPublicOptions.RSAEncryptionPadding);
+            return Rsa.VerifyData(valueBytes, signatureBytes, HashAlgorithmName.SHA256, _clientConfigurationProvider.RsaSignatureOptions.RSASignaturePadding);
         }
     }
 }
