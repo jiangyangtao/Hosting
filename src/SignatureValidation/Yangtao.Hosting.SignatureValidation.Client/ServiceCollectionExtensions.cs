@@ -1,6 +1,6 @@
 ﻿namespace Yangtao.Hosting.SignatureValidation.Client
 {
-    public class Class1
+    public class ServiceCollectionExtensions
     {
 
     }

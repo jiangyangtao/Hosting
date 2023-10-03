@@ -10,4 +10,8 @@
     <ProjectReference Include="..\..\Yangtao.Hosting.Encryption\Yangtao.Hosting.Encryption.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Abstractions\" />
+  </ItemGroup>
+
 </Project>
