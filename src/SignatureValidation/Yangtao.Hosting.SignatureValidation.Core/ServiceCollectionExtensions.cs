@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Yangtao.Hosting.SignatureValidation.Core.Abstractions;
-using Yangtao.Hosting.SignatureValidation.Core.RsaProvider;
+using Yangtao.Hosting.SignatureValidation.Core.RsaProviders;
 
 namespace Yangtao.Hosting.SignatureValidation.Core
 {
@@ -10,6 +10,7 @@ namespace Yangtao.Hosting.SignatureValidation.Core
         {
             services.AddSingleton<IRsaPrivateProvider, RsaPrivateProvider>();
             services.AddSingleton<IRsaPublicProvider, RsaPublicProvider>();
+            services.AddSingleton<IHmacShaProvider, HmacShaProvider>();
             services.AddSingleton<ISignatureValidationFactory, SignatureValidationFactory>();
             services.AddSingleton<ISignatureValidationProvider, SignatureValidationProvider>();
             return services;
