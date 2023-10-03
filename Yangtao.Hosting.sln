@@ -93,6 +93,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.SqlReposito
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.SqlRepository.Sqlite", "src\SqlRepository\Yangtao.Hosting.SqlRepository.Sqlite\Yangtao.Hosting.SqlRepository.Sqlite.csproj", "{C666B4D1-BF72-480D-8738-68A38FB4ECC5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SignatureValidation", "SignatureValidation", "{39497ABA-8DDC-4999-98CB-FAE7DB6C9AF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.SignatureValidation.Abstractions", "src\SignatureValidation\Yangtao.Hosting.SignatureValidation.Abstractions\Yangtao.Hosting.SignatureValidation.Abstractions.csproj", "{11191720-453E-4A2F-BC0B-E2852240CA1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -235,6 +239,10 @@ Global
 		{C666B4D1-BF72-480D-8738-68A38FB4ECC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C666B4D1-BF72-480D-8738-68A38FB4ECC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C666B4D1-BF72-480D-8738-68A38FB4ECC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11191720-453E-4A2F-BC0B-E2852240CA1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11191720-453E-4A2F-BC0B-E2852240CA1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11191720-453E-4A2F-BC0B-E2852240CA1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11191720-453E-4A2F-BC0B-E2852240CA1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -280,6 +288,8 @@ Global
 		{583B6BD1-8AD8-4339-83FA-E2E7771C8078} = {25A73F71-02A0-42DD-BE42-628EE6E63799}
 		{BE128CEC-EE8A-4481-B2CB-016FC927717B} = {25A73F71-02A0-42DD-BE42-628EE6E63799}
 		{C666B4D1-BF72-480D-8738-68A38FB4ECC5} = {25A73F71-02A0-42DD-BE42-628EE6E63799}
+		{39497ABA-8DDC-4999-98CB-FAE7DB6C9AF7} = {0F8D7355-F530-40C9-A64D-ABA3CFA6C79F}
+		{11191720-453E-4A2F-BC0B-E2852240CA1F} = {39497ABA-8DDC-4999-98CB-FAE7DB6C9AF7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28EDA54C-950D-459F-AFC9-092C65E8B3D9}

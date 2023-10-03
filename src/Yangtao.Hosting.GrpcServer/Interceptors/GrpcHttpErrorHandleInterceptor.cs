@@ -6,11 +6,11 @@ using Yangtao.Hosting.Extensions;
 namespace Yangtao.Hosting.GrpcServer.Interceptors
 {
     /// <summary>
-    /// GRPC 全局侦听器
+    /// <see cref="HttpErrorResult"/> 处理拦截器
     /// </summary>
-    internal class GrpcGlobalInterceptor : Interceptor
+    internal class GrpcHttpErrorHandleInterceptor : Interceptor
     {
-        public GrpcGlobalInterceptor()
+        public GrpcHttpErrorHandleInterceptor()
         {
         }
 
@@ -28,7 +28,6 @@ namespace Yangtao.Hosting.GrpcServer.Interceptors
 
                 return (TResponse)response;
             }
-
         }
 
         private static (int code, string message) GetErrorResult(Exception exception)
@@ -45,9 +44,13 @@ namespace Yangtao.Hosting.GrpcServer.Interceptors
             return (code, message);
         }
 
-        private static object CreateErrorResponse<TRequest, TResponse>(UnaryServerMethod<TRequest, TResponse> continuation, int code, string message) where TRequest : class where TResponse : class
+        private static object? CreateErrorResponse<TRequest, TResponse>(UnaryServerMethod<TRequest, TResponse> continuation, int code, string message) where TRequest : class where TResponse : class
         {
+            if (continuation.Target == null) return null;
+
             var responseType = continuation.Target.GetType().GenericTypeArguments.LastOrDefault();
+            if (responseType == null) return null;
+
             var response = Activator.CreateInstance(responseType);
             var propertyInfos = responseType.GetProperties();
             var errorResultType = propertyInfos.FirstOrDefault(a => a.Name.Contains("Error"));

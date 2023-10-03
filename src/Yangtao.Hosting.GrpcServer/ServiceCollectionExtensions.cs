@@ -10,7 +10,7 @@ namespace Yangtao.Hosting.GrpcServer
         {
             services.AddGrpc(options =>
             {
-                options.Interceptors.Add<GrpcGlobalInterceptor>();
+                options.Interceptors.Add<GrpcHttpErrorHandleInterceptor>();
                 action(options);
             });
 
