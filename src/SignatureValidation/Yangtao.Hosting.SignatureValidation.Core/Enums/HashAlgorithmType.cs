@@ -1,7 +1,7 @@
 ﻿
 namespace Yangtao.Hosting.SignatureValidation.Core.Enums
 {
-    public enum HmacShaAlgorithmType
+    public enum HashAlgorithmType
     {
         /// <summary>
         /// HS256

@@ -5,7 +5,7 @@ namespace Yangtao.Hosting.SignatureValidation.Core.Configurations
 {
     public class HmacShaOptions
     {
-        public HmacShaAlgorithmType HmacShaAlgorithmType { set; get; } = HmacShaAlgorithmType.HmacSha256;
+        public HashAlgorithmType HmacShaAlgorithmType { set; get; } = HashAlgorithmType.HmacSha256;
 
         public HmacShaSignatureFormatType HmacShaSignatureFormatType { set; get; } = HmacShaSignatureFormatType.Base64;
 

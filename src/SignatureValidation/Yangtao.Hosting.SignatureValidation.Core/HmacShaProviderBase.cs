@@ -38,10 +38,10 @@ namespace Yangtao.Hosting.SignatureValidation.Core
 
         private HashAlgorithm GetHashAlgorithm()
         {
-            if (_hmacShaConfiguration.HmacShaAlgorithmType == HmacShaAlgorithmType.HmacSha256)
+            if (_hmacShaConfiguration.HmacShaAlgorithmType == HashAlgorithmType.HmacSha256)
                 return new HMACSHA256(_hmacShaConfiguration.SecretKeyBytes);
 
-            if (_hmacShaConfiguration.HmacShaAlgorithmType == HmacShaAlgorithmType.HmacSha384)
+            if (_hmacShaConfiguration.HmacShaAlgorithmType == HashAlgorithmType.HmacSha384)
                 return new HMACSHA384(_hmacShaConfiguration.SecretKeyBytes);
 
             return new HMACSHA512(_hmacShaConfiguration.SecretKeyBytes);

@@ -43,7 +43,7 @@ namespace Yangtao.Hosting.SignatureValidation.Client
 
             var signatureBytes = Convert.FromBase64String(signature);
             var valueBytes = Encoding.UTF8.GetBytes(value);
-            return Rsa.VerifyData(valueBytes, signatureBytes, HashAlgorithmName.SHA256, _clientConfigurationProvider.RsaSignatureOptions.RSASignaturePadding);
+            return Rsa.VerifyData(valueBytes, signatureBytes, _clientConfigurationProvider.RsaSignatureOptions.HashAlgorithmName, _clientConfigurationProvider.RsaSignatureOptions.RSASignaturePadding);
         }
     }
 }
