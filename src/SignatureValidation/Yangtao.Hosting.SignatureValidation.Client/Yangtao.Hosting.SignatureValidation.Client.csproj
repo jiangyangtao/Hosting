@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Yangtao.Hosting.SignatureValidation.Core\Yangtao.Hosting.SignatureValidation.Core.csproj" />
+  </ItemGroup>
+
 </Project>
