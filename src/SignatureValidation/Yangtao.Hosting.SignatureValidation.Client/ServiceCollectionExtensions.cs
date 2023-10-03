@@ -24,7 +24,7 @@ namespace Yangtao.Hosting.SignatureValidation.Client
             optionAction(rsaSignatureOptions);
             if (rsaSignatureOptions.PublicKey.IsNullOrEmpty()) throw new ArgumentNullException(null, nameof(RsaSignatureOptions.PublicKey));
 
-            return services.AddClientValidation(ValidationType.Encrypt, SignatureAlgorithm.RSA, rsaSignatureOptions: rsaSignatureOptions);
+            return services.AddClientValidation(ValidationType.Signatrue, SignatureAlgorithm.RSA, rsaSignatureOptions: rsaSignatureOptions);
         }
 
         public static IServiceCollection AddEncryptionValidation(this IServiceCollection services, Action<RsaEncryptionOptions> optionAction)
