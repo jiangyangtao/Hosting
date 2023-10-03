@@ -1,22 +1,14 @@
-﻿using System.Text.Json.Serialization;
+﻿using RSAExtensions;
+using Yangtao.Hosting.SignatureValidation.Core.Enums;
 
 namespace Yangtao.Hosting.SignatureValidation.Core.Configurations
 {
     public abstract class RsaConfigurationBase
     {
-        public RsaAlgorithmType AlgorithmType { set; get; }
-
         public RSAKeyType RSAKeyType { set; get; }
 
-        public string Algorithm
-        {
-            get
-            {
-                if (AlgorithmType == RsaAlgorithmType.RsaSha256) return SecurityAlgorithms.RsaSha256;
-                if (AlgorithmType == RsaAlgorithmType.RsaSha384) return SecurityAlgorithms.RsaSha384;
+        public RSAEncryptionPaddingType RSAEncryptionPaddingType { set; get; }
 
-                return SecurityAlgorithms.RsaSha512;
-            }
-        }
+        protected string SecretKey { set; get; }
     }
 }

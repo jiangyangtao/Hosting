@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Yangtao.Hosting.SignatureValidation.Core.Enums;
 
 namespace Yangtao.Hosting.SignatureValidation.Core.Configurations
 {
-    internal class HmacShaConfiguration
+    public class HmacShaConfiguration
     {
+        public HmacShaAlgorithmType HmacShaAlgorithmType { set; get; }
+
+        public string SecretKey { set; get; }
     }
 }
