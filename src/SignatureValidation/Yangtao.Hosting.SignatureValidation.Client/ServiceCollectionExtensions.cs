@@ -2,7 +2,6 @@
 using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.SignatureValidation.Client.Abstractions;
 using Yangtao.Hosting.SignatureValidation.Client.Configurations;
-using Yangtao.Hosting.SignatureValidation.Core.Abstractions;
 using Yangtao.Hosting.SignatureValidation.Core.Configurations;
 using Yangtao.Hosting.SignatureValidation.Core.Enums;
 
@@ -69,7 +68,8 @@ namespace Yangtao.Hosting.SignatureValidation.Client
             }
 
             services.AddSingleton<IClientConfigurationProvider, ClientConfigurationProvider>();
-            services.AddSingleton<IHmacShaProvider, ClientHmacShaProvider>();
+            services.AddSingleton<IClientSignatureValidationProvider, ClientSignatureValidationProvider>();
+            services.AddSingleton<IClientHmacShaProvider, ClientHmacShaProvider>();
             services.AddSingleton<IRsaPublicProvider, RsaPublicProvider>();
             return services;
         }
