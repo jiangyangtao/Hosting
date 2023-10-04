@@ -5,10 +5,17 @@ namespace Yangtao.Hosting.SignatureValidation.Server
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddServerSignatureValidation(this IServiceCollection services)
+        
+        public static IServiceCollection AddServerHcmaShaSignatureValidation(this IServiceCollection services)
         {
             return services;
         }
+
+        public static IServiceCollection AddServerRsaSignatureValidation(this IServiceCollection services)
+        {
+            return services;
+        }
+
 
         public static IServiceCollection AddServerEncryptionValidation(this IServiceCollection services)
         {

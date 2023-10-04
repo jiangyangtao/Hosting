@@ -10,14 +10,14 @@ namespace Yangtao.Hosting.SignatureValidation.Core
 {
     internal class HmacShaProvider : IHmacShaProvider
     {
-        private readonly HmacShaConfiguration _hmacShaConfiguration;
+        private readonly HmacShaOptions _hmacShaConfiguration;
 
         public HmacShaProvider(
             IOptions<SignatureValidationConfiguration> signatureValidationConfigurationOptions,
-            IOptions<HmacShaConfiguration> hmacShaConfigurationOptions)
+            IOptions<HmacShaOptions> hmacShaConfigurationOptions)
         {
             if (signatureValidationConfigurationOptions.Value.IsHmacShaSignature && hmacShaConfigurationOptions.Value == null)
-                throw new NullReferenceException(nameof(HmacShaConfiguration));
+                throw new NullReferenceException(nameof(HmacShaOptions));
 
             _hmacShaConfiguration = hmacShaConfigurationOptions.Value;
         }

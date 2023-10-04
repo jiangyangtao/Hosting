@@ -3,7 +3,7 @@ using Yangtao.Hosting.SignatureValidation.Core.Enums;
 
 namespace Yangtao.Hosting.SignatureValidation.Core.Configurations
 {
-    public class HmacShaConfiguration
+    public class HmacShaOptions
     {
         public HmacShaAlgorithmType HmacShaAlgorithmType { set; get; }
 
