@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Yangtao.Hosting.SignatureValidation.Core.Abstractions;
 using Yangtao.Hosting.SignatureValidation.Core.Configurations;
 using Yangtao.Hosting.SignatureValidation.Core.Enums;
@@ -29,25 +28,25 @@ namespace Yangtao.Hosting.SignatureValidation.Core
 
         public SignatureAlgorithm SignatureAlgorithm => _signatureValidationConfiguration.SignatureAlgorithm;
 
+        public bool IsHmacShaSignature => _signatureValidationConfiguration.IsHmacShaSignature;
+
+        public bool IsRsaSignature => _signatureValidationConfiguration.IsRsaSignature;
+
+        public bool IsRsaEncryption => _signatureValidationConfiguration.IsRsaEncryption;
+
         public HmacShaConfiguration GetHmacShaConfiguration()
         {
-            if (_rsaPublicConfiguration == null) throw new NullReferenceException(nameof(HmacShaConfiguration));
-
-            return _hmacShaConfiguration;
+            return _hmacShaConfiguration ?? throw new NullReferenceException(nameof(HmacShaConfiguration));
         }
 
         public RsaPrivateConfiguration GetRsaPrivateConfiguration()
         {
-            if (_rsaPrivateConfiguration == null) throw new NullReferenceException(nameof(RsaPrivateConfiguration));
-
-            return _rsaPrivateConfiguration;
+            return _rsaPrivateConfiguration ?? throw new NullReferenceException(nameof(RsaPrivateConfiguration));
         }
 
         public RsaPublicConfiguration GetRsaPublicConfiguration()
         {
-            if (_rsaPublicConfiguration == null) throw new NullReferenceException(nameof(RsaPublicConfiguration));
-
-            return _rsaPublicConfiguration;
+            return _rsaPublicConfiguration ?? throw new NullReferenceException(nameof(RsaPublicConfiguration));
         }
     }
 }

@@ -6,6 +6,8 @@ namespace Yangtao.Hosting.SignatureValidation.Core.Configurations
     {
         public HmacShaAlgorithmType HmacShaAlgorithmType { set; get; }
 
+        public HmacShaSignatureFormatType HmacShaSignatureFormatType { set; get; }
+
         public string SecretKey { set; get; }
     }
 }

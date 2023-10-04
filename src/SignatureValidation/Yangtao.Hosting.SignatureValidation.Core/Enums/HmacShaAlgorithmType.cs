@@ -18,4 +18,11 @@ namespace Yangtao.Hosting.SignatureValidation.Core.Enums
         /// </summary>
         HmacSha512 = 3,
     }
+
+    public enum HmacShaSignatureFormatType
+    {
+        Hexadecimal,
+
+        Base64,
+    }
 }

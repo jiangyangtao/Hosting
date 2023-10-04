@@ -1,4 +1,5 @@
 ﻿using Yangtao.Hosting.SignatureValidation.Core.Abstractions;
+using Yangtao.Hosting.SignatureValidation.Core.Enums;
 
 namespace Yangtao.Hosting.SignatureValidation.Core
 {
@@ -21,26 +22,22 @@ namespace Yangtao.Hosting.SignatureValidation.Core
             _hmacShaProvider = hmacShaProvider;
         }
 
-        public string Decrypt(string ciphertext)
-        {
-            throw new NotImplementedException();
-        }
+        public string Decrypt(string ciphertext) => _rsaPrivateProvider.Decrypt(ciphertext);
 
-        public string Encrypt(string plaintext)
-        {
-           
+        public string Encrypt(string plaintext) => _rsaPublicProvider.Encrypt(plaintext);
 
-            return _rsaPublicProvider
-        }
-         
         public string SignData(string value)
         {
-            throw new NotImplementedException();
+            if (_configurationProvider.SignatureAlgorithm == SignatureAlgorithm.HmacSha) return _hmacShaProvider.SignData(value);
+
+            return _rsaPrivateProvider.SignData(value);
         }
 
         public bool VerifyData(string value, string signature)
         {
-            throw new NotImplementedException();
+            if (_configurationProvider.SignatureAlgorithm == SignatureAlgorithm.HmacSha) return _hmacShaProvider.VerifyData(value, signature);
+
+            return _rsaPublicProvider.VerifyData(value, signature);
         }
     }
 }
