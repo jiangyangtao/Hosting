@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Yangtao.Hosting.SignatureValidation.Core.Abstractions;
+using Yangtao.Hosting.SignatureValidation.Core.HmacShaPorviders;
 
 namespace Yangtao.Hosting.SignatureValidation.Core
 {
