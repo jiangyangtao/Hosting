@@ -34,19 +34,10 @@ namespace Yangtao.Hosting.SignatureValidation.Core
 
         public bool IsRsaEncryption => _signatureValidationConfiguration.IsRsaEncryption;
 
-        public HmacShaConfiguration GetHmacShaConfiguration()
-        {
-            return _hmacShaConfiguration ?? throw new NullReferenceException(nameof(HmacShaConfiguration));
-        }
+        public HmacShaConfiguration HmacShaConfiguration => _hmacShaConfiguration;
 
-        public RsaPrivateConfiguration GetRsaPrivateConfiguration()
-        {
-            return _rsaPrivateConfiguration ?? throw new NullReferenceException(nameof(RsaPrivateConfiguration));
-        }
+        public RsaPrivateConfiguration RsaPrivateConfiguration => _rsaPrivateConfiguration;
 
-        public RsaPublicConfiguration GetRsaPublicConfiguration()
-        {
-            return _rsaPublicConfiguration ?? throw new NullReferenceException(nameof(RsaPublicConfiguration));
-        }
+        public RsaPublicConfiguration RsaPublicConfiguration => _rsaPublicConfiguration;
     }
 }

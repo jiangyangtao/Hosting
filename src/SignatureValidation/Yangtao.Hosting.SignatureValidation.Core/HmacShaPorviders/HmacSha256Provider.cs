@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Cryptography;
 using Yangtao.Hosting.SignatureValidation.Core.Abstractions;
 using Yangtao.Hosting.SignatureValidation.Core.Enums;
 
@@ -10,18 +6,28 @@ namespace Yangtao.Hosting.SignatureValidation.Core.HmacShaPorviders
 {
     internal class HmacSha256Provider : HmacShaProviderBase, IHmacShaProvider
     {
-        public HmacSha256Provider(HmacShaSignatureFormatType signatureFormatType) : base(signatureFormatType)
+        private readonly HMACSHA256 hmacSha256;
+
+        public HmacSha256Provider(ISignatureValidationConfigurationProvider configurationProvider) : base(configurationProvider)
         {
+            if (configurationProvider.IsHmacShaSignature == false) return;
+            if (_hmacShaConfiguration.HmacShaAlgorithmType != HmacShaAlgorithmType) return;
+
+            hmacSha256 = new HMACSHA256();
         }
 
-        public string SignData(string value)
+        public HmacShaAlgorithmType HmacShaAlgorithmType => HmacShaAlgorithmType.HmacSha256;
+
+        public string SignData(byte[] valueBytes)
         {
-            throw new NotImplementedException();
+            var hash = hmacSha256.ComputeHash(valueBytes);
+            return FormatSignature(hash);
         }
 
-        public bool VerifyData(string value, string signature)
+        public bool VerifyData(byte[] valueBytes, string signature)
         {
-            throw new NotImplementedException();
+            var computeSignValue = SignData(valueBytes);
+            return computeSignValue == signature;
         }
     }
 }

@@ -1,21 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
+using Yangtao.Hosting.SignatureValidation.Core.Abstractions;
+using Yangtao.Hosting.SignatureValidation.Core.Configurations;
 using Yangtao.Hosting.SignatureValidation.Core.Enums;
 
 namespace Yangtao.Hosting.SignatureValidation.Core.HmacShaPorviders
 {
     internal abstract class HmacShaProviderBase
     {
-        private readonly HmacShaSignatureFormatType _signatureFormatType;
+        protected readonly HmacShaConfiguration _hmacShaConfiguration;
 
-        protected HmacShaProviderBase(HmacShaSignatureFormatType signatureFormatType)
+        protected HmacShaProviderBase(ISignatureValidationConfigurationProvider configurationProvider)
         {
-            _signatureFormatType = signatureFormatType;
+            if (configurationProvider.IsHmacShaSignature && configurationProvider.HmacShaConfiguration == null)
+                throw new NullReferenceException(nameof(HmacShaConfiguration));
+
+            _hmacShaConfiguration = configurationProvider.HmacShaConfiguration;
         }
 
+        protected string FormatSignature(byte[] resultBytes)
+        {
+            if (_hmacShaConfiguration.HmacShaSignatureFormatType == HmacShaSignatureFormatType.Base64)
+                return Convert.ToBase64String(resultBytes);
 
+            return ToHexadecimalFormat(resultBytes);
+        }
+
+        protected static string ToHexadecimalFormat(byte[] resultBytes)
+        {
+            var stringBuilder = new StringBuilder();
+            foreach (var item in resultBytes)
+            {
+                stringBuilder.AppendFormat("{0:x2}", item);
+            }
+            return stringBuilder.ToString();
+        }
     }
 }
