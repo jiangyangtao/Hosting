@@ -11,7 +11,12 @@ namespace Yangtao.Hosting.SignatureValidation.Core
         {
             services.AddSingleton<IRsaPrivateProvider, RsaPrivateProvider>();
             services.AddSingleton<IRsaPublicProvider, RsaPublicProvider>();
-            services.AddSingleton<IHmacShaProvider, HmacShaProvider>();
+
+            services.AddSingleton<IHmacShaPorviderFactory, HmacShaPorviderFactory>();
+            services.AddSingleton<IHmacShaProvider, HmacSha256Provider>();
+            services.AddSingleton<IHmacShaProvider, HmacSha384Provider>();
+            services.AddSingleton<IHmacShaProvider, HmacSha512Provider>();
+
             services.AddSingleton<ISignatureValidationProvider, SignatureValidationProvider>();
             return services;
         }
