@@ -1,4 +1,5 @@
-﻿namespace Yangtao.Hosting.SignatureValidation.Core.Configurations
+﻿
+namespace Yangtao.Hosting.SignatureValidation.Core.Configurations
 {
     public class RsaPrivateConfiguration : RsaBase
     {
