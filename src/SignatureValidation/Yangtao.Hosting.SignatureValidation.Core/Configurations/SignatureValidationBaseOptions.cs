@@ -2,7 +2,7 @@
 
 namespace Yangtao.Hosting.SignatureValidation.Core.Configurations
 {
-    public class SignatureValidationConfiguration
+    public abstract class SignatureValidationBaseOptions
     {
         public ValidationType ValidationType { set; get; }
 

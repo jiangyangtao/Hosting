@@ -1,25 +1,21 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.SignatureValidation.Core.Abstractions;
 using Yangtao.Hosting.SignatureValidation.Core.Configurations;
 using Yangtao.Hosting.SignatureValidation.Core.Enums;
-using Yangtao.Hosting.Extensions;
-using Microsoft.Extensions.Options;
 
 namespace Yangtao.Hosting.SignatureValidation.Core
 {
-    internal class HmacShaProvider : IHmacShaProvider
+    public abstract class HmacShaProviderBase : IHmacShaProvider
     {
         private readonly HmacShaOptions _hmacShaConfiguration;
 
-        public HmacShaProvider(
-            IOptions<SignatureValidationConfiguration> signatureValidationConfigurationOptions,
-            IOptions<HmacShaOptions> hmacShaConfigurationOptions)
+        public HmacShaProviderBase(bool isHmacShaSignature, HmacShaOptions hmacShaConfigurationOptions)
         {
-            if (signatureValidationConfigurationOptions.Value.IsHmacShaSignature && hmacShaConfigurationOptions.Value == null)
-                throw new NullReferenceException(nameof(HmacShaOptions));
+            if (isHmacShaSignature) return;
 
-            _hmacShaConfiguration = hmacShaConfigurationOptions.Value;
+            _hmacShaConfiguration = hmacShaConfigurationOptions ?? throw new NullReferenceException(nameof(HmacShaOptions));
         }
 
         public string SignData(string value)

@@ -7,7 +7,7 @@ namespace Yangtao.Hosting.SignatureValidation.Core
     {
         public static IServiceCollection AddSignatureValidationCore(this IServiceCollection services)
         {
-            services.AddSingleton<IHmacShaProvider, HmacShaProvider>();
+            services.AddSingleton<IHmacShaProvider, HmacShaProviderBase>();
             return services;
         }
     }

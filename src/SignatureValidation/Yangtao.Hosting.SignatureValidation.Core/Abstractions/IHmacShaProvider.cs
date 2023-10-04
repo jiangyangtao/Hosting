@@ -1,8 +1,6 @@
-﻿using Yangtao.Hosting.SignatureValidation.Core.Enums;
-
-namespace Yangtao.Hosting.SignatureValidation.Core.Abstractions
+﻿namespace Yangtao.Hosting.SignatureValidation.Core.Abstractions
 {
-    internal interface IHmacShaProvider
+    public interface IHmacShaProvider
     {
         /// <summary>
         /// 签名

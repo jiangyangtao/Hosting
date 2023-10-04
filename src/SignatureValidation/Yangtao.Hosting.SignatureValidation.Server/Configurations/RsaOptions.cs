@@ -2,7 +2,7 @@
 
 namespace Yangtao.Hosting.SignatureValidation.Server.Configurations
 {
-    public class RsaPrivateConfiguration : RsaBase
+    public class RsaOptions : RsaBase
     {
         public string PrivateKey { set; get; }
     }

@@ -2,8 +2,8 @@
 
 namespace Yangtao.Hosting.SignatureValidation.Client.Configurations
 {
-    public class RsaOptions : RsaBase
+    public class ClientValidationOptions : SignatureValidationBaseOptions
     {
-        public string PublicKey { set; get; }
+
     }
 }
