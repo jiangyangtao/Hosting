@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Yangtao.Hosting.SignatureValidation.Core.Abstractions;
 using Yangtao.Hosting.SignatureValidation.Core.Configurations;
 using Yangtao.Hosting.SignatureValidation.Core.Enums;
@@ -28,10 +29,25 @@ namespace Yangtao.Hosting.SignatureValidation.Core
 
         public SignatureAlgorithm SignatureAlgorithm => _signatureValidationConfiguration.SignatureAlgorithm;
 
-        public HmacShaConfiguration? HmacShaConfiguration => _hmacShaConfiguration;
+        public HmacShaConfiguration GetHmacShaConfiguration()
+        {
+            if (_rsaPublicConfiguration == null) throw new NullReferenceException(nameof(HmacShaConfiguration));
 
-        public RsaPrivateConfiguration? RsaPrivateConfiguration => _rsaPrivateConfiguration;
+            return _hmacShaConfiguration;
+        }
 
-        public RsaPublicConfiguration? RsaPublicConfiguration => _rsaPublicConfiguration;
+        public RsaPrivateConfiguration GetRsaPrivateConfiguration()
+        {
+            if (_rsaPrivateConfiguration == null) throw new NullReferenceException(nameof(RsaPrivateConfiguration));
+
+            return _rsaPrivateConfiguration;
+        }
+
+        public RsaPublicConfiguration GetRsaPublicConfiguration()
+        {
+            if (_rsaPublicConfiguration == null) throw new NullReferenceException(nameof(RsaPublicConfiguration));
+
+            return _rsaPublicConfiguration;
+        }
     }
 }

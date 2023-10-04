@@ -9,10 +9,10 @@ namespace Yangtao.Hosting.SignatureValidation.Core.Abstractions
 
         SignatureAlgorithm SignatureAlgorithm { get; }
 
-        HmacShaConfiguration? HmacShaConfiguration { get; }
+        HmacShaConfiguration GetHmacShaConfiguration();
 
-        RsaPrivateConfiguration? RsaPrivateConfiguration { get; }
+        RsaPrivateConfiguration GetRsaPrivateConfiguration();
 
-        RsaPublicConfiguration? RsaPublicConfiguration { get; }
+        RsaPublicConfiguration GetRsaPublicConfiguration();
     }
 }
