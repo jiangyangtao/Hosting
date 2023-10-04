@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Yangtao.Hosting.SignatureValidation.Server.Abstractions;
 
 namespace Yangtao.Hosting.SignatureValidation.Server
 {
@@ -6,8 +7,7 @@ namespace Yangtao.Hosting.SignatureValidation.Server
     {
         public static IServiceCollection AddServerSignature(this IServiceCollection services)
         {
-
-
+            services.AddSingleton<IRsaPrivateProvider, RsaPrivateProvider>();
             return services;
         }
     }
