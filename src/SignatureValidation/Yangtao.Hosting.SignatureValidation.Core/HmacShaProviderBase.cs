@@ -11,7 +11,7 @@ namespace Yangtao.Hosting.SignatureValidation.Core
     {
         private readonly HmacShaOptions _hmacShaConfiguration;
 
-        public HmacShaProviderBase(bool isHmacShaSignature, HmacShaOptions hmacShaConfigurationOptions)
+        public HmacShaProviderBase(bool isHmacShaSignature, HmacShaOptions? hmacShaConfigurationOptions)
         {
             if (isHmacShaSignature) return;
 

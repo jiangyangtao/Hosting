@@ -68,6 +68,7 @@ namespace Yangtao.Hosting.SignatureValidation.Client
                 });
             }
 
+            services.AddSingleton<IClientConfigurationProvider, ClientConfigurationProvider>();
             services.AddSingleton<IHmacShaProvider, ClientHmacShaProvider>();
             services.AddSingleton<IRsaPublicProvider, RsaPublicProvider>();
             return services;
