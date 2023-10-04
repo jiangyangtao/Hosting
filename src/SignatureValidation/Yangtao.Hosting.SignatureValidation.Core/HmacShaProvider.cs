@@ -3,6 +3,7 @@ using System.Text;
 using Yangtao.Hosting.SignatureValidation.Core.Abstractions;
 using Yangtao.Hosting.SignatureValidation.Core.Configurations;
 using Yangtao.Hosting.SignatureValidation.Core.Enums;
+using Yangtao.Hosting.Extensions;
 
 namespace Yangtao.Hosting.SignatureValidation.Core
 {
@@ -18,17 +19,22 @@ namespace Yangtao.Hosting.SignatureValidation.Core
             _hmacShaConfiguration = configurationProvider.HmacShaConfiguration;
         }
 
-        public string SignData(byte[] valueBytes)
+        public string SignData(string value)
         {
+            if (value.IsNullOrEmpty()) throw new ArgumentNullException(nameof(value));
+
+            var valueBytes = Encoding.UTF8.GetBytes(value);
             using var hashAlgorithm = GetHashAlgorithm();
             var resultBytes = hashAlgorithm.ComputeHash(valueBytes);
 
             return FormatSignature(resultBytes);
         }
 
-        public bool VerifyData(byte[] valueBytes, string signature)
+        public bool VerifyData(string value, string signature)
         {
-            var computeSignValue = SignData(valueBytes);
+            if (signature.IsNullOrEmpty()) throw new ArgumentNullException(nameof(signature));
+
+            var computeSignValue = SignData(value);
             return computeSignValue == signature;
         }
 

@@ -7,16 +7,16 @@ namespace Yangtao.Hosting.SignatureValidation.Core.Abstractions
         /// <summary>
         /// 签名
         /// </summary>
-        /// <param name="valueBytes"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
-        string SignData(byte[] valueBytes);
+        string SignData(string value);
 
         /// <summary>
         /// 验证签名
         /// </summary>
-        /// <param name="valueBytes"></param>
+        /// <param name="value"></param>
         /// <param name="signature"></param>
         /// <returns></returns>
-        bool VerifyData(byte[] valueBytes, string signature);
+        bool VerifyData(string value, string signature);
     }
 }
