@@ -1,6 +1,7 @@
 ﻿namespace Yangtao.Hosting.SignatureValidation.Core.Abstractions
 {
-    internal interface ISignatureValidationFactory
+    internal interface ISignatureValidationProviderFactory
     {
+
     }
 }

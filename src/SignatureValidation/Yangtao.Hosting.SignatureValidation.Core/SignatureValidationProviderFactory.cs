@@ -2,7 +2,7 @@
 
 namespace Yangtao.Hosting.SignatureValidation.Core
 {
-    internal class SignatureValidationFactory : ISignatureValidationFactory
+    internal class SignatureValidationProviderFactory : ISignatureValidationProviderFactory
     {
     }
 }
