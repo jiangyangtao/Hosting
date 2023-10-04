@@ -5,6 +5,16 @@ namespace Yangtao.Hosting.SignatureValidation.Server
 {
     public static class ServiceCollectionExtensions
     {
+        public static IServiceCollection AddServerSignatureValidation(this IServiceCollection services)
+        {
+            return services;
+        }
+
+        public static IServiceCollection AddServerEncryptionValidation(this IServiceCollection services)
+        {
+            return services;
+        }
+
         public static IServiceCollection AddServerSignature(this IServiceCollection services)
         {
             services.AddSingleton<IRsaPrivateProvider, RsaPrivateProvider>();

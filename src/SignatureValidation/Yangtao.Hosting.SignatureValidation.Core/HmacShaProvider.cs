@@ -4,6 +4,7 @@ using Yangtao.Hosting.SignatureValidation.Core.Abstractions;
 using Yangtao.Hosting.SignatureValidation.Core.Configurations;
 using Yangtao.Hosting.SignatureValidation.Core.Enums;
 using Yangtao.Hosting.Extensions;
+using Microsoft.Extensions.Options;
 
 namespace Yangtao.Hosting.SignatureValidation.Core
 {
@@ -11,12 +12,14 @@ namespace Yangtao.Hosting.SignatureValidation.Core
     {
         private readonly HmacShaConfiguration _hmacShaConfiguration;
 
-        public HmacShaProvider(ISignatureValidationConfigurationProvider configurationProvider)
+        public HmacShaProvider(
+            IOptions<SignatureValidationConfiguration> signatureValidationConfigurationOptions,
+            IOptions<HmacShaConfiguration> hmacShaConfigurationOptions)
         {
-            if (configurationProvider.IsHmacShaSignature && configurationProvider.HmacShaConfiguration == null)
+            if (signatureValidationConfigurationOptions.Value.IsHmacShaSignature && hmacShaConfigurationOptions.Value == null)
                 throw new NullReferenceException(nameof(HmacShaConfiguration));
 
-            _hmacShaConfiguration = configurationProvider.HmacShaConfiguration;
+            _hmacShaConfiguration = hmacShaConfigurationOptions.Value;
         }
 
         public string SignData(string value)
