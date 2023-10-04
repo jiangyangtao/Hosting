@@ -4,7 +4,7 @@ using Yangtao.Hosting.SignatureValidation.Core.Abstractions;
 using Yangtao.Hosting.SignatureValidation.Core.Configurations;
 using Yangtao.Hosting.SignatureValidation.Core.Enums;
 
-namespace Yangtao.Hosting.SignatureValidation.Core.HmacShaPorviders
+namespace Yangtao.Hosting.SignatureValidation.Core
 {
     internal class HmacShaProvider : IHmacShaProvider
     {
