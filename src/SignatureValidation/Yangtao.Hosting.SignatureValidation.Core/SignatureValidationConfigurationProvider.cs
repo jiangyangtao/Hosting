@@ -9,19 +9,13 @@ namespace Yangtao.Hosting.SignatureValidation.Core
     {
         private readonly SignatureValidationConfiguration _signatureValidationConfiguration;
         private readonly HmacShaConfiguration _hmacShaConfiguration;
-        private readonly RsaPrivateConfiguration _rsaPrivateConfiguration;
-        private readonly RsaPublicConfiguration _rsaPublicConfiguration;
 
         public SignatureValidationConfigurationProvider(
             IOptions<SignatureValidationConfiguration> signatureValidationConfigurationOptions,
-            IOptions<HmacShaConfiguration> hmacShaConfigurationOptions,
-            IOptions<RsaPrivateConfiguration> rsaPrivateConfigurationOptions,
-            IOptions<RsaPublicConfiguration> rsaPublicConfigurationOptions)
+            IOptions<HmacShaConfiguration> hmacShaConfigurationOptions)
         {
             _signatureValidationConfiguration = signatureValidationConfigurationOptions.Value;
             _hmacShaConfiguration = hmacShaConfigurationOptions.Value;
-            _rsaPrivateConfiguration = rsaPrivateConfigurationOptions.Value;
-            _rsaPublicConfiguration = rsaPublicConfigurationOptions.Value;
         }
 
         public ValidationType ValidationType => _signatureValidationConfiguration.ValidationType;
@@ -30,14 +24,6 @@ namespace Yangtao.Hosting.SignatureValidation.Core
 
         public bool IsHmacShaSignature => _signatureValidationConfiguration.IsHmacShaSignature;
 
-        public bool IsRsaSignature => _signatureValidationConfiguration.IsRsaSignature;
-
-        public bool IsRsaEncryption => _signatureValidationConfiguration.IsRsaEncryption;
-
         public HmacShaConfiguration HmacShaConfiguration => _hmacShaConfiguration;
-
-        public RsaPrivateConfiguration RsaPrivateConfiguration => _rsaPrivateConfiguration;
-
-        public RsaPublicConfiguration RsaPublicConfiguration => _rsaPublicConfiguration;
     }
 }

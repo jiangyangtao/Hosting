@@ -11,14 +11,6 @@ namespace Yangtao.Hosting.SignatureValidation.Core.Abstractions
 
         bool IsHmacShaSignature { get; }
 
-        bool IsRsaSignature { get; }
-
-        bool IsRsaEncryption { get; }
-
         HmacShaConfiguration HmacShaConfiguration { get; }
-
-        RsaPrivateConfiguration RsaPrivateConfiguration { get; }
-
-        RsaPublicConfiguration RsaPublicConfiguration { get; }
     }
 }
