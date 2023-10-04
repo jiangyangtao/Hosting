@@ -3,9 +3,9 @@ using Yangtao.Hosting.SignatureValidation.Core;
 
 namespace Yangtao.Hosting.SignatureValidation.Client
 {
-    internal class ClientHmacShaProvider : HmacShaProviderBase
+    internal class ClientHmacShaProvider : HmacShaProviderBase, IClientHmacShaProvider
     {
-        public ClientHmacShaProvider(IClientConfigurationProvider clientConfigurationProvider) 
+        public ClientHmacShaProvider(IClientConfigurationProvider clientConfigurationProvider)
             : base(clientConfigurationProvider.ClientValidationOptions.IsHmacShaSignature, clientConfigurationProvider.HmacShaOptions)
         { }
     }

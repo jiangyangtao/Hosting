@@ -1,13 +1,12 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 using Yangtao.Hosting.Extensions;
-using Yangtao.Hosting.SignatureValidation.Core.Abstractions;
 using Yangtao.Hosting.SignatureValidation.Core.Configurations;
 using Yangtao.Hosting.SignatureValidation.Core.Enums;
 
 namespace Yangtao.Hosting.SignatureValidation.Core
 {
-    public abstract class HmacShaProviderBase : IHmacShaProvider
+    public abstract class HmacShaProviderBase
     {
         private readonly HmacShaOptions _hmacShaConfiguration;
 

@@ -10,8 +10,6 @@ namespace Yangtao.Hosting.SignatureValidation.Core.Configurations
 
         public bool IsHmacShaSignature => ValidationType == ValidationType.Signatrue && SignatureAlgorithm == SignatureAlgorithm.HmacSha;
 
-        public bool IsRsaSignature => ValidationType == ValidationType.Signatrue && SignatureAlgorithm == SignatureAlgorithm.RSA;
-
-        public bool IsRsaEncryption => ValidationType == ValidationType.Encrypt;
+        public bool IsRsa => ValidationType == ValidationType.Encrypt || SignatureAlgorithm == SignatureAlgorithm.RSA;
     }
 }
