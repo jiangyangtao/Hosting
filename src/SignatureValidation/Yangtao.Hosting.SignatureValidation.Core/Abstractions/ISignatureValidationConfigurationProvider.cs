@@ -5,12 +5,14 @@ namespace Yangtao.Hosting.SignatureValidation.Core.Abstractions
 {
     public interface ISignatureValidationConfigurationProvider
     {
-        public ValidationType ValidationType { set; get; }
+        ValidationType ValidationType { get; }
 
-        public HmacShaConfiguration HmacShaConfiguration { set; get; }
+        SignatureAlgorithm SignatureAlgorithm { get; }
 
-        public RsaPrivateConfiguration RsaPrivateConfiguration { set; get; }
+        HmacShaConfiguration? HmacShaConfiguration { get; }
 
-        public RsaPublicConfiguration RsaPublicConfiguration { set; get; }
+        RsaPrivateConfiguration? RsaPrivateConfiguration { get; }
+
+        RsaPublicConfiguration? RsaPublicConfiguration { get; }
     }
 }
