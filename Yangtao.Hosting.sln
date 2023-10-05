@@ -109,6 +109,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.SignatureValidation.Se
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.SignatureValidation.Client", "test\Test.SignatureValidation\Test.SignatureValidation.Client\Test.SignatureValidation.Client.csproj", "{B3A8DFE9-CCE1-4589-AD3D-667BFE5DC278}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.SignatureValidation.ClientConsole", "test\Test.SignatureValidation\Test.SignatureValidation.ClientConsole\Test.SignatureValidation.ClientConsole.csproj", "{9BCC21FC-C4B7-4FB6-BBFD-0B77A1194BAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -271,6 +273,10 @@ Global
 		{B3A8DFE9-CCE1-4589-AD3D-667BFE5DC278}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3A8DFE9-CCE1-4589-AD3D-667BFE5DC278}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3A8DFE9-CCE1-4589-AD3D-667BFE5DC278}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BCC21FC-C4B7-4FB6-BBFD-0B77A1194BAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BCC21FC-C4B7-4FB6-BBFD-0B77A1194BAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BCC21FC-C4B7-4FB6-BBFD-0B77A1194BAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BCC21FC-C4B7-4FB6-BBFD-0B77A1194BAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -324,6 +330,7 @@ Global
 		{D99C9444-79AA-4BFF-8207-FD82F4AB5E38} = {82EB0F45-3EAA-4C22-B58D-DF11C4569D7D}
 		{F9A5C268-B958-42CA-9A73-6D92565A3E37} = {FBF434B9-AA3B-404D-A8B8-B9996C89FB38}
 		{B3A8DFE9-CCE1-4589-AD3D-667BFE5DC278} = {FBF434B9-AA3B-404D-A8B8-B9996C89FB38}
+		{9BCC21FC-C4B7-4FB6-BBFD-0B77A1194BAE} = {FBF434B9-AA3B-404D-A8B8-B9996C89FB38}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28EDA54C-950D-459F-AFC9-092C65E8B3D9}

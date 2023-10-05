@@ -1,4 +1,7 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Yangtao.Hosting.SignatureValidation.Server.Attributes;
+using Yangtao.Hosting.SignatureValidation.Server.Configurations;
 
 namespace Test.SignatureValidation.Server.Controllers
 {
@@ -19,6 +22,7 @@ namespace Test.SignatureValidation.Server.Controllers
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
+        [ServerSignatureValidation]
         public IEnumerable<WeatherForecast> Get()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast

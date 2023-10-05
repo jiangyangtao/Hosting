@@ -11,6 +11,6 @@ namespace Yangtao.Hosting.SignatureValidation.Core.Configurations
 
         public string SecretKey { set; get; }
 
-        public byte[] SecretKeyBytes => Encoding.UTF8.GetBytes(SecretKey);
+        internal byte[] SecretKeyBytes => Encoding.UTF8.GetBytes(SecretKey);
     }
 }
