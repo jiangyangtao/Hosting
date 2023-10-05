@@ -105,6 +105,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.AES", "test\Test.Encry
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.RSA", "test\Test.Encryption\Test.RSA\Test.RSA.csproj", "{D99C9444-79AA-4BFF-8207-FD82F4AB5E38}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.SignatureValidation.Server", "test\Test.SignatureValidation\Test.SignatureValidation.Server\Test.SignatureValidation.Server.csproj", "{F9A5C268-B958-42CA-9A73-6D92565A3E37}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -259,6 +261,10 @@ Global
 		{D99C9444-79AA-4BFF-8207-FD82F4AB5E38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D99C9444-79AA-4BFF-8207-FD82F4AB5E38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D99C9444-79AA-4BFF-8207-FD82F4AB5E38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9A5C268-B958-42CA-9A73-6D92565A3E37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9A5C268-B958-42CA-9A73-6D92565A3E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9A5C268-B958-42CA-9A73-6D92565A3E37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9A5C268-B958-42CA-9A73-6D92565A3E37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -310,6 +316,7 @@ Global
 		{9F3DD6E9-4F91-444B-B6E6-B899172EEB4D} = {82EB0F45-3EAA-4C22-B58D-DF11C4569D7D}
 		{2553893F-04AE-4CC3-9F8E-04C155368299} = {82EB0F45-3EAA-4C22-B58D-DF11C4569D7D}
 		{D99C9444-79AA-4BFF-8207-FD82F4AB5E38} = {82EB0F45-3EAA-4C22-B58D-DF11C4569D7D}
+		{F9A5C268-B958-42CA-9A73-6D92565A3E37} = {FBF434B9-AA3B-404D-A8B8-B9996C89FB38}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28EDA54C-950D-459F-AFC9-092C65E8B3D9}
