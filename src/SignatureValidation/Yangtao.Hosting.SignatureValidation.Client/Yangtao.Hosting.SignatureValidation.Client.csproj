@@ -10,10 +10,6 @@
     <ProjectReference Include="..\Yangtao.Hosting.SignatureValidation.Core\Yangtao.Hosting.SignatureValidation.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Authentication\" />
-  </ItemGroup>
-
 	<ImportGroup>
 		<Import Project="..\..\..\props\Hosting.Publish.props" />
 		<Import Project="..\..\..\props\Hosting.Version.props" />

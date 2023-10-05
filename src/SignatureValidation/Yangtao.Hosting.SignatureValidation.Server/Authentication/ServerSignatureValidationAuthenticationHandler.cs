@@ -14,6 +14,7 @@ namespace Yangtao.Hosting.SignatureValidation.Server.Authentication
 
         protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
+          
             throw new NotImplementedException();
         }
     }
