@@ -16,9 +16,7 @@ namespace Yangtao.Hosting.SignatureValidation.Client
             _clientHmacShaProvider = clientHmacShaProvider;
             _rsaPublicProvider = rsaPublicProvider;
             _clientConfigurationProvider = clientConfigurationProvider;
-        }
-
-        public string Encrypt(string plaintext) => _rsaPublicProvider.Encrypt(plaintext);
+        }      
 
         public bool VerifyData(string value, string signature)
         {

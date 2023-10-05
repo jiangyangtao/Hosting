@@ -1,14 +1,7 @@
 ﻿namespace Yangtao.Hosting.SignatureValidation.Client.Abstractions
 {
     public interface IClientSignatureValidationProvider
-    {
-        /// <summary>
-        /// 加密
-        /// </summary>
-        /// <param name="plaintext"></param>
-        /// <returns></returns>
-        string Encrypt(string plaintext);
-
+    {     
         /// <summary>
         /// 验证签名
         /// </summary>
