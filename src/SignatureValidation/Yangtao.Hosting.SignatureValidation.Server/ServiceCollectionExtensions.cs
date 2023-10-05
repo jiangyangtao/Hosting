@@ -77,7 +77,7 @@ namespace Yangtao.Hosting.SignatureValidation.Server
             }
 
             services.AddSingleton<IServerConfigurationProvider, ServerConfigurationProvider>();
-            services.AddSingleton<IServerEncryptionValidationProvider, ServerEncryptionValidationProvider>();
+            services.AddSingleton<IServerEncryptionValidationProvider, ServerSignatureValidationProvider>();
             services.AddSingleton<IServerSignatureValidationProvider, ServerSignatureValidationProvider>();
             services.AddSingleton<IServerHmacShaProvider, ServerHmacShaProvider>();
             services.AddSingleton<IRsaPrivateProvider, RsaPrivateProvider>();

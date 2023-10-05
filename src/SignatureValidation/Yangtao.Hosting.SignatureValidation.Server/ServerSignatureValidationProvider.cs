@@ -2,7 +2,7 @@
 
 namespace Yangtao.Hosting.SignatureValidation.Server
 {
-    internal class ServerSignatureValidationProvider : IServerSignatureValidationProvider
+    internal class ServerSignatureValidationProvider : IServerSignatureValidationProvider, IServerEncryptionValidationProvider
     {
         private readonly IServerHmacShaProvider _serverHmacShaProvider;
         private readonly IRsaPrivateProvider _rsaPrivateProvider;
@@ -16,7 +16,9 @@ namespace Yangtao.Hosting.SignatureValidation.Server
             _serverHmacShaProvider = serverHmacShaProvider;
             _rsaPrivateProvider = rsaPrivateProvider;
             _serverConfigurationProvider = serverConfigurationProvider;
-        }   
+        }
+
+        public string Decrypt(string ciphertext) => _rsaPrivateProvider.Decrypt(ciphertext);
 
         public string SignData(string value)
         {
