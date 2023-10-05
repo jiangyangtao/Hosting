@@ -2,6 +2,7 @@
 using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.SignatureValidation.Client.Abstractions;
 using Yangtao.Hosting.SignatureValidation.Client.Configurations;
+using Yangtao.Hosting.SignatureValidation.Client.Providers;
 using Yangtao.Hosting.SignatureValidation.Core.Configurations;
 using Yangtao.Hosting.SignatureValidation.Core.Enums;
 

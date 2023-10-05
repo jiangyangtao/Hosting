@@ -1,7 +1,7 @@
 ﻿using Yangtao.Hosting.SignatureValidation.Client.Abstractions;
 using Yangtao.Hosting.SignatureValidation.Core;
 
-namespace Yangtao.Hosting.SignatureValidation.Client
+namespace Yangtao.Hosting.SignatureValidation.Client.Providers
 {
     internal class ClientHmacShaProvider : HmacShaProviderBase, IClientHmacShaProvider
     {
