@@ -1,7 +1,9 @@
 ﻿using RSAExtensions;
 using System.Security.Cryptography;
+using System.Text;
 using Yangtao.Hosting.SignatureValidation.Client.Abstractions;
 using Yangtao.Hosting.SignatureValidation.Client.Configurations;
+using Yangtao.Hosting.Extensions;
 
 namespace Yangtao.Hosting.SignatureValidation.Client
 {
@@ -26,7 +28,12 @@ namespace Yangtao.Hosting.SignatureValidation.Client
 
         public bool VerifyData(string value, string signature)
         {
-            throw new NotImplementedException();
+            if (value.IsNullOrEmpty()) throw new ArgumentNullException(nameof(value));
+            if (signature.IsNullOrEmpty()) throw new ArgumentNullException(nameof(signature));
+
+            var signatureBytes = Convert.FromBase64String(signature);
+            var valueBytes = Encoding.UTF8.GetBytes(value);
+            return Rsa.VerifyData(valueBytes, signatureBytes, HashAlgorithmName.SHA256, _clientConfigurationProvider.RsaPublicOptions.RSAEncryptionPadding);
         }
     }
 }

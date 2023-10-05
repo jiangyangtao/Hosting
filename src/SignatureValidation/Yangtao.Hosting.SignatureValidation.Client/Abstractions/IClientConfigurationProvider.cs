@@ -9,6 +9,8 @@ namespace Yangtao.Hosting.SignatureValidation.Client.Abstractions
 
         HmacShaOptions? HmacShaOptions { get; }
 
-        RsaOptions? RsaPublicOptions { get; }
+        RsaSignatureOptions? RsaSignatureOptions { get; }
+
+        RsaEncryptionOptions? RsaEncryptionOptions { get; }
     }
 }
