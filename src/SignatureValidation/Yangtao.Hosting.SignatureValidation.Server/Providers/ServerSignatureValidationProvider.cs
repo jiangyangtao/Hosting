@@ -1,6 +1,6 @@
 ﻿using Yangtao.Hosting.SignatureValidation.Server.Abstractions;
 
-namespace Yangtao.Hosting.SignatureValidation.Server
+namespace Yangtao.Hosting.SignatureValidation.Server.Providers
 {
     internal class ServerSignatureValidationProvider : IServerSignatureValidationProvider, IServerEncryptionValidationProvider
     {

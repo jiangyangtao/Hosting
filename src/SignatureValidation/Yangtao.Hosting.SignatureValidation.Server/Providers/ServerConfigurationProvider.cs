@@ -3,7 +3,7 @@ using Yangtao.Hosting.SignatureValidation.Core.Configurations;
 using Yangtao.Hosting.SignatureValidation.Server.Abstractions;
 using Yangtao.Hosting.SignatureValidation.Server.Configurations;
 
-namespace Yangtao.Hosting.SignatureValidation.Server
+namespace Yangtao.Hosting.SignatureValidation.Server.Providers
 {
     internal class ServerConfigurationProvider : IServerConfigurationProvider
     {

@@ -7,7 +7,7 @@ using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.SignatureValidation.Server.Abstractions;
 using Yangtao.Hosting.SignatureValidation.Server.Configurations;
 
-namespace Yangtao.Hosting.SignatureValidation.Server
+namespace Yangtao.Hosting.SignatureValidation.Server.Providers
 {
     internal class RsaPrivateProvider : IRsaPrivateProvider
     {
