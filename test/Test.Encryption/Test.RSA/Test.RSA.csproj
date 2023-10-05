@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Yangtao.Hosting.Encryption\Yangtao.Hosting.Encryption.csproj" />
+    <ProjectReference Include="..\..\..\src\Yangtao.Hosting.Encryption\Yangtao.Hosting.Encryption.csproj" />
   </ItemGroup>
 
 </Project>
