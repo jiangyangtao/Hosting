@@ -41,7 +41,6 @@ namespace Test.SignatureValidation.Client
                     {
                         ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                     };
-
                     var serviceConfig = new ServiceConfig();
                     serviceConfig.MethodConfigs.Add(new MethodConfig
                     {

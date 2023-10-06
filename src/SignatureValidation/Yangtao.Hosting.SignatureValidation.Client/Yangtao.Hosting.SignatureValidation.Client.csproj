@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -6,6 +6,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+
+	<ItemGroup>
+		<PackageReference Include="Grpc.Net.ClientFactory" Version="2.57.0" />
+	</ItemGroup>
+	
   <ItemGroup>
     <ProjectReference Include="..\Yangtao.Hosting.SignatureValidation.Core\Yangtao.Hosting.SignatureValidation.Core.csproj" />
   </ItemGroup>
