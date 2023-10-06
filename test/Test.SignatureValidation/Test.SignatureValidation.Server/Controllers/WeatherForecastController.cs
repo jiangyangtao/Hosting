@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Yangtao.Hosting.SignatureValidation.Server.Attributes;
 using Yangtao.Hosting.SignatureValidation.Server.Configurations;
 
@@ -36,9 +37,10 @@ namespace Test.SignatureValidation.Server.Controllers
 
         [HttpPost]
         [ServerSignatureValidation]
-        public string Post()
+        public string Post([FromBody] UserDto dto)
         {
-            return "hello,world";
+            var json = JsonConvert.SerializeObject(dto);
+            return json;
         }
     }
 }

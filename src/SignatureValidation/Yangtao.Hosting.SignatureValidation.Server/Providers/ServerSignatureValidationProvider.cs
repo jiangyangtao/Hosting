@@ -27,5 +27,7 @@ namespace Yangtao.Hosting.SignatureValidation.Server.Providers
 
             return _rsaPrivateProvider.SignData(value);
         }
+
+        public bool VerifyData(string value, string signature) => _serverHmacShaProvider.VerifyData(value, signature);
     }
 }

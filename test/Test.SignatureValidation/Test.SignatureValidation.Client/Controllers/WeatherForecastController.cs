@@ -52,9 +52,9 @@ namespace Test.SignatureValidation.Client.Controllers
             httpClient.DefaultRequestHeaders.Add("signature", signature);
 
             var jsonContent = new JsonContent(content);
-            await httpClient.PostAsync("http://localhost:5234/WeatherForecast", jsonContent);
-
-            return "1";
+            var response = await httpClient.PostAsync("http://localhost:5234/WeatherForecast", jsonContent);
+            var result = await response.Content.ReadAsStringAsync();
+            return result;
         }
 
         [HttpPut]
@@ -65,7 +65,7 @@ namespace Test.SignatureValidation.Client.Controllers
                 Username = "Alex",
                 Passwrod = "123456"
             };
-            var response =await _grpcProviderClient.LoginAsync(request);
+            var response = await _grpcProviderClient.LoginAsync(request);
 
             return "1";
         }

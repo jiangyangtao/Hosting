@@ -2,6 +2,9 @@
 {
     internal class ServerSignatureValidationDefaultKeys
     {
-        public const string ServerSignatureValidationScheme = "ServerSignatureValidation";
+        public const string GrpcKey = "grpc";
+
+
+
     }
 }
