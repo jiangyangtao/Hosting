@@ -16,9 +16,7 @@ namespace Yangtao.Hosting.SignatureValidation.Server
             _serverHmacShaProvider = serverHmacShaProvider;
             _rsaPrivateProvider = rsaPrivateProvider;
             _serverConfigurationProvider = serverConfigurationProvider;
-        }
-
-        public string Decrypt(string ciphertext) => _rsaPrivateProvider.Decrypt(ciphertext);
+        }   
 
         public string SignData(string value)
         {
