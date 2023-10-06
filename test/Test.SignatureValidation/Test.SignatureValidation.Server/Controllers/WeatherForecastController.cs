@@ -33,5 +33,12 @@ namespace Test.SignatureValidation.Server.Controllers
             })
             .ToArray();
         }
+
+        [HttpPost]
+        [ServerSignatureValidation]
+        public string Post()
+        {
+            return "hello,world";
+        }
     }
 }

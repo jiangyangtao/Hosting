@@ -10,4 +10,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\SignatureValidation\Yangtao.Hosting.SignatureValidation.Client\Yangtao.Hosting.SignatureValidation.Client.csproj" />
+    <ProjectReference Include="..\..\..\src\Yangtao.Hosting.Common\Yangtao.Hosting.Common.csproj" />
+  </ItemGroup>
+
 </Project>

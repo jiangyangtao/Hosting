@@ -2,6 +2,6 @@
 {
     public class SignatureValidationDefaultKeys
     {
-        public const string SignatureKey = "Signature";
+        public const string SignatureKey = "signature";
     }
 }

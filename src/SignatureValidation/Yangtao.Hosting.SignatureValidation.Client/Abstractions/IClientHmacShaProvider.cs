@@ -2,6 +2,8 @@
 {
     internal interface IClientHmacShaProvider
     {
+        string SignData(string value);
+
         /// <summary>
         /// 验证签名
         /// </summary>

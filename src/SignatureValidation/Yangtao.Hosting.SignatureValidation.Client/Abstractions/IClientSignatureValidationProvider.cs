@@ -1,7 +1,9 @@
 ﻿namespace Yangtao.Hosting.SignatureValidation.Client.Abstractions
 {
     public interface IClientSignatureValidationProvider
-    {     
+    {
+        string SignData(string value);
+
         /// <summary>
         /// 验证签名
         /// </summary>

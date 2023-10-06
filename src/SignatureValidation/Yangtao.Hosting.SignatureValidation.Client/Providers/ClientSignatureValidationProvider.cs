@@ -20,6 +20,8 @@ namespace Yangtao.Hosting.SignatureValidation.Client.Providers
 
         public string Encrypt(string plaintext) => _rsaPublicProvider.Encrypt(plaintext);
 
+        public string SignData(string value) => _clientHmacShaProvider.SignData(value);
+
         public bool VerifyData(string value, string signature)
         {
             if (_clientConfigurationProvider.ClientValidationOptions.IsHmacShaSignature)

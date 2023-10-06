@@ -12,7 +12,7 @@ namespace Yangtao.Hosting.SignatureValidation.Core
 
         public HmacShaProviderBase(bool isHmacShaSignature, HmacShaOptions? hmacShaConfigurationOptions)
         {
-            if (isHmacShaSignature) return;
+            if (isHmacShaSignature == false) return;
 
             _hmacShaConfiguration = hmacShaConfigurationOptions ?? throw new NullReferenceException(nameof(HmacShaOptions));
         }
