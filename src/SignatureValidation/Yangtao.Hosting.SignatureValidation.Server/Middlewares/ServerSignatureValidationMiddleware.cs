@@ -61,26 +61,26 @@ namespace Yangtao.Hosting.SignatureValidation.Server.Middlewares
                 return;
             }
 
-            var hasSignatureKey = context.Request.Headers.TryGetValue(SignatureValidationDefaultKeys.SignatureKey, out StringValues value);
-            if (hasSignatureKey == false)
-            {
-                await ValidationFailAsync(context);
-                return;
-            }
-
-            var signature = value.ToString();
-            if (signature.IsNullOrEmpty())
-            {
-                await ValidationFailAsync(context);
-                return;
-            }
-
-            context.Request.EnableBuffering();
-            var stream = new StreamReader(context.Request.Body);
-            var body = await stream.ReadToEndAsync();
-
             if (_serverConfigurationProvider.ServerValidationOptions.ValidationType == ValidationType.Signatrue)
             {
+                var hasSignatureKey = context.Request.Headers.TryGetValue(SignatureValidationDefaultKeys.SignatureKey, out StringValues value);
+                if (hasSignatureKey == false)
+                {
+                    await ValidationFailAsync(context);
+                    return;
+                }
+
+                var signature = value.ToString();
+                if (signature.IsNullOrEmpty())
+                {
+                    await ValidationFailAsync(context);
+                    return;
+                }
+
+                context.Request.EnableBuffering();
+                var stream = new StreamReader(context.Request.Body);
+                var body = await stream.ReadToEndAsync();
+
                 var r = _serverSignatureValidationProvider.VerifyData(body, signature);
                 if (r == false)
                 {
@@ -91,6 +91,9 @@ namespace Yangtao.Hosting.SignatureValidation.Server.Middlewares
 
             if (_serverConfigurationProvider.ServerValidationOptions.ValidationType == ValidationType.Encrypt)
             {
+                var stream = new StreamReader(context.Request.Body);
+                var body = await stream.ReadToEndAsync();
+
                 var content = _serverEncryptionValidationProvider.Decrypt(body);
                 var requestBody = Encoding.UTF8.GetBytes(content);
                 var requestBodyStream = new MemoryStream();

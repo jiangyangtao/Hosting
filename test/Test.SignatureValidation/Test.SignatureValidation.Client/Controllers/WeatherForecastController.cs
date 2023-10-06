@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net.Mime;
+using System.Text;
 using Test.SignatureValidation.ClientGrpc.Provider;
 using Yangtao.Hosting.SignatureValidation.Client.Abstractions;
 using JsonContent = Yangtao.Hosting.Common.JsonContent;
@@ -11,6 +13,7 @@ namespace Test.SignatureValidation.Client.Controllers
     public class WeatherForecastController : ControllerBase
     {
         private readonly IClientSignatureValidationProvider _signatureValidationProvider;
+        private readonly IClientEncryptionValidationProvider _clientEncryptionValidationProvider;
         private readonly ClientSignatureValidationGrpcProvider.ClientSignatureValidationGrpcProviderClient _grpcProviderClient;
 
         private static readonly string[] Summaries = new[]
@@ -23,11 +26,13 @@ namespace Test.SignatureValidation.Client.Controllers
         public WeatherForecastController(
             ILogger<WeatherForecastController> logger,
             IClientSignatureValidationProvider signatureValidationProvider,
-            ClientSignatureValidationGrpcProvider.ClientSignatureValidationGrpcProviderClient grpcProviderClient)
+            ClientSignatureValidationGrpcProvider.ClientSignatureValidationGrpcProviderClient grpcProviderClient,
+            IClientEncryptionValidationProvider clientEncryptionValidationProvider)
         {
             _logger = logger;
             _signatureValidationProvider = signatureValidationProvider;
             _grpcProviderClient = grpcProviderClient;
+            _clientEncryptionValidationProvider = clientEncryptionValidationProvider;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
@@ -48,10 +53,11 @@ namespace Test.SignatureValidation.Client.Controllers
             var httpClient = new HttpClient();
             var content = new { Id = 1, Name = "Alex" };
             var json = JsonConvert.SerializeObject(content);
-            var signature = _signatureValidationProvider.SignData(json);
-            httpClient.DefaultRequestHeaders.Add("signature", signature);
+            //var signature = _signatureValidationProvider.SignData(json);
+            var ciphertext = _clientEncryptionValidationProvider.Encrypt(json);
+            //httpClient.DefaultRequestHeaders.Add("signature", signature);
 
-            var jsonContent = new JsonContent(content);
+            var jsonContent = new StringContent(ciphertext, Encoding.UTF8, MediaTypeNames.Application.Json);
             var response = await httpClient.PostAsync("http://localhost:5234/WeatherForecast", jsonContent);
             var result = await response.Content.ReadAsStringAsync();
             return result;

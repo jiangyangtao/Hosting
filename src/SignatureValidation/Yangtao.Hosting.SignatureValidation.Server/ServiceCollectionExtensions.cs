@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.SignatureValidation.Core.Configurations;
 using Yangtao.Hosting.SignatureValidation.Core.Enums;
@@ -79,12 +80,12 @@ namespace Yangtao.Hosting.SignatureValidation.Server
                 });
             }
 
-            services.AddSingleton<IServerConfigurationProvider, ServerConfigurationProvider>();
-            services.AddSingleton<IServerEncryptionValidationProvider, ServerSignatureValidationProvider>();
-            services.AddSingleton<IServerSignatureValidationProvider, ServerSignatureValidationProvider>();
-            services.AddSingleton<IServerHmacShaProvider, ServerHmacShaProvider>();
-            services.AddSingleton<IRsaPrivateProvider, RsaPrivateProvider>();
-            services.AddSingleton<ServerSignatureValidationMiddleware>();
+            services.TryAddSingleton<IServerConfigurationProvider, ServerConfigurationProvider>();
+            services.TryAddSingleton<IServerEncryptionValidationProvider, ServerSignatureValidationProvider>();
+            services.TryAddSingleton<IServerSignatureValidationProvider, ServerSignatureValidationProvider>();
+            services.TryAddSingleton<IServerHmacShaProvider, ServerHmacShaProvider>();
+            services.TryAddSingleton<IRsaPrivateProvider, RsaPrivateProvider>();
+            services.TryAddSingleton<ServerSignatureValidationMiddleware>();
             return services;
         }
     }

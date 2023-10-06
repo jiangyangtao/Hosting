@@ -23,7 +23,7 @@ namespace Yangtao.Hosting.SignatureValidation.Server.Providers
                 if (_serverConfigurationProvider.RsaEncryptionOptions == null) throw new NullReferenceException(nameof(RsaEncryptionOptions));
 
                 Rsa = RSA.Create();
-                Rsa.ImportPublicKey(_serverConfigurationProvider.RsaEncryptionOptions.RSAKeyType, _serverConfigurationProvider.RsaEncryptionOptions.PrivateKey);
+                Rsa.ImportPrivateKey(_serverConfigurationProvider.RsaEncryptionOptions.RSAKeyType, _serverConfigurationProvider.RsaEncryptionOptions.PrivateKey);
             }
 
             if (_serverConfigurationProvider.ServerValidationOptions.IsRsaSignature)

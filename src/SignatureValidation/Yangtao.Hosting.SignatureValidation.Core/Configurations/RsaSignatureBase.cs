@@ -1,5 +1,5 @@
-﻿using System.Security.Authentication;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
+using Yangtao.Hosting.SignatureValidation.Core.Enums;
 
 namespace Yangtao.Hosting.SignatureValidation.Core.Configurations
 {
@@ -7,7 +7,7 @@ namespace Yangtao.Hosting.SignatureValidation.Core.Configurations
     {
         public RSASignaturePaddingMode RSASignaturePaddingMode { set; get; } = RSASignaturePaddingMode.Pkcs1;
 
-        public HashAlgorithmType HashAlgorithmType { set; get; } = HashAlgorithmType.Sha256;
+        public HashAlgorithmType HashAlgorithmType { set; get; } = HashAlgorithmType.SHA256;
 
         public RSASignaturePadding RSASignaturePadding
         {
@@ -24,8 +24,8 @@ namespace Yangtao.Hosting.SignatureValidation.Core.Configurations
         {
             get
             {
-                if (HashAlgorithmType == HashAlgorithmType.Sha256) return HashAlgorithmName.SHA256;
-                if (HashAlgorithmType == HashAlgorithmType.Sha256) return HashAlgorithmName.SHA384;
+                if (HashAlgorithmType == HashAlgorithmType.SHA256) return HashAlgorithmName.SHA256;
+                if (HashAlgorithmType == HashAlgorithmType.SHA384) return HashAlgorithmName.SHA384;
 
                 return HashAlgorithmName.SHA512;
             }
