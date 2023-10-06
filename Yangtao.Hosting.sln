@@ -99,17 +99,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test.SignatureValidation", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test.Encryption", "Test.Encryption", "{82EB0F45-3EAA-4C22-B58D-DF11C4569D7D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.3DES", "test\Test.Encryption\Test.3DES\Test.3DES.csproj", "{9F3DD6E9-4F91-444B-B6E6-B899172EEB4D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.AES", "test\Test.Encryption\Test.AES\Test.AES.csproj", "{2553893F-04AE-4CC3-9F8E-04C155368299}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.RSA", "test\Test.Encryption\Test.RSA\Test.RSA.csproj", "{D99C9444-79AA-4BFF-8207-FD82F4AB5E38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.SignatureValidation.Server", "test\Test.SignatureValidation\Test.SignatureValidation.Server\Test.SignatureValidation.Server.csproj", "{F9A5C268-B958-42CA-9A73-6D92565A3E37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.SignatureValidation.Server", "test\Test.SignatureValidation\Test.SignatureValidation.Server\Test.SignatureValidation.Server.csproj", "{F9A5C268-B958-42CA-9A73-6D92565A3E37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.SignatureValidation.Client", "test\Test.SignatureValidation\Test.SignatureValidation.Client\Test.SignatureValidation.Client.csproj", "{B3A8DFE9-CCE1-4589-AD3D-667BFE5DC278}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.SignatureValidation.Client", "test\Test.SignatureValidation\Test.SignatureValidation.Client\Test.SignatureValidation.Client.csproj", "{B3A8DFE9-CCE1-4589-AD3D-667BFE5DC278}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.SignatureValidation.ClientConsole", "test\Test.SignatureValidation\Test.SignatureValidation.ClientConsole\Test.SignatureValidation.ClientConsole.csproj", "{9BCC21FC-C4B7-4FB6-BBFD-0B77A1194BAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.SignatureValidation.ClientConsole", "test\Test.SignatureValidation\Test.SignatureValidation.ClientConsole\Test.SignatureValidation.ClientConsole.csproj", "{9BCC21FC-C4B7-4FB6-BBFD-0B77A1194BAE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.AES", "test\Test.Encryption\Test.AES\Test.AES.csproj", "{22E1D758-4C46-44FA-A100-8FF50029E3D0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.3DES", "test\Test.Encryption\Test.3DES\Test.3DES.csproj", "{E16AE3D5-1DBD-43E4-BD96-72812AD8544B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -253,14 +253,6 @@ Global
 		{41A41540-5255-41B1-9012-2B9A96E5EDB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41A41540-5255-41B1-9012-2B9A96E5EDB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41A41540-5255-41B1-9012-2B9A96E5EDB0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9F3DD6E9-4F91-444B-B6E6-B899172EEB4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9F3DD6E9-4F91-444B-B6E6-B899172EEB4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9F3DD6E9-4F91-444B-B6E6-B899172EEB4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9F3DD6E9-4F91-444B-B6E6-B899172EEB4D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2553893F-04AE-4CC3-9F8E-04C155368299}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2553893F-04AE-4CC3-9F8E-04C155368299}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2553893F-04AE-4CC3-9F8E-04C155368299}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2553893F-04AE-4CC3-9F8E-04C155368299}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D99C9444-79AA-4BFF-8207-FD82F4AB5E38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D99C9444-79AA-4BFF-8207-FD82F4AB5E38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D99C9444-79AA-4BFF-8207-FD82F4AB5E38}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -277,6 +269,14 @@ Global
 		{9BCC21FC-C4B7-4FB6-BBFD-0B77A1194BAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BCC21FC-C4B7-4FB6-BBFD-0B77A1194BAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BCC21FC-C4B7-4FB6-BBFD-0B77A1194BAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22E1D758-4C46-44FA-A100-8FF50029E3D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22E1D758-4C46-44FA-A100-8FF50029E3D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22E1D758-4C46-44FA-A100-8FF50029E3D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22E1D758-4C46-44FA-A100-8FF50029E3D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E16AE3D5-1DBD-43E4-BD96-72812AD8544B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E16AE3D5-1DBD-43E4-BD96-72812AD8544B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E16AE3D5-1DBD-43E4-BD96-72812AD8544B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E16AE3D5-1DBD-43E4-BD96-72812AD8544B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -325,12 +325,12 @@ Global
 		{41A41540-5255-41B1-9012-2B9A96E5EDB0} = {39497ABA-8DDC-4999-98CB-FAE7DB6C9AF7}
 		{FBF434B9-AA3B-404D-A8B8-B9996C89FB38} = {E54AF2F8-8C5F-4A19-BD6E-E63DEC4CA1AD}
 		{82EB0F45-3EAA-4C22-B58D-DF11C4569D7D} = {E54AF2F8-8C5F-4A19-BD6E-E63DEC4CA1AD}
-		{9F3DD6E9-4F91-444B-B6E6-B899172EEB4D} = {82EB0F45-3EAA-4C22-B58D-DF11C4569D7D}
-		{2553893F-04AE-4CC3-9F8E-04C155368299} = {82EB0F45-3EAA-4C22-B58D-DF11C4569D7D}
 		{D99C9444-79AA-4BFF-8207-FD82F4AB5E38} = {82EB0F45-3EAA-4C22-B58D-DF11C4569D7D}
 		{F9A5C268-B958-42CA-9A73-6D92565A3E37} = {FBF434B9-AA3B-404D-A8B8-B9996C89FB38}
 		{B3A8DFE9-CCE1-4589-AD3D-667BFE5DC278} = {FBF434B9-AA3B-404D-A8B8-B9996C89FB38}
 		{9BCC21FC-C4B7-4FB6-BBFD-0B77A1194BAE} = {FBF434B9-AA3B-404D-A8B8-B9996C89FB38}
+		{22E1D758-4C46-44FA-A100-8FF50029E3D0} = {82EB0F45-3EAA-4C22-B58D-DF11C4569D7D}
+		{E16AE3D5-1DBD-43E4-BD96-72812AD8544B} = {82EB0F45-3EAA-4C22-B58D-DF11C4569D7D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28EDA54C-950D-459F-AFC9-092C65E8B3D9}
