@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Primitives;
 using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.SignatureValidation.Core.Configurations;
+using Yangtao.Hosting.SignatureValidation.Core.Enums;
 using Yangtao.Hosting.SignatureValidation.Server.Abstractions;
 using Yangtao.Hosting.SignatureValidation.Server.Attributes;
 
@@ -10,14 +11,25 @@ namespace Yangtao.Hosting.SignatureValidation.Server.Middlewares
     internal class ServerSignatureValidationMiddleware : IMiddleware
     {
         private readonly IServerConfigurationProvider _serverConfigurationProvider;
+        private readonly IServerSignatureValidationProvider _serverSignatureValidationProvider;
 
-        public ServerSignatureValidationMiddleware(IServerConfigurationProvider serverConfigurationProvider)
+        public ServerSignatureValidationMiddleware(
+            IServerConfigurationProvider serverConfigurationProvider, 
+            IServerSignatureValidationProvider serverSignatureValidationProvider)
         {
             _serverConfigurationProvider = serverConfigurationProvider;
+            _serverSignatureValidationProvider = serverSignatureValidationProvider;
         }
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
+            var contentType = context.Request.ContentType;
+            if (contentType.Contains("grpc", StringComparison.OrdinalIgnoreCase))
+            {
+                await next(context);
+                return;
+            }
+
             var endpoint = context.GetEndpoint();
             if (endpoint != null)
             {
@@ -38,7 +50,14 @@ namespace Yangtao.Hosting.SignatureValidation.Server.Middlewares
                         return;
                     }
 
+                    context.Request.EnableBuffering();
+                    var stream = new StreamReader(context.Request.Body);
+                    var body = await stream.ReadToEndAsync();
 
+                    if (_serverConfigurationProvider.ServerValidationOptions.ValidationType == ValidationType.Signatrue)
+                    {
+                        var r = _serverSignatureValidationProvider.
+                    }
                 }
             }
 

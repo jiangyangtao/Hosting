@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Test.SignatureValidation.ClientGrpc.Provider;
 using Yangtao.Hosting.SignatureValidation.Client.Abstractions;
 using JsonContent = Yangtao.Hosting.Common.JsonContent;
 
@@ -10,6 +11,8 @@ namespace Test.SignatureValidation.Client.Controllers
     public class WeatherForecastController : ControllerBase
     {
         private readonly IClientSignatureValidationProvider _signatureValidationProvider;
+        private readonly ClientSignatureValidationGrpcProvider.ClientSignatureValidationGrpcProviderClient _grpcProviderClient;
+
         private static readonly string[] Summaries = new[]
         {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -17,10 +20,14 @@ namespace Test.SignatureValidation.Client.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IClientSignatureValidationProvider signatureValidationProvider)
+        public WeatherForecastController(
+            ILogger<WeatherForecastController> logger,
+            IClientSignatureValidationProvider signatureValidationProvider,
+            ClientSignatureValidationGrpcProvider.ClientSignatureValidationGrpcProviderClient grpcProviderClient)
         {
             _logger = logger;
             _signatureValidationProvider = signatureValidationProvider;
+            _grpcProviderClient = grpcProviderClient;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
@@ -46,6 +53,19 @@ namespace Test.SignatureValidation.Client.Controllers
 
             var jsonContent = new JsonContent(content);
             await httpClient.PostAsync("http://localhost:5234/WeatherForecast", jsonContent);
+
+            return "1";
+        }
+
+        [HttpPut]
+        public async Task<string> Put()
+        {
+            var request = new LoginRequest()
+            {
+                Username = "Alex",
+                Passwrod = "123456"
+            };
+            var response =await _grpcProviderClient.LoginAsync(request);
 
             return "1";
         }

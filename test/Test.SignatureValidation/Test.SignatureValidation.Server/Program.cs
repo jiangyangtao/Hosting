@@ -1,3 +1,4 @@
+using Test.SignatureValidation.Server.GrpcServices;
 using Yangtao.Hosting.SignatureValidation.Core.Enums;
 using Yangtao.Hosting.SignatureValidation.Server;
 
@@ -21,6 +22,10 @@ namespace Test.SignatureValidation.Server
                 options.HmacShaSignatureFormatType = HmacShaSignatureFormatType.Base64;
                 options.SecretKey = "3d37adf4f8a593811d8035c9a355bb25";
             });
+            builder.Services.AddGrpc(options =>
+            {
+                options.EnableDetailedErrors = true;
+            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -37,7 +42,7 @@ namespace Test.SignatureValidation.Server
 
             app.UseServerSignatureValidation();
             app.MapControllers();
-
+            app.MapGrpcService<UserGrpcService>();
             app.Run();
         }
     }

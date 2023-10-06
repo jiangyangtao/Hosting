@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option csharp_namespace = "Test.SignatureValidation.ClientGrpc.Provider";
+
+package ClientSignatureValidationGrpc;
+
+service ClientSignatureValidationGrpcProvider {
+	rpc Login(LoginRequest) returns (LoginResponse);
+}
+
+message LoginRequest{
+	string Username=1;
+	string Passwrod=2;
+}
+
+message LoginResponse {
+	bool Result = 1;
+	string AccessToken = 2;
+}
+
