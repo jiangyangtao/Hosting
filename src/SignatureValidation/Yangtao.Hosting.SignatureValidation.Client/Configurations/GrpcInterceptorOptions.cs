@@ -11,10 +11,13 @@
 
         public GrpcInterceptorOptions AddInterceptorMethod(string method)
         {
-            if (InterceptorMethods.Any(a => a == method)) return this;
+            var exist = ExistInterceptorMethod(method);
+            if (exist) return this;
 
             InterceptorMethods.Add(method);
             return this;
         }
+
+        internal bool ExistInterceptorMethod(string method) => InterceptorMethods.Any(a => a == method);
     }
 }
