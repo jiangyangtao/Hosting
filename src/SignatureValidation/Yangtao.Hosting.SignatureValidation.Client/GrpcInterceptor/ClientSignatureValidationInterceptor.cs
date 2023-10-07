@@ -50,8 +50,7 @@ namespace Yangtao.Hosting.SignatureValidation.Client.GrpcInterceptor
                 context = new ClientInterceptorContext<TRequest, TResponse>(context.Method, context.Host, options);
             }
 
-            var json = JsonConvert.SerializeObject(request);
-            var signature = BuildSignature(json);
+            var signature = BuildSignature(request);
             context.Options.Headers.Add(SignatureValidationDefaultKeys.SignatureKey, signature);
 
             return context;

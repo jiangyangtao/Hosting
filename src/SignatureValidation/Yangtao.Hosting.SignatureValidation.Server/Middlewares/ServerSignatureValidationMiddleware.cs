@@ -93,8 +93,19 @@ namespace Yangtao.Hosting.SignatureValidation.Server.Middlewares
             {
                 var stream = new StreamReader(context.Request.Body);
                 var body = await stream.ReadToEndAsync();
+                if (body.IsNullOrEmpty())
+                {
+                    await ValidationFailAsync(context);
+                    return;
+                }
 
                 var content = _serverEncryptionValidationProvider.Decrypt(body);
+                if (content.IsNullOrEmpty())
+                {
+                    await ValidationFailAsync(context);
+                    return;
+                }
+
                 var requestBody = Encoding.UTF8.GetBytes(content);
                 var requestBodyStream = new MemoryStream();
                 requestBodyStream.Seek(0, SeekOrigin.Begin);
