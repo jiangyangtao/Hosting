@@ -4,20 +4,27 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Yangtao.Hosting.SignatureValidation.Client.Abstractions;
 using Yangtao.Hosting.SignatureValidation.Client.Configurations;
+using Yangtao.Hosting.SignatureValidation.Core.Enums;
 
 namespace Yangtao.Hosting.SignatureValidation.Client.GrpcInterceptor
 {
     internal class ClientSignatureValidationInterceptor : Interceptor
     {
         private readonly GrpcInterceptorOptions GrpcInterceptorOptions;
+        private readonly IClientConfigurationProvider _clientConfigurationProvider;
+        private readonly IClientEncryptionValidationProvider _clientEncryptionValidationProvider;
         private readonly IClientSignatureValidationProvider _clientSignatureValidationProvider;
 
         public ClientSignatureValidationInterceptor(
             IOptions<GrpcInterceptorOptions> options,
-            IClientSignatureValidationProvider clientSignatureValidationProvider)
+            IClientSignatureValidationProvider clientSignatureValidationProvider,
+            IClientEncryptionValidationProvider clientEncryptionValidationProvider,
+            IClientConfigurationProvider clientConfigurationProvider)
         {
             GrpcInterceptorOptions = options.Value;
             _clientSignatureValidationProvider = clientSignatureValidationProvider;
+            _clientEncryptionValidationProvider = clientEncryptionValidationProvider;
+            _clientConfigurationProvider = clientConfigurationProvider;
         }
 
         public override AsyncUnaryCall<TResponse> AsyncUnaryCall<TRequest, TResponse>(TRequest request, ClientInterceptorContext<TRequest, TResponse> context, AsyncUnaryCallContinuation<TRequest, TResponse> continuation)
@@ -43,10 +50,18 @@ namespace Yangtao.Hosting.SignatureValidation.Client.GrpcInterceptor
             }
 
             var json = JsonConvert.SerializeObject(request);
-            var signature = _clientSignatureValidationProvider.SignData(json);
+            var signature = BuildSignature(json);
             context.Options.Headers.Add("signature", signature);
 
             return context;
+        }
+
+        private string BuildSignature<TRequest>(TRequest request)
+        {
+            var json = JsonConvert.SerializeObject(request);
+            if (_clientConfigurationProvider.ClientValidationOptions.ValidationType == ValidationType.Signatrue) return _clientSignatureValidationProvider.SignData(json);
+
+            return _clientEncryptionValidationProvider.Encrypt(json);
         }
     }
 }
