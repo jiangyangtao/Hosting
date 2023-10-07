@@ -13,7 +13,7 @@ namespace Test.SignatureValidation.Server.GrpcServices
 
         public override Task<LoginResponse> Login(LoginRequest request, ServerCallContext context)
         {
-            return base.Login(request, context);
+            return Task.FromResult(new LoginResponse { Result = true, AccessToken = "1111111" });
         }
     }
 }

@@ -72,8 +72,7 @@ namespace Test.SignatureValidation.Client.Controllers
                 Passwrod = "123456"
             };
             var response = await _grpcProviderClient.LoginAsync(request);
-
-            return "1";
+            return response.AccessToken;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Grpc.Net.ClientFactory;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Yangtao.Hosting.SignatureValidation.Client.Configurations;
 using Yangtao.Hosting.SignatureValidation.Client.GrpcInterceptor;
 
@@ -16,7 +18,8 @@ namespace Yangtao.Hosting.SignatureValidation.Client
                 a.InterceptorMethods = options.InterceptorMethods;
             });
 
-            clientBuilder.AddInterceptor<ClientSignatureValidationInterceptor>();
+            clientBuilder.Services.TryAddTransient<ClientSignatureValidationInterceptor>();
+            clientBuilder.AddInterceptor<ClientSignatureValidationInterceptor>(InterceptorScope.Channel);
             return clientBuilder;
         }
     }

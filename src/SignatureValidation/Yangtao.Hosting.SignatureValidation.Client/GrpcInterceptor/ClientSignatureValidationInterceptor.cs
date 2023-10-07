@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Yangtao.Hosting.SignatureValidation.Client.Abstractions;
 using Yangtao.Hosting.SignatureValidation.Client.Configurations;
+using Yangtao.Hosting.SignatureValidation.Core.Configurations;
 using Yangtao.Hosting.SignatureValidation.Core.Enums;
 
 namespace Yangtao.Hosting.SignatureValidation.Client.GrpcInterceptor
@@ -51,7 +52,7 @@ namespace Yangtao.Hosting.SignatureValidation.Client.GrpcInterceptor
 
             var json = JsonConvert.SerializeObject(request);
             var signature = BuildSignature(json);
-            context.Options.Headers.Add("signature", signature);
+            context.Options.Headers.Add(SignatureValidationDefaultKeys.SignatureKey, signature);
 
             return context;
         }

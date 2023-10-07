@@ -19,12 +19,12 @@ namespace Test.SignatureValidation.Client
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddHcmaShaSignatureValidation(options =>
-            {
-                options.HmacShaAlgorithmType = HashAlgorithmType.SHA256;
-                options.HmacShaSignatureFormatType = HmacShaSignatureFormatType.Base64;
-                options.SecretKey = "3d37adf4f8a593811d8035c9a355bb25";
-            });
+            //builder.Services.AddHcmaShaSignatureValidation(options =>
+            //{
+            //    options.HmacShaAlgorithmType = HashAlgorithmType.SHA256;
+            //    options.HmacShaSignatureFormatType = HmacShaSignatureFormatType.Base64;
+            //    options.SecretKey = "3d37adf4f8a593811d8035c9a355bb25";
+            //});
             builder.Services.AddEncryptionValidation(options =>
             {
                 options.RSAEncryptionPaddingType = RSAEncryptionPaddingType.Pkcs1;
@@ -56,6 +56,10 @@ namespace Test.SignatureValidation.Client
                     });
                     channelOptions.ServiceConfig = serviceConfig;
                 });
+            }).AddClientSignatureValidationGrpcInterceptor(options =>
+            {
+                options.AddInterceptorMethod(nameof(ClientSignatureValidationGrpcProvider.ClientSignatureValidationGrpcProviderClient.Login));
+                options.AddInterceptorMethod(nameof(ClientSignatureValidationGrpcProvider.ClientSignatureValidationGrpcProviderClient.LoginAsync));
             });
             var app = builder.Build();
 
