@@ -136,6 +136,11 @@ namespace Yangtao.Hosting.Repository.Core.Providers
 
         public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate) => _dbContext.Set<TEntity>().Where(predicate);
 
+
+        public IQueryable<TEntity> GetNoTracking() => _dbContext.Set<TEntity>().AsNoTracking();
+
+        public IQueryable<TEntity> GetNoTracking(Expression<Func<TEntity, bool>> predicate) => _dbContext.Set<TEntity>().Where(predicate).AsNoTracking();
+
         public Task<TEntity?> GetByIdAsync(Expression<Func<TEntity, bool>> predicate) => _dbContext.Set<TEntity>().Where(predicate).FirstOrDefaultAsync();
 
         public Task<TEntity?> GetByIdAsync(string id) => _dbContext.Set<TEntity>().FirstOrDefaultAsync(a => a.Id == id);
@@ -450,5 +455,6 @@ namespace Yangtao.Hosting.Repository.Core.Providers
         public IQueryable<TEntity> SqlQuery(FormattableString sql) => _dbContext.Database.SqlQuery<TEntity>(sql);
 
         public IQueryable<TEntity> SqlQueryRaw(string sql, params object[] parameters) => _dbContext.Database.SqlQueryRaw<TEntity>(sql, parameters);
+
     }
 }

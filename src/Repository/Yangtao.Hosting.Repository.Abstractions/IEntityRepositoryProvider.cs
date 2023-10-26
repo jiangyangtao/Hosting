@@ -130,6 +130,12 @@ namespace Yangtao.Hosting.Repository.Abstractions
         IQueryable<TEntity> Get();
 
         /// <summary>
+        /// 获取一个不跟踪的 IQueryable
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<TEntity> GetNoTracking();
+
+        /// <summary>
         /// 获取一个 IQueryable
         /// </summary>
         /// <typeparam name="TSource"></typeparam>
@@ -137,5 +143,12 @@ namespace Yangtao.Hosting.Repository.Abstractions
         /// <param name="include"></param>
         /// <returns></returns>
         IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate);
+
+        /// <summary>
+        /// 获取一个不跟踪的 IQueryable
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        IQueryable<TEntity> GetNoTracking(Expression<Func<TEntity, bool>> predicate);
     }
 }
