@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Data;
 using System.Linq.Expressions;
 using Yangtao.Hosting.Repository.Abstractions;
@@ -21,6 +22,9 @@ namespace Yangtao.Hosting.Repository.Core.Providers
 
         public IQueryable<TView> Get(Expression<Func<TView, bool>> predicate) => _dbContext.Set<TView>().Where(predicate);
 
+        public IQueryable<TView> GetNoTracking() => _dbContext.Set<TView>().AsNoTracking();
+
+        public IQueryable<TView> GetNoTracking(Expression<Func<TView, bool>> predicate) => _dbContext.Set<TView>().Where(predicate).AsNoTracking();
 
         public IQueryable<TView> SqlQuery(FormattableString sql) => _dbContext.Database.SqlQuery<TView>(sql);
 
