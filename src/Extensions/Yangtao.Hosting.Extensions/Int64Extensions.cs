@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
-namespace Yangtao.Hosting.Extensions
+﻿namespace Yangtao.Hosting.Extensions
 {
     public static class Int64Extensions
     {
@@ -15,5 +8,9 @@ namespace Yangtao.Hosting.Extensions
 
             return value.Value;
         }
+
+        public static DateTime ToDateTimeForSeconds(this long value) => DateTimeOffset.FromUnixTimeSeconds(value).LocalDateTime;
+
+        public static DateTime ToDateTimeForMilliseconds(this long value) => DateTimeOffset.FromUnixTimeMilliseconds(value).LocalDateTime;
     }
 }

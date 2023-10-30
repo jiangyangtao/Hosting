@@ -32,5 +32,21 @@ namespace Yangtao.Hosting.Extensions
         {
             return dateTime.ToString(format);
         }
+
+        public static long ToUnixTimeSeconds(this DateTime time) => new DateTimeOffset(time).ToUnixTimeSeconds();
+
+        public static long ToUnixTimeMilliseconds(this DateTime time) => new DateTimeOffset(time).ToUnixTimeMilliseconds();
+
+        public static long ToUnixTimeSeconds(this DateTime? time)
+        {
+            if (time.HasValue == false) return 0;
+            return time.Value.ToUnixTimeSeconds();
+        }
+
+        public static long ToUnixTimeMilliseconds(this DateTime? time)
+        {
+            if (time.HasValue == false) return 0;
+            return time.Value.ToUnixTimeMilliseconds();
+        }
     }
 }
