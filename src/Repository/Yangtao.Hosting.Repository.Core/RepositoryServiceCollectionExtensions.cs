@@ -43,7 +43,7 @@ namespace Yangtao.Hosting.Repository.Core
 
         private static void RegisterRepository(this IServiceCollection services, Type[] types, string methodName)
         {
-            var registerRepositoryMethod = BuildRegisterRepositoryMethod(methodName);
+            var registerRepositoryMethod = typeof(RepositoryServiceCollectionExtensions).GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic);
             foreach (var type in types)
             {
                 var method = registerRepositoryMethod.MakeGenericMethod(type);
@@ -61,7 +61,5 @@ namespace Yangtao.Hosting.Repository.Core
         {
             services.AddScoped<IViewRepositoryProvider<TView>, ViewRepositoryProvider<TView>>();
         }
-
-        private static MethodInfo BuildRegisterRepositoryMethod(string methodName) => typeof(RepositoryServiceCollectionExtensions).GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic);
     }
 }
