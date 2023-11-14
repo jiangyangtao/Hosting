@@ -1,4 +1,5 @@
-﻿namespace Yangtao.Hosting.Extensions
+﻿
+namespace Yangtao.Hosting.Extensions
 {
     public static class Int64Extensions
     {
