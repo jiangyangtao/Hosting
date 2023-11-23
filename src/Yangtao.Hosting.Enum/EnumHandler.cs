@@ -14,6 +14,8 @@ namespace Yangtao.Hosting.Enum
 
         public TEnum? GetEnumValue(string name) => GetValue<TEnum>(name);
 
+        public TEnum? GetEnumValue(int value) => GetValue<TEnum>(value);
+
         public void Dispose()
         {
             GC.SuppressFinalize(this);

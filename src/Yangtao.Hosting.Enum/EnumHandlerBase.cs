@@ -7,6 +7,7 @@ namespace Yangtao.Hosting.Enum
 
         protected EnumHandlerBase(Type enumType)
         {
+            EnumType = enumType;
             var array = System.Enum.GetValues(enumType);
             var enumInfos = new List<EnumInfo>();
             foreach (var item in array)
@@ -35,12 +36,20 @@ namespace Yangtao.Hosting.Enum
 
         public bool HasValue(int value) => Values.Any(a => a == value);
 
-        public int? GetValue(string name)
+        public int? GetNumberValue(string name)
         {
             var enumInfo = EnumInfos.FirstOrDefault(a => a.Name == name);
             if (enumInfo == null) return null;
 
             return enumInfo.Value;
+        }
+
+        public string GetName(int value)
+        {
+            var enumInfo = EnumInfos.FirstOrDefault(a => a.Value == value);
+            if (enumInfo == null) return string.Empty;
+
+            return enumInfo.Name;
         }
 
         public TEnum? GetValue<TEnum>(string name) where TEnum : struct, System.Enum
@@ -51,13 +60,14 @@ namespace Yangtao.Hosting.Enum
             return (TEnum)enumInfo.ObjectValue;
         }
 
-        public string GetName(int value)
+        public TEnum? GetValue<TEnum>(int value) where TEnum : struct, System.Enum
         {
             var enumInfo = EnumInfos.FirstOrDefault(a => a.Value == value);
-            if (enumInfo == null) return string.Empty;
+            if (enumInfo == null) return null;
 
-            return enumInfo.Name;
+            return (TEnum)enumInfo.ObjectValue;
         }
+
     }
 
 
