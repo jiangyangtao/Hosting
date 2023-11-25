@@ -14,5 +14,7 @@
         public string Text { set; get; }
 
         public string Description { set; get; }
+
+        public static TextValueOption[] Empty() => Array.Empty<TextValueOption>();
     }
 }
