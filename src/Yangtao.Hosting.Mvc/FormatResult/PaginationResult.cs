@@ -5,14 +5,14 @@ namespace Yangtao.Hosting.Mvc.FormatResult
     {
         public PaginationResult(long count)
         {
-            TotalCount = count;
+            Total = count;
             List = Array.Empty<T>();
         }
 
         /// <summary>
         /// 数据总量
         /// </summary>
-        public long TotalCount { get; }
+        public long Total { get; }
 
         public T[] List { set; get; }
     }
