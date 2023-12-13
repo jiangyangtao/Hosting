@@ -113,6 +113,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.3DES", "test\Test.Encr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.MessageQueue.MemoryQueue", "src\MessageQueue\Yangtao.Hosting.MessageQueue.MemoryQueue\Yangtao.Hosting.MessageQueue.MemoryQueue.csproj", "{75388180-9505-40FD-AC20-97B04B455906}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.GrpcClient", "src\Yangtao.Hosting.GrpcClient\Yangtao.Hosting.GrpcClient.csproj", "{D12B1DA4-6277-42C2-AAA4-35CCD8F67FEA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -283,6 +285,10 @@ Global
 		{75388180-9505-40FD-AC20-97B04B455906}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75388180-9505-40FD-AC20-97B04B455906}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75388180-9505-40FD-AC20-97B04B455906}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D12B1DA4-6277-42C2-AAA4-35CCD8F67FEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D12B1DA4-6277-42C2-AAA4-35CCD8F67FEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D12B1DA4-6277-42C2-AAA4-35CCD8F67FEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D12B1DA4-6277-42C2-AAA4-35CCD8F67FEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -338,6 +344,7 @@ Global
 		{22E1D758-4C46-44FA-A100-8FF50029E3D0} = {82EB0F45-3EAA-4C22-B58D-DF11C4569D7D}
 		{E16AE3D5-1DBD-43E4-BD96-72812AD8544B} = {82EB0F45-3EAA-4C22-B58D-DF11C4569D7D}
 		{75388180-9505-40FD-AC20-97B04B455906} = {AD7CF780-FBA8-436D-B141-EADB8AEAD28B}
+		{D12B1DA4-6277-42C2-AAA4-35CCD8F67FEA} = {0F8D7355-F530-40C9-A64D-ABA3CFA6C79F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28EDA54C-950D-459F-AFC9-092C65E8B3D9}
