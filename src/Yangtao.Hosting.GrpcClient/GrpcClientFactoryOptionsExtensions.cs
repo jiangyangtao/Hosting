@@ -6,18 +6,18 @@ namespace Yangtao.Hosting.GrpcClient
 {
     public static class GrpcClientFactoryOptionsExtensions
     {
-        public static GrpcClientFactoryOptions SetConfig(this GrpcClientFactoryOptions options, GrpcClientOptions clientOptions)
+        public static GrpcClientFactoryOptions SetConfig(this GrpcClientFactoryOptions grpcClientFactoryOptions, GrpcClientOptions clientOptions)
         {
-            return options.SetConfig(clientOptions);
+            return grpcClientFactoryOptions.SetConfig(grpcClientOptions => grpcClientOptions = clientOptions);
         }
 
-        public static GrpcClientOptions SetConfig(this GrpcClientFactoryOptions options, Action<GrpcClientOptions> optionAction)
+        public static GrpcClientFactoryOptions SetConfig(this GrpcClientFactoryOptions grpcClientFactoryOptions, Action<GrpcClientOptions> optionAction)
         {
             var clientOptions = new GrpcClientOptions();
             optionAction(clientOptions);
 
-            options.Address = new Uri(clientOptions.Endpoint);
-            options.ChannelOptionsActions.Add((channelOptions) =>
+            grpcClientFactoryOptions.Address = new Uri(clientOptions.Endpoint);
+            grpcClientFactoryOptions.ChannelOptionsActions.Add((channelOptions) =>
             {
                 if (clientOptions.AllowUnsafeCertificate)
                 {
@@ -47,7 +47,7 @@ namespace Yangtao.Hosting.GrpcClient
                 }
             });
 
-            return clientOptions;
+            return grpcClientFactoryOptions;
         }
     }
 }
