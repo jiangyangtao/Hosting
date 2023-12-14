@@ -1,4 +1,6 @@
-﻿namespace Yangtao.Hosting.GrpcClient
+﻿using Grpc.Net.ClientFactory;
+
+namespace Yangtao.Hosting.GrpcClient
 {
     public class GrpcClientOptions
     {
@@ -19,5 +21,7 @@
         public bool AddRetry { set; get; } = true;
 
         public bool UseAuthenticationGrpcClientInterceptor { set; get; } = true;
+
+        public InterceptorScope InterceptorScope { set; get; } = InterceptorScope.Channel;
     }
 }

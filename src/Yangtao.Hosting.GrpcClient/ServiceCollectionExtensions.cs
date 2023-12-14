@@ -20,12 +20,12 @@ namespace Yangtao.Hosting.GrpcClient
             var httpClientBuilder = services.AddGrpcClient<TClient>(options =>
              {
                  options.SetDefault(clientOptions);
-             }).AddAuthenticationGrpcClientInterceptor();
+             });
 
             if (clientOptions.UseAuthenticationGrpcClientInterceptor)
             {
                 services.AddAuthenticationGrpcClientInterceptor();
-                httpClientBuilder.AddAuthenticationGrpcClientInterceptor();
+                httpClientBuilder.AddAuthenticationGrpcClientInterceptor(clientOptions.InterceptorScope);
             }
 
             return services;
