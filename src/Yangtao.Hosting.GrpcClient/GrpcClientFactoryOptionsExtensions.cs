@@ -6,12 +6,12 @@ namespace Yangtao.Hosting.GrpcClient
 {
     public static class GrpcClientFactoryOptionsExtensions
     {
-        public static GrpcClientFactoryOptions SetConfig(this GrpcClientFactoryOptions grpcClientFactoryOptions, GrpcClientOptions clientOptions)
+        public static GrpcClientFactoryOptions SetDefault(this GrpcClientFactoryOptions grpcClientFactoryOptions, GrpcClientOptions clientOptions)
         {
-            return grpcClientFactoryOptions.SetConfig(grpcClientOptions => grpcClientOptions = clientOptions);
+            return grpcClientFactoryOptions.SetDefault(grpcClientOptions => grpcClientOptions = clientOptions);
         }
 
-        public static GrpcClientFactoryOptions SetConfig(this GrpcClientFactoryOptions grpcClientFactoryOptions, Action<GrpcClientOptions> optionAction)
+        public static GrpcClientFactoryOptions SetDefault(this GrpcClientFactoryOptions grpcClientFactoryOptions, Action<GrpcClientOptions> optionAction)
         {
             var clientOptions = new GrpcClientOptions();
             optionAction(clientOptions);
@@ -19,7 +19,7 @@ namespace Yangtao.Hosting.GrpcClient
             grpcClientFactoryOptions.Address = new Uri(clientOptions.Endpoint);
             grpcClientFactoryOptions.ChannelOptionsActions.Add((channelOptions) =>
             {
-                if (clientOptions.AllowUnsafeCertificate)
+                if (clientOptions.AllowAnyServerCertificate)
                 {
                     // 允许自签名证书
                     channelOptions.HttpHandler = new HttpClientHandler

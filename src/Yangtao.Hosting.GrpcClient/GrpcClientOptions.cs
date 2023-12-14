@@ -2,12 +2,16 @@
 {
     public class GrpcClientOptions
     {
+        internal GrpcClientOptions()
+        {
+        }
+
         public string Endpoint { set; get; }
 
         /// <summary>
-        /// // 允许自签名证书
+        /// 允许自签名证书
         /// </summary>
-        public bool AllowUnsafeCertificate { set; get; } = true;
+        public bool AllowAnyServerCertificate { set; get; } = true;
 
         /// <summary>
         /// 重试策略
