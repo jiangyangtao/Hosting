@@ -8,7 +8,14 @@ namespace Yangtao.Hosting.GrpcClient
     {
         public static GrpcClientFactoryOptions SetDefault(this GrpcClientFactoryOptions grpcClientFactoryOptions, GrpcClientOptions clientOptions)
         {
-            return grpcClientFactoryOptions.SetDefault(grpcClientOptions => grpcClientOptions = clientOptions);
+            return grpcClientFactoryOptions.SetDefault(grpcClientOptions =>
+            {
+                grpcClientOptions.Endpoint = clientOptions.Endpoint;
+                grpcClientOptions.AllowAnyServerCertificate = clientOptions.AllowAnyServerCertificate;
+                grpcClientOptions.AddRetry = clientOptions.AddRetry;
+                grpcClientOptions.UseAuthenticationGrpcClientInterceptor = clientOptions.UseAuthenticationGrpcClientInterceptor;
+                grpcClientOptions.InterceptorScope = clientOptions.InterceptorScope;
+            });
         }
 
         public static GrpcClientFactoryOptions SetDefault(this GrpcClientFactoryOptions grpcClientFactoryOptions, Action<GrpcClientOptions> optionAction)
