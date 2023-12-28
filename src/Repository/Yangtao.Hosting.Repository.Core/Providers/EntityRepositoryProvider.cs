@@ -11,7 +11,7 @@ using Yangtao.Hosting.Repository.Abstractions;
 
 namespace Yangtao.Hosting.Repository.Core.Providers
 {
-    internal class EntityRepositoryProvider<TEntity> : IEntityRepositoryProvider<TEntity> where TEntity : BaseEntity
+    internal class EntityRepositoryProvider<TEntity> : IEntityRepository<TEntity> where TEntity : BaseEntity
     {
         public const string UserIdPreperty = "UserId";
 

@@ -54,7 +54,7 @@ namespace Yangtao.Hosting.Repository.Core
 
         private static void RegisterEntityRepository<TEntity>(IServiceCollection services) where TEntity : BaseEntity
         {
-            services.AddScoped<IEntityRepositoryProvider<TEntity>, EntityRepositoryProvider<TEntity>>();
+            services.AddScoped<IEntityRepository<TEntity>, EntityRepositoryProvider<TEntity>>();
         }
 
         private static void RegisterViewRepository<TView>(IServiceCollection services) where TView : BaseView
