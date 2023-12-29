@@ -16,7 +16,7 @@ namespace Yangtao.Hosting.Repository.Core
             services.AddDbContext<DefaultDbContext>(optionsAction);
             services.RegisterModelRepository();
 
-            services.AddScoped<IDataBaseProvider, DataBaseProvider>();
+            services.AddScoped<IDataBaseRepository, DataBaseRepository>();
             return services;
         }
 
@@ -52,14 +52,19 @@ namespace Yangtao.Hosting.Repository.Core
             }
         }
 
-        private static void RegisterEntityRepository<TEntity>(IServiceCollection services) where TEntity : BaseEntity
+        private static void RegisterEntityRepository<TEntity>(IServiceCollection services) where TEntity : BaseEntity<string>, new()
         {
-            services.AddScoped<IEntityRepository<TEntity>, EntityRepositoryProvider<TEntity>>();
+            services.AddScoped<IEntityRepository<TEntity>, EntityRepository<TEntity>>();
+        }
+
+        private static void RegisterEntityRepository<TEntity, TKeyType>(IServiceCollection services) where TEntity : BaseEntity<TKeyType>, new() where TKeyType : struct
+        {
+            services.AddScoped<IEntityRepository<TEntity, TKeyType>, EntityRepository<TEntity, TKeyType>>();
         }
 
         private static void RegisterViewRepository<TView>(IServiceCollection services) where TView : BaseView
         {
-            services.AddScoped<IViewRepositoryProvider<TView>, ViewRepositoryProvider<TView>>();
+            services.AddScoped<IViewRepositoryProvider<TView>, ViewRepository<TView>>();
         }
     }
 }

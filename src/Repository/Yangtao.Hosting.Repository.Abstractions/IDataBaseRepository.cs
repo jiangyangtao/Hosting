@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Yangtao.Hosting.Repository.Abstractions
 {
-    public interface IDataBaseProvider
+    public interface IDataBaseRepository
     {
         IQueryable<TResult> SqlQuery<TResult>(FormattableString sql);
 

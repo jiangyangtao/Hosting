@@ -19,7 +19,7 @@
         public string Id { get; set; }
     }
 
-    public interface IEntity<TKeyType> : IEntityBase where TKeyType : struct
+    public interface IEntity<TKeyType> : IEntityBase
     {
         public TKeyType Id { get; set; }
     }

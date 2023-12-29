@@ -6,11 +6,11 @@ using Yangtao.Hosting.Repository.Abstractions;
 
 namespace Yangtao.Hosting.Repository.Core.Providers
 {
-    internal class DataBaseProvider : IDataBaseProvider
+    internal class DataBaseRepository : IDataBaseRepository
     {
         private readonly DefaultDbContext _dbContext;
 
-        public DataBaseProvider(DefaultDbContext dbContext)
+        public DataBaseRepository(DefaultDbContext dbContext)
         {
             _dbContext = dbContext;
         }

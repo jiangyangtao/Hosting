@@ -5,7 +5,7 @@ using Yangtao.Hosting.Repository.Abstractions;
 
 namespace Yangtao.Hosting.Repository.Core
 {
-    internal class EntityColumns<TEntity> : IEntityColumns<TEntity> where TEntity : BaseEntity
+    internal class EntityColumns<TEntity> : IEntityColumns<TEntity> where TEntity : IEntityBase
     {
         private readonly IList<string> Columns;
         private readonly IList<Expression<Func<TEntity, object>>> ColumnExpressions;

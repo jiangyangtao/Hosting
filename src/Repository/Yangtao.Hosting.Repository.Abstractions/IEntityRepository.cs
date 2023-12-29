@@ -2,7 +2,7 @@
 
 namespace Yangtao.Hosting.Repository.Abstractions
 {
-    public interface IEntityRepository<TEntity> : ISqlQueryProvider<TEntity>, IEmptyArray<TEntity> where TEntity : IEntityBase
+    public interface IEntityRepositoryBase<TEntity, TKeyType> : ISqlQueryProvider<TEntity>, IEmptyArray<TEntity> where TEntity : BaseEntity<TKeyType>
     {
         IEntityColumns<TEntity> CreateEntityColumnExpressions();
 
@@ -45,7 +45,7 @@ namespace Yangtao.Hosting.Repository.Abstractions
 
         Task<long> UpdateRangePropertyAsync<TProperty>(TEntity[] entities, Expression<Func<TEntity, TProperty>> propertyExpression, bool isCommit = true);
 
-        Task<TEntity> UpdateIfExistByIdAsync(string id, Action<TEntity> action, bool isCommit = true);
+        Task<TEntity> UpdateIfExistByIdAsync(TKeyType id, Action<TEntity> action, bool isCommit = true);
 
         Task<TEntity> UpdateIfExistAsync(Expression<Func<TEntity, bool>> predicate, Action<TEntity> action, bool isCommit = true);
 
@@ -72,7 +72,7 @@ namespace Yangtao.Hosting.Repository.Abstractions
         /// <param name="id"></param>
         /// <param name="isCommit"></param>
         /// <returns></returns>
-        Task DeleteByIdAsync(string id, bool isCommit = true);
+        Task DeleteByIdAsync(TKeyType id, bool isCommit = true);
 
         /// <summary>
         /// 删除一条数据
@@ -120,7 +120,7 @@ namespace Yangtao.Hosting.Repository.Abstractions
         /// <typeparam name="TSource"></typeparam>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<TEntity?> GetByIdAsync(string id);
+        Task<TEntity?> GetByIdAsync(TKeyType id);
 
         /// <summary>
         /// 获取一个 IQueryable
@@ -150,5 +150,15 @@ namespace Yangtao.Hosting.Repository.Abstractions
         /// <param name="predicate"></param>
         /// <returns></returns>
         IQueryable<TEntity> GetNoTracking(Expression<Func<TEntity, bool>> predicate);
+    }
+
+    public interface IEntityRepository<TEntity> : IEntityRepositoryBase<TEntity, string> where TEntity : BaseEntity<string>
+    {
+
+    }
+
+    public interface IEntityRepository<TEntity, TKeyType> : IEntityRepositoryBase<TEntity, TKeyType> where TEntity : BaseEntity<TKeyType>
+    {
+
     }
 }

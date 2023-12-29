@@ -6,11 +6,11 @@ using Yangtao.Hosting.Repository.Abstractions;
 
 namespace Yangtao.Hosting.Repository.Core.Providers
 {
-    internal class ViewRepositoryProvider<TView> : IViewRepositoryProvider<TView> where TView : BaseView
+    internal class ViewRepository<TView> : IViewRepositoryProvider<TView> where TView : BaseView
     {
         private readonly DbContext _dbContext;
 
-        public ViewRepositoryProvider(DefaultDbContext dbContext)
+        public ViewRepository(DefaultDbContext dbContext)
         {
             _dbContext = dbContext;
         }

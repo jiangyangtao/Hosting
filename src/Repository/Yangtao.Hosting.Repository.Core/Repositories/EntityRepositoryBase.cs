@@ -9,20 +9,20 @@ using System.Reflection;
 using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.Repository.Abstractions;
 
-namespace Yangtao.Hosting.Repository.Core.Providers
+namespace Yangtao.Hosting.Repository.Core.Repositories
 {
-    internal class EntityRepositoryProvider<TEntity> : IEntityRepository<TEntity> where TEntity : BaseEntity
+    internal abstract class EntityRepositoryBase<TEntity, TKeyType> : IEntityRepositoryBase<TEntity, TKeyType> where TEntity : BaseEntity<TKeyType>
     {
         public const string UserIdPreperty = "UserId";
 
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly DefaultDbContext _dbContext;
+        protected readonly IHttpContextAccessor _httpContextAccessor;
+        protected readonly DefaultDbContext _dbContext;
 
-        private readonly Type BaseModelType = typeof(TEntity);
-        private readonly Type TEntityType;
-        private readonly PropertyInfo[] EntityProperties;
+        protected readonly Type BaseModelType = typeof(TEntity);
+        protected readonly Type TEntityType;
+        protected readonly PropertyInfo[] EntityProperties;
 
-        public EntityRepositoryProvider(IHttpContextAccessor httpContextAccessor, DefaultDbContext dbContext)
+        public EntityRepositoryBase(IHttpContextAccessor httpContextAccessor, DefaultDbContext dbContext)
         {
             _httpContextAccessor = httpContextAccessor;
             _dbContext = dbContext;
@@ -31,7 +31,7 @@ namespace Yangtao.Hosting.Repository.Core.Providers
             EntityProperties = TEntityType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
         }
 
-        private string UserId
+        protected string UserId
         {
             get
             {
@@ -44,7 +44,7 @@ namespace Yangtao.Hosting.Repository.Core.Providers
 
         public async Task<TEntity> AddAsync(TEntity entity, bool isCommit = true)
         {
-            if (entity == null) return null;
+            if (entity == null) return default;
 
             entity.CreateUser = UserId;
             entity.UpdateUser = UserId;
@@ -85,7 +85,7 @@ namespace Yangtao.Hosting.Repository.Core.Providers
             return await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteByIdAsync(string id, bool isCommit = true)
+        public async Task DeleteByIdAsync(TKeyType id, bool isCommit = true)
         {
             var entity = await GetByIdAsync(id);
             if (entity != null) await DeleteAsync(entity, isCommit);
@@ -143,7 +143,7 @@ namespace Yangtao.Hosting.Repository.Core.Providers
 
         public Task<TEntity?> GetByIdAsync(Expression<Func<TEntity, bool>> predicate) => _dbContext.Set<TEntity>().Where(predicate).FirstOrDefaultAsync();
 
-        public Task<TEntity?> GetByIdAsync(string id) => _dbContext.Set<TEntity>().FirstOrDefaultAsync(a => a.Id == id);
+        public abstract Task<TEntity?> GetByIdAsync(TKeyType id);
 
         public async Task<TEntity> UpdateAsync(TEntity entity, bool isCommit = true)
         {
@@ -363,10 +363,7 @@ namespace Yangtao.Hosting.Repository.Core.Providers
             return entities.Length;
         }
 
-        public async Task<TEntity> UpdateIfExistByIdAsync(string id, Action<TEntity> action, bool isCommit = true)
-        {
-            return await UpdateIfExistAsync(a => a.Id == id, action, isCommit);
-        }
+        public abstract Task<TEntity> UpdateIfExistByIdAsync(TKeyType id, Action<TEntity> action, bool isCommit = true);
 
         public async Task<TEntity> UpdateIfExistAsync(Expression<Func<TEntity, bool>> predicate, Action<TEntity> action, bool isCommit = true)
         {
