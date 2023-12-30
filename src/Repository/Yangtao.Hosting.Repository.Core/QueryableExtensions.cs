@@ -9,12 +9,12 @@ namespace Yangtao.Hosting.Repository.Core
             return queryable.Skip(paginationParam.Start).Take(paginationParam.Size);
         }
 
-        public static IQueryable<TEntity> OrderByDescCreateTime<TEntity>(this IQueryable<TEntity> queryable) where TEntity : IEntity
+        public static IQueryable<TEntity> OrderByDescCreateTime<TEntity>(this IQueryable<TEntity> queryable) where TEntity : IEntityBase
         {
             return queryable.OrderByDescending(a => a.CreateTime);
         }
 
-        public static IQueryable<TEntity> DefaultOrderPagination<TEntity>(this IQueryable<TEntity> queryable, PaginationBase paginationParam) where TEntity : IEntity
+        public static IQueryable<TEntity> DefaultOrderPagination<TEntity>(this IQueryable<TEntity> queryable, PaginationBase paginationParam) where TEntity : IEntityBase
         {
             return queryable.OrderByDescCreateTime().Pagination(paginationParam);
         }

@@ -34,12 +34,10 @@ namespace Yangtao.Hosting.Repository.Core
 
         private static void RegisterModelRepository(this IServiceCollection services)
         {
-            var types = ModelTypeBuilder.GetEntityModleTypes();
+            var service = ModelTypeBuilder.GetEntityModelService();
+            service.Register(services);
 
-            //var entityTypes =types.Where(a=>a.Generic)
-            services.RegisterRepository(types, nameof(RegisterEntityRepository));
-
-            var viewTypes = ModelTypeBuilder.GetViewModleTypes();
+            var viewTypes = ModelTypeBuilder.GetViewModelTypes();
             if (viewTypes.NotNullAndEmpty()) services.RegisterRepository(viewTypes, nameof(RegisterViewRepository));
         }
 
@@ -52,26 +50,6 @@ namespace Yangtao.Hosting.Repository.Core
                 method.GetGenericMethodDefinition();
                 method.Invoke(null, new object[] { services });
             }
-        }
-
-        private static void RegisterEntityRepository<TEntity>(IServiceCollection services) where TEntity : class, IEntity<string>, new()
-        {
-            services.AddScoped<IEntityRepository<TEntity>, EntityRepository<TEntity>>();
-        }
-
-        private static void RegisterGuidEntityRepository<TEntity>(IServiceCollection services) where TEntity : class, IEntity<Guid>, new()
-        {
-            services.AddScoped<IGuidEntityRepository<TEntity>, GuidEntityRepository<TEntity>>();
-        }
-
-        private static void RegisterIntegerEntityRepository<TEntity>(IServiceCollection services) where TEntity : class, IEntity<int>, new()
-        {
-            services.AddScoped<IIntegerEntityRepository<TEntity>, IntegerEntityRepository<TEntity>>();
-        }
-
-        private static void RegisterBigIntegerEntityRepository<TEntity>(IServiceCollection services) where TEntity : class, IEntity<long>, new()
-        {
-            services.AddScoped<IBigIntegerEntityRepository<TEntity>, BigIntegerEntityRepository<TEntity>>();
         }
 
         private static void RegisterViewRepository<TView>(IServiceCollection services) where TView : BaseView

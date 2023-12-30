@@ -12,16 +12,27 @@ namespace Yangtao.Hosting.Repository.Core.Builders
         {
         }
 
-        public static Type[] GetEntityModleTypes() => GetModleTypes(typeof(IEntity<>));
+        internal static EntityModelService GetEntityModelService()
+        {
+            if (EntityModelService == null)
+            {
+                EntityModelService = new EntityModelService();
+                EntityModelService.Build(CurrnetAssemblies);
+            }
 
-        public static Type[] GetViewModleTypes() => GetModleTypes(typeof(IView));
+            return EntityModelService;
+        }
 
-        private static Type[] GetModleTypes(Type modelType)
+        private static EntityModelService EntityModelService { set; get; }
+
+        public static Type[] GetViewModelTypes() => GetModelTypes(typeof(IView));
+
+        private static Type[] GetModelTypes(Type modelType)
         {
             var assemblies = CurrnetAssemblies;
 
             var entityTypes = assemblies.SelectMany(assemblie => assemblie.GetTypes().Where(t => t.BaseType != null && t.BaseType == modelType)).ToArray();
-            return entityTypes.Where(a => a.HasInterface<IProxyTargetAccessor>() == false).ToArray();  // 去除懒加载创建的实体代理
+            return entityTypes.Where(a => a.HasInterface<IProxyTargetAccessor>() == false).ToArray();
         }
 
         private static Assembly[] CurrnetAssemblies

@@ -11,7 +11,8 @@ namespace Yangtao.Hosting.Repository.Core
     {
         public static ModelBuilder MapEntities(this ModelBuilder modelBuilder)
         {
-            var types = ModelTypeBuilder.GetEntityModleTypes();
+            var service = ModelTypeBuilder.GetEntityModelService();
+            var types = service.GetEntityTypes();
             foreach (var type in types)
             {
                 if (type.IsAbstract) continue;
@@ -34,7 +35,7 @@ namespace Yangtao.Hosting.Repository.Core
 
         public static ModelBuilder MapViews(this ModelBuilder modelBuilder)
         {
-            var types = ModelTypeBuilder.GetViewModleTypes();
+            var types = ModelTypeBuilder.GetViewModelTypes();
             foreach (var type in types)
             {
                 if (type.IsAbstract) continue;
