@@ -2,7 +2,7 @@
 
 namespace Yangtao.Hosting.Repository.Abstractions
 {
-    public interface IEntityRepositoryBase<TEntity, TKeyType> : ISqlQueryProvider<TEntity>, IEmptyArray<TEntity> where TEntity : BaseEntity<TKeyType>
+    public interface IEntityRepositoryBase<TEntity, TKeyType> : ISqlQueryProvider<TEntity>, IEmptyArray<TEntity> where TEntity : IEntity<TKeyType>
     {
         IEntityColumns<TEntity> CreateEntityColumnExpressions();
 
@@ -152,12 +152,22 @@ namespace Yangtao.Hosting.Repository.Abstractions
         IQueryable<TEntity> GetNoTracking(Expression<Func<TEntity, bool>> predicate);
     }
 
-    public interface IEntityRepository<TEntity> : IEntityRepositoryBase<TEntity, string> where TEntity : BaseEntity<string>
+    public interface IEntityRepository<TEntity> : IEntityRepositoryBase<TEntity, string> where TEntity : IEntity<string>
     {
 
     }
 
-    public interface IEntityRepository<TEntity, TKeyType> : IEntityRepositoryBase<TEntity, TKeyType> where TEntity : BaseEntity<TKeyType>
+    public interface IGuidEntityRepository<TEntity> : IEntityRepositoryBase<TEntity, Guid> where TEntity : IEntity<Guid>
+    {
+
+    }
+
+    public interface IIntegerEntityRepository<TEntity> : IEntityRepositoryBase<TEntity, int> where TEntity : IEntity<int>
+    {
+
+    }
+
+    public interface IBigIntegerEntityRepository<TEntity> : IEntityRepositoryBase<TEntity, long> where TEntity : IEntity<long>
     {
 
     }

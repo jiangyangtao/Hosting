@@ -12,9 +12,9 @@ namespace Yangtao.Hosting.Repository.Core.Builders
         {
         }
 
-        public static Type[] GetEntityModleTypes() => GetModleTypes(typeof(BaseEntity));
+        public static Type[] GetEntityModleTypes() => GetModleTypes(typeof(IEntity<>));
 
-        public static Type[] GetViewModleTypes() => GetModleTypes(typeof(BaseView));
+        public static Type[] GetViewModleTypes() => GetModleTypes(typeof(IView));
 
         private static Type[] GetModleTypes(Type modelType)
         {

@@ -1,17 +1,17 @@
 ﻿
 namespace Yangtao.Hosting.Repository.Abstractions
 {
-    public interface ICloneable<out TEntity>
+    public interface ICloneable<out TEntityBase>
     {
-        TEntity Clone();
+        TEntityBase Clone();
     }
 
-    public interface ICloneableEntity<TEntity> : ICloneable<TEntity> where TEntity : IEntity
+    public interface ICloneableEntity<out TEntityBase> : ICloneable<TEntityBase>
     {
 
     }
 
-    public interface ICloneableView<TView> : ICloneable<TView> where TView : IView
+    public interface ICloneableView<out TView> : ICloneable<TView> where TView : IView
     {
 
     }

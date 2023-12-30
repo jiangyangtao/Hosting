@@ -34,8 +34,10 @@ namespace Yangtao.Hosting.Repository.Core
 
         private static void RegisterModelRepository(this IServiceCollection services)
         {
-            var entityTypes = ModelTypeBuilder.GetEntityModleTypes();
-            services.RegisterRepository(entityTypes, nameof(RegisterEntityRepository));
+            var types = ModelTypeBuilder.GetEntityModleTypes();
+
+            //var entityTypes =types.Where(a=>a.Generic)
+            services.RegisterRepository(types, nameof(RegisterEntityRepository));
 
             var viewTypes = ModelTypeBuilder.GetViewModleTypes();
             if (viewTypes.NotNullAndEmpty()) services.RegisterRepository(viewTypes, nameof(RegisterViewRepository));
@@ -52,14 +54,24 @@ namespace Yangtao.Hosting.Repository.Core
             }
         }
 
-        private static void RegisterEntityRepository<TEntity>(IServiceCollection services) where TEntity : BaseEntity<string>, new()
+        private static void RegisterEntityRepository<TEntity>(IServiceCollection services) where TEntity : class, IEntity<string>, new()
         {
             services.AddScoped<IEntityRepository<TEntity>, EntityRepository<TEntity>>();
         }
 
-        private static void RegisterEntityRepository<TEntity, TKeyType>(IServiceCollection services) where TEntity : BaseEntity<TKeyType>, new() where TKeyType : struct
+        private static void RegisterGuidEntityRepository<TEntity>(IServiceCollection services) where TEntity : class, IEntity<Guid>, new()
         {
-            services.AddScoped<IEntityRepository<TEntity, TKeyType>, EntityRepository<TEntity, TKeyType>>();
+            services.AddScoped<IGuidEntityRepository<TEntity>, GuidEntityRepository<TEntity>>();
+        }
+
+        private static void RegisterIntegerEntityRepository<TEntity>(IServiceCollection services) where TEntity : class, IEntity<int>, new()
+        {
+            services.AddScoped<IIntegerEntityRepository<TEntity>, IntegerEntityRepository<TEntity>>();
+        }
+
+        private static void RegisterBigIntegerEntityRepository<TEntity>(IServiceCollection services) where TEntity : class, IEntity<long>, new()
+        {
+            services.AddScoped<IBigIntegerEntityRepository<TEntity>, BigIntegerEntityRepository<TEntity>>();
         }
 
         private static void RegisterViewRepository<TView>(IServiceCollection services) where TView : BaseView

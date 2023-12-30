@@ -3,11 +3,8 @@ using Yangtao.Hosting.Common;
 
 namespace Yangtao.Hosting.Repository.Abstractions
 {
-    public abstract class BaseEntity<TKeyType> : IEntity<TKeyType>, ICloneableEntity<IEntity>
+    public abstract class EntityBase : IEntityBase, ICloneableEntity<IEntityBase>
     {
-        [Key]
-        public TKeyType Id { get; set; }
-
         public DateTime CreateTime { get; set; }
 
         public DateTime UpdateTime { get; set; }
@@ -16,33 +13,23 @@ namespace Yangtao.Hosting.Repository.Abstractions
 
         public string? UpdateUser { get; set; }
 
-        public IEntity Clone()
+        public IEntityBase Clone()
         {
-            return (IEntity)MemberwiseClone();
+            return (IEntityBase)MemberwiseClone();
         }
     }
 
-    public abstract class BaseEntity : IEntity<string>
+    public abstract class BaseEntity<TKeyType> : EntityBase, IEntity<TKeyType>
+    {
+        [Key]
+        public TKeyType Id { get; set; }
+    }
+
+    public abstract class BaseEntity : BaseEntity<string>
     {
         protected BaseEntity()
         {
             Id = SequentialGuidGenerator.NewSequentialGuid(SequentialGuidType.SequentialAsString).ToString();
-        }
-
-        [Key]
-        public string Id { get; set; }
-
-        public DateTime CreateTime { get; set; }
-
-        public DateTime UpdateTime { get; set; }
-
-        public string? CreateUser { get; set; }
-
-        public string? UpdateUser { get; set; }
-
-        public IEntity Clone()
-        {
-            return (IEntity)MemberwiseClone();
         }
     }
 

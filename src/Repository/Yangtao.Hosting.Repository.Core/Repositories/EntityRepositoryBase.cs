@@ -11,7 +11,7 @@ using Yangtao.Hosting.Repository.Abstractions;
 
 namespace Yangtao.Hosting.Repository.Core.Repositories
 {
-    internal abstract class EntityRepositoryBase<TEntity, TKeyType> : IEntityRepositoryBase<TEntity, TKeyType> where TEntity : BaseEntity<TKeyType>
+    internal abstract class EntityRepositoryBase<TEntity, TKeyType> : IEntityRepositoryBase<TEntity, TKeyType> where TEntity : class, IEntity<TKeyType>, new()
     {
         public const string UserIdPreperty = "UserId";
 
@@ -44,7 +44,7 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
 
         public async Task<TEntity> AddAsync(TEntity entity, bool isCommit = true)
         {
-            if (entity == null) return default;
+            if (entity == null) return null;
 
             entity.CreateUser = UserId;
             entity.UpdateUser = UserId;
@@ -85,11 +85,8 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
             return await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteByIdAsync(TKeyType id, bool isCommit = true)
-        {
-            var entity = await GetByIdAsync(id);
-            if (entity != null) await DeleteAsync(entity, isCommit);
-        }
+        public abstract Task DeleteByIdAsync(TKeyType id, bool isCommit = true);
+
 
         public async Task<long> DeleteIfExistAsync(Expression<Func<TEntity, bool>> predicate, bool isCommit = true)
         {
@@ -221,7 +218,7 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
             return entity;
         }
 
-        private string AnalysisExpression(Expression expression)
+        private static string AnalysisExpression(Expression expression)
         {
             if (expression is MemberExpression memberExpression) return memberExpression.Member.Name;
             if (expression is UnaryExpression unaryExpression) return AnalysisExpression(unaryExpression.Operand);
@@ -365,6 +362,7 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
 
         public abstract Task<TEntity> UpdateIfExistByIdAsync(TKeyType id, Action<TEntity> action, bool isCommit = true);
 
+
         public async Task<TEntity> UpdateIfExistAsync(Expression<Func<TEntity, bool>> predicate, Action<TEntity> action, bool isCommit = true)
         {
             var entity = await Get(predicate).FirstOrDefaultAsync();
@@ -376,7 +374,7 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
             var entityType = entity.GetType();
             var properties = entityType.GetProperties();
             var hasModify = false;
-            var createTimeName = nameof(IEntity.CreateTime);
+            var createTimeName = nameof(IEntity<TKeyType>.CreateTime);
             foreach (var propertyInfo in properties)
             {
                 if (propertyInfo.Name == createTimeName) continue;
@@ -430,7 +428,8 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
 
         private TEntity Clone(TEntity entity)
         {
-            if (entity == null) return default;
+            if (entity == null) return null;
+
             var type = entity.GetType();
             var newObject = Activator.CreateInstance(type);
 
@@ -452,6 +451,5 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
         public IQueryable<TEntity> SqlQuery(FormattableString sql) => _dbContext.Database.SqlQuery<TEntity>(sql);
 
         public IQueryable<TEntity> SqlQueryRaw(string sql, params object[] parameters) => _dbContext.Database.SqlQueryRaw<TEntity>(sql, parameters);
-
     }
 }
