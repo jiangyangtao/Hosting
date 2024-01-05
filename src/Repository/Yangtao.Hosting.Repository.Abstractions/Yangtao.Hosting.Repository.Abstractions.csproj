@@ -9,10 +9,10 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.10" />
 	</ItemGroup>
-	
-  <ItemGroup>
-    <ProjectReference Include="..\..\Yangtao.Hosting.Common\Yangtao.Hosting.Common.csproj" />
-  </ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Yangtao.Hosting.Common\Yangtao.Hosting.Common.csproj" />
+	</ItemGroup>
 
 
 	<ImportGroup>

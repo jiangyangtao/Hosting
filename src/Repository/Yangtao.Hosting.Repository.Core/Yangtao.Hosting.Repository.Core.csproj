@@ -14,7 +14,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Extensions\Yangtao.Hosting.Extensions\Yangtao.Hosting.Extensions.csproj" />
 	  <ProjectReference Include="..\Yangtao.Hosting.Repository.Abstractions\Yangtao.Hosting.Repository.Abstractions.csproj" />
 	</ItemGroup>
 

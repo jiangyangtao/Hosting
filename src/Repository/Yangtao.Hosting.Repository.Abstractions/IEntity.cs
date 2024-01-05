@@ -18,24 +18,4 @@
     {
         public TKeyType Id { get; set; }
     }
-
-    //public interface IEntity : IEntity<string>
-    //{
-
-    //}
-
-    //public interface IGuidEntity : IEntity<Guid>
-    //{
-
-    //}
-
-    //public interface IIntegerEntity : IEntity<int>
-    //{
-
-    //}
-
-    //public interface IBigIntegerEntity : IEntity<long>
-    //{
-
-    //}
 }
