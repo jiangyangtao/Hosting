@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace Yangtao.Hosting.Mvc.HttpResponseResult.HttpResult
+﻿namespace Yangtao.Hosting.Mvc.HttpResponseResult.HttpResult
 {
     public class HttpBadRequestResult : HttpFailResult
     {
