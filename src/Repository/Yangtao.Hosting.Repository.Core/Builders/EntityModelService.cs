@@ -49,10 +49,10 @@ namespace Yangtao.Hosting.Repository.Core.Builders
         public Type[] GetEntityTypes()
         {
             var types = new List<Type>();
-            if (StringEntityType.EntityTypes.NotNullAndEmpty()) types.AddRange(types);
-            if (GuidEntityType.EntityTypes.NotNullAndEmpty()) types.AddRange(types);
-            if (IntegerEntityType.EntityTypes.NotNullAndEmpty()) types.AddRange(types);
-            if (BigIntegerEntityType.EntityTypes.NotNullAndEmpty()) types.AddRange(types);
+            if (StringEntityType.EntityTypes.NotNullAndEmpty()) types.AddRange(StringEntityType.EntityTypes);
+            if (GuidEntityType.EntityTypes.NotNullAndEmpty()) types.AddRange(GuidEntityType.EntityTypes);
+            if (IntegerEntityType.EntityTypes.NotNullAndEmpty()) types.AddRange(IntegerEntityType.EntityTypes);
+            if (BigIntegerEntityType.EntityTypes.NotNullAndEmpty()) types.AddRange(BigIntegerEntityType.EntityTypes);
 
             return types.ToArray();
         }
