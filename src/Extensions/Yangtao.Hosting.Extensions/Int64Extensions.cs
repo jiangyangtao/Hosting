@@ -41,5 +41,41 @@ namespace Yangtao.Hosting.Extensions
         }
 
         public static DateTime ToDateTimeForMilliseconds(this long value) => DateTimeOffset.FromUnixTimeMilliseconds(value).LocalDateTime;
+
+        #region 返回 length 对应的 Size
+
+        /// <summary>
+        /// 返回 ContentLength 对应的Size
+        /// </summary>
+        /// <param name="length"> ContentLength 长度</param>
+        /// <returns>
+        /// B/KB/MB/GB/TB/PB
+        /// </returns>
+        public static string FileSize(this long length)
+        {
+            var size = Convert.ToDouble(length);
+            var units = new string[] { "B", "KB", "MB", "GB", "TB", "PB" };
+            var mod = 1024.0;
+            var i = 0;
+            while (size >= mod)
+            {
+                size /= mod;
+                i++;
+            }
+            return $"{Math.Round(size)}{units[i]}";
+        }
+
+        #endregion
+
+        #region 将此实例的数值转换为其千分位的字符串表示形式
+
+        /// <summary>
+        /// 将此实例的数值转换为其千分位的字符串表示形式
+        /// </summary>
+        /// <param name="value">要转换的<see cref="long"/></param>
+        /// <returns>此实例的值的千分位字符串表示形式</returns>
+        public static string ToThousand(this long value) => string.Format("{0:N}", value);
+
+        #endregion
     }
 }
