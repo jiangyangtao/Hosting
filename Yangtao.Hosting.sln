@@ -113,7 +113,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.3DES", "test\Test.Encr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.MessageQueue.MemoryQueue", "src\MessageQueue\Yangtao.Hosting.MessageQueue.MemoryQueue\Yangtao.Hosting.MessageQueue.MemoryQueue.csproj", "{75388180-9505-40FD-AC20-97B04B455906}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.GrpcClient", "src\Yangtao.Hosting.GrpcClient\Yangtao.Hosting.GrpcClient.csproj", "{D12B1DA4-6277-42C2-AAA4-35CCD8F67FEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.GrpcClient", "src\Yangtao.Hosting.GrpcClient\Yangtao.Hosting.GrpcClient.csproj", "{D12B1DA4-6277-42C2-AAA4-35CCD8F67FEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
