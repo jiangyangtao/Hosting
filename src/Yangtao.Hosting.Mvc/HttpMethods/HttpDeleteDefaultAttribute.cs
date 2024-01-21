@@ -2,9 +2,11 @@
 
 namespace Yangtao.Hosting.Mvc.HttpMethods
 {
-    internal class HttpDeleteDefaultAttribute : HttpDeleteAttribute
+    public class HttpDeleteDefaultAttribute : HttpDeleteAttribute
     {
-        public HttpDeleteDefaultAttribute() : base("/api/v{v:ApiVersion}/[controller]")
+        public HttpDeleteDefaultAttribute() : base("/api/v{v:ApiVersion}/[controller]/") { }
+
+        public HttpDeleteDefaultAttribute(string template) : base("/api/v{v:ApiVersion}/[controller]/" + template)
         {
         }
     }

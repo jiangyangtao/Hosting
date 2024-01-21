@@ -2,9 +2,11 @@
 
 namespace Yangtao.Hosting.Mvc.HttpMethods
 {
-    internal class HttpPutDefaultAttribute : HttpPutAttribute
+    public class HttpPutDefaultAttribute : HttpPutAttribute
     {
-        public HttpPutDefaultAttribute() : base("/api/v{v:ApiVersion}/[controller]")
+        public HttpPutDefaultAttribute() : base("/api/v{v:ApiVersion}/[controller]/") { }
+
+        public HttpPutDefaultAttribute(string template) : base("/api/v{v:ApiVersion}/[controller]/" + template)
         {
         }
     }
