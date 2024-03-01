@@ -1,18 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq.Expressions;
-using System.Reflection;
-using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.Repository.Abstractions;
 using Yangtao.Hosting.Repository.Core.Repositories;
 
 namespace Yangtao.Hosting.Repository.Core.Providers
-{  
+{
     internal class EntityRepository<TEntity> : EntityRepositoryBase<TEntity, string>, IEntityRepository<TEntity> where TEntity : class, IEntity<string>, new()
     {
         public EntityRepository(IHttpContextAccessor httpContextAccessor, DefaultDbContext dbContext) : base(httpContextAccessor, dbContext)

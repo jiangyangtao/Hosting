@@ -57,7 +57,7 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
             return entity;
         }
 
-        public async Task<long> AddRangeAsync(IEnumerable<TEntity> entities, bool isCommit = true)
+        public async Task<long> AddRangeAsync(TEntity[] entities, bool isCommit = true)
         {
             if (entities.IsNullOrEmpty()) return 0;
 
@@ -264,7 +264,7 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
             return entities.Length;
         }
 
-        public async Task<long> UpdateRangePartAsync(IEnumerable<TEntity> entities, Expression<Func<TEntity, object>> updateColumns, bool isCommit = true)
+        public async Task<long> UpdateRangePartAsync(TEntity[] entities, Expression<Func<TEntity, object>> updateColumns, bool isCommit = true)
         {
             if (entities.IsNullOrEmpty()) return 0;
             if (updateColumns == null) return 0;

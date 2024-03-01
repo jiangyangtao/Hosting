@@ -22,7 +22,7 @@ namespace Yangtao.Hosting.Repository.Abstractions
         /// <param name="entities"></param>
         /// <param name="isCommit"></param>
         /// <returns></returns>
-        Task<long> AddRangeAsync(IEnumerable<TEntity> entities, bool isCommit = true);
+        Task<long> AddRangeAsync(TEntity[] entities, bool isCommit = true);
 
         /// <summary>
         /// 修改
@@ -39,7 +39,7 @@ namespace Yangtao.Hosting.Repository.Abstractions
 
         Task<TEntity> UpdatePropertyAsync<TProperty>(TEntity entity, Expression<Func<TEntity, TProperty>> propertyExpression, bool isCommit = true);
 
-        Task<long> UpdateRangePartAsync(IEnumerable<TEntity> entities, Expression<Func<TEntity, object>> updateColumns, bool isCommit = true);
+        Task<long> UpdateRangePartAsync(TEntity[] entities, Expression<Func<TEntity, object>> updateColumns, bool isCommit = true);
 
         Task<long> UpdateRangePartAsync((TEntity entities, IEntityColumns<TEntity> updateColumns)[] values, bool isCommit = true);
 

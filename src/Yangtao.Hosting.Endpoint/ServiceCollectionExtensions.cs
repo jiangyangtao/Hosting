@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Yangtao.Hosting.Endpoint
@@ -9,13 +10,11 @@ namespace Yangtao.Hosting.Endpoint
         {
             var defaultApiVersion = new ApiVersion(1, 0);
             services.AddApiVersioning(options =>
-            {
-                options.ReportApiVersions = true;
-                options.UseApiBehavior = true;
-                options.AssumeDefaultVersionWhenUnspecified = true;
-                options.DefaultApiVersion = defaultApiVersion;
-            });
-            services.AddVersionedApiExplorer(options =>
+              {
+                  options.ReportApiVersions = true;
+                  options.AssumeDefaultVersionWhenUnspecified = true;
+                  options.DefaultApiVersion = defaultApiVersion;
+              }).AddApiExplorer(options =>
             {
                 options.GroupNameFormat = "'v'V";
                 options.SubstituteApiVersionInUrl = true;
