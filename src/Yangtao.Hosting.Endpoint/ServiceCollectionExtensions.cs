@@ -11,7 +11,7 @@ namespace Yangtao.Hosting.Endpoint
             var defaultApiVersion = new ApiVersion(1, 0);
             services.AddApiVersioning(options =>
               {
-                  options.ReportApiVersions = true;
+                  options.ReportApiVersions = false;
                   options.AssumeDefaultVersionWhenUnspecified = true;
                   options.DefaultApiVersion = defaultApiVersion;
               }).AddApiExplorer(options =>
@@ -19,7 +19,7 @@ namespace Yangtao.Hosting.Endpoint
                 options.GroupNameFormat = "'v'V";
                 options.SubstituteApiVersionInUrl = true;
                 options.DefaultApiVersion = defaultApiVersion;
-            });
+            }).AddMvc();
 
             return services;
         }
