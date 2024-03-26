@@ -1,5 +1,4 @@
-﻿using NLog;
-using NLog.Config;
+﻿using NLog.Config;
 
 namespace Yangtao.Hosting.NLog
 {
@@ -17,8 +16,8 @@ namespace Yangtao.Hosting.NLog
             var fileTargetWrapper = LogTargetBuilder.BuildFileTarget(options.FileLayoutType);
             loggingConfiguration.AddTarget("console", consoleTarget);
             loggingConfiguration.AddTarget("file", fileTargetWrapper);
-            loggingConfiguration.LoggingRules.Add(new LoggingRule("*", LogLevel.Info, consoleTarget));
-            loggingConfiguration.LoggingRules.Add(new LoggingRule("*", LogLevel.Error, fileTargetWrapper));
+            loggingConfiguration.LoggingRules.Add(new LoggingRule("*", options.ConsoleLogLevel, consoleTarget));
+            loggingConfiguration.LoggingRules.Add(new LoggingRule("*", options.FileLogLevel, fileTargetWrapper));
 
             return loggingConfiguration;
         }

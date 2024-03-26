@@ -53,7 +53,7 @@ namespace Yangtao.Hosting.NLog
             var fileTarget = new FileTarget
             {
                 FileName = $"{LogPath}" + "${shortdate}.log",
-                Layout = "LogTime: ${longdate} ${newline}      ErrorSource: ${logger} ${newline}    Message: ${message:raw=true} ${newline}    Exception: ${exception:format=tostring} ${newline}   RequestMethod: ${aspnet-request-method} ${newline}    RequestUrl: ${aspnet-request-url:IncludeHost=true:IncludePort=true:IncludeQueryString=true:IncludeScheme=true} ${newline}   InnerException:${event-properties:InnerException} ${newline}   StackTrace: ${event-properties:StackTrace} ${newline}",
+                Layout = "LogTime: ${longdate} ${newline}${newline}        Level: ${level} ${newline}${newline}        Callsite: ${callsite} ${newline}${newline}        Stacktrace: ${stacktrace} ${newline}${newline}        ErrorSource: ${logger} ${newline}${newline}        Message: ${message:raw=true} ${newline}${newline}        Exception: ${exception:format=tostring} ${newline}${newline}${newline}${newline}${newline}${newline}${newline}${newline}",
             };
 
             if (layoutType == FileLayoutType.Json) fileTarget.Layout = LogLayoutBuilder.BuildJsonLayout();

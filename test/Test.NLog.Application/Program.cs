@@ -1,3 +1,5 @@
+using Yangtao.Hosting.NLog;
+
 namespace Test.NLog.Application
 {
     public class Program
@@ -5,6 +7,7 @@ namespace Test.NLog.Application
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Logging.ConfigNLog();
 
             // Add services to the container.
 

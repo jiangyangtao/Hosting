@@ -5,6 +5,14 @@ namespace Yangtao.Hosting.NLog
 {
     public static class LoggingBuilderExtensions
     {
+        public static ILoggingBuilder ConfigNLog(this ILoggingBuilder loggingBuilder)
+        {
+            return ConfigNLog(loggingBuilder, (options) =>
+            {
+                options.FileLayoutType = FileLayoutType.Custom;
+            });
+        }
+
         public static ILoggingBuilder ConfigNLog(this ILoggingBuilder loggingBuilder, Action<NLogConfigurationOptions> action)
         {
             var options = new NLogConfigurationOptions();
