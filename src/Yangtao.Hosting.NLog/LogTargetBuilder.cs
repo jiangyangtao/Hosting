@@ -48,14 +48,15 @@ namespace Yangtao.Hosting.NLog
             return consoleTarget;
         }
 
-        public static AsyncTargetWrapper BuildFileTarget()
+        public static AsyncTargetWrapper BuildFileTarget(FileLayoutType layoutType = FileLayoutType.Custom)
         {
-            var jsonLayout = LogLayoutBuilder.BuildJsonLayout();
             var fileTarget = new FileTarget
             {
                 FileName = $"{LogPath}" + "${shortdate}.log",
-                Layout = jsonLayout
+                Layout = "LogTime: ${longdate} ${newline}      ErrorSource: ${logger} ${newline}    Message: ${message:raw=true} ${newline}    Exception: ${exception:format=tostring} ${newline}   RequestMethod: ${aspnet-request-method} ${newline}    RequestUrl: ${aspnet-request-url:IncludeHost=true:IncludePort=true:IncludeQueryString=true:IncludeScheme=true} ${newline}   InnerException:${event-properties:InnerException} ${newline}   StackTrace: ${event-properties:StackTrace} ${newline}",
             };
+
+            if (layoutType == FileLayoutType.Json) fileTarget.Layout = LogLayoutBuilder.BuildJsonLayout();
             var fileTargetWrapper = new AsyncTargetWrapper
             {
                 WrappedTarget = fileTarget,
