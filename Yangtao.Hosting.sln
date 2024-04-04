@@ -115,7 +115,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.MessageQueu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.GrpcClient", "src\Yangtao.Hosting.GrpcClient\Yangtao.Hosting.GrpcClient.csproj", "{D12B1DA4-6277-42C2-AAA4-35CCD8F67FEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.NLog.Application", "test\Test.NLog.Application\Test.NLog.Application.csproj", "{62D1C34F-D992-4116-BF99-C4B1902C9E97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.NLog.Application", "test\Test.NLog.Application\Test.NLog.Application.csproj", "{62D1C34F-D992-4116-BF99-C4B1902C9E97}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FrontendApi", "FrontendApi", "{768440C9-CFF2-4132-A2F2-65F71C32E6AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yangtao.Hosting.FrontendApi", "src\FrontendApi\Yangtao.Hosting.FrontendApi\Yangtao.Hosting.FrontendApi.csproj", "{7857C9BD-EFDC-41A1-AAFC-BF7D2F554176}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -295,6 +299,10 @@ Global
 		{62D1C34F-D992-4116-BF99-C4B1902C9E97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62D1C34F-D992-4116-BF99-C4B1902C9E97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62D1C34F-D992-4116-BF99-C4B1902C9E97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7857C9BD-EFDC-41A1-AAFC-BF7D2F554176}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7857C9BD-EFDC-41A1-AAFC-BF7D2F554176}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7857C9BD-EFDC-41A1-AAFC-BF7D2F554176}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7857C9BD-EFDC-41A1-AAFC-BF7D2F554176}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -352,6 +360,8 @@ Global
 		{75388180-9505-40FD-AC20-97B04B455906} = {AD7CF780-FBA8-436D-B141-EADB8AEAD28B}
 		{D12B1DA4-6277-42C2-AAA4-35CCD8F67FEA} = {0F8D7355-F530-40C9-A64D-ABA3CFA6C79F}
 		{62D1C34F-D992-4116-BF99-C4B1902C9E97} = {E54AF2F8-8C5F-4A19-BD6E-E63DEC4CA1AD}
+		{768440C9-CFF2-4132-A2F2-65F71C32E6AD} = {0F8D7355-F530-40C9-A64D-ABA3CFA6C79F}
+		{7857C9BD-EFDC-41A1-AAFC-BF7D2F554176} = {768440C9-CFF2-4132-A2F2-65F71C32E6AD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28EDA54C-950D-459F-AFC9-092C65E8B3D9}
