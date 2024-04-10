@@ -15,6 +15,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Extensions\Yangtao.Hosting.Extensions\Yangtao.Hosting.Extensions.csproj" />
+		<ProjectReference Include="..\Yangtao.Hosting.GrpcCore\Yangtao.Hosting.GrpcCore.csproj" />
 	</ItemGroup>
 
 	<ImportGroup>
