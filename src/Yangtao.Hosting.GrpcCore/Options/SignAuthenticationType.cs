@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Yangtao.Hosting.GrpcCore
+namespace Yangtao.Hosting.GrpcCore.Options
 {
     public enum SignAuthenticationType
     {

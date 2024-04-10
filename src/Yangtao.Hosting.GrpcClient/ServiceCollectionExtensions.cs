@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Yangtao.Hosting.GrpcClient.Interceptors;
 using Yangtao.Hosting.GrpcClient.Options;
+using Yangtao.Hosting.GrpcCore.Options;
 
 namespace Yangtao.Hosting.GrpcClient
 {

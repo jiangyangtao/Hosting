@@ -1,4 +1,4 @@
-﻿using Yangtao.Hosting.GrpcCore;
+﻿using Yangtao.Hosting.GrpcCore.Options;
 
 namespace Yangtao.Hosting.GrpcServer.Attributes
 {

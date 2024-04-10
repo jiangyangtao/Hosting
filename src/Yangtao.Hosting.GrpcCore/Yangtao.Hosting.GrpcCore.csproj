@@ -11,4 +11,9 @@
 		<Import Project="..\..\props\Hosting.Version.props" />
 	</ImportGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Yangtao.Hosting.Abstractions\Yangtao.Hosting.Abstractions.csproj" />
+	  <ProjectReference Include="..\Yangtao.Hosting.Encryption\Yangtao.Hosting.Encryption.csproj" />
+	</ItemGroup>
+
 </Project>
