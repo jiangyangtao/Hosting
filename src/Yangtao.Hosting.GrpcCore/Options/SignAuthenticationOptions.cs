@@ -2,9 +2,11 @@
 {
     public class SignAuthenticationOptions
     {
-        public bool UseSignAuthenticationGrpcClientInterceptor { set; get; } = false;
+        internal SignAuthenticationOptions()
+        {
+        }
 
-        public SignAuthenticationType SignAuthenticationType { set; get; } = SignAuthenticationType.Aes;
+        public SignAuthenticationType? SignAuthenticationType { set; get; }
 
         public AesSignOptions? AesSignOptions { set; get; }
 

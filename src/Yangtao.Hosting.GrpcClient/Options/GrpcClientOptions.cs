@@ -3,9 +3,11 @@ using Yangtao.Hosting.GrpcCore.Options;
 
 namespace Yangtao.Hosting.GrpcClient.Options
 {
-    public class GrpcClientOptions : SignAuthenticationOptions
+    public class GrpcClientOptions
     {
-        internal GrpcClientOptions() { }
+        internal GrpcClientOptions()
+        {
+        }
 
         public string Endpoint { set; get; }
 
@@ -22,5 +24,11 @@ namespace Yangtao.Hosting.GrpcClient.Options
         public bool UseAuthenticationGrpcClientInterceptor { set; get; } = true;
 
         public InterceptorScope InterceptorScope { set; get; } = InterceptorScope.Channel;
+
+        public SignAuthenticationType? SignAuthenticationType { set; get; }
+
+        public AesSignOptions? AesSignOptions { set; get; }
+
+        public RsaPublicSignOptions? RsaPublicSignOptions { set; get; }
     }
 }

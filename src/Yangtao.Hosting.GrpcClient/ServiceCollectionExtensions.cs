@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Yangtao.Hosting.GrpcClient.Interceptors;
 using Yangtao.Hosting.GrpcClient.Options;
+using Yangtao.Hosting.GrpcCore;
 using Yangtao.Hosting.GrpcCore.Options;
 
 namespace Yangtao.Hosting.GrpcClient
@@ -13,14 +14,6 @@ namespace Yangtao.Hosting.GrpcClient
         {
             var clientOptions = new GrpcClientOptions();
             optionAction(clientOptions);
-
-            var serviceProvider = services.BuildServiceProvider();
-            var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-            services.Configure<SignAuthenticationOptions>(a =>
-            {
-                a.UseSignAuthenticationGrpcClientInterceptor = clientOptions.UseSignAuthenticationGrpcClientInterceptor;
-                a.SignAuthenticationType = clientOptions.SignAuthenticationType;
-            });
 
             var httpClientBuilder = services.AddGrpcClient<TClient>(options =>
              {
@@ -33,8 +26,21 @@ namespace Yangtao.Hosting.GrpcClient
                 httpClientBuilder.AddAuthenticationGrpcClientInterceptor(clientOptions.InterceptorScope);
             }
 
-            if (clientOptions.UseSignAuthenticationGrpcClientInterceptor)
+            if (clientOptions.SignAuthenticationType.HasValue)
             {
+                if (clientOptions.SignAuthenticationType == SignAuthenticationType.Aes && clientOptions.AesSignOptions == null)
+                    throw new ArgumentException(nameof(clientOptions.AesSignOptions));
+
+                if (clientOptions.SignAuthenticationType == SignAuthenticationType.RSA && clientOptions.RsaPublicSignOptions == null)
+                    throw new ArgumentException(nameof(clientOptions.RsaPublicSignOptions));
+
+                services.AddGrpcCore(options =>
+                {
+                    options.SignAuthenticationType = clientOptions.SignAuthenticationType;
+                    options.AesSignOptions = clientOptions.AesSignOptions;
+                    options.RsaPublicSignOptions = clientOptions.RsaPublicSignOptions;
+                });
+
                 services.AddSignAuthenticationGrpcClientInterceptor();
                 httpClientBuilder.AddSignAuthenticationGrpcClientInterceptor(clientOptions.InterceptorScope);
             }

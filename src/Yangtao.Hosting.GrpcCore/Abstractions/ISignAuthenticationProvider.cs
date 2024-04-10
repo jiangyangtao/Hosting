@@ -1,4 +1,4 @@
-﻿namespace Yangtao.Hosting.GrpcCore
+﻿namespace Yangtao.Hosting.GrpcCore.Abstractions
 {
     public interface ISignAuthenticationProvider
     {
