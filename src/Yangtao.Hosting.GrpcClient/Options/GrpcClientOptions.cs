@@ -1,12 +1,10 @@
 ﻿using Grpc.Net.ClientFactory;
 
-namespace Yangtao.Hosting.GrpcClient
+namespace Yangtao.Hosting.GrpcClient.Options
 {
-    public class GrpcClientOptions
+    public class GrpcClientOptions : SignAuthenticationOptions
     {
-        internal GrpcClientOptions()
-        {
-        }
+        internal GrpcClientOptions() { }
 
         public string Endpoint { set; get; }
 

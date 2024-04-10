@@ -3,7 +3,7 @@ using Grpc.Core.Interceptors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 
-namespace Yangtao.Hosting.GrpcClient
+namespace Yangtao.Hosting.GrpcClient.Interceptors
 {
     public class AuthenticationGrpcClientInterceptor : Interceptor
     {

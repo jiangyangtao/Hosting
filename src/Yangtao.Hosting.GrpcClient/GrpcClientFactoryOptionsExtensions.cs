@@ -1,6 +1,7 @@
 ﻿using Grpc.Core;
 using Grpc.Net.Client.Configuration;
 using Grpc.Net.ClientFactory;
+using Yangtao.Hosting.GrpcClient.Options;
 
 namespace Yangtao.Hosting.GrpcClient
 {
