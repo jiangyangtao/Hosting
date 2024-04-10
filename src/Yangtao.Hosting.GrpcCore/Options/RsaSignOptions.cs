@@ -5,8 +5,9 @@ using System.Security.Authentication;
 
 namespace Yangtao.Hosting.GrpcCore.Options
 {
-    internal class RsaSignOptions
+    public abstract class RsaSignOptions
     {
+        [JsonConverter(typeof(StringEnumConverter))]
         public HashAlgorithmType AlgorithmType { set; get; }
 
         [JsonConverter(typeof(StringEnumConverter))]

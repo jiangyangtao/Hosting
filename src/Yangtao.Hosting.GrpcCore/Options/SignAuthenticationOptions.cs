@@ -6,8 +6,10 @@
 
         public SignAuthenticationType SignAuthenticationType { set; get; } = SignAuthenticationType.Aes;
 
-     
+        public AesSignOptions? AesSignOptions { set; get; }
 
-        public string 
+        public RsaPrivateSignOptions? RsaPrivateSignOptions { set; get; }
+
+        public RsaPublicSignOptions? RsaPublicSignOptions { set; get; }
     }
 }
