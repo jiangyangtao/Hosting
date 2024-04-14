@@ -52,6 +52,26 @@ namespace Yangtao.Hosting.Extensions
             return emailReg.IsMatch(value.Trim());
         }
 
+        /// <summary>
+        /// 判断字符串中是否包含中文
+        /// </summary>
+        /// <param name="str">需要判断的字符串</param>
+        /// <returns><see cref="true"/> 则有中文，<see cref="false"/> 则没有中文</returns>
+        public static bool HasChinese(this string value)
+        {
+            if (value.IsNullOrEmpty()) return false;
+
+            return Regex.IsMatch(value, @"[\u4e00-\u9fa5]");
+        }
+
+        public static bool IsExcel(this string value)
+        {
+            var suffixName = value[(value.LastIndexOf(".") + 1)..];
+            if (suffixName.Equals("xlsx", StringComparison.OrdinalIgnoreCase)) return true;
+
+            return suffixName.Equals("xls", StringComparison.OrdinalIgnoreCase);
+        }
+
         #region 中文数字转换
 
         /// <summary>
