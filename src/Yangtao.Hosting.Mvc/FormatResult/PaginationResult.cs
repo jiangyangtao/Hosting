@@ -14,6 +14,6 @@ namespace Yangtao.Hosting.Mvc.FormatResult
         /// </summary>
         public long Total { get; }
 
-        public T[] List { set; get; }
+        public IEnumerable<T> List { set; get; }
     }
 }
