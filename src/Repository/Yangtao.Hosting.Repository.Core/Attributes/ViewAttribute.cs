@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Yangtao.Hosting.Repository.Core.Attribute
+namespace Yangtao.Hosting.Repository.Core.Attributes
 {
     internal class ViewAttribute : TableAttribute
     {
