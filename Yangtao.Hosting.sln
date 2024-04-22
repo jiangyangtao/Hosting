@@ -129,6 +129,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test.GrpcServer", "Test.Grp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.GrpcServer.Application", "test\Test.GrpcServer\Test.GrpcServer.Application\Test.GrpcServer.Application.csproj", "{338F7F05-1919-4E26-82E0-20086F200F36}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.GrpcClient.Application", "src\Test.GrpcServer\Test.GrpcClient.Application\Test.GrpcClient.Application.csproj", "{D3BC2FDD-3982-4BAF-99F1-02726106EDE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -323,6 +325,10 @@ Global
 		{338F7F05-1919-4E26-82E0-20086F200F36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{338F7F05-1919-4E26-82E0-20086F200F36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{338F7F05-1919-4E26-82E0-20086F200F36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3BC2FDD-3982-4BAF-99F1-02726106EDE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3BC2FDD-3982-4BAF-99F1-02726106EDE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3BC2FDD-3982-4BAF-99F1-02726106EDE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3BC2FDD-3982-4BAF-99F1-02726106EDE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -386,6 +392,7 @@ Global
 		{0ED7A322-631E-4AA8-B453-9EFA6CB3FCD3} = {6A3CAB3C-590D-45E6-9283-EB00D4D39FD8}
 		{1DF2E908-F14E-4676-9A2C-B12746DAE76D} = {E54AF2F8-8C5F-4A19-BD6E-E63DEC4CA1AD}
 		{338F7F05-1919-4E26-82E0-20086F200F36} = {1DF2E908-F14E-4676-9A2C-B12746DAE76D}
+		{D3BC2FDD-3982-4BAF-99F1-02726106EDE2} = {1DF2E908-F14E-4676-9A2C-B12746DAE76D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28EDA54C-950D-459F-AFC9-092C65E8B3D9}
