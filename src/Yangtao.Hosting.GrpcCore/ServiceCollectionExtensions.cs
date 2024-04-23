@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Yangtao.Hosting.GrpcCore.Abstractions;
 using Yangtao.Hosting.GrpcCore.Options;
 using Yangtao.Hosting.GrpcCore.SignProviders;
@@ -13,9 +12,6 @@ namespace Yangtao.Hosting.GrpcCore
             var option = new SignAuthenticationOptions();
             optionAction(option);
 
-            var serviceProvider = services.BuildServiceProvider();
-            var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-
             services.Configure<SignAuthenticationOptions>(a =>
             {
                 a.SignAuthenticationType = option.SignAuthenticationType;
@@ -25,7 +21,7 @@ namespace Yangtao.Hosting.GrpcCore
             });
 
             services.AddSingleton<SignProviderFactory>();
-            services.AddSingleton<ISignProvider, AesSignProivder>();
+            services.AddSingleton<ISignProvider, AesSignProvider>();
             services.AddSingleton<ISignProvider, RsaSignProvider>();
             services.AddSingleton<ISignAuthenticationProvider, SignAuthenticationProvider>();
 

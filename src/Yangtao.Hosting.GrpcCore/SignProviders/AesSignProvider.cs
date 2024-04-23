@@ -5,11 +5,11 @@ using Yangtao.Hosting.GrpcCore.Options;
 
 namespace Yangtao.Hosting.GrpcCore.SignProviders
 {
-    internal class AesSignProivder : ISignProvider
+    internal class AesSignProvider : ISignProvider
     {
         private readonly Aes? Aes;
 
-        public AesSignProivder(IOptions<SignAuthenticationOptions> signOptions)
+        public AesSignProvider(IOptions<SignAuthenticationOptions> signOptions)
         {
             if (signOptions.Value.AesSignOptions != null)
             {

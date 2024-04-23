@@ -2,10 +2,6 @@
 {
     public class SignAuthenticationOptions
     {
-        internal SignAuthenticationOptions()
-        {
-        }
-
         public SignAuthenticationType? SignAuthenticationType { set; get; }
 
         public AesSignOptions? AesSignOptions { set; get; }

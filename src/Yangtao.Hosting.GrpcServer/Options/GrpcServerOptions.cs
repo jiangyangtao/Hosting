@@ -7,9 +7,10 @@ namespace Yangtao.Hosting.GrpcServer.Options
     {
         internal GrpcServerOptions()
         {
+            GrpcServiceOptions = new GrpcServiceOptions();
         }
 
-        public GrpcServiceOptions GrpcServiceOptions { set; get; }
+        public GrpcServiceOptions GrpcServiceOptions {get; }
 
         public SignAuthenticationType? SignAuthenticationType { set; get; }
 

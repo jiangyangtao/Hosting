@@ -28,7 +28,7 @@ namespace Yangtao.Hosting.GrpcServer.Interceptors
             if (httpContext.Request.Headers.Authorization.IsNullOrEmpty()) throw UnauthorizedException;
 
             var authorization = httpContext.Request.Headers.Authorization.ToString();
-            var time = _signAuthenticationProvider.Encrypt(authorization);
+            var time = _signAuthenticationProvider.Decrypt(authorization);
 
             var parseResult = DateTime.TryParse(time, out DateTime d);
             if (parseResult == false) throw UnauthorizedException;

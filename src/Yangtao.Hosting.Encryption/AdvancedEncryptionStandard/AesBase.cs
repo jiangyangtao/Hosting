@@ -11,10 +11,10 @@ namespace Yangtao.Hosting.Encryption.AdvancedEncryptionStandard
         protected AesBase(string securityKey, string iv)
         {
             if (securityKey.IsNullOrEmpty()) throw new ArgumentNullException(nameof(securityKey));
-            if (securityKey.Length != 16 ||
-                securityKey.Length != 24 ||
-                securityKey.Length != 32 ||
-                securityKey.Length != 40 ||
+            if (securityKey.Length != 16 &&
+                securityKey.Length != 24 &&
+                securityKey.Length != 32 &&
+                securityKey.Length != 40 &&
                 securityKey.Length != 48) throw new ArgumentOutOfRangeException(nameof(securityKey));
 
             if (iv.IsNullOrEmpty()) throw new ArgumentNullException(nameof(iv));
