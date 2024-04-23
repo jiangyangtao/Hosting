@@ -2,6 +2,6 @@
 {
     public class RsaPrivateSignOptions : RsaSignOptions
     {
-        public string PrivateKey { set; get; }
+        public string? PrivateKey { set; get; }
     }
 }
