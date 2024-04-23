@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 using Yangtao.Hosting.Extensions;
-using Yangtao.Hosting.Repository.Core.Attribute;
+using Yangtao.Hosting.Repository.Core.Attributes;
 using Yangtao.Hosting.Repository.Core.Builders;
 
 namespace Yangtao.Hosting.Repository.Core
