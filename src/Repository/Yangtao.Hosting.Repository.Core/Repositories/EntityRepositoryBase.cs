@@ -155,6 +155,8 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
             return entity;
         }
 
+        public Task<TEntity> UpdateAsync(TEntity entity, IEntityColumns<TEntity> updateColumns, bool isCommit = true) => UpdatePartAsync(entity, updateColumns, isCommit);
+
         public async Task<TEntity> UpdatePartAsync(TEntity entity, Expression<Func<TEntity, object>> updateColumns, bool isCommit = true)
         {
             if (entity == null) return null;
@@ -361,7 +363,6 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
         }
 
         public abstract Task<TEntity> UpdateIfExistByIdAsync(TKeyType id, Action<TEntity> action, bool isCommit = true);
-
 
         public async Task<TEntity> UpdateIfExistAsync(Expression<Func<TEntity, bool>> predicate, Action<TEntity> action, bool isCommit = true)
         {
