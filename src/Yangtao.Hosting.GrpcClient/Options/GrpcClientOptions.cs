@@ -1,15 +1,19 @@
 ﻿using Grpc.Net.ClientFactory;
+using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.GrpcCore.Options;
 
 namespace Yangtao.Hosting.GrpcClient.Options
 {
     public class GrpcClientOptions
     {
-        internal GrpcClientOptions()
+        private readonly ICollection<string> _signAuthenticationMethods;
+
+        public GrpcClientOptions()
         {
+            _signAuthenticationMethods = new List<string>();
         }
 
-        public string Endpoint { set; get; }
+        public string? Endpoint { set; get; }
 
         /// <summary>
         /// 允许自签名证书
@@ -30,5 +34,17 @@ namespace Yangtao.Hosting.GrpcClient.Options
         public AesSignOptions? AesSignOptions { set; get; }
 
         public RsaPublicSignOptions? RsaPublicSignOptions { set; get; }
+
+        /// <summary>
+        /// 签名校验的方法集，为空则全部都需要校验
+        /// </summary>
+        public ICollection<string> SignAuthenticationMethods => _signAuthenticationMethods;
+
+        internal bool ExisySignAuthMethods(string method)
+        {
+            if (_signAuthenticationMethods.Count == 0) return true;
+
+            return _signAuthenticationMethods.Contains(method, StringComparison.OrdinalIgnoreCase);
+        }
     }
 }

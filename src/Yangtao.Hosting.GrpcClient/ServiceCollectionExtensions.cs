@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.GrpcClient.Interceptors;
 using Yangtao.Hosting.GrpcClient.Options;
 using Yangtao.Hosting.GrpcCore;
@@ -13,6 +14,27 @@ namespace Yangtao.Hosting.GrpcClient
         {
             var clientOptions = new GrpcClientOptions();
             optionAction(clientOptions);
+
+            services.Configure<GrpcClientOptions>(options =>
+            {
+                options.Endpoint = clientOptions.Endpoint;
+                options.AllowAnyServerCertificate = clientOptions.AllowAnyServerCertificate;
+                options.AddRetry = clientOptions.AddRetry;
+                options.UseAuthenticationGrpcClientInterceptor = clientOptions.UseAuthenticationGrpcClientInterceptor;
+                options.InterceptorScope = clientOptions.InterceptorScope;
+
+                options.SignAuthenticationType = clientOptions.SignAuthenticationType;
+                options.AesSignOptions = clientOptions.AesSignOptions;
+                options.RsaPublicSignOptions = clientOptions.RsaPublicSignOptions;
+
+                if (clientOptions.SignAuthenticationMethods.NotNullAndEmpty())
+                {
+                    foreach (var item in clientOptions.SignAuthenticationMethods)
+                    {
+                        options.SignAuthenticationMethods.Add(item);
+                    }
+                }
+            });
 
             var httpClientBuilder = services.AddGrpcClient<TClient>(options =>
              {

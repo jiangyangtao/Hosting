@@ -12,5 +12,12 @@
 
             return string.Join(separator, values);
         }
+
+        public static bool Contains(this IEnumerable<string> values, string target, StringComparison comparison)
+        {
+            if (values.IsNullOrEmpty()) return false;
+
+            return values.Any(a => a.Equals(target, comparison));
+        }
     }
 }
