@@ -1,5 +1,4 @@
 ﻿using Grpc.Net.ClientFactory;
-using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.GrpcCore.Options;
 
 namespace Yangtao.Hosting.GrpcClient.Options
@@ -39,12 +38,5 @@ namespace Yangtao.Hosting.GrpcClient.Options
         /// 签名校验的方法集，为空则全部都需要校验
         /// </summary>
         public ICollection<string> SignAuthenticationMethods => _signAuthenticationMethods;
-
-        internal bool ExisySignAuthMethods(string method)
-        {
-            if (_signAuthenticationMethods.Count == 0) return true;
-
-            return _signAuthenticationMethods.Contains(method, StringComparison.OrdinalIgnoreCase);
-        }
     }
 }

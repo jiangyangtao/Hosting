@@ -10,17 +10,17 @@ namespace Yangtao.Hosting.GrpcClient.Interceptors
     public class SignAuthenticationGrpcClientInterceptor : Interceptor
     {
         private readonly ISignAuthenticationProvider _signAuthenticationProvider;
-        private readonly IOptionsMonitor<GrpcClientOptions> GrpcClientOptions;
+        private readonly ICollection<string> _signAuthenticationMethods;
 
-        public SignAuthenticationGrpcClientInterceptor(ISignAuthenticationProvider signAuthenticationProvider, IOptionsMonitor<GrpcClientOptions> clientOptions)
+        public SignAuthenticationGrpcClientInterceptor(ISignAuthenticationProvider signAuthenticationProvider, IOptions<GrpcClientOptions> clientOptions)
         {
             _signAuthenticationProvider = signAuthenticationProvider;
-            GrpcClientOptions = clientOptions;
+            _signAuthenticationMethods = clientOptions.Value.SignAuthenticationMethods;
         }
 
         public override AsyncUnaryCall<TResponse> AsyncUnaryCall<TRequest, TResponse>(TRequest request, ClientInterceptorContext<TRequest, TResponse> context, AsyncUnaryCallContinuation<TRequest, TResponse> continuation)
         {
-            var exist = GrpcClientOptions.CurrentValue.ExisySignAuthMethods(context.Method.Name);
+            var exist = ExisySignAuthMethods(context.Method.Name);
             if (exist == false) return base.AsyncUnaryCall(request, context, continuation);
 
             if (context.Options.Headers == null)
@@ -34,6 +34,13 @@ namespace Yangtao.Hosting.GrpcClient.Interceptors
             context.Options.Headers.Add("Authorization", authorization);
 
             return base.AsyncUnaryCall(request, context, continuation);
+        }
+
+        private bool ExisySignAuthMethods(string method)
+        {
+            if (_signAuthenticationMethods.Count == 0) return true;
+
+            return _signAuthenticationMethods.Contains(method, StringComparison.OrdinalIgnoreCase);
         }
     }
 }
