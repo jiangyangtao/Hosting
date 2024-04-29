@@ -33,6 +33,17 @@ namespace Yangtao.Hosting.Extensions
             return dateTime.ToString(format);
         }
 
+        public static string ToFormatDate(this DateTime? dateTime, string format = "yyyy-MM-dd") => dateTime.ToFormat(format);
+
+        public static string ToFormatDateTime(this DateTime? dateTime, string format = "yyyy-MM-dd HH:mm:ss") => dateTime.ToFormat(format);
+
+        public static string ToFormat(this DateTime? dateTime, string format)
+        {
+            if (dateTime.HasValue == false) return string.Empty;
+
+            return dateTime.Value.ToString(format);
+        }
+
         public static long ToUnixTimeSeconds(this DateTime time) => new DateTimeOffset(time).ToUnixTimeSeconds();
 
         public static long ToUnixTimeMilliseconds(this DateTime time) => new DateTimeOffset(time).ToUnixTimeMilliseconds();
