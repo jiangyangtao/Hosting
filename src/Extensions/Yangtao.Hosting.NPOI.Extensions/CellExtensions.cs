@@ -13,12 +13,12 @@ namespace Yangtao.Hosting.NPOI.Extensions
             return cell;
         }
 
-        public static ICell DrawBorder(this ICell cell)
+        public static ICell DrawBorder(this ICell cell, BorderStyle border = BorderStyle.Thin)
         {
-            cell.CellStyle.BorderTop = BorderStyle.Thin;
-            cell.CellStyle.BorderRight = BorderStyle.Thin;
-            cell.CellStyle.BorderBottom = BorderStyle.Thin;
-            cell.CellStyle.BorderLeft = BorderStyle.Thin;
+            cell.CellStyle.BorderTop = border;
+            cell.CellStyle.BorderRight = border;
+            cell.CellStyle.BorderBottom = border;
+            cell.CellStyle.BorderLeft = border;
 
             return cell;
         }

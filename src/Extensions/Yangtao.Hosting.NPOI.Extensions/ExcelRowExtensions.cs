@@ -8,7 +8,15 @@ namespace Yangtao.Hosting.NPOI.Extensions
         {
             for (int i = 0; i < cellCount; i++)
             {
-                row.CreateCell(row.Cells.Count + 1);
+                row.CreateCell(row.Cells.Count);
+            }
+        }
+
+        public static void AddCells(this IRow row, int cellCount, IWorkbook workbook)
+        {
+            for (int i = 0; i < cellCount; i++)
+            {
+                row.CreateStyleCell(row.Cells.Count, workbook);
             }
         }
 
