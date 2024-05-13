@@ -15,13 +15,14 @@
 
 
 	<ItemGroup>
-		<ProjectReference Include="..\Extensions\Yangtao.Hosting.Extensions\Yangtao.Hosting.Extensions.csproj" />
+		<ProjectReference Include="..\..\Extensions\Yangtao.Hosting.Extensions\Yangtao.Hosting.Extensions.csproj" />
 		<ProjectReference Include="..\Yangtao.Hosting.GrpcCore\Yangtao.Hosting.GrpcCore.csproj" />
 	</ItemGroup>
 
+
 	<ImportGroup>
-		<Import Project="..\..\props\Hosting.Publish.props" />
-		<Import Project="..\..\props\Hosting.Version.props" />
+		<Import Project="..\..\..\props\Hosting.Publish.props" />
+		<Import Project="..\..\..\props\Hosting.Version.props" />
 	</ImportGroup>
 
 </Project>

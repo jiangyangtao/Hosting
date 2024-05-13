@@ -2,8 +2,8 @@
 {
     public class AesSignOptions
     {
-        public string Iv { set; get; }
+        public string? Iv { set; get; }
 
-        public string SecurityKey { set; get; }
+        public string? SecurityKey { set; get; }
     }
 }

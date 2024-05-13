@@ -11,14 +11,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Yangtao.Hosting.Core\Yangtao.Hosting.Core.csproj" />
+    <ProjectReference Include="..\..\Yangtao.Hosting.Core\Yangtao.Hosting.Core.csproj" />
+    <ProjectReference Include="..\..\Yangtao.Hosting.Core\Yangtao.Hosting.Core.csproj" />
     <ProjectReference Include="..\Yangtao.Hosting.GrpcCore\Yangtao.Hosting.GrpcCore.csproj" />
   </ItemGroup>
 
 
+
 	<ImportGroup>
-		<Import Project="..\..\props\Hosting.Publish.props" />
-		<Import Project="..\..\props\Hosting.Version.props" />
+		<Import Project="..\..\..\props\Hosting.Publish.props" />
+		<Import Project="..\..\..\props\Hosting.Version.props" />
 	</ImportGroup>
 	
 </Project>
