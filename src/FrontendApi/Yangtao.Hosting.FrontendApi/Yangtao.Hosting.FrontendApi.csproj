@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
@@ -12,12 +12,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Attributes\" />
+		<ProjectReference Include="..\..\Extensions\Yangtao.Hosting.Extensions\Yangtao.Hosting.Extensions.csproj" />
+		<ProjectReference Include="..\..\Yangtao.Hosting.Mvc\Yangtao.Hosting.Mvc.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\..\Extensions\Yangtao.Hosting.Extensions\Yangtao.Hosting.Extensions.csproj" />
-	  <ProjectReference Include="..\..\Yangtao.Hosting.Mvc\Yangtao.Hosting.Mvc.csproj" />
-	</ItemGroup>
+	<ImportGroup>
+		<Import Project="..\..\..\props\Hosting.Publish.props" />
+		<Import Project="..\..\..\props\Hosting.Version.props" />
+	</ImportGroup>
 
 </Project>
