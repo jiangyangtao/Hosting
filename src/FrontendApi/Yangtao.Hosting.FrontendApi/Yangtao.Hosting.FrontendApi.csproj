@@ -13,7 +13,6 @@
 
 	<ItemGroup>
 		<Folder Include="Attributes\" />
-		<Folder Include="Fields\" />
 	</ItemGroup>
 
 	<ItemGroup>
