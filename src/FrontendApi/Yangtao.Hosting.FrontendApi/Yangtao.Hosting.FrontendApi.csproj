@@ -13,7 +13,6 @@
 
 	<ItemGroup>
 		<Folder Include="Attributes\" />
-		<Folder Include="Components\" />
 		<Folder Include="Controls\" />
 		<Folder Include="Enums\" />
 		<Folder Include="Fields\" />
