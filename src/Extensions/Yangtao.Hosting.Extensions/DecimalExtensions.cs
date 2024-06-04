@@ -11,11 +11,19 @@
             return Math.Round(value.Value, decimals);
         }
 
+        public static double ToDouble(this decimal? value)
+        {
+            if (value.HasValue == false) return 0;
+
+            return Convert.ToDouble(value.Value);
+        }
+
         public static double ToDouble(this decimal? value, int decimals = 2)
         {
             if (value.HasValue == false) return 0;
 
-            return (double)Math.Round(value.Value, decimals);
+            var d = Math.Round(value.Value, decimals);
+            return Convert.ToDouble(d);
         }
     }
 }
