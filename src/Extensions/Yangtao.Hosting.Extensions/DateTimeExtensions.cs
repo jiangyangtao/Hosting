@@ -50,13 +50,13 @@ namespace Yangtao.Hosting.Extensions
 
         public static long ToUnixTimeSeconds(this DateTime? time)
         {
-            if (time.HasValue == false) return 0;
+            if (time.HasValue == false) return -1;
             return time.Value.ToUnixTimeSeconds();
         }
 
         public static long ToUnixTimeMilliseconds(this DateTime? time)
         {
-            if (time.HasValue == false) return 0;
+            if (time.HasValue == false) return -1;
             return time.Value.ToUnixTimeMilliseconds();
         }
     }
