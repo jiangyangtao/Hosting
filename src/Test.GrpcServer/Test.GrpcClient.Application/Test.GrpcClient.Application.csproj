@@ -18,7 +18,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Yangtao.Hosting.GrpcClient\Yangtao.Hosting.GrpcClient.csproj" />
+		<ProjectReference Include="..\..\Grpc\Yangtao.Hosting.GrpcClient\Yangtao.Hosting.GrpcClient.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

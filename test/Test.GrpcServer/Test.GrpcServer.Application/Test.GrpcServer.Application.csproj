@@ -12,7 +12,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\src\Yangtao.Hosting.GrpcServer\Yangtao.Hosting.GrpcServer.csproj" />
+		<ProjectReference Include="..\..\..\src\Grpc\Yangtao.Hosting.GrpcServer\Yangtao.Hosting.GrpcServer.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
