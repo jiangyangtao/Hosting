@@ -7,7 +7,7 @@ namespace Yangtao.Hosting.Enum
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddEnum(this IServiceCollection services)
+        public static IServiceCollection AddEnumServices(this IServiceCollection services)
         {
             var assemblys = DependencyContext.Default.CompileLibraries.Where(a => a.Type == "project").Select(a => Assembly.Load(a.Name)).ToArray();
             if (assemblys.IsNullOrEmpty()) return services;
