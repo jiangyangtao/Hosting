@@ -10,10 +10,10 @@ namespace Yangtao.Hosting.Repository.Core
 {
     public static class RepositoryServiceCollectionExtensions
     {
-        public static IServiceCollection AddRepositoryCore(this IServiceCollection services, Action<DbContextOptionsBuilder> optionsAction)
+        public static IServiceCollection AddRepositoryCore(this IServiceCollection services, Action<DbContextOptionsBuilder> optionsAction, ServiceLifetime lifetime = ServiceLifetime.Scoped)
         {
             services.AddHttpContextAccessor();
-            services.AddDbContext<DefaultDbContext>(optionsAction);
+            services.AddDbContext<DefaultDbContext>(optionsAction, lifetime);
             services.RegisterModelRepository();
 
             services.AddScoped<IDataBaseRepository, DataBaseRepository>();

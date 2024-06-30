@@ -11,6 +11,8 @@
             return Math.Round(value.Value, decimals);
         }
 
+        public static double ToDouble(this decimal value) => Convert.ToDouble(value);
+
         public static double ToDouble(this decimal? value)
         {
             if (value.HasValue == false) return 0;
