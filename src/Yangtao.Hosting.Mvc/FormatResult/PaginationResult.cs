@@ -1,4 +1,5 @@
 ﻿
+using Yangtao.Hosting.Core;
 using Yangtao.Hosting.Extensions;
 
 namespace Yangtao.Hosting.Mvc.FormatResult

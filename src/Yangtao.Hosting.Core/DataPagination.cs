@@ -1,4 +1,5 @@
-﻿namespace Yangtao.Hosting.Mvc.FormatResult
+﻿
+namespace Yangtao.Hosting.Core
 {
     public class DataPagination<TData> where TData : class
     {
