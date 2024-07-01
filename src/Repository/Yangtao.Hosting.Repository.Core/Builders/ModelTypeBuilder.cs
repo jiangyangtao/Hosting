@@ -12,7 +12,7 @@ namespace Yangtao.Hosting.Repository.Core.Builders
         {
         }
 
-        internal static EntityModelRegisterHandler GetEntityModelService()
+        internal static EntityModelRegisterHandler GetModelRegisterHandler()
         {
             if (RegisterHandler == null)
             {

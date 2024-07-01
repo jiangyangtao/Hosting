@@ -35,10 +35,7 @@ namespace Yangtao.Hosting.Repository.Core.Builders
             Types.Add(type);
         }
 
-        public void AddService<TEntity>(IServiceCollection services) where TEntity : class, IEntity<string>, new()
-        {
-            services.AddScoped<IEntityRepository<TEntity>, EntityRepository<TEntity>>();
-        }
+        protected abstract void AddService<TEntity>(IServiceCollection services) where TEntity : class, IEntity<TKeyType>, new();
 
         public abstract void Register(IServiceCollection services);
 
@@ -54,7 +51,7 @@ namespace Yangtao.Hosting.Repository.Core.Builders
             }
         }
 
-        protected MethodInfo RegisterRepositoryMethod => typeof(EntityTypeBase<TKeyType>).GetMethod(nameof(AddService));
+        protected abstract MethodInfo RegisterRepositoryMethod { get; }
 
         protected static readonly Type IgnoreGenericType = typeof(BaseEntity<TKeyType>);
 
@@ -65,12 +62,26 @@ namespace Yangtao.Hosting.Repository.Core.Builders
     {
         public override Type IgnoreType => typeof(BaseEntity);
 
+        protected override MethodInfo RegisterRepositoryMethod => typeof(StringEntityType).GetMethod(nameof(AddService));
+
+        protected override void AddService<TEntity>(IServiceCollection services)
+        {
+            services.AddScoped<IEntityRepository<TEntity>, EntityRepository<TEntity>>();
+        }
+
         public override void Register(IServiceCollection services) => RegisterRepository(services);
     }
 
     internal class GuidEntityType : EntityTypeBase<Guid>
     {
         public override Type IgnoreType => typeof(GuidBaseEntity);
+
+        protected override MethodInfo RegisterRepositoryMethod => typeof(GuidEntityType).GetMethod(nameof(AddService));
+
+        protected override void AddService<TEntity>(IServiceCollection services)
+        {
+            services.AddScoped<IGuidEntityRepository<TEntity>, GuidEntityRepository<TEntity>>();
+        }
 
         public override void Register(IServiceCollection services) => RegisterRepository(services);
     }
@@ -79,12 +90,26 @@ namespace Yangtao.Hosting.Repository.Core.Builders
     {
         public override Type IgnoreType => typeof(IntegerBaseEntity);
 
+        protected override MethodInfo RegisterRepositoryMethod => typeof(IntegerEntityType).GetMethod(nameof(AddService));
+
+        protected override void AddService<TEntity>(IServiceCollection services)
+        {
+            services.AddScoped<IIntegerEntityRepository<TEntity>, IntegerEntityRepository<TEntity>>();
+        }
+
         public override void Register(IServiceCollection services) => RegisterRepository(services);
     }
 
     internal class BigIntegerEntityType : EntityTypeBase<long>
     {
         public override Type IgnoreType => typeof(BigIntegerBaseEntity);
+
+        protected override MethodInfo RegisterRepositoryMethod => typeof(BigIntegerEntityType).GetMethod(nameof(AddService));
+
+        protected override void AddService<TEntity>(IServiceCollection services)
+        {
+            services.AddScoped<IBigIntegerEntityRepository<TEntity>, BigIntegerEntityRepository<TEntity>>();
+        }
 
         public override void Register(IServiceCollection services) => RegisterRepository(services);
     }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Data;
 using System.Linq.Expressions;
 using Yangtao.Hosting.Repository.Abstractions;

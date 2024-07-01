@@ -11,8 +11,8 @@ namespace Yangtao.Hosting.Repository.Core
     {
         public static ModelBuilder MapEntities(this ModelBuilder modelBuilder)
         {
-            var service = ModelTypeBuilder.GetEntityModelService();
-            var types = service.GetEntityTypes();
+            var registerHandler = ModelTypeBuilder.GetModelRegisterHandler();
+            var types = registerHandler.GetEntityTypes();
             foreach (var type in types)
             {
                 if (type.IsAbstract) continue;

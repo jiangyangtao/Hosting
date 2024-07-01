@@ -34,7 +34,7 @@ namespace Yangtao.Hosting.Repository.Core
 
         private static void RegisterModelRepository(this IServiceCollection services)
         {
-            var registerHandler = ModelTypeBuilder.GetEntityModelService();
+            var registerHandler = ModelTypeBuilder.GetModelRegisterHandler();
             registerHandler.Register(services);
 
             var viewTypes = ModelTypeBuilder.GetViewModelTypes();
