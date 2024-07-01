@@ -4,7 +4,7 @@ using Yangtao.Hosting.Extensions;
 
 namespace Yangtao.Hosting.Repository.Core.Builders
 {
-    internal class EntityModelService
+    internal class EntityModelRegisterHandler
     {
         public readonly StringEntityType StringEntityType;
 
@@ -14,7 +14,7 @@ namespace Yangtao.Hosting.Repository.Core.Builders
 
         public readonly BigIntegerEntityType BigIntegerEntityType;
 
-        public EntityModelService()
+        public EntityModelRegisterHandler()
         {
             StringEntityType = new();
             GuidEntityType = new();
@@ -42,8 +42,6 @@ namespace Yangtao.Hosting.Repository.Core.Builders
                     BigIntegerEntityType.Add(type);
                 }
             }
-
-
         }
 
         public Type[] GetEntityTypes()

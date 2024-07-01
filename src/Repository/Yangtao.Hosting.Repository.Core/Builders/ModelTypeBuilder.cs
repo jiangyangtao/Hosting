@@ -12,26 +12,24 @@ namespace Yangtao.Hosting.Repository.Core.Builders
         {
         }
 
-        internal static EntityModelService GetEntityModelService()
+        internal static EntityModelRegisterHandler GetEntityModelService()
         {
-            if (EntityModelService == null)
+            if (RegisterHandler == null)
             {
-                EntityModelService = new EntityModelService();
-                EntityModelService.Build(CurrnetAssemblies);
+                RegisterHandler = new EntityModelRegisterHandler();
+                RegisterHandler.Build(CurrnetAssemblies);
             }
 
-            return EntityModelService;
+            return RegisterHandler;
         }
 
-        private static EntityModelService EntityModelService { set; get; }
+        private static EntityModelRegisterHandler RegisterHandler { set; get; }
 
         public static Type[] GetViewModelTypes() => GetModelTypes(typeof(IView));
 
         private static Type[] GetModelTypes(Type modelType)
         {
-            var assemblies = CurrnetAssemblies;
-
-            var entityTypes = assemblies.SelectMany(assemblie => assemblie.GetTypes().Where(t => t.BaseType != null && t.BaseType == modelType)).ToArray();
+            var entityTypes = CurrnetAssemblies.SelectMany(assemblie => assemblie.GetTypes().Where(t => t.BaseType != null && t.BaseType == modelType)).ToArray();
             return entityTypes.Where(a => a.HasInterface<IProxyTargetAccessor>() == false).ToArray();
         }
 
