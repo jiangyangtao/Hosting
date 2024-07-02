@@ -1,15 +1,14 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Reflection;
-using Yangtao.Hosting.FrontendApi.Abstractions;
 using Yangtao.Hosting.FrontendApi.Attributes;
 using Yangtao.Hosting.FrontendApi.Enums;
 
 namespace Yangtao.Hosting.FrontendApi.Controls
 {
-    internal class DatePickerControl : ControlBase, IFieldGroup
+    internal class DatePickerControl : ControlBase
     {
-        public DatePickerControl(PropertyInfo property, XmlDocumentHandler xmlHandler) : base(property, xmlHandler)
+        public DatePickerControl(PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
         {
             var datePickerAttr = property.GetCustomAttribute<DatePickerAttribute>();
             if (datePickerAttr != null)

@@ -11,18 +11,18 @@ using Yangtao.Hosting.FrontendApi.Fields;
 
 namespace Yangtao.Hosting.FrontendApi.Controls
 {
-    internal abstract class ControlBase : FieldBase, IControl, IField, IFieldGroup
+    internal abstract class ControlBase : FieldBase, IControl
     {
         protected ControlBase()
         {
         }
 
-        protected ControlBase(PropertyInfo property, XmlDocumentHandler xmlHandler) : base(property, xmlHandler)
+        protected ControlBase(PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
         {
             FieldType = property.PropertyType.GetFieldType();
 
             var existValidation = property.GetCustomAttribute<ExistValidationAttribute>();
-            if (existValidation != null) ExistValidation = new(existValidation, xmlHandler);
+            if (existValidation != null) ExistValidation = new(existValidation, documentHandler);
 
             var requiredAttr = property.GetCustomAttribute<RequiredAttribute>();
             if (requiredAttr != null) Required = true;

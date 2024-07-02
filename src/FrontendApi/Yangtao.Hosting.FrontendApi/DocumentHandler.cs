@@ -5,13 +5,17 @@ using Yangtao.Hosting.Extensions;
 
 namespace Yangtao.Hosting.FrontendApi
 {
-    internal class XmlDocumentHandler
+    internal class DocumentHandler
     {
         private readonly Dictionary<string, XDocument> XmlDocmentDictionary;
 
-        public XmlDocumentHandler()
+        private readonly string CurrentServiceName;
+
+        public DocumentHandler(string serviceName)
         {
             XmlDocmentDictionary = new();
+
+            CurrentServiceName = serviceName;
         }
 
         public string? GetFieldSummary(FieldInfo field)
@@ -33,17 +37,19 @@ namespace Yangtao.Hosting.FrontendApi
         {
             var assemblyName = property.DeclaringType.Assembly.GetName().Name;
             var memberName = $"P:{property.DeclaringType.FullName}.{property.Name}";
-
             var text = GetSummaryText(assemblyName, memberName);
-            if (property.PropertyType.IsEnum && text.IsNullOrEmpty()) return GetEnumSummary(property);
+
+            var type = property.GetReadProperty();
+            if (type.IsEnum && text.IsNullOrEmpty()) return GetEnumSummary(property);
 
             return text;
         }
 
         public string? GetEnumSummary(PropertyInfo property)
         {
-            var assemblyName = property.PropertyType.Assembly.GetName().Name;
-            var memberName = $"T:{property.PropertyType.FullName}";
+            var type = property.GetReadProperty();
+            var assemblyName = type.Assembly.GetName().Name;
+            var memberName = $"T:{type.FullName}";
             return GetSummaryText(assemblyName, memberName);
         }
 
@@ -67,6 +73,13 @@ namespace Yangtao.Hosting.FrontendApi
             var xmlDoc = XDocument.Load(xmlPath);
             XmlDocmentDictionary.Add(assemblyName, xmlDoc);
             return xmlDoc;
+        }
+
+        public string GetServiceName(string serviceName)
+        {
+            if (serviceName.NotNullAndEmpty()) return serviceName;
+
+            return CurrentServiceName;
         }
     }
 }

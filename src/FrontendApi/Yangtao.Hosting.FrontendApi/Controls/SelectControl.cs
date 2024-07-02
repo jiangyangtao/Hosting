@@ -8,21 +8,29 @@ using Yangtao.Hosting.Mvc.FormatResult;
 
 namespace Yangtao.Hosting.FrontendApi.Controls
 {
-    internal class SelectControl : ControlBase, IFieldGroup, IHttpAction
+    internal class SelectControl : ControlBase, IHttpAction
     {
-        public SelectControl(PropertyInfo property, XmlDocumentHandler xmlHandler) : base(property, xmlHandler)
+        public SelectControl(PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
         {
             SourceType = SelectSourceType.Enum;
-            EnumOptions = property.PropertyType.GetValueOptions(xmlHandler);
+            EnumOptions = property.PropertyType.GetValueOptions(documentHandler);
+
+            var selectAttr = property.GetCustomAttribute<SelectAttribute>();
+            if (selectAttr != null) InitSelectAttribute(selectAttr, property, documentHandler);
         }
 
-        public SelectControl(SelectAttribute selectAttribute, PropertyInfo property, XmlDocumentHandler xmlHandler) : base(property, xmlHandler)
+        public SelectControl(SelectAttribute selectAttribute, PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        {
+            InitSelectAttribute(selectAttribute, property, documentHandler);
+        }
+
+        private void InitSelectAttribute(SelectAttribute selectAttribute, PropertyInfo property, DocumentHandler documentHandler)
         {
             SelectMode = selectAttribute.SelectMode;
             ActionApi = selectAttribute.ActionApi;
             SourceType = selectAttribute.SourceType;
             HttpActionType = selectAttribute.HttpActionType;
-            ServiceName = selectAttribute.ServiceName;
+            ServiceName = documentHandler.GetServiceName(selectAttribute.ServiceName);
 
             Bordered = selectAttribute.Bordered;
             ShowSearch = selectAttribute.ShowSearch;
@@ -30,8 +38,8 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 
             if (selectAttribute.SourceType == SelectSourceType.Enum)
             {
-                var type = selectAttribute.EnumSource ?? property.PropertyType;
-                EnumOptions = type.GetValueOptions(xmlHandler);
+                var type = selectAttribute.Source ?? property.PropertyType;
+                EnumOptions = type.GetValueOptions(documentHandler);
             }
         }
 

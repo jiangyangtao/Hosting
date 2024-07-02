@@ -2,16 +2,15 @@
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using Yangtao.Hosting.FrontendApi.Abstractions;
 using Yangtao.Hosting.FrontendApi.Attributes;
 using Yangtao.Hosting.FrontendApi.Enums;
 using Yangtao.Hosting.Mvc.FormatResult;
 
 namespace Yangtao.Hosting.FrontendApi.Controls
 {
-    internal class InputControl : ControlBase, IFieldGroup
+    internal class InputControl : ControlBase
     {
-        public InputControl(PropertyInfo property, XmlDocumentHandler xmlHandler) : base(property, xmlHandler)
+        public InputControl(PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
         {
             var maxLenthAttr = property.GetCustomAttribute<MaxLengthAttribute>();
             if (maxLenthAttr != null) MaxLength = maxLenthAttr.Length;
@@ -45,7 +44,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
                 AddOnBeforeType = addOnBeforeAttr.AddOnBeforeType;
 
                 if (addOnBeforeAttr.AddOnBeforeType == AddOnType.Enum && addOnBeforeAttr.AddOnBeforeSource != null)
-                    AddOnBeforeOptions = addOnBeforeAttr.AddOnBeforeSource.GetValueOptions(xmlHandler);
+                    AddOnBeforeOptions = addOnBeforeAttr.AddOnBeforeSource.GetValueOptions(documentHandler);
             }
 
             var addOnAfterAttr = property.GetCustomAttribute<AddOnAfterAttribute>();
@@ -55,7 +54,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
                 AddOnAfterType = addOnAfterAttr.AddOnAfterType;
 
                 if (addOnAfterAttr.AddOnAfterType == AddOnType.Enum && addOnAfterAttr.AddOnAfterSource != null)
-                    AddOnAfterOptions = addOnAfterAttr.AddOnAfterSource.GetValueOptions(xmlHandler);
+                    AddOnAfterOptions = addOnAfterAttr.AddOnAfterSource.GetValueOptions(documentHandler);
             }
         }
 

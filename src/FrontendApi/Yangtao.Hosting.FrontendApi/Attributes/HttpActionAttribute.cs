@@ -38,7 +38,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
     {
         public HttpActionAttribute(Type controller, string methodName) : base(controller, methodName)
         {
-
+            
         }
 
         public HttpActionAttribute(string? actionApi, HttpMethodType httpActionType) : base(actionApi, httpActionType)

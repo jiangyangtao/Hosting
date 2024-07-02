@@ -1,13 +1,12 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Reflection;
-using Yangtao.Hosting.FrontendApi.Abstractions;
 using Yangtao.Hosting.FrontendApi.Attributes;
 using Yangtao.Hosting.FrontendApi.Enums;
 
 namespace Yangtao.Hosting.FrontendApi.Controls
 {
-    internal class FormUploadControl : ControlBase, IFieldGroup
+    internal class FormUploadControl : ControlBase
     {
         public FormUploadControl(FormUploadAttribute formUploadAttr)
         {
@@ -15,12 +14,11 @@ namespace Yangtao.Hosting.FrontendApi.Controls
             Name = formUploadAttr.Text;
             UploadCount = formUploadAttr.UploadCount;
             Bordered = formUploadAttr.Bordered;
-            SortIndex = formUploadAttr.SortIndex;
             GroupName = formUploadAttr.GroupName;
             Required = formUploadAttr.Required;
         }
 
-        public FormUploadControl(PropertyInfo property, XmlDocumentHandler xmlHandler) : base(property, xmlHandler)
+        public FormUploadControl(PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
         {
         }
 

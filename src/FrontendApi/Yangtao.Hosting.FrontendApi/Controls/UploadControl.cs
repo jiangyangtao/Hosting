@@ -9,14 +9,14 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 {
     internal class UploadControl : FormUploadControl, IHttpAction
     {
-        public UploadControl(UploadAttribute uploadAttribute, PropertyInfo property, XmlDocumentHandler xmlHandler) : base(property, xmlHandler)
+        public UploadControl(UploadAttribute uploadAttribute, PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
         {
             UploadCount = uploadAttribute.UploadCount;
             Bordered = uploadAttribute.Bordered;
             ActionApi = uploadAttribute.ActionApi;
             HttpActionType = uploadAttribute.HttpActionType;
             HttpVersion = uploadAttribute.HttpVersion;
-            ServiceName = uploadAttribute.ServiceName;
+            ServiceName = documentHandler.GetServiceName(uploadAttribute.ServiceName);
         }
 
         public string? ActionApi { set; get; }

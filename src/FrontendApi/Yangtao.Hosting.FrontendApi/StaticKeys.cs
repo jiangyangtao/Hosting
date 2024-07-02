@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using Yangtao.Hosting.FrontendApi.Enums;
 using Yangtao.Hosting.Mvc.FormatResult;
 using Yangtao.Hosting.Mvc.HttpMethods;
 
@@ -32,6 +30,7 @@ namespace Yangtao.Hosting.FrontendApi
 
 
         public static readonly Type PaginationType = typeof(PagingParameter);
+        public static readonly Type NullableType = typeof(Nullable<>);
 
 
         public static readonly Type HttpGetType = typeof(HttpGetAttribute);

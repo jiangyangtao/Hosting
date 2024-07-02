@@ -10,7 +10,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 {
     internal class InputNumberControl : ControlBase
     {
-        public InputNumberControl(PropertyInfo property, XmlDocumentHandler xmlHandler) : base(property, xmlHandler)
+        public InputNumberControl(PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
         {
             var rangeAttr = property.GetCustomAttribute<RangeAttribute>();
             if (rangeAttr != null)
@@ -49,7 +49,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
                 AddOnBeforeType = addOnBeforeAttr.AddOnBeforeType;
 
                 if (addOnBeforeAttr.AddOnBeforeType == AddOnType.Enum && addOnBeforeAttr.AddOnBeforeSource != null)
-                    AddOnBeforeOptions = addOnBeforeAttr.AddOnBeforeSource.GetValueOptions(xmlHandler);
+                    AddOnBeforeOptions = addOnBeforeAttr.AddOnBeforeSource.GetValueOptions(documentHandler);
             }
 
             var addOnAfterAttr = property.GetCustomAttribute<AddOnAfterAttribute>();
@@ -59,7 +59,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
                 AddOnAfterType = addOnAfterAttr.AddOnAfterType;
 
                 if (addOnAfterAttr.AddOnAfterType == AddOnType.Enum && addOnAfterAttr.AddOnAfterSource != null)
-                    AddOnAfterOptions = addOnAfterAttr.AddOnAfterSource.GetValueOptions(xmlHandler);
+                    AddOnAfterOptions = addOnAfterAttr.AddOnAfterSource.GetValueOptions(documentHandler);
             }
         }
 

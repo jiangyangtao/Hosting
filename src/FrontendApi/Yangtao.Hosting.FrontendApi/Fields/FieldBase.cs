@@ -5,16 +5,17 @@ using Yangtao.Hosting.FrontendApi.Enums;
 
 namespace Yangtao.Hosting.FrontendApi.Fields
 {
-    internal abstract class FieldBase : IField, IFieldGroup
+    internal abstract class FieldBase : IField
     {
         protected FieldBase()
         {
         }
 
-        protected FieldBase(PropertyInfo property, XmlDocumentHandler xmlHandler)
+        protected FieldBase(PropertyInfo property, DocumentHandler documentHandler)
         {
+
             Name = property.Name;
-            Text = xmlHandler.GetPropertySummary(property);
+            Text = documentHandler.GetPropertySummary(property);
 
             var formatAttribute = property.GetCustomAttribute<FormatterAttribute>();
             if (formatAttribute != null) Format = formatAttribute.Formatter;
@@ -22,10 +23,9 @@ namespace Yangtao.Hosting.FrontendApi.Fields
             var uniqueKey = property.GetCustomAttribute<UniqueKeyAttribute>();
             if (uniqueKey != null) IsKey = true;
 
-            var fieldItemAttribute = property.GetCustomAttribute<FieldItemAttribute>();
+            var fieldItemAttribute = property.GetCustomAttribute<FieldGroupItemAttribute>();
             if (fieldItemAttribute != null)
             {
-                SortIndex = fieldItemAttribute.SortIndex;
                 GroupName = fieldItemAttribute.GroupName;
             }
         }
@@ -37,8 +37,6 @@ namespace Yangtao.Hosting.FrontendApi.Fields
         public string? Format { protected set; get; }
 
         public abstract FieldType FieldType { get; }
-
-        public int SortIndex { protected set; get; }
 
         public string? GroupName { protected set; get; }
 

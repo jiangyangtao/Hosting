@@ -1,13 +1,12 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Yangtao.Hosting.FrontendApi.Abstractions;
 using Yangtao.Hosting.FrontendApi.Enums;
 
 namespace Yangtao.Hosting.FrontendApi.Controls
 {
-    internal class RangePickerControl : ControlBase, IFieldGroup
+    internal class RangePickerControl : ControlBase
     {
-        public RangePickerControl(RangeControlInfo rangeControlInfo, RangeEndDateControlInfo endDateControlInfo, XmlDocumentHandler xmlHandler) : base(rangeControlInfo.Property, xmlHandler)
+        public RangePickerControl(RangeControlInfo rangeControlInfo, RangeEndDateControlInfo endDateControlInfo, DocumentHandler documentHandler) : base(rangeControlInfo.Property, documentHandler)
         {
             BeginDate = rangeControlInfo.Property.Name;
             RangeName = rangeControlInfo.RangeName;

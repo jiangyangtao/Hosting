@@ -2,15 +2,14 @@
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using Yangtao.Hosting.FrontendApi.Abstractions;
 using Yangtao.Hosting.FrontendApi.Attributes;
 using Yangtao.Hosting.FrontendApi.Enums;
 
 namespace Yangtao.Hosting.FrontendApi.Controls
 {
-    internal class TextAreaControl : ControlBase, IFieldGroup
+    internal class TextAreaControl : ControlBase
     {
-        public TextAreaControl(TextAreaAttribute textAreaAttr, PropertyInfo property, XmlDocumentHandler xmlHandler) : base(property, xmlHandler)
+        public TextAreaControl(TextAreaAttribute textAreaAttr, PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
         {
             Rows = textAreaAttr.Rows;
             ShowCount = textAreaAttr.ShowCount;

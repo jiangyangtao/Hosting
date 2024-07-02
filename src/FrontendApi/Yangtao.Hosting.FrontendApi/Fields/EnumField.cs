@@ -6,12 +6,12 @@ using Yangtao.Hosting.Mvc.FormatResult;
 
 namespace Yangtao.Hosting.FrontendApi.Fields
 {
-    internal class EnumField : FieldBase
+    internal class EnumField : Field
     {
-        public EnumField(PropertyInfo property, XmlDocumentHandler xmlHandler) : base(property, xmlHandler)
+        public EnumField(PropertyInfo property, DocumentHandler documentHandler) : base(FieldType.Enum, property, documentHandler)
         {
             FieldType = FieldType.Enum;
-            ValueOptions = property.PropertyType.GetValueOptions(xmlHandler);
+            ValueOptions = property.PropertyType.GetValueOptions(documentHandler);
         }
 
         public IEnumerable<TextValueOption> ValueOptions { set; get; }

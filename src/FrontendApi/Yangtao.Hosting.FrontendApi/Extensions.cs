@@ -12,61 +12,63 @@ namespace Yangtao.Hosting.FrontendApi
 {
     internal static class Extensions
     {
-        public static IHttpAction GetHttpAction(this MethodInfo method)
+        public static IHttpAction GetHttpAction(this MethodInfo method, HttpVersion version = HttpVersion.v1, string serviceName = "")
         {
             var controller = method.DeclaringType.Name.RemoveController();
 
             (HttpMethodType httpType, bool isDefault) = method.GetHttpType();
-            if (isDefault) return new HttpAction(httpType, controller);
+            if (isDefault) return new HttpAction(httpType, controller, version, serviceName);
 
             return new HttpAction(httpType, $"{controller}/{method.Name}");
         }
 
         private static (HttpMethodType httpType, bool isDefault) GetHttpType(this MethodInfo method)
         {
-            var httpGet = method.GetCustomAttribute(StaticKeys.HttpGetType);
-            if (httpGet != null) return (HttpMethodType.Get, false);
-
-            var httpDefaultGet = method.GetCustomAttribute(StaticKeys.HttpDefaultGetType);
+            var httpDefaultGet = method.GetCustomAttribute(StaticKeys.HttpDefaultGetType, false);
             if (httpDefaultGet != null) return (HttpMethodType.Get, true);
 
+            var httpGet = method.GetCustomAttribute(StaticKeys.HttpGetType, false);
+            if (httpGet != null) return (HttpMethodType.Get, false);
 
 
-            var httpPost = method.GetCustomAttribute(StaticKeys.HttpPostType);
-            if (httpPost != null) return (HttpMethodType.Post, false);
 
-            var httpDefaultPost = method.GetCustomAttribute(StaticKeys.HttpDefaultPostType);
+            var httpDefaultPost = method.GetCustomAttribute(StaticKeys.HttpDefaultPostType, false);
             if (httpDefaultPost != null) return (HttpMethodType.Post, true);
 
+            var httpPost = method.GetCustomAttribute(StaticKeys.HttpPostType, false);
+            if (httpPost != null) return (HttpMethodType.Post, false);
 
 
-            var httpPut = method.GetCustomAttribute(StaticKeys.HttpPutType);
-            if (httpPut != null) return (HttpMethodType.Put, false);
 
-            var httpDefaultPut = method.GetCustomAttribute(StaticKeys.HttpDefaultPutType);
+            var httpDefaultPut = method.GetCustomAttribute(StaticKeys.HttpDefaultPutType, false);
             if (httpDefaultPut != null) return (HttpMethodType.Put, true);
 
+            var httpPut = method.GetCustomAttribute(StaticKeys.HttpPutType, false);
+            if (httpPut != null) return (HttpMethodType.Put, false);
 
 
-            var httpPatch = method.GetCustomAttribute(StaticKeys.HttpPatchType);
-            if (httpPatch != null) return (HttpMethodType.Patch, false);
 
-            var httpDefaultPatch = method.GetCustomAttribute(StaticKeys.HttpDefaultPatchType);
+            var httpDefaultPatch = method.GetCustomAttribute(StaticKeys.HttpDefaultPatchType, false);
             if (httpDefaultPatch != null) return (HttpMethodType.Patch, true);
 
+            var httpPatch = method.GetCustomAttribute(StaticKeys.HttpPatchType, false);
+            if (httpPatch != null) return (HttpMethodType.Patch, false);
 
 
-            var httpDelete = method.GetCustomAttribute(StaticKeys.HttpDeleteType);
-            if (httpDelete != null) return (HttpMethodType.Delete, false);
 
-            var httpDefaultDelete = method.GetCustomAttribute(StaticKeys.HttpDefaultDeleteType);
+            var httpDefaultDelete = method.GetCustomAttribute(StaticKeys.HttpDefaultDeleteType, false);
             if (httpDefaultDelete != null) return (HttpMethodType.Delete, true);
+
+            var httpDelete = method.GetCustomAttribute(StaticKeys.HttpDeleteType, false);
+            if (httpDelete != null) return (HttpMethodType.Delete, false);
 
             throw new ArgumentException($"{method.Name} not exist http method the attribute");
         }
 
         public static FieldType GetFieldType(this Type propertyType)
         {
+            propertyType = propertyType.GetReadProperty();
+
             if (propertyType == StaticKeys.IntType || propertyType == StaticKeys.IntNullableType) return FieldType.Integer;
             if (propertyType == StaticKeys.DecimalType || propertyType == StaticKeys.DecimalNullableType ||
                     propertyType == StaticKeys.DoubleType || propertyType == StaticKeys.DoubleNullableType ||
@@ -79,7 +81,7 @@ namespace Yangtao.Hosting.FrontendApi
             return FieldType.String;
         }
 
-        public static IEnumerable<ControlBase> BuildControls(this Type formType, XmlDocumentHandler xmlHandler)
+        public static IEnumerable<ControlBase> BuildControls(this Type formType, DocumentHandler documentHandler)
         {
             var properties = formType.GetProperties();
             var controls = new List<ControlBase>();
@@ -106,54 +108,56 @@ namespace Yangtao.Hosting.FrontendApi
                     }
                 }
 
-                var control = property.BuildControl(fieldType, xmlHandler);
+                var control = property.BuildControl(fieldType, documentHandler);
                 controls.Add(control);
             }
 
-            var rangeControls = rangeControlCollection.BuildRangePickerControls(xmlHandler);
+            var rangeControls = rangeControlCollection.BuildRangePickerControls(documentHandler);
             if (rangeControls.NotNullAndEmpty()) controls.AddRange(rangeControls);
 
             return controls;
         }
 
-        public static ControlBase BuildControl(this PropertyInfo property, XmlDocumentHandler xmlHandler)
+        public static ControlBase BuildControl(this PropertyInfo property, DocumentHandler documentHandler)
         {
             var fieldType = GetFieldType(property.PropertyType);
-            return property.BuildControl(fieldType, xmlHandler);
+            return property.BuildControl(fieldType, documentHandler);
         }
 
-        private static ControlBase BuildControl(this PropertyInfo property, FieldType fieldType, XmlDocumentHandler xmlHandler)
+        private static ControlBase BuildControl(this PropertyInfo property, FieldType fieldType, DocumentHandler documentHandler)
         {
             if (fieldType == FieldType.Enum)
             {
                 var switchAttr = property.GetCustomAttribute<SwitchAttribute>();
-                if (switchAttr != null) return new SwitchControl(switchAttr, property, xmlHandler);
+                if (switchAttr != null) return new SwitchControl(switchAttr, property, documentHandler);
 
-                var selectAttr = property.GetCustomAttribute<SelectAttribute>();
-                if (selectAttr != null) return new SelectControl(selectAttr, property, xmlHandler);
-
-                return new SelectControl(property, xmlHandler);
+                return new SelectControl(property, documentHandler);
             }
 
-            if (fieldType == FieldType.Boolean) return new SwitchControl(property, xmlHandler);
-            if (fieldType == FieldType.DateTime) return new DatePickerControl(property, xmlHandler);
+            var selectAttr = property.GetCustomAttribute<SelectAttribute>();
+            if (selectAttr != null) return new SelectControl(selectAttr, property, documentHandler);
 
-            if (fieldType == FieldType.Decimal || fieldType == FieldType.Integer) return new InputNumberControl(property, xmlHandler);
+            if (fieldType == FieldType.Boolean) return new SwitchControl(property, documentHandler);
+            if (fieldType == FieldType.DateTime) return new DatePickerControl(property, documentHandler);
+
+            if (fieldType == FieldType.Decimal || fieldType == FieldType.Integer) return new InputNumberControl(property, documentHandler);
 
             var textArea = property.GetCustomAttribute<TextAreaAttribute>();
-            if (textArea != null) return new TextAreaControl(textArea, property, xmlHandler);
+            if (textArea != null) return new TextAreaControl(textArea, property, documentHandler);
 
             var uploadAttr = property.GetCustomAttribute<UploadAttribute>();
-            if (uploadAttr != null) return new UploadControl(uploadAttr, property, xmlHandler);
+            if (uploadAttr != null) return new UploadControl(uploadAttr, property, documentHandler);
 
             var passwordAttr = property.GetCustomAttribute<PasswordAttribute>();
-            if (passwordAttr != null) return new PasswordControl(passwordAttr, property, xmlHandler);
+            if (passwordAttr != null) return new PasswordControl(passwordAttr, property, documentHandler);
 
-            return new InputControl(property, xmlHandler);
+            return new InputControl(property, documentHandler);
         }
 
-        public static IEnumerable<TextValueOption> GetValueOptions(this Type enumType, XmlDocumentHandler xmlHandler)
+        public static IEnumerable<TextValueOption> GetValueOptions(this Type enumType, DocumentHandler documentHandler)
         {
+            enumType = enumType.GetReadProperty();
+
             if (enumType.IsEnum == false) return TextValueOption.Empty();
 
             var options = new Collection<TextValueOption>();
@@ -162,7 +166,7 @@ namespace Yangtao.Hosting.FrontendApi
             {
                 if (field.FieldType.IsEnum == false) continue;
 
-                var text = xmlHandler.GetFieldSummary(field);
+                var text = documentHandler.GetFieldSummary(field);
                 var textValueOption = new TextValueOption(field.Name, text);
                 options.Add(textValueOption);
             }
@@ -170,24 +174,37 @@ namespace Yangtao.Hosting.FrontendApi
             return options;
         }
 
+        public static Type GetReadProperty(this PropertyInfo property) => property.PropertyType.GetReadProperty();
+
+        private static Type GetReadProperty(this Type propertyType)
+        {
+            if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == StaticKeys.NullableType)
+            {
+                var genericArguments = propertyType.GetGenericArguments();
+                if (genericArguments.NotNullAndEmpty()) return propertyType.GetGenericArguments()[0];
+            }
+
+            return propertyType;
+        }
+
         public static string RemoveController(this string controller) => controller.Replace(StaticKeys.ControllerKey, "");
 
-        public static IEnumerable<FieldBase> BuildFields(this Type dataType, XmlDocumentHandler xmlHandler)
+        public static IEnumerable<FieldBase> BuildFields(this Type dataType, DocumentHandler documentHandler)
         {
-            return dataType.GetProperties().Select(a => a.BuildField(xmlHandler));
+            return dataType.GetProperties().Select(a => a.BuildField(documentHandler));
         }
 
-        public static IEnumerable<ParamField> BuildParamFields(this Type dataType, XmlDocumentHandler xmlHandler)
+        public static IEnumerable<ParamField> BuildParamFields(this Type dataType, DocumentHandler documentHandler)
         {
-            return dataType.GetProperties().Select(property => new ParamField(property, xmlHandler));
+            return dataType.GetProperties().Select(property => new ParamField(property, documentHandler));
         }
 
-        public static FieldBase BuildField(this PropertyInfo property, XmlDocumentHandler xmlHandler)
+        public static FieldBase BuildField(this PropertyInfo property, DocumentHandler documentHandler)
         {
             var fieldType = property.PropertyType.GetFieldType();
-            if (fieldType == FieldType.Enum) return new EnumField(property, xmlHandler);
+            if (fieldType == FieldType.Enum) return new EnumField(property, documentHandler);
 
-            return new Field(fieldType, property, xmlHandler);
+            return new Field(fieldType, property, documentHandler);
         }
     }
 }

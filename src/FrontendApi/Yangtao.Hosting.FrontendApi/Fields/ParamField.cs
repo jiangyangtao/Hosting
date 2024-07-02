@@ -9,10 +9,10 @@ namespace Yangtao.Hosting.FrontendApi.Fields
 {
     internal class ParamField : IField
     {
-        public ParamField(PropertyInfo property, XmlDocumentHandler xmlHandler)
+        public ParamField(PropertyInfo property, DocumentHandler documentHandler)
         {
             Name = property.Name;
-            Text = xmlHandler.GetPropertySummary(property);
+            Text = documentHandler.GetPropertySummary(property);
 
             FieldType = property.PropertyType.GetFieldType();
 

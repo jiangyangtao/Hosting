@@ -11,14 +11,11 @@ namespace Yangtao.Hosting.FrontendApi
 
         private readonly IDictionary<string, TableComponent> Tables;
 
-        private readonly IDictionary<string, SelectorComponent> Selectors;
-
         public FrontendModule(string module)
         {
             Tables = new Dictionary<string, TableComponent>();
             Forms = new Dictionary<string, FormComponent>();
             QueryForms = new Dictionary<string, QueryFormComponent>();
-            Selectors = new Dictionary<string, SelectorComponent>();
             Module = module;
         }
 
@@ -36,17 +33,6 @@ namespace Yangtao.Hosting.FrontendApi
             AddForm(tableComponent.AddForm);
             AddForm(tableComponent.EditForm);
             AddQueryForm(tableComponent.QueryForm);
-        }
-
-        public void AddSelector(SelectorComponent? selector)
-        {
-            if (selector == null) return;
-            if (selector.ComponentName.IsNullOrEmpty()) return;
-
-            var exist = Selectors.ContainsKey(selector.ComponentName);
-            if (exist) return;
-
-            Selectors.TryAdd(selector.ComponentName, selector);
         }
 
         public void AddForm(FormComponent? component)
@@ -76,7 +62,5 @@ namespace Yangtao.Hosting.FrontendApi
         public IEnumerable<FormComponent> FormComponents => Forms.Values;
 
         public IEnumerable<QueryFormComponent> QueryFormComponents => QueryForms.Values;
-
-        public IEnumerable<SelectorComponent> SelectorComponents => Selectors.Values;
     }
 }

@@ -17,13 +17,12 @@ namespace Yangtao.Hosting.FrontendApi
         {
             var options = new FrontendApiConfigurationOptions();
             optionAction(options);
-
             return routeBuilder.UseFrontendConfiguration(options);
         }
 
         private static IEndpointRouteBuilder UseFrontendConfiguration(this IEndpointRouteBuilder endpointRouteBuilder, FrontendApiConfigurationOptions options)
         {
-            var result = new FrontendComponentBuilder().BuildJson();
+            var result = new FrontendComponentBuilder(options.DefaultServiceName).BuildJson();
             var routeHandlerBuilder = endpointRouteBuilder.MapGet(options.Endpoint, async (HttpResponse response) =>
             {
                 response.ContentType = options.ResponseContentType;

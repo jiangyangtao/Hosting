@@ -19,8 +19,6 @@
 
         public bool Bordered { set; get; } = true;
 
-        public int SortIndex { get; }
-
         public string? GroupName { get; }
     }
 }

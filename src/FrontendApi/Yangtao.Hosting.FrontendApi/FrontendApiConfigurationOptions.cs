@@ -11,6 +11,8 @@ namespace Yangtao.Hosting.FrontendApi
 
         public bool RequireAuthorization { set; get; } = true;
 
+        public string? DefaultServiceName { set; get; }
+
         /// <summary>
         /// Enum Result the ContentType,Default application/json
         /// </summary>

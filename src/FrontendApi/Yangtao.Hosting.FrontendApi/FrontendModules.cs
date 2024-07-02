@@ -13,26 +13,25 @@ namespace Yangtao.Hosting.FrontendApi
         private readonly IDictionary<string, FrontendModule> frontendModules;
         private readonly IEnumerable<Assembly> Assemblies;
 
-        public FrontendModules(IEnumerable<Assembly> assemblies)
+        public FrontendModules(IEnumerable<Assembly> assemblies, string       serviceName)
         {
             frontendModules = new Dictionary<string, FrontendModule>();
             Assemblies = assemblies;
 
-            var xmlHandler = new XmlDocumentHandler();
-            BuildTableComponent(xmlHandler);
-            BuildFormComponent(xmlHandler);
-            BuildSelectorComponent(xmlHandler);
-            BuildQueryFormComponent(xmlHandler);
+            var documentHandler = new DocumentHandler(serviceName);
+            BuildTableComponent(documentHandler);
+            BuildFormComponent(documentHandler);
+            BuildQueryFormComponent(documentHandler);
         }
 
-        private void BuildTableComponent(XmlDocumentHandler xmlHandler)
+        private void BuildTableComponent(DocumentHandler documentHandler)
         {
             var tableComponentTypes = GetTypes(typeof(TableComponentAttribute));
             if (tableComponentTypes.IsNullOrEmpty()) return;
 
             foreach (var tableComponentType in tableComponentTypes)
             {
-                var tableComponent = new TableComponent(tableComponentType, xmlHandler);
+                var tableComponent = new TableComponent(tableComponentType, documentHandler);
                 if (tableComponent.Module.IsNullOrEmpty()) continue;
 
                 var module = GetModule(tableComponent.Module);
@@ -40,14 +39,14 @@ namespace Yangtao.Hosting.FrontendApi
             }
         }
 
-        private void BuildFormComponent(XmlDocumentHandler xmlHandler)
+        private void BuildFormComponent(DocumentHandler documentHandler)
         {
             var formComponentTypes = GetTypes(typeof(FormAttribute));
             if (formComponentTypes.IsNullOrEmpty()) return;
 
             foreach (var formComponentType in formComponentTypes)
             {
-                var form = new FormComponent(formComponentType, xmlHandler);
+                var form = new FormComponent(formComponentType, documentHandler);
                 if (form.IsEmptyModule) continue;
 
                 var module = GetModule(form.Module);
@@ -55,29 +54,14 @@ namespace Yangtao.Hosting.FrontendApi
             }
         }
 
-        private void BuildSelectorComponent(XmlDocumentHandler xmlHandler)
-        {
-            var selectorComponentTypes = GetTypes(typeof(SelectorComponentAttribute));
-            if (selectorComponentTypes.IsNullOrEmpty()) return;
-
-            foreach (var selectorComponentType in selectorComponentTypes)
-            {
-                var selector = new SelectorComponent(selectorComponentType, xmlHandler);
-                if (selector.IsEmptyModule) continue;
-
-                var module = GetModule(selector.Module);
-                module.AddSelector(selector);
-            }
-        }
-
-        private void BuildQueryFormComponent(XmlDocumentHandler xmlHandler)
+        private void BuildQueryFormComponent(DocumentHandler documentHandler)
         {
             var queryFormComponentTypes = GetTypes(typeof(QueryFormAttribute));
             if (queryFormComponentTypes.IsNullOrEmpty()) return;
 
             foreach (var queryFormComponentType in queryFormComponentTypes)
             {
-                var queryForm = new QueryFormComponent(queryFormComponentType, xmlHandler);
+                var queryForm = new QueryFormComponent(queryFormComponentType, documentHandler);
                 if (queryForm.IsEmptyModule) continue;
 
                 var module = GetModule(queryForm.Module);

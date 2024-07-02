@@ -27,7 +27,7 @@ namespace Yangtao.Hosting.Extensions
             return value;
         }
 
-        public static T DeserializeToObject<T>(this string value)
+        public static T? DeserializeToObject<T>(this string value)
         {
             if (value.IsNullOrEmpty()) return default;
 

@@ -8,8 +8,8 @@
             CanVisible = canVisible;
         }
 
-        public bool CanVisible { set; get; }
+        public bool CanVisible { set; get; } = true;
 
-        public bool Bordered { set; get; }
+        public bool Bordered { set; get; } = true;
     }
 }

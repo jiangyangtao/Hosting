@@ -16,14 +16,14 @@ namespace Yangtao.Hosting.FrontendApi.Components
             RequestParams = Array.Empty<ParamField>();
         }
 
-        protected IndependentActionBase(IAction action, XmlDocumentHandler xmlHandler) : this()
+        protected IndependentActionBase(IAction action, DocumentHandler documentHandler) : this()
         {
             ActionApi = action.ActionApi;
             HttpActionType = action.HttpActionType;
             HttpVersion = action.HttpVersion;
-            ServiceName = action.ServiceName;
+            ServiceName = documentHandler.GetServiceName(action.ServiceName);
 
-            if (action.RequestData != null) RequestParams = action.RequestData.BuildParamFields(xmlHandler);
+            if (action.RequestData != null) RequestParams = action.RequestData.BuildParamFields(documentHandler);
         }
 
         [JsonIgnore]
@@ -47,9 +47,9 @@ namespace Yangtao.Hosting.FrontendApi.Components
 
     internal class IndependentEdit : IndependentActionBase
     {
-        public IndependentEdit(PropertyInfo property, IndependentEditAttribute independentEdit, XmlDocumentHandler xmlHandler) : base(independentEdit, xmlHandler)
+        public IndependentEdit(PropertyInfo property, IndependentEditAttribute independentEdit, DocumentHandler documentHandler) : base(independentEdit, documentHandler)
         {
-            Control = property.BuildControl(xmlHandler);
+            Control = property.BuildControl(documentHandler);
         }
 
         public ControlBase Control { get; }
@@ -60,7 +60,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
 
     internal class ExistValidation : IndependentActionBase
     {
-        public ExistValidation(ExistValidationAttribute existValidation, XmlDocumentHandler xmlHandler) : base(existValidation, xmlHandler)
+        public ExistValidation(ExistValidationAttribute existValidation, DocumentHandler documentHandler) : base(existValidation, documentHandler)
         {
         }
 
@@ -70,7 +70,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
 
     internal class DeleteAction : IndependentActionBase
     {
-        public DeleteAction(DeleteActionAttribute actionAttribute, XmlDocumentHandler xmlHandler) : base(actionAttribute, xmlHandler)
+        public DeleteAction(DeleteActionAttribute actionAttribute, DocumentHandler documentHandler) : base(actionAttribute, documentHandler)
         {
         }
 

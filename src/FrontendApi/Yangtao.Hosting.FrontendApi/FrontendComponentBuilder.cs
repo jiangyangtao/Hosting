@@ -10,10 +10,10 @@ namespace Yangtao.Hosting.FrontendApi
 
         private readonly FrontendModules frontendModules;
 
-        public FrontendComponentBuilder()
+        public FrontendComponentBuilder(string currentServiceName)
         {
             var assemblies = DependencyContext.Default.CompileLibraries.Where(a => a.Type == ProjectType).Select(a => Assembly.Load(a.Name)).ToArray();
-            frontendModules = new FrontendModules(assemblies);
+            frontendModules = new FrontendModules(assemblies, currentServiceName);
         }
 
         private string JsonData { set; get; } = string.Empty;
