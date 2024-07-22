@@ -19,19 +19,19 @@ namespace Yangtao.Hosting.Repository.Abstractions
             return queryable.CountAsync();
         }
 
-        public virtual IQueryable<TEntity> Pagination(IEntityRepository<TEntity> repository)
+        public virtual IQueryable<TEntity> BuildPaginationQuery(IEntityRepository<TEntity> repository)
         {
             var queryable = BuildQuery(repository);
             return queryable.Skip(Start).Take(Size);
         }
 
-        public virtual IQueryable<TEntity> OrderByDescCreateTime(IEntityRepository<TEntity> repository)
+        public virtual IQueryable<TEntity> BuildOrderByDescCreateTimeQuery(IEntityRepository<TEntity> repository)
         {
             var queryable = BuildQuery(repository);
             return queryable.OrderByDescending(a => a.CreateTime);
         }
 
-        public virtual IQueryable<TEntity> DefaultOrderPagination(IEntityRepository<TEntity> repository)
+        public virtual IQueryable<TEntity> BuildDefaultOrderPaginationQuery(IEntityRepository<TEntity> repository)
         {
             var queryable = BuildQuery(repository);
             return queryable.OrderByDescending(a => a.CreateTime).Skip(Start).Take(Size);
