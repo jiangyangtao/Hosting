@@ -26,8 +26,6 @@ namespace Yangtao.Hosting.Controller
         [NonAction]
         public TResult ResponseBadRequest<TResult>(int code, string message) => HttpErrorResult.ResponseBadRequest<TResult>(code, message);
 
-
-
         [NonAction]
         public Task<HttpBadRequestResult> ResponseBadRequestAsync() => Task.FromResult(new HttpBadRequestResult());
 

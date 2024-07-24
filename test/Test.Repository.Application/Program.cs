@@ -1,13 +1,12 @@
-using Yangtao.Hosting.NLog;
+using Yangtao.Hosting.Repository.MySql;
 
-namespace Test.NLog.Application
+namespace Test.Repository.Application
 {
     public class Program
     {
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Logging.ConfigNLog();
 
             // Add services to the container.
 
@@ -15,6 +14,8 @@ namespace Test.NLog.Application
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddRepository();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

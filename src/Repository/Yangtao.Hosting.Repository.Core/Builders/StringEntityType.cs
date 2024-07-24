@@ -35,8 +35,6 @@ namespace Yangtao.Hosting.Repository.Core.Builders
             Types.Add(type);
         }
 
-        protected abstract void AddService<TEntity>(IServiceCollection services) where TEntity : class, IEntity<TKeyType>, new();
-
         public abstract void Register(IServiceCollection services);
 
         protected void RegisterRepository(IServiceCollection services)
@@ -64,7 +62,7 @@ namespace Yangtao.Hosting.Repository.Core.Builders
 
         protected override MethodInfo RegisterRepositoryMethod => typeof(StringEntityType).GetMethod(nameof(AddService));
 
-        protected override void AddService<TEntity>(IServiceCollection services)
+        public static void AddService<TEntity>(IServiceCollection services) where TEntity : class, IEntity<string>, new()
         {
             services.AddScoped<IEntityRepository<TEntity>, EntityRepository<TEntity>>();
         }
@@ -78,7 +76,7 @@ namespace Yangtao.Hosting.Repository.Core.Builders
 
         protected override MethodInfo RegisterRepositoryMethod => typeof(GuidEntityType).GetMethod(nameof(AddService));
 
-        protected override void AddService<TEntity>(IServiceCollection services)
+        public static void AddService<TEntity>(IServiceCollection services) where TEntity : class, IEntity<Guid>, new()
         {
             services.AddScoped<IGuidEntityRepository<TEntity>, GuidEntityRepository<TEntity>>();
         }
@@ -92,7 +90,7 @@ namespace Yangtao.Hosting.Repository.Core.Builders
 
         protected override MethodInfo RegisterRepositoryMethod => typeof(IntegerEntityType).GetMethod(nameof(AddService));
 
-        protected override void AddService<TEntity>(IServiceCollection services)
+        public static void AddService<TEntity>(IServiceCollection services) where TEntity : class, IEntity<int>, new()
         {
             services.AddScoped<IIntegerEntityRepository<TEntity>, IntegerEntityRepository<TEntity>>();
         }
@@ -106,7 +104,7 @@ namespace Yangtao.Hosting.Repository.Core.Builders
 
         protected override MethodInfo RegisterRepositoryMethod => typeof(BigIntegerEntityType).GetMethod(nameof(AddService));
 
-        protected override void AddService<TEntity>(IServiceCollection services)
+        public static void AddService<TEntity>(IServiceCollection services) where TEntity : class, IEntity<long>, new()
         {
             services.AddScoped<IBigIntegerEntityRepository<TEntity>, BigIntegerEntityRepository<TEntity>>();
         }
