@@ -10,21 +10,21 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 {
     internal class SelectControl : ControlBase, IHttpAction
     {
-        public SelectControl(PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        public SelectControl(PropertyInfo property, FieldType fieldType, DocumentHandler documentHandler) : base(property, documentHandler)
         {
             SourceType = SelectSourceType.Enum;
             EnumOptions = property.PropertyType.GetValueOptions(documentHandler);
 
             var selectAttr = property.GetCustomAttribute<SelectAttribute>();
-            if (selectAttr != null) InitSelectAttribute(selectAttr, property, documentHandler);
+            if (selectAttr != null) InitSelectAttribute(selectAttr, property, fieldType, documentHandler);
         }
 
-        public SelectControl(SelectAttribute selectAttribute, PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        public SelectControl(SelectAttribute selectAttribute, PropertyInfo property, FieldType fieldType, DocumentHandler documentHandler) : base(property, documentHandler)
         {
-            InitSelectAttribute(selectAttribute, property, documentHandler);
+            InitSelectAttribute(selectAttribute, property, fieldType, documentHandler);
         }
 
-        private void InitSelectAttribute(SelectAttribute selectAttribute, PropertyInfo property, DocumentHandler documentHandler)
+        private void InitSelectAttribute(SelectAttribute selectAttribute, PropertyInfo property, FieldType fieldType, DocumentHandler documentHandler)
         {
             SelectMode = selectAttribute.SelectMode;
             ActionApi = selectAttribute.ActionApi;
@@ -35,6 +35,11 @@ namespace Yangtao.Hosting.FrontendApi.Controls
             Bordered = selectAttribute.Bordered;
             ShowSearch = selectAttribute.ShowSearch;
             AllowClear = selectAttribute.AllowClear;
+
+            if (fieldType == FieldType.Boolean)
+            {
+                EnumOptions = new TextValueOption[] { new("true", "否"), new("false", "是") };
+            }
 
             if (selectAttribute.SourceType == SelectSourceType.Enum)
             {

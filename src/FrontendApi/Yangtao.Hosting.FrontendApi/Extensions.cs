@@ -131,11 +131,11 @@ namespace Yangtao.Hosting.FrontendApi
                 var switchAttr = property.GetCustomAttribute<SwitchAttribute>();
                 if (switchAttr != null) return new SwitchControl(switchAttr, property, documentHandler);
 
-                return new SelectControl(property, documentHandler);
+                return new SelectControl(property, fieldType, documentHandler);
             }
 
             var selectAttr = property.GetCustomAttribute<SelectAttribute>();
-            if (selectAttr != null) return new SelectControl(selectAttr, property, documentHandler);
+            if (selectAttr != null) return new SelectControl(selectAttr, property, fieldType, documentHandler);
 
             if (fieldType == FieldType.Boolean) return new SwitchControl(property, documentHandler);
             if (fieldType == FieldType.DateTime) return new DatePickerControl(property, documentHandler);
