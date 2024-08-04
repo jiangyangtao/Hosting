@@ -25,7 +25,6 @@ namespace Yangtao.Hosting.Repository.Core.Builders
         public void Add(Type type)
         {
             if (type.FullName.IsNullOrEmpty()) return;
-            if (type.FullName.Contains(IgnoreGenericType.FullName)) return;
             if (type == IgnoreType) return;
             if (type.HasInterface<IProxyTargetAccessor>()) return;
 
@@ -50,8 +49,6 @@ namespace Yangtao.Hosting.Repository.Core.Builders
         }
 
         protected abstract MethodInfo RegisterRepositoryMethod { get; }
-
-        protected static readonly Type IgnoreGenericType = typeof(BaseEntity<TKeyType>);
 
         public abstract Type IgnoreType { get; }
     }
