@@ -10,7 +10,7 @@ namespace Yangtao.Hosting.Extensions
         /// <returns></returns>
         public static DateTime GetZeroTime(this DateTime date)
         {
-            return new DateTime(date.Year, date.Month, date.Day, 0, 0, 0, 0);
+            return date.AddDays(0).Date;
         }
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace Yangtao.Hosting.Extensions
         /// <returns></returns>
         public static DateTime GetFullTime(this DateTime date)
         {
-            return new DateTime(date.Year, date.Month, date.Day, 23, 59, 59, 999);
+            return date.AddDays(1).Date.AddMilliseconds(-1);
         }
 
         public static string ToFormatDate(this DateTime dateTime, string format = "yyyy-MM-dd")
@@ -58,6 +58,56 @@ namespace Yangtao.Hosting.Extensions
         {
             if (time.HasValue == false) return -1;
             return time.Value.ToUnixTimeMilliseconds();
+        }
+
+
+        /// <summary>
+        /// 获取当月最后一天
+        /// </summary>
+        /// <param name="d"></param>
+        /// <param name="fullTime">是否覆盖时间</param>
+        /// <returns></returns>
+        public static DateTime GetLastDay(this DateTime d, bool fullTime = false)
+        {
+            if (fullTime) d.AddDays(1 - d.Day).Date.AddMonths(1).AddMilliseconds(-1);
+
+            return d.AddDays(-(d.Day + 1)).Date.AddMonths(1);
+        }
+
+        /// <summary>
+        /// 是否为当月最后一天
+        /// </summary>
+        /// <param name="d"></param>
+        /// <returns></returns>
+        public static bool IsLastDay(this DateTime d)
+        {
+            var lastDay = d.GetLastDay();
+            return lastDay.Date == d.Date;
+        }
+
+        /// <summary>
+        /// 获取当月最后一天
+        /// </summary>
+        /// <param name="d"></param>
+        /// <param name="fullTime">是否覆盖时间</param>
+        /// <returns></returns>
+        public static DateTime GetFirstDay(this DateTime d, bool fullTime = false)
+        {
+            var r = d.AddDays(-(d.Day + 1)).Date.AddMonths(1);
+            if (fullTime) return r.Date;
+
+            return r;
+        }
+
+        /// <summary>
+        /// 是否为当月最后一天
+        /// </summary>
+        /// <param name="d"></param>
+        /// <returns></returns>
+        public static bool IsFirstDay(this DateTime d)
+        {
+            var lastDay = d.GetFirstDay();
+            return lastDay.Date == d.Date;
         }
     }
 }
