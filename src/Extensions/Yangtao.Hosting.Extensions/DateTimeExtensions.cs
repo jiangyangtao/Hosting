@@ -69,9 +69,9 @@ namespace Yangtao.Hosting.Extensions
         /// <returns></returns>
         public static DateTime GetLastDay(this DateTime d, bool fullTime = false)
         {
-            if (fullTime) d.AddDays(1 - d.Day).Date.AddMonths(1).AddMilliseconds(-1);
+            if (fullTime) return d.AddDays(1 - d.Day).Date.AddMonths(1).AddMilliseconds(-1);
 
-            return d.AddDays(-(d.Day + 1)).Date.AddMonths(1);
+            return d.AddDays(-d.Day).AddMonths(1);
         }
 
         /// <summary>
