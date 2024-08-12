@@ -86,14 +86,14 @@ namespace Yangtao.Hosting.Extensions
         }
 
         /// <summary>
-        /// 获取当月最后一天
+        /// 获取当月第一天
         /// </summary>
         /// <param name="d"></param>
         /// <param name="fullTime">是否覆盖时间</param>
         /// <returns></returns>
         public static DateTime GetFirstDay(this DateTime d, bool fullTime = false)
         {
-            var r = d.AddDays(-(d.Day + 1)).Date.AddMonths(1);
+            var r = d.AddDays(1 - DateTime.Now.Day);
             if (fullTime) return r.Date;
 
             return r;
