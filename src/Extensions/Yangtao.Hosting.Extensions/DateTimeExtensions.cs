@@ -109,5 +109,64 @@ namespace Yangtao.Hosting.Extensions
             var lastDay = d.GetFirstDay();
             return lastDay.Date == d.Date;
         }
+
+
+
+
+        /// <summary>
+        /// 获取指定时间的时间范围
+        /// </summary>
+        /// <param name="d">指定时间</param>
+        /// <returns></returns>
+        public static TimeRange GetTimeRange(this DateTime d) => TimeRange.GetParam(d);
+
+        /// <summary>
+        /// 获取指定时间的月份时间范围
+        /// </summary>
+        /// <param name="d">指定时间</param>
+        /// <returns></returns>
+        public static TimeRange GetMonthRange(this DateTime d)
+        {
+            return new()
+            {
+                BeginTime = d.GetFirstDay(true),
+                EndTime = d.GetLastDay(true),
+            };
+        }
+    }
+
+    /// <summary>
+    /// 时间范围
+    /// </summary>
+    public class TimeRange
+    {
+        /// <summary>
+        /// 开始时间
+        /// </summary>
+        public DateTime BeginTime { set; get; }
+
+        /// <summary>
+        /// 结束时间
+        /// </summary>
+        public DateTime EndTime { set; get; }
+
+        public static TimeRange GetToday()
+        {
+            var now = DateTime.Now;
+            return new()
+            {
+                BeginTime = now.GetZeroTime(),
+                EndTime = now.GetFullTime(),
+            };
+        }
+
+        public static TimeRange GetParam(DateTime d)
+        {
+            return new()
+            {
+                BeginTime = d.GetZeroTime(),
+                EndTime = d.GetFullTime(),
+            };
+        }
     }
 }
