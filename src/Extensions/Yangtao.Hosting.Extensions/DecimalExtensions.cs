@@ -4,9 +4,9 @@
     {
         public static decimal ToRound(this decimal value, int decimals = 2) => Math.Round(value, decimals);
 
-        public static decimal? ToRound(this decimal? value, int decimals = 2)
+        public static decimal ToRound(this decimal? value, int decimals = 2, decimal defaultValue = 0)
         {
-            if (value.HasValue == false) return null;
+            if (value.HasValue == false) value = defaultValue;
 
             return Math.Round(value.Value, decimals);
         }

@@ -127,11 +127,9 @@ namespace Yangtao.Hosting.Extensions
         /// <returns></returns>
         public static TimeRange GetMonthRange(this DateTime d)
         {
-            return new()
-            {
-                BeginTime = d.GetFirstDay(true),
-                EndTime = d.GetLastDay(true),
-            };
+            var beginTime = d.GetFirstDay(true);
+            var endTime = d.GetLastDay(true);
+            return new(beginTime, endTime);
         }
     }
 
@@ -140,15 +138,26 @@ namespace Yangtao.Hosting.Extensions
     /// </summary>
     public class TimeRange
     {
+        private TimeRange()
+        {
+        }
+
+        public TimeRange(DateTime beginTime, DateTime endTime)
+        {
+            BeginTime = beginTime;
+            EndTime = endTime;
+        }
+
+
         /// <summary>
         /// 开始时间
         /// </summary>
-        public DateTime BeginTime { set; get; }
+        public DateTime BeginTime { private set; get; }
 
         /// <summary>
         /// 结束时间
         /// </summary>
-        public DateTime EndTime { set; get; }
+        public DateTime EndTime { private set; get; }
 
         public static TimeRange GetToday()
         {
