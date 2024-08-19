@@ -11,8 +11,8 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
             Type controller,
             string? enableAction,
             string? disableAction,
-            HttpVersion enableActionVersion = HttpVersion.v1,
-            HttpVersion disableActionVersion = HttpVersion.v1,
+            ApiVersion enableActionVersion = ApiVersion.v1,
+            ApiVersion disableActionVersion = ApiVersion.v1,
             string serviceName = "")
         {
             RequestData = requestData;

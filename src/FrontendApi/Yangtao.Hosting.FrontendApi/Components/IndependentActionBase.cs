@@ -40,7 +40,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
         public abstract IndependentType IndependentType { get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public HttpVersion HttpVersion { set; get; } = HttpVersion.v1;
+        public ApiVersion HttpVersion { set; get; } = ApiVersion.v1;
 
         public string? ServiceName { set; get; }
     }

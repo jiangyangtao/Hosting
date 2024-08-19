@@ -97,7 +97,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
         public bool IsPagination { set; get; } = false;
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public HttpVersion HttpVersion { set; get; } = HttpVersion.v1;
+        public ApiVersion HttpVersion { set; get; } = ApiVersion.v1;
 
         public string? ServiceName { set; get; }
     }

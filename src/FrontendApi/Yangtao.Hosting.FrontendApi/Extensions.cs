@@ -12,7 +12,7 @@ namespace Yangtao.Hosting.FrontendApi
 {
     internal static class Extensions
     {
-        public static IHttpAction GetHttpAction(this MethodInfo method, HttpVersion version = HttpVersion.v1, string serviceName = "")
+        public static IHttpAction GetHttpAction(this MethodInfo method, ApiVersion version = ApiVersion.v1, string serviceName = "")
         {
             var controller = method.DeclaringType.Name.RemoveController();
 

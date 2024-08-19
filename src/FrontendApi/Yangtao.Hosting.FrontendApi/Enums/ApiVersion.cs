@@ -1,6 +1,6 @@
 ﻿namespace Yangtao.Hosting.FrontendApi.Enums
 {
-    public enum HttpVersion
+    public enum ApiVersion
     {
         v1,
 
