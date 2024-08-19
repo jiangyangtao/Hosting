@@ -159,5 +159,29 @@ namespace Yangtao.Hosting.Extensions
         }
 
         #endregion
+
+        #region Decimal
+
+        public static decimal ToDecimal(this string value, decimal defaultValue = 0)
+        {
+            if (value.IsNullOrEmpty()) return defaultValue;
+
+            var parseResult = decimal.TryParse(value, out decimal d);
+            if (parseResult == false) return defaultValue;
+
+            return d;
+        }
+
+        public static decimal? ToDecimalNullable(this string value)
+        {
+            if (value.IsNullOrEmpty()) return null;
+
+            var parseResult = decimal.TryParse(value, out decimal d);
+            if (parseResult == false) return null;
+
+            return d;
+        }
+
+        #endregion
     }
 }
