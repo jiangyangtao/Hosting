@@ -28,7 +28,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
 
         public HttpMethodType? HttpActionType { set; get; }
 
-        public ApiVersion HttpVersion { set; get; } = ApiVersion.v1;
+        public ApiVersion ApiVersion { set; get; } = ApiVersion.v1;
 
         public string? ServiceName { set; get; }
     }

@@ -15,7 +15,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
             Bordered = uploadAttribute.Bordered;
             ActionApi = uploadAttribute.ActionApi;
             HttpActionType = uploadAttribute.HttpActionType;
-            HttpVersion = uploadAttribute.HttpVersion;
+            ApiVersion = uploadAttribute.ApiVersion;
             ServiceName = documentHandler.GetServiceName(uploadAttribute.ServiceName);
         }
 
@@ -25,7 +25,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
         public HttpMethodType? HttpActionType { set; get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public ApiVersion HttpVersion { set; get; } = ApiVersion.v1;
+        public ApiVersion ApiVersion { set; get; } = ApiVersion.v1;
 
         public string? ServiceName { set; get; }
     }

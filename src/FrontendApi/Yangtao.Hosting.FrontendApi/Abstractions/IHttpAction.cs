@@ -10,7 +10,7 @@ namespace Yangtao.Hosting.FrontendApi.Abstractions
 
         public HttpMethodType? HttpActionType { get; }
 
-        public ApiVersion HttpVersion { get; }
+        public ApiVersion ApiVersion { get; }
 
         public string? ServiceName { get; }
     }
@@ -21,7 +21,7 @@ namespace Yangtao.Hosting.FrontendApi.Abstractions
         {
             HttpActionType = httpActionType;
             ActionApi = actionApi;
-            HttpVersion = version;
+            ApiVersion = version;
             ServiceName = serviceName;
         }
 
@@ -31,7 +31,7 @@ namespace Yangtao.Hosting.FrontendApi.Abstractions
         public HttpMethodType? HttpActionType { set; get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public ApiVersion HttpVersion { set; get; } = ApiVersion.v1;
+        public ApiVersion ApiVersion { set; get; } = ApiVersion.v1;
 
         public string? ServiceName { set; get; }
     }

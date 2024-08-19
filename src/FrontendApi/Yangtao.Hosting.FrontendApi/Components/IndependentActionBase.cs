@@ -20,7 +20,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
         {
             ActionApi = action.ActionApi;
             HttpActionType = action.HttpActionType;
-            HttpVersion = action.HttpVersion;
+            ApiVersion = action.ApiVersion;
             ServiceName = documentHandler.GetServiceName(action.ServiceName);
 
             if (action.RequestData != null) RequestParams = action.RequestData.BuildParamFields(documentHandler);
@@ -40,7 +40,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
         public abstract IndependentType IndependentType { get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public ApiVersion HttpVersion { set; get; } = ApiVersion.v1;
+        public ApiVersion ApiVersion { set; get; } = ApiVersion.v1;
 
         public string? ServiceName { set; get; }
     }

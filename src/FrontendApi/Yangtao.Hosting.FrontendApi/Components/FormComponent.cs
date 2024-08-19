@@ -27,7 +27,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
             {
                 ActionApi = httpActionAttribute.ActionApi;
                 HttpActionType = httpActionAttribute.HttpActionType;
-                HttpVersion = httpActionAttribute.HttpVersion;
+                ApiVersion = httpActionAttribute.ApiVersion;
                 ServiceName = documentHandler.GetServiceName(httpActionAttribute.ServiceName);
             }
 
@@ -55,7 +55,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
         public IEnumerable<IFieldGroup> FormGroups { set; get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public ApiVersion HttpVersion { set; get; } = ApiVersion.v1;
+        public ApiVersion ApiVersion { set; get; } = ApiVersion.v1;
 
         public string? ServiceName { set; get; }
     }
