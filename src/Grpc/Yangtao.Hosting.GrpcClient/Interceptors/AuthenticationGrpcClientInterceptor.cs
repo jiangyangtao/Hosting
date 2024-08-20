@@ -5,15 +5,31 @@ using Microsoft.Extensions.Primitives;
 
 namespace Yangtao.Hosting.GrpcClient.Interceptors
 {
+    /// <summary>
+    /// Grpc Client 验证拦截器
+    /// </summary>
     public class AuthenticationGrpcClientInterceptor : Interceptor
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
+        /// <summary>
+        /// 构建 <see cref="AuthenticationGrpcClientInterceptor"/>
+        /// </summary>
+        /// <param name="httpContextAccessor"></param>
         public AuthenticationGrpcClientInterceptor(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
         }
 
+        /// <summary>
+        /// 重写 AsyncUnaryCall 加入验证信息
+        /// </summary>
+        /// <typeparam name="TRequest"></typeparam>
+        /// <typeparam name="TResponse"></typeparam>
+        /// <param name="request"></param>
+        /// <param name="context"></param>
+        /// <param name="continuation"></param>
+        /// <returns></returns>
         public override AsyncUnaryCall<TResponse> AsyncUnaryCall<TRequest, TResponse>(TRequest request, ClientInterceptorContext<TRequest, TResponse> context, AsyncUnaryCallContinuation<TRequest, TResponse> continuation)
         {
             if (context.Options.Headers == null)

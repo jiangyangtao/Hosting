@@ -7,8 +7,18 @@ using Yangtao.Hosting.GrpcServer.Options;
 
 namespace Yangtao.Hosting.GrpcServer
 {
+    /// <summary>
+    /// <see cref="IServiceCollection"/> Extension for GrpcServer
+    /// </summary>
     public static class ServiceCollectionExtensions
     {
+        /// <summary>
+        /// 注册 Grpc Server
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public static IServiceCollection AddGrpcServer(this IServiceCollection services, Action<GrpcServerOptions> action)
         {
             var serverOptions = new GrpcServerOptions();
