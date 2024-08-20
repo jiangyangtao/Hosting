@@ -13,7 +13,7 @@ namespace Yangtao.Hosting.GrpcClient
             {
                 grpcClientOptions.Endpoint = clientOptions.Endpoint;
                 grpcClientOptions.AllowAnyServerCertificate = clientOptions.AllowAnyServerCertificate;
-                grpcClientOptions.AddRetry = clientOptions.AddRetry;
+                grpcClientOptions.AllowRetry = clientOptions.AllowRetry;
                 grpcClientOptions.UseAuthenticationGrpcClientInterceptor = clientOptions.UseAuthenticationGrpcClientInterceptor;
                 grpcClientOptions.InterceptorScope = clientOptions.InterceptorScope;
             });
@@ -36,7 +36,7 @@ namespace Yangtao.Hosting.GrpcClient
                     };
                 }
 
-                if (clientOptions.AddRetry)
+                if (clientOptions.AllowRetry)
                 {
                     var serviceConfig = new ServiceConfig();
                     serviceConfig.MethodConfigs.Add(new MethodConfig

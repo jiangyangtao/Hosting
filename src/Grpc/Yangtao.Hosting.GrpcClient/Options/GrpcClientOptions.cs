@@ -24,17 +24,18 @@ namespace Yangtao.Hosting.GrpcClient.Options
         public string? Endpoint { set; get; }
 
         /// <summary>
-        /// 允许自签名证书
+        /// 允许自签名证书，默认允许
         /// </summary>
         public bool AllowAnyServerCertificate { set; get; } = true;
 
         /// <summary>
-        /// 重试策略
+        /// 允许重试策略，默认允许
         /// </summary>
-        public bool AddRetry { set; get; } = true;
+        public bool AllowRetry { set; get; } = true;
 
         /// <summary>
-        /// 是否使用与项目一致的验证方式
+        /// 是否使用与项目一致的验证方式，默认使用。
+        /// 如果使用签名验证则设置为 false
         /// </summary>
         public bool UseAuthenticationGrpcClientInterceptor { set; get; } = true;
 

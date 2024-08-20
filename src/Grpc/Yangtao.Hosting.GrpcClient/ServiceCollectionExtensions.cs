@@ -19,7 +19,7 @@ namespace Yangtao.Hosting.GrpcClient
             {
                 options.Endpoint = clientOptions.Endpoint;
                 options.AllowAnyServerCertificate = clientOptions.AllowAnyServerCertificate;
-                options.AddRetry = clientOptions.AddRetry;
+                options.AllowRetry = clientOptions.AllowRetry;
                 options.UseAuthenticationGrpcClientInterceptor = clientOptions.UseAuthenticationGrpcClientInterceptor;
                 options.InterceptorScope = clientOptions.InterceptorScope;
 
