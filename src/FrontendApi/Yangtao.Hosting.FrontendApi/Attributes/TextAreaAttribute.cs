@@ -8,11 +8,11 @@
             Rows = rows;
         }
 
-        public bool ShowCount { set; get; }
+        public bool ShowCount { set; get; } = true;
 
         public int Rows { set; get; }
 
-        public bool Bordered { set; get; }
+        public bool Bordered { set; get; } = true;
 
         public bool AllowClear { set; get; } = true;
     }
