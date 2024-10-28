@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Yangtao.Hosting.Controller
 {
-    [Route("api/v{v:ApiVersion}/[controller]/[action]")]
+    [Route("api/v{v:ApiVersion}/{area:exists}/[controller]/[action]")]
     [ApiController]
     [Authorize]
     public abstract class BaseApiController : HttpResultController

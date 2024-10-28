@@ -17,5 +17,13 @@ namespace Yangtao.Hosting.NPOI.Extensions
 
             return excelcolumnNames.ToArray();
         }
+
+        public static IRow GetRow(this ISheet sheet, int rowIndex)
+        {
+            var row = sheet.GetRow(rowIndex);
+            if (row == null) sheet.CreateRow(rowIndex);
+
+            return row;
+        }
     }
 }
