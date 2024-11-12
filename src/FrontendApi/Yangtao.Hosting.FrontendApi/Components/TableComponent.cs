@@ -17,7 +17,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
             if (httpActionAttribute != null)
             {
                 ActionApi = httpActionAttribute.ActionApi;
-                HttpActionType = httpActionAttribute.HttpActionType;
+                HttpMethodType = httpActionAttribute.HttpMethodType;
                 ApiVersion = httpActionAttribute.ApiVersion;
                 ServiceName = documentHandler.GetServiceName(httpActionAttribute.ServiceName);
             }
@@ -90,7 +90,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
         public string? ActionApi { set; get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public HttpMethodType? HttpActionType { set; get; } = HttpMethodType.Get;
+        public HttpMethodType? HttpMethodType { set; get; } = Enums.HttpMethodType.Get;
 
         public IEnumerable<FieldBase> Fields { set; get; }
 

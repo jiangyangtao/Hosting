@@ -10,7 +10,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
             UploadCount = uploadCount;
         }
 
-        public UploadAttribute(string? actionApi = "", HttpMethodType httpActionType = HttpMethodType.Put, int uploadCount = 1) : base(actionApi, httpActionType)
+        public UploadAttribute(string? actionApi = "", HttpMethodType httpActionType = Enums.HttpMethodType.Put, int uploadCount = 1) : base(actionApi, httpActionType)
         {
             UploadCount = uploadCount;
         }

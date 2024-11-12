@@ -18,7 +18,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
             {
                 DisplayMode = formAttr.DisplayMode;
                 ActionApi = formAttr.ActionApi;
-                HttpActionType = formAttr.HttpActionType;
+                HttpMethodType = formAttr.HttpMethodType;
                 ServiceName = documentHandler.GetServiceName(formAttr.ServiceName);
             }
 
@@ -26,7 +26,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
             if (httpActionAttribute != null)
             {
                 ActionApi = httpActionAttribute.ActionApi;
-                HttpActionType = httpActionAttribute.HttpActionType;
+                HttpMethodType = httpActionAttribute.HttpMethodType;
                 ApiVersion = httpActionAttribute.ApiVersion;
                 ServiceName = documentHandler.GetServiceName(httpActionAttribute.ServiceName);
             }
@@ -50,7 +50,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
         public string? ActionApi { set; get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public HttpMethodType? HttpActionType { set; get; }
+        public HttpMethodType? HttpMethodType { set; get; }
 
         public IEnumerable<IFieldGroup> FormGroups { set; get; }
 

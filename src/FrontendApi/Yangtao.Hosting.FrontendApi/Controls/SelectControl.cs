@@ -29,7 +29,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
             SelectMode = selectAttribute.SelectMode;
             ActionApi = selectAttribute.ActionApi;
             SourceType = selectAttribute.SourceType;
-            HttpActionType = selectAttribute.HttpActionType;
+            HttpMethodType = selectAttribute.HttpMethodType;
             ServiceName = documentHandler.GetServiceName(selectAttribute.ServiceName);
 
             Bordered = selectAttribute.Bordered;
@@ -66,7 +66,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
         public string? ActionApi { set; get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public HttpMethodType? HttpActionType { set; get; }
+        public HttpMethodType? HttpMethodType { set; get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public ApiVersion ApiVersion { set; get; } = ApiVersion.v1;

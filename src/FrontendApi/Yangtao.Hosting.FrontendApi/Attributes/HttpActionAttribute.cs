@@ -15,18 +15,18 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
             var action = method.GetHttpAction();
 
             ActionApi = action.ActionApi;
-            HttpActionType = action.HttpActionType;
+            HttpMethodType = action.HttpMethodType;
         }
 
         protected HttpActionAttributeBase(string? actionApi, HttpMethodType httpActionType)
         {
             ActionApi = actionApi;
-            HttpActionType = httpActionType;
+            HttpMethodType = httpActionType;
         }
 
         public string? ActionApi { set; get; }
 
-        public HttpMethodType? HttpActionType { set; get; }
+        public HttpMethodType? HttpMethodType { set; get; }
 
         public ApiVersion ApiVersion { set; get; } = ApiVersion.v1;
 
@@ -41,7 +41,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
             
         }
 
-        public HttpActionAttribute(string? actionApi, HttpMethodType httpActionType) : base(actionApi, httpActionType)
+        public HttpActionAttribute(string? actionApi, HttpMethodType httpMethodType) : base(actionApi, httpMethodType)
         {
 
         }

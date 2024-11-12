@@ -6,7 +6,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
     [AttributeUsage(AttributeTargets.Class)]
     public class DeleteActionAttribute : HttpActionAttributeBase, IAction
     {
-        public DeleteActionAttribute(Type? requestData, string? actionApi) : base(actionApi, HttpMethodType.Delete)
+        public DeleteActionAttribute(Type? requestData, string? actionApi) : base(actionApi, Enums.HttpMethodType.Delete)
         {
             RequestData = requestData;
         }

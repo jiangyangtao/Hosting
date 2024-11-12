@@ -19,7 +19,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
         protected IndependentActionBase(IAction action, DocumentHandler documentHandler) : this()
         {
             ActionApi = action.ActionApi;
-            HttpActionType = action.HttpActionType;
+            HttpMethodType = action.HttpMethodType;
             ApiVersion = action.ApiVersion;
             ServiceName = documentHandler.GetServiceName(action.ServiceName);
 
@@ -34,7 +34,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
         public string? ActionApi { get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public HttpMethodType? HttpActionType { get; }
+        public HttpMethodType? HttpMethodType { get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public abstract IndependentType IndependentType { get; }
