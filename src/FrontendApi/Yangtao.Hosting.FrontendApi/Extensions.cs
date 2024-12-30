@@ -140,7 +140,7 @@ namespace Yangtao.Hosting.FrontendApi
             if (fieldType == FieldType.Boolean) return new SwitchControl(property, documentHandler);
             if (fieldType == FieldType.DateTime) return new DatePickerControl(property, documentHandler);
 
-            if (fieldType == FieldType.Decimal || fieldType == FieldType.Integer) return new InputNumberControl(property, documentHandler);
+            if (fieldType == FieldType.Decimal || fieldType == FieldType.Integer) return new InputNumberControl(fieldType, property, documentHandler);
 
             var textArea = property.GetCustomAttribute<TextAreaAttribute>();
             if (textArea != null) return new TextAreaControl(textArea, property, documentHandler);

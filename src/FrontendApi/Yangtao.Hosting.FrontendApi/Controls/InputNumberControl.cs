@@ -10,8 +10,18 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 {
     internal class InputNumberControl : ControlBase
     {
-        public InputNumberControl(PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        public InputNumberControl(FieldType fieldType, PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
         {
+            ChangeStep = 1;
+            Min = 0;
+            Max = int.MaxValue;
+            if (fieldType == FieldType.Decimal)
+            {
+                ChangeStep = 0.1;
+                Max = decimal.MaxValue;
+            }
+
+
             var rangeAttr = property.GetCustomAttribute<RangeAttribute>();
             if (rangeAttr != null)
             {
