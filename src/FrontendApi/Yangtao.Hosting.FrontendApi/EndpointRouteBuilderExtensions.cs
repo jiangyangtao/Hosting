@@ -22,7 +22,7 @@ namespace Yangtao.Hosting.FrontendApi
 
         private static IEndpointRouteBuilder UseFrontendConfiguration(this IEndpointRouteBuilder endpointRouteBuilder, FrontendApiConfigurationOptions options)
         {
-            var result = new FrontendComponentBuilder(options.DefaultServiceName).BuildJson();
+            var result = new FrontendComponentBuilder(options).BuildJson();
             var routeHandlerBuilder = endpointRouteBuilder.MapGet(options.Endpoint, async (HttpResponse response) =>
             {
                 response.ContentType = options.ResponseContentType;

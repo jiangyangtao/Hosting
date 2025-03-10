@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Reflection;
+using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.FrontendApi.Abstractions;
 using Yangtao.Hosting.FrontendApi.Attributes;
 using Yangtao.Hosting.FrontendApi.Enums;
@@ -22,6 +23,32 @@ namespace Yangtao.Hosting.FrontendApi.Controls
         public SelectControl(SelectAttribute selectAttribute, PropertyInfo property, FieldType fieldType, DocumentHandler documentHandler) : base(property, documentHandler)
         {
             InitSelectAttribute(selectAttribute, property, fieldType, documentHandler);
+        }
+
+        public SelectControl(DictionaryAttribute dictionaryAttribute, PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        {
+            SelectMode = dictionaryAttribute.SelectMode;
+            SourceType = dictionaryAttribute.SourceType;
+
+            if (dictionaryAttribute.ActionApi.NotNullAndEmpty() && dictionaryAttribute.ServiceName.NotNullAndEmpty())
+            {
+                ActionApi = dictionaryAttribute.ActionApi;
+                HttpMethodType = dictionaryAttribute.HttpMethodType;
+                ApiVersion = dictionaryAttribute.ApiVersion;
+                ServiceName = documentHandler.GetServiceName(dictionaryAttribute.ServiceName);
+            }
+
+            if (documentHandler.DictionaryConfig != null && dictionaryAttribute.ActionApi.IsNullOrEmpty() && dictionaryAttribute.ServiceName.IsNullOrEmpty())
+            {
+                ActionApi = documentHandler.DictionaryConfig.ActionApi;
+                ApiVersion = documentHandler.DictionaryConfig.ApiVersion;
+                HttpMethodType = documentHandler.DictionaryConfig.HttpMethodType;
+                ServiceName = documentHandler.DictionaryConfig.ServiceName;
+            }
+
+            Bordered = dictionaryAttribute.Bordered;
+            ShowSearch = dictionaryAttribute.ShowSearch;
+            AllowClear = dictionaryAttribute.AllowClear;
         }
 
         private void InitSelectAttribute(SelectAttribute selectAttribute, PropertyInfo property, FieldType fieldType, DocumentHandler documentHandler)

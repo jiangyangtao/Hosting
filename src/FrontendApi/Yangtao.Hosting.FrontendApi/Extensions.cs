@@ -142,6 +142,22 @@ namespace Yangtao.Hosting.FrontendApi
 
             if (fieldType == FieldType.Decimal || fieldType == FieldType.Integer) return new InputNumberControl(fieldType, property, documentHandler);
 
+            var dictionary = property.GetCustomAttribute<DictionaryAttribute>();
+            if (dictionary != null)
+            {
+                if (dictionary.OptionsType == OptionsType.RadioGroup)
+                {
+
+                }
+
+                if (dictionary.OptionsType == OptionsType.Segmented)
+                {
+
+                }
+
+                return new SelectControl(dictionary, property, documentHandler);
+            }
+
             var textArea = property.GetCustomAttribute<TextAreaAttribute>();
             if (textArea != null) return new TextAreaControl(textArea, property, documentHandler);
 

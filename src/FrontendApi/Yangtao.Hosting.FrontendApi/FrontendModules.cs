@@ -13,12 +13,12 @@ namespace Yangtao.Hosting.FrontendApi
         private readonly IDictionary<string, FrontendModule> frontendModules;
         private readonly IEnumerable<Assembly> Assemblies;
 
-        public FrontendModules(IEnumerable<Assembly> assemblies, string       serviceName)
+        public FrontendModules(IEnumerable<Assembly> assemblies, FrontendApiConfigurationOptions options)
         {
             frontendModules = new Dictionary<string, FrontendModule>();
             Assemblies = assemblies;
 
-            var documentHandler = new DocumentHandler(serviceName);
+            var documentHandler = new DocumentHandler(options);
             BuildTableComponent(documentHandler);
             BuildFormComponent(documentHandler);
             BuildQueryFormComponent(documentHandler);

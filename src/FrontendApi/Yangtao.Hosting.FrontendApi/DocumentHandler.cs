@@ -11,11 +11,14 @@ namespace Yangtao.Hosting.FrontendApi
 
         private readonly string CurrentServiceName;
 
-        public DocumentHandler(string serviceName)
+        public readonly DictionaryConfig? DictionaryConfig;
+
+        public DocumentHandler(FrontendApiConfigurationOptions options)
         {
             XmlDocmentDictionary = new();
 
-            CurrentServiceName = serviceName;
+            CurrentServiceName = options.DefaultServiceName;
+            DictionaryConfig = options.DictionaryConfig;
         }
 
         public string? GetFieldSummary(FieldInfo field)
