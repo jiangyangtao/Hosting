@@ -18,6 +18,10 @@
 
         RangePicker,
 
-        Password
+        Password,
+
+        RadioGroup,
+
+        Segmented
     }
 }

@@ -142,21 +142,20 @@ namespace Yangtao.Hosting.FrontendApi
 
             if (fieldType == FieldType.Decimal || fieldType == FieldType.Integer) return new InputNumberControl(fieldType, property, documentHandler);
 
-            var dictionary = property.GetCustomAttribute<DictionaryAttribute>();
-            if (dictionary != null)
+            var dictionaryAttr = property.GetCustomAttribute<DictionaryAttribute>();
+            if (dictionaryAttr != null)
             {
-                if (dictionary.OptionsType == OptionsType.RadioGroup)
-                {
+                if (dictionaryAttr.OptionsType == OptionsType.Select) return new SelectControl(dictionaryAttr, property, documentHandler);
+                if (dictionaryAttr.OptionsType == OptionsType.Segmented) return new SegmentedControl(dictionaryAttr, property, documentHandler);
 
-                }
-
-                if (dictionary.OptionsType == OptionsType.Segmented)
-                {
-
-                }
-
-                return new SelectControl(dictionary, property, documentHandler);
+                return new RadioGroupControl(dictionaryAttr, property, documentHandler);
             }
+
+            var segmentedAttr = property.GetCustomAttribute<SegmentedAttribute>();
+            if (segmentedAttr != null) return new SegmentedControl(segmentedAttr, property, documentHandler);
+
+            var radioGroupAttr = property.GetCustomAttribute<RadioGroupAttribute>();
+            if (radioGroupAttr != null) return new RadioGroupControl(radioGroupAttr, property, documentHandler);
 
             var textArea = property.GetCustomAttribute<TextAreaAttribute>();
             if (textArea != null) return new TextAreaControl(textArea, property, documentHandler);
