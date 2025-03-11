@@ -11,12 +11,26 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
 
         public SelectSourceType SourceType { get; } = SelectSourceType.API;
 
-        public OptionsType OptionsType { get; } = OptionsType.Select;
+        public DictionaryOptionsType OptionsType { get; } = DictionaryOptionsType.Select;
 
         public bool Bordered { set; get; } = true;
 
         public bool AllowClear { set; get; } = true;
 
         public bool ShowSearch { set; get; } = true;
+
+
+        public bool IsRadioGroup
+        {
+            get
+            {
+                if (OptionsType == DictionaryOptionsType.RadioGroup) return true;
+                if (OptionsType == DictionaryOptionsType.RadioGroupBtn) return true;
+                if (OptionsType == DictionaryOptionsType.RadioGroupDeepBtn) return true;
+                if (OptionsType == DictionaryOptionsType.RadioGroupVertical) return true;
+
+                return false;
+            }
+        }
     }
 }

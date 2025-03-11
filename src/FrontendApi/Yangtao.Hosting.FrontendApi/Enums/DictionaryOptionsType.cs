@@ -1,6 +1,6 @@
 ﻿namespace Yangtao.Hosting.FrontendApi.Enums
 {
-    public enum OptionsType
+    public enum DictionaryOptionsType
     {
         /// <summary>
         /// 下拉框

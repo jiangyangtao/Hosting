@@ -10,10 +10,11 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
             SourceType = SelectSourceType.Enum;
         }
 
-        public SelectAttribute(string apiSource, HttpMethodType actionType = Enums.HttpMethodType.Get, SelectMode mode = SelectMode.Tags) : base(apiSource, actionType)
+        public SelectAttribute(string serviceName, string apiSource, HttpMethodType actionType = Enums.HttpMethodType.Get, SelectMode mode = SelectMode.Tags) : base(apiSource, actionType)
         {
             SourceType = SelectSourceType.API;
             SelectMode = mode;
+            ServiceName = serviceName;
         }
 
         public SelectAttribute(Type controller, string methodName, SelectMode mode = SelectMode.Tags) : base(controller, methodName)

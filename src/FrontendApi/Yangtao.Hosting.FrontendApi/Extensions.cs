@@ -131,31 +131,40 @@ namespace Yangtao.Hosting.FrontendApi
                 var switchAttr = property.GetCustomAttribute<SwitchAttribute>();
                 if (switchAttr != null) return new SwitchControl(switchAttr, property, documentHandler);
 
+                var radioGroupAttribute = property.GetCustomAttribute<RadioGroupAttribute>();
+                if (radioGroupAttribute != null)
+                {
+                    return new RadioGroupControl(radioGroupAttribute, property, fieldType, documentHandler);
+                }
+
                 return new SelectControl(property, fieldType, documentHandler);
             }
 
             var selectAttr = property.GetCustomAttribute<SelectAttribute>();
             if (selectAttr != null) return new SelectControl(selectAttr, property, fieldType, documentHandler);
 
-            if (fieldType == FieldType.Boolean) return new SwitchControl(property, documentHandler);
-            if (fieldType == FieldType.DateTime) return new DatePickerControl(property, documentHandler);
-
-            if (fieldType == FieldType.Decimal || fieldType == FieldType.Integer) return new InputNumberControl(fieldType, property, documentHandler);
-
             var dictionaryAttr = property.GetCustomAttribute<DictionaryAttribute>();
             if (dictionaryAttr != null)
             {
-                if (dictionaryAttr.OptionsType == OptionsType.Select) return new SelectControl(dictionaryAttr, property, documentHandler);
-                if (dictionaryAttr.OptionsType == OptionsType.Segmented) return new SegmentedControl(dictionaryAttr, property, documentHandler);
+                if (dictionaryAttr.OptionsType == DictionaryOptionsType.Select) return new SelectControl(dictionaryAttr, property, documentHandler);
+                if (dictionaryAttr.OptionsType == DictionaryOptionsType.Segmented) return new SegmentedControl(dictionaryAttr, property, documentHandler);
 
                 return new RadioGroupControl(dictionaryAttr, property, documentHandler);
             }
 
+            var radioGroupAttr = property.GetCustomAttribute<RadioGroupAttribute>();
+            if (radioGroupAttr != null) return new RadioGroupControl(radioGroupAttr, property, fieldType, documentHandler);
+
             var segmentedAttr = property.GetCustomAttribute<SegmentedAttribute>();
             if (segmentedAttr != null) return new SegmentedControl(segmentedAttr, property, documentHandler);
 
-            var radioGroupAttr = property.GetCustomAttribute<RadioGroupAttribute>();
-            if (radioGroupAttr != null) return new RadioGroupControl(radioGroupAttr, property, documentHandler);
+
+
+
+            if (fieldType == FieldType.Boolean) return new SwitchControl(property, documentHandler);
+            if (fieldType == FieldType.DateTime) return new DatePickerControl(property, documentHandler);
+
+            if (fieldType == FieldType.Decimal || fieldType == FieldType.Integer) return new InputNumberControl(fieldType, property, documentHandler);
 
             var textArea = property.GetCustomAttribute<TextAreaAttribute>();
             if (textArea != null) return new TextAreaControl(textArea, property, documentHandler);
