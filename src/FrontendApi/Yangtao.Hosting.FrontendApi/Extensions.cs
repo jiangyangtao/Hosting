@@ -143,7 +143,7 @@ namespace Yangtao.Hosting.FrontendApi
             var selectAttr = property.GetCustomAttribute<SelectAttribute>();
             if (selectAttr != null) return new SelectControl(selectAttr, property, fieldType, documentHandler);
 
-            var dictionaryAttr = property.GetCustomAttribute<DictionaryAttribute>();
+            var dictionaryAttr = property.GetCustomAttribute<DictionaryOptionsAttribute>();
             if (dictionaryAttr != null)
             {
                 if (dictionaryAttr.OptionsType == DictionaryOptionsType.Select) return new SelectControl(dictionaryAttr, property, documentHandler);

@@ -31,7 +31,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
             }
         }
 
-        public RadioGroupControl(DictionaryAttribute dictionaryAttribute, PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        public RadioGroupControl(DictionaryOptionsAttribute dictionaryAttribute, PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
         {
             if (dictionaryAttribute.OptionsType == DictionaryOptionsType.RadioGroup) RadioGroupType = RadioGroupType.RadioGroup;
             if (dictionaryAttribute.OptionsType == DictionaryOptionsType.RadioGroupBtn) RadioGroupType = RadioGroupType.RadioGroupBtn;

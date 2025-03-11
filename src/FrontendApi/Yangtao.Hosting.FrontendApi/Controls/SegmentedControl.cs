@@ -13,7 +13,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
             Block = segmentedAttribute.Block;
         }
 
-        public SegmentedControl(DictionaryAttribute dictionaryAttribute, PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        public SegmentedControl(DictionaryOptionsAttribute dictionaryAttribute, PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
         {
             if (dictionaryAttribute.ActionApi.NotNullAndEmpty() && dictionaryAttribute.ServiceName.NotNullAndEmpty())
             {

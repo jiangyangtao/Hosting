@@ -3,7 +3,7 @@ using Yangtao.Hosting.FrontendApi.Enums;
 
 namespace Yangtao.Hosting.FrontendApi
 {
-    public class DictionaryConfig : IHttpAction
+    public class DictionaryOptionsConfig : IHttpAction
     {
         public string? ActionApi { set; get; }
 

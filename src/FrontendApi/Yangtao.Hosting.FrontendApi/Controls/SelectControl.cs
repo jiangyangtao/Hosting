@@ -25,7 +25,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
             InitSelectAttribute(selectAttribute, property, fieldType, documentHandler);
         }
 
-        public SelectControl(DictionaryAttribute dictionaryAttribute, PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        public SelectControl(DictionaryOptionsAttribute dictionaryAttribute, PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
         {
             SelectMode = dictionaryAttribute.SelectMode;
             SourceType = dictionaryAttribute.SourceType;

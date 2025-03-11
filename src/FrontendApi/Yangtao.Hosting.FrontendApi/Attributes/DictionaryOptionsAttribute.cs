@@ -3,7 +3,7 @@
 namespace Yangtao.Hosting.FrontendApi.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public class DictionaryAttribute : HttpActionAttributeBase
+    public class DictionaryOptionsAttribute : HttpActionAttributeBase
     {
         public string? Module { set; get; }
 
