@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Yangtao.Hosting.Mvc.FormatResult
+namespace Yangtao.Hosting.Common
 {
     /// <summary>
     /// 分页参数
