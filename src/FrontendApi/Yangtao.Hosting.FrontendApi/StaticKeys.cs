@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Yangtao.Hosting.Common;
 using Yangtao.Hosting.Mvc.FormatResult;
 using Yangtao.Hosting.Mvc.HttpMethods;
 

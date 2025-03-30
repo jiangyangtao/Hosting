@@ -7,10 +7,10 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="RSAExtensions" Version="1.1.1" />
+		<PackageReference Include="RSAExtensions" Version="1.1.2" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.3.0" />
 		<PackageReference Include="Grpc.AspNetCore.Server" Version="2.57.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authorization" Version="7.0.0" />
 	</ItemGroup>

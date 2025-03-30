@@ -12,7 +12,7 @@
 	</ImportGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="RSAExtensions" Version="1.1.1" />
+	  <PackageReference Include="RSAExtensions" Version="1.1.2" />
 	</ItemGroup>
 
 	<ItemGroup>
