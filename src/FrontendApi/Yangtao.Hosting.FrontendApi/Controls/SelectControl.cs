@@ -65,7 +65,9 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 
             if (fieldType == FieldType.Boolean)
             {
-                EnumOptions = new TextValueOption[] { new("true", "否"), new("false", "是") };
+                selectAttribute.BooleanTrueText ??= "是";
+                selectAttribute.BooleanFalseText ??= "否";
+                EnumOptions = new TextValueOption[] { new("true", selectAttribute.BooleanTrueText), new("false", selectAttribute.BooleanFalseText) };
             }
 
             if (selectAttribute.SourceType == SelectSourceType.Enum)

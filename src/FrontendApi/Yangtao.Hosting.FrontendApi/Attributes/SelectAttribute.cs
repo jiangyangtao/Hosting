@@ -41,5 +41,10 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
         public bool ShowSearch { set; get; } = true;
 
         public Type? Source { get; }
+
+
+        public string BooleanTrueText { set; get; }
+
+        public string BooleanFalseText { set; get; }
     }
 }
