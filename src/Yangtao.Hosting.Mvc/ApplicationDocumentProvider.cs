@@ -36,6 +36,7 @@ namespace Yangtao.Hosting.Mvc
             if (ApplicationDocument == null) return string.Empty;
 
             var r = ApplicationDocument.XPathEvaluate($"normalize-space(//member[@name = '{memberName}']/summary/text())") as string;
+            r ??= ApplicationDocument.XPathEvaluate($"normalize-space(//member[contains(@name,'{memberName}')]/summary/text())") as string;
             return r ?? string.Empty;
         }
 

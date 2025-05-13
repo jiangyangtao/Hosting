@@ -135,6 +135,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yangtao.Hosting.GrpcServer"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Repository.Application", "test\Test.Repository.Application\Test.Repository.Application.csproj", "{D4BBFC3D-0CE7-4F43-969E-39762C402E08}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Mvc.ConsoleApp", "test\Test.Mvc.ConsoleApp\Test.Mvc.ConsoleApp.csproj", "{99851414-E401-49C3-9723-2CA663246020}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -337,6 +339,10 @@ Global
 		{D4BBFC3D-0CE7-4F43-969E-39762C402E08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4BBFC3D-0CE7-4F43-969E-39762C402E08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4BBFC3D-0CE7-4F43-969E-39762C402E08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99851414-E401-49C3-9723-2CA663246020}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99851414-E401-49C3-9723-2CA663246020}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99851414-E401-49C3-9723-2CA663246020}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99851414-E401-49C3-9723-2CA663246020}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -403,6 +409,7 @@ Global
 		{6B3DABDF-3DDC-4D2B-96A1-41D5362EEA69} = {AD177218-88F7-4179-A50B-D613F156D01B}
 		{7386C4BA-6BB4-4BDE-9CFC-F1FDCC06C148} = {AD177218-88F7-4179-A50B-D613F156D01B}
 		{D4BBFC3D-0CE7-4F43-969E-39762C402E08} = {E54AF2F8-8C5F-4A19-BD6E-E63DEC4CA1AD}
+		{99851414-E401-49C3-9723-2CA663246020} = {E54AF2F8-8C5F-4A19-BD6E-E63DEC4CA1AD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28EDA54C-950D-459F-AFC9-092C65E8B3D9}

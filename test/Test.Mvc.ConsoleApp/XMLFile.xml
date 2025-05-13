@@ -1,0 +1,698 @@
+﻿<?xml version="1.0"?>
+<doc>
+	<assembly>
+		<name>Admin.Employee.Application</name>
+	</assembly>
+	<members>
+		<member name="T:Admin.Employee.Application.Controllers.DepartmentController">
+			<summary>
+				部门
+			</summary>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.DepartmentController.Add(Admin.Employee.Application.Dto.DepartmentDto)">
+			<summary>
+				添加
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.DepartmentController.Remove(Admin.Employee.Application.Dto.DepartmentDtoBase)">
+			<summary>
+				删除
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.DepartmentController.Modify(Admin.Employee.Application.Dto.UpdateDepartmentDto)">
+			<summary>
+				修改
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.DepartmentController.Department(Admin.Employee.Application.Dto.DepartmentDtoBase)">
+			<summary>
+				获取部门数据
+			</summary>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.DepartmentController.Departments">
+			<summary>
+				获取部门
+			</summary>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.DepartmentController.AddEmployee(Admin.Employee.Application.Dto.DepartmentPositionDto)">
+			<summary>
+				添加部门员工
+			</summary>
+			<param name="departmentPosition"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.DepartmentController.ChangeEmployeePosition(Admin.Employee.Application.Dto.DepartmentPositionDto)">
+			<summary>
+				修改部门员工职位
+			</summary>
+			<param name="departmentPosition"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.DepartmentController.RemoveEmployee(Admin.Employee.Application.Dto.DepartmentEmployeeDtoBase)">
+			<summary>
+				删除部门员工
+			</summary>
+			<param name="departmentId"></param>
+			<param name="employeeId"></param>
+			<returns></returns>
+		</member>
+		<member name="T:Admin.Employee.Application.Controllers.EmployeeController">
+			<summary>
+				员工
+			</summary>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.EmployeeController.ExistLoginName(Admin.Employee.Application.Dto.ExistEmployeeLoginNameDto)">
+			<summary>
+				登录名验证
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.EmployeeController.ExistMobile(Admin.Employee.Application.Dto.ExistEmployeeMobileDto)">
+			<summary>
+				手机号验证
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.EmployeeController.ExistEmail(Admin.Employee.Application.Dto.ExistEmployeeEmailDto)">
+			<summary>
+				邮箱验证
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.EmployeeController.Add(Admin.Employee.Application.Dto.AddEmployeeDto)">
+			<summary>
+				添加
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.EmployeeController.Remove(Admin.Employee.Application.Dto.EmployeeDtoBase)">
+			<summary>
+				删除
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.EmployeeController.ModifyAsnyc(Admin.Employee.Application.Dto.ModifyEmployeeDto)">
+			<summary>
+				修改
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.EmployeeController.ModifyCurrent(Admin.Employee.Application.Dto.UpdateEmployeeDto)">
+			<summary>
+				更新
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.EmployeeController.InService(Admin.Employee.Application.Dto.EmployeeDtoBase)">
+			<summary>
+				修改为在职
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.EmployeeController.Resigned(Admin.Employee.Application.Dto.EmployeeDtoBase)">
+			<summary>
+				修改为离职
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.EmployeeController.ResetPassword(Admin.Employee.Application.Dto.ResetPasswordDto)">
+			<summary>
+				重置密码
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.EmployeeController.ChangePassword(Admin.Employee.Application.Dto.ChangePasswordDto)">
+			<summary>
+				更新密码
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.EmployeeController.Employees(Admin.Employee.Application.Dto.EmployeeQueryDto)">
+			<summary>
+				员工数据
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.EmployeeController.Profile">
+			<summary>
+				获取资料
+			</summary>
+			<returns></returns>
+		</member>
+		<member name="T:Admin.Employee.Application.Controllers.PermissionController">
+			<summary>
+				权限
+			</summary>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.PermissionController.PutDepartmentPermission(Admin.Employee.Application.Dto.AuthorizationPermissionDto)">
+			<summary>
+				部门授权
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.PermissionController.PutRolePermission(Admin.Employee.Application.Dto.AuthorizationPermissionDto)">
+			<summary>
+				角色授权
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.PermissionController.RemoveDepartmentPermission(Admin.Employee.Application.Dto.AuthorizationPermissionDto)">
+			<summary>
+				删除部门授权
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.PermissionController.RemoveRolePermission(Admin.Employee.Application.Dto.AuthorizationPermissionDto)">
+			<summary>
+				删除角色授权
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.PermissionController.RolePermissions(Admin.Employee.Application.Dto.PermissionDto)">
+			<summary>
+				获取角色权限
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.PermissionController.DepartmentPermissions(Admin.Employee.Application.Dto.PermissionDto)">
+			<summary>
+				获取部门权限
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.PermissionController.EmployeePermission">
+			<summary>
+				获取权限
+			</summary>
+			<returns></returns>
+		</member>
+		<member name="T:Admin.Employee.Application.Controllers.RoleController">
+			<summary>
+				角色
+			</summary>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.RoleController.Add(Admin.Employee.Application.Dto.RoleDto)">
+			<summary>
+				添加
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.RoleController.Remove(Admin.Employee.Application.Dto.RoleDtoBase)">
+			<summary>
+				删除
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.RoleController.Modify(Admin.Employee.Application.Dto.UpdateRoleDto)">
+			<summary>
+				修改
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.RoleController.Role(Admin.Employee.Application.Dto.RoleDtoBase)">
+			<summary>
+				获取角色数据
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.RoleController.Roles">
+			<summary>
+				获取角色
+			</summary>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.RoleController.AddEmployee(Admin.Employee.Application.Dto.RoleEmployeeDto)">
+			<summary>
+				添加员工
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.RoleController.RemoveEmployee(Admin.Employee.Application.Dto.RoleEmployeeDto)">
+			<summary>
+				删除员工
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="T:Admin.Employee.Application.Controllers.SettingsController">
+			<summary>
+				设置
+			</summary>
+		</member>
+		<member name="T:Admin.Employee.Application.Controllers.SystemLogController">
+			<summary>
+				系统日志
+			</summary>
+		</member>
+		<member name="M:Admin.Employee.Application.Controllers.SystemLogController.ActionLogs(Admin.Employee.Application.Dto.ActionLogQueryDto)">
+			<summary>
+				获取日志
+			</summary>
+			<param name="dto"></param>
+			<returns></returns>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ActionLogDto.Module">
+			<summary>
+				模块
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ActionLogDto.ModuleName">
+			<summary>
+				模块
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ActionLogDto.Action">
+			<summary>
+				操作
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ActionLogDto.ActionName">
+			<summary>
+				操作
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ActionLogDto.ActionTime">
+			<summary>
+				操作时间
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ActionLogDto.ElapsedTime">
+			<summary>
+				耗时
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ActionLogDto.ResponseStatusCode">
+			<summary>
+				状态码
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ActionLogDto.IsSuccessful">
+			<summary>
+				结果
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ActionLogQueryDto.employeeId">
+			<summary>
+				员工
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ActionLogQueryDto.moduleName">
+			<summary>
+				模块
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ActionLogQueryDto.actionName">
+			<summary>
+				操作
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ActionLogQueryDto.isSuccessful">
+			<summary>
+				结果
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ActionLogResult.EmployeeName">
+			<summary>
+				员工
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ExistEmployeeLoginNameDto.LoginName">
+			<summary>
+				登录名
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ExistEmployeeMobileDto.Mobile">
+			<summary>
+				手机号
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ExistEmployeeEmailDto.Email">
+			<summary>
+				邮箱
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.AddEmployeeDto.EmployeeCode">
+			<summary>
+				工号
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.AddEmployeeDto.LoginName">
+			<summary>
+				登录名
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.AddEmployeeDto.Password">
+			<summary>
+				密码
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.AddEmployeeDto.JobTitleId">
+			<summary>
+				职称
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.AddEmployeeDto.PositionLevelId">
+			<summary>
+				职级
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.AddEmployeeDto.Description">
+			<summary>
+				备注
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ResetPasswordDto.NewPassword">
+			<summary>
+				新密码
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ChangePasswordDto.OldPassword">
+			<summary>
+				旧密码
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ChangePasswordDto.NewPassword">
+			<summary>
+				新密码
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.UpdateEmployeeDto.EmployeeName">
+			<summary>
+				姓名
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.UpdateEmployeeDto.Mobile">
+			<summary>
+				手机号
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.UpdateEmployeeDto.Email">
+			<summary>
+				邮箱
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ModifyEmployeeDto.JobTitleId">
+			<summary>
+				职称
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ModifyEmployeeDto.PositionLevelId">
+			<summary>
+				职级
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.ModifyEmployeeDto.Description">
+			<summary>
+				备注
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.EmployeeQueryDto.employeeName">
+			<summary>
+				姓名
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.EmployeeQueryDto.employeeStatus">
+			<summary>
+				状态
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.CurrentEmployeeResult.EmployeeCode">
+			<summary>
+				工号
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.CurrentEmployeeResult.Avatar">
+			<summary>
+				头像
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.CurrentEmployeeResult.LoginName">
+			<summary>
+				登录名
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.CurrentEmployeeResult.JobTitle">
+			<summary>
+				职称
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.CurrentEmployeeResult.PositionLevelTitle">
+			<summary>
+				职级
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.EmployeeResult.EmployeeStatus">
+			<summary>
+				状态
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.EmployeePermissionDto.ActionKeys">
+			<summary>
+				操作
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.EmployeePermissionDto.MenuKeys">
+			<summary>
+				接入点
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.RoleDto.RoleName">
+			<summary>
+				角色名称
+			</summary>
+		</member>
+		<member name="P:Admin.Employee.Application.Dto.UpdateRoleDto.RoleName">
+			<summary>
+				角色名称
+			</summary>
+		</member>
+		<member name="T:Admin.Employee.Grpc.Providers.AuthenticationReflection">
+			<summary>Holder for reflection information generated from Authentication.proto</summary>
+		</member>
+		<member name="P:Admin.Employee.Grpc.Providers.AuthenticationReflection.Descriptor">
+			<summary>File descriptor for Authentication.proto</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.TokenRequest.TokenFieldNumber">
+			<summary>Field number for the "token" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.EmployeeResult.EmployeeIdFieldNumber">
+			<summary>Field number for the "EmployeeId" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.EmployeeResult.EmployeeCodeFieldNumber">
+			<summary>Field number for the "EmployeeCode" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.EmployeeResult.EmployeeNameFieldNumber">
+			<summary>Field number for the "EmployeeName" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.EmployeeResult.MobileFieldNumber">
+			<summary>Field number for the "Mobile" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.EmployeeResult.EmailFieldNumber">
+			<summary>Field number for the "Email" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.EmployeeResult.IsAdminFieldNumber">
+			<summary>Field number for the "IsAdmin" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.AuthenticationResponse.ErrorFieldNumber">
+			<summary>Field number for the "Error" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.AuthenticationResponse.ResultFieldNumber">
+			<summary>Field number for the "Result" field.</summary>
+		</member>
+		<member name="T:Admin.Employee.Grpc.Providers.AuthenticationResponse.ResultOneofCase">
+			<summary>Enum of possible cases for the "result" oneof.</summary>
+		</member>
+		<member name="P:Admin.Employee.Grpc.Providers.AdminEmployeeAuthenticationGrpcProvider.Descriptor">
+			<summary>Service descriptor</summary>
+		</member>
+		<member name="T:Admin.Employee.Grpc.Providers.AdminEmployeeAuthenticationGrpcProvider.AdminEmployeeAuthenticationGrpcProviderBase">
+			<summary>Base class for server-side implementations of AdminEmployeeAuthenticationGrpcProvider</summary>
+		</member>
+		<member name="M:Admin.Employee.Grpc.Providers.AdminEmployeeAuthenticationGrpcProvider.BindService(Admin.Employee.Grpc.Providers.AdminEmployeeAuthenticationGrpcProvider.AdminEmployeeAuthenticationGrpcProviderBase)">
+			<summary>Creates service definition that can be registered with a server</summary>
+			<param name="serviceImpl">An object implementing the server-side handling logic.</param>
+		</member>
+		<member name="M:Admin.Employee.Grpc.Providers.AdminEmployeeAuthenticationGrpcProvider.BindService(Grpc.Core.ServiceBinderBase,Admin.Employee.Grpc.Providers.AdminEmployeeAuthenticationGrpcProvider.AdminEmployeeAuthenticationGrpcProviderBase)">
+			<summary>
+				Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
+				Note: this method is part of an experimental API that can change or be removed without any prior notice.
+			</summary>
+			<param name="serviceBinder">
+				Service methods will be bound by calling <c>AddMethod</c> on this object.
+			</param>
+			<param name="serviceImpl">An object implementing the server-side handling logic.</param>
+		</member>
+		<member name="T:Admin.Employee.Grpc.Providers.AuthorizationReflection">
+			<summary>Holder for reflection information generated from Authorization.proto</summary>
+		</member>
+		<member name="P:Admin.Employee.Grpc.Providers.AuthorizationReflection.Descriptor">
+			<summary>File descriptor for Authorization.proto</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.AuthorizationRequest.EndpointFieldNumber">
+			<summary>Field number for the "Endpoint" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.AuthorizationResponse.AuthorizationResultFieldNumber">
+			<summary>Field number for the "AuthorizationResult" field.</summary>
+		</member>
+		<member name="P:Admin.Employee.Grpc.Providers.AdminEmployeeAuthorizationGrpcProvider.Descriptor">
+			<summary>Service descriptor</summary>
+		</member>
+		<member name="T:Admin.Employee.Grpc.Providers.AdminEmployeeAuthorizationGrpcProvider.AdminEmployeeAuthorizationGrpcProviderBase">
+			<summary>Base class for server-side implementations of AdminEmployeeAuthorizationGrpcProvider</summary>
+		</member>
+		<member name="M:Admin.Employee.Grpc.Providers.AdminEmployeeAuthorizationGrpcProvider.BindService(Admin.Employee.Grpc.Providers.AdminEmployeeAuthorizationGrpcProvider.AdminEmployeeAuthorizationGrpcProviderBase)">
+			<summary>Creates service definition that can be registered with a server</summary>
+			<param name="serviceImpl">An object implementing the server-side handling logic.</param>
+		</member>
+		<member name="M:Admin.Employee.Grpc.Providers.AdminEmployeeAuthorizationGrpcProvider.BindService(Grpc.Core.ServiceBinderBase,Admin.Employee.Grpc.Providers.AdminEmployeeAuthorizationGrpcProvider.AdminEmployeeAuthorizationGrpcProviderBase)">
+			<summary>
+				Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
+				Note: this method is part of an experimental API that can change or be removed without any prior notice.
+			</summary>
+			<param name="serviceBinder">
+				Service methods will be bound by calling <c>AddMethod</c> on this object.
+			</param>
+			<param name="serviceImpl">An object implementing the server-side handling logic.</param>
+		</member>
+		<member name="T:Admin.Employee.Grpc.Providers.SystemLogReflection">
+			<summary>Holder for reflection information generated from SystemLog.proto</summary>
+		</member>
+		<member name="P:Admin.Employee.Grpc.Providers.SystemLogReflection.Descriptor">
+			<summary>File descriptor for SystemLog.proto</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.ActionLogRequest.ModuleFieldNumber">
+			<summary>Field number for the "Module" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.ActionLogRequest.ModuleNameFieldNumber">
+			<summary>Field number for the "ModuleName" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.ActionLogRequest.ActionFieldNumber">
+			<summary>Field number for the "Action" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.ActionLogRequest.ActionNameFieldNumber">
+			<summary>Field number for the "ActionName" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.ActionLogRequest.ActionTimeFieldNumber">
+			<summary>Field number for the "ActionTime" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.ActionLogRequest.EmployeeIdFieldNumber">
+			<summary>Field number for the "EmployeeId" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.ActionLogRequest.ElapsedTimeFieldNumber">
+			<summary>Field number for the "ElapsedTime" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.ActionLogRequest.ResponseStatusCodeFieldNumber">
+			<summary>Field number for the "ResponseStatusCode" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.ActionLogRequest.IsSuccessfulFieldNumber">
+			<summary>Field number for the "IsSuccessful" field.</summary>
+		</member>
+		<member name="P:Admin.Employee.Grpc.Providers.AdminEmployeeSystemLogGrpcProvider.Descriptor">
+			<summary>Service descriptor</summary>
+		</member>
+		<member name="T:Admin.Employee.Grpc.Providers.AdminEmployeeSystemLogGrpcProvider.AdminEmployeeSystemLogGrpcProviderBase">
+			<summary>Base class for server-side implementations of AdminEmployeeSystemLogGrpcProvider</summary>
+		</member>
+		<member name="M:Admin.Employee.Grpc.Providers.AdminEmployeeSystemLogGrpcProvider.BindService(Admin.Employee.Grpc.Providers.AdminEmployeeSystemLogGrpcProvider.AdminEmployeeSystemLogGrpcProviderBase)">
+			<summary>Creates service definition that can be registered with a server</summary>
+			<param name="serviceImpl">An object implementing the server-side handling logic.</param>
+		</member>
+		<member name="M:Admin.Employee.Grpc.Providers.AdminEmployeeSystemLogGrpcProvider.BindService(Grpc.Core.ServiceBinderBase,Admin.Employee.Grpc.Providers.AdminEmployeeSystemLogGrpcProvider.AdminEmployeeSystemLogGrpcProviderBase)">
+			<summary>
+				Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
+				Note: this method is part of an experimental API that can change or be removed without any prior notice.
+			</summary>
+			<param name="serviceBinder">
+				Service methods will be bound by calling <c>AddMethod</c> on this object.
+			</param>
+			<param name="serviceImpl">An object implementing the server-side handling logic.</param>
+		</member>
+		<member name="T:Admin.Employee.Grpc.Providers.PermissionReflection">
+			<summary>Holder for reflection information generated from Permission.proto</summary>
+		</member>
+		<member name="P:Admin.Employee.Grpc.Providers.PermissionReflection.Descriptor">
+			<summary>File descriptor for Permission.proto</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.PermissionModel.PermissionKeyFieldNumber">
+			<summary>Field number for the "PermissionKey" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.PermissionModel.PermissionTypeFieldNumber">
+			<summary>Field number for the "PermissionType" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.EndpointPermissionsModel.EndpointFieldNumber">
+			<summary>Field number for the "Endpoint" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.EndpointPermissionsModel.PermissionsFieldNumber">
+			<summary>Field number for the "Permissions" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.ServiceEndpointPermissionRequest.ServiceNameFieldNumber">
+			<summary>Field number for the "ServiceName" field.</summary>
+		</member>
+		<member name="F:Admin.Employee.Grpc.Providers.ServiceEndpointPermissionRequest.EndpointPermissionsFieldNumber">
+			<summary>Field number for the "EndpointPermissions" field.</summary>
+		</member>
+		<member name="P:Admin.Employee.Grpc.Providers.AdminEmployeePermissionGrpcProvider.Descriptor">
+			<summary>Service descriptor</summary>
+		</member>
+		<member name="T:Admin.Employee.Grpc.Providers.AdminEmployeePermissionGrpcProvider.AdminEmployeePermissionGrpcProviderBase">
+			<summary>Base class for server-side implementations of AdminEmployeePermissionGrpcProvider</summary>
+		</member>
+		<member name="M:Admin.Employee.Grpc.Providers.AdminEmployeePermissionGrpcProvider.BindService(Admin.Employee.Grpc.Providers.AdminEmployeePermissionGrpcProvider.AdminEmployeePermissionGrpcProviderBase)">
+			<summary>Creates service definition that can be registered with a server</summary>
+			<param name="serviceImpl">An object implementing the server-side handling logic.</param>
+		</member>
+		<member name="M:Admin.Employee.Grpc.Providers.AdminEmployeePermissionGrpcProvider.BindService(Grpc.Core.ServiceBinderBase,Admin.Employee.Grpc.Providers.AdminEmployeePermissionGrpcProvider.AdminEmployeePermissionGrpcProviderBase)">
+			<summary>
+				Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
+				Note: this method is part of an experimental API that can change or be removed without any prior notice.
+			</summary>
+			<param name="serviceBinder">
+				Service methods will be bound by calling <c>AddMethod</c> on this object.
+			</param>
+			<param name="serviceImpl">An object implementing the server-side handling logic.</param>
+		</member>
+		<member name="T:Grpc.Common.CommonReflection">
+			<summary>Holder for reflection information generated from Common.proto</summary>
+		</member>
+		<member name="P:Grpc.Common.CommonReflection.Descriptor">
+			<summary>File descriptor for Common.proto</summary>
+		</member>
+		<member name="F:Grpc.Common.ErrorResult.CodeFieldNumber">
+			<summary>Field number for the "Code" field.</summary>
+		</member>
+		<member name="F:Grpc.Common.ErrorResult.MessageFieldNumber">
+			<summary>Field number for the "Message" field.</summary>
+		</member>
+	</members>
+</doc>

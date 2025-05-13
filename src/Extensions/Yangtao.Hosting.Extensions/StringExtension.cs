@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Yangtao.Hosting.Extensions
@@ -183,5 +185,17 @@ namespace Yangtao.Hosting.Extensions
         }
 
         #endregion
+
+        /// <summary>
+        /// 转换为 MD5
+        /// </summary>
+        /// <param name="input">要转换的字符串</param>
+        /// <returns></returns>
+        public static string ToMd5(string input)
+        {
+            var inputBytes = Encoding.UTF8.GetBytes(input);
+            var hashBytes = MD5.HashData(inputBytes);
+            return Convert.ToHexString(hashBytes);
+        }
     }
 }
