@@ -70,7 +70,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
                 EnumOptions = new TextValueOption[] { new("true", selectAttribute.BooleanTrueText), new("false", selectAttribute.BooleanFalseText) };
             }
 
-            if (selectAttribute.SourceType == SelectSourceType.Enum)
+            if (fieldType == FieldType.Enum && selectAttribute.SourceType == SelectSourceType.Enum)
             {
                 var type = selectAttribute.Source ?? property.PropertyType;
                 EnumOptions = type.GetValueOptions(documentHandler);
