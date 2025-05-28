@@ -159,13 +159,13 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
 
         public async Task<TEntity> UpdatePartAsync(TEntity entity, Expression<Func<TEntity, object>> updateColumns, bool isCommit = true)
         {
-            if (entity == null) return null;
-            if (updateColumns == null) return null;
-            if (updateColumns.Body is not NewExpression newExpression) return null;
-            if (newExpression.Members.IsNullOrEmpty()) return null;
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
+            if (updateColumns == null) throw new ArgumentNullException(nameof(updateColumns)); ;
+            if (updateColumns.Body is not NewExpression newExpression) throw new ArgumentException("The argument updateColumns not NewExpression", nameof(updateColumns));
+            if (newExpression.Members.IsNullOrEmpty()) throw new ArgumentException("The argument updateColumns not field", nameof(updateColumns));
 
             var columns = newExpression.Members.Select(a => a.Name).ToArray();
-            if (columns.IsNullOrEmpty()) return null;
+            if (columns.IsNullOrEmpty()) throw new ArgumentException("The argument updateColumns not field", nameof(updateColumns));
 
             foreach (var column in columns)
             {

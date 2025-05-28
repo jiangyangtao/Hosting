@@ -36,6 +36,23 @@ namespace Yangtao.Hosting.Extensions
             return JsonConvert.DeserializeObject<T>(value);
         }
 
+        public static bool TryDeserializeToObject<T>(this string value, out T? result)
+        {
+            result = default;
+            if (value.IsNullOrEmpty()) return false;
+
+            try
+            {
+                result = JsonConvert.DeserializeObject<T>(value);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// 指示指定的字符串是否为电子邮箱
         /// </summary>
