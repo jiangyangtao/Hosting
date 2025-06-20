@@ -78,7 +78,7 @@ namespace Yangtao.Hosting.FrontendApi
             return xmlDoc;
         }
 
-        public string GetServiceName(string serviceName)
+        public string GetServiceName(string serviceName = "")
         {
             if (serviceName.NotNullAndEmpty()) return serviceName;
 

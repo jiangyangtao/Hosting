@@ -17,8 +17,15 @@ namespace Yangtao.Hosting.FrontendApi.Fields
                 throw new ArgumentException($"{nameof(property)} not exist {nameof(DataStatusAttribute)}", nameof(property));
 
             RequestData = dataStatusAttribute.RequestData;
-            EnableHttpAction = dataStatusAttribute.EnableHttpAction;
-            DisableHttpAction = dataStatusAttribute.DisableHttpAction;
+
+            var enableHttpAction = new HttpAction(dataStatusAttribute.EnableHttpAction);
+            enableHttpAction.ServiceName = documentHandler.GetServiceName(enableHttpAction.ServiceName);
+
+            var disableHttpAction = new HttpAction(dataStatusAttribute.DisableHttpAction);
+            disableHttpAction.ServiceName = documentHandler.GetServiceName(disableHttpAction.ServiceName);
+
+            EnableHttpAction = enableHttpAction;
+            DisableHttpAction = disableHttpAction;
 
             if (RequestData != null) RequestParams = RequestData.BuildParamFields(documentHandler);
         }

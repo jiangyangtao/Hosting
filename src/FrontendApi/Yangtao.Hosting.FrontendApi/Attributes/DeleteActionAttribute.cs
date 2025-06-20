@@ -1,5 +1,4 @@
 ﻿using Yangtao.Hosting.FrontendApi.Abstractions;
-using Yangtao.Hosting.FrontendApi.Enums;
 
 namespace Yangtao.Hosting.FrontendApi.Attributes
 {
