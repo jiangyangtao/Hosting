@@ -47,7 +47,7 @@ namespace Yangtao.Hosting.NPOI.Extensions
             for (int col = 0; col < first.Cells.Count; col++)
             {
                 sheet.AutoSizeColumn(col);
-                int columnWidth = sheet.GetColumnWidth(col) / 256;
+                var columnWidth = sheet.GetColumnWidth(col) / 256;
                 for (int rowIndex = 0; rowIndex <= sheet.LastRowNum; rowIndex++)
                 {
                     var row = sheet.GetRow(rowIndex);
