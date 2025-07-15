@@ -1,4 +1,5 @@
 ﻿using NPOI.SS.UserModel;
+using NPOI.SS.Util;
 using Yangtao.Hosting.NPOI.Extensions.Enums;
 
 namespace Yangtao.Hosting.NPOI.Extensions
@@ -128,6 +129,68 @@ namespace Yangtao.Hosting.NPOI.Extensions
         {
             var cells = sheet.GetCells();
             return cells.Where(predicate);
+        }
+
+
+        /// <summary>
+        /// 复制行
+        /// </summary>
+        /// <param name="sheet">工作表</param>
+        /// <param name="sourceRowIndex">要复制的行索引</param>
+        /// <param name="targetRowIndex">目标行索引</param>
+        /// <param name="isCopyCellValue">是否复制单元格的值</param>
+        public static IRow CopyRowTo(this ISheet sheet, int sourceRowIndex, int targetRowIndex, bool isCopyCellValue = true)
+        {
+            var sourceRow = sheet.GetRow(sourceRowIndex);
+            var targetRow = sheet.GetRow(targetRowIndex);
+            targetRow ??= sheet.CreateRow(targetRowIndex);
+
+            targetRow.Height = sourceRow.Height;
+            targetRow.RowStyle = sourceRow.RowStyle;
+
+            for (int cellIndex = 0; cellIndex < sourceRow.LastCellNum; cellIndex++)
+            {
+                var sourceCell = sourceRow.GetCell(cellIndex);
+                if (sourceCell != null)
+                {
+                    var targetCell = targetRow.CreateCell(cellIndex, sourceCell.CellType);
+                    targetCell.SetCellType(sourceCell.CellType);
+                    targetCell.ClearValue();
+                    targetCell.CellStyle = sourceCell.CellStyle;
+
+                    if (sourceCell.CellComment != null) targetCell.CellComment = sourceCell.CellComment;
+                    if (sourceCell.Hyperlink != null) targetCell.Hyperlink = sourceCell.Hyperlink;
+                    if (isCopyCellValue) targetCell.SetCellValue(sourceCell.StringCellValue);
+                }
+            }
+
+            for (int mergedRegionIndex = 0; mergedRegionIndex < sheet.NumMergedRegions; mergedRegionIndex++)
+            {
+                var mergedRegion = sheet.GetMergedRegion(mergedRegionIndex);
+                if (mergedRegion.FirstRow >= targetRowIndex && mergedRegion.LastRow <= targetRowIndex)
+                {
+                    sheet.RemoveMergedRegion(mergedRegionIndex);
+                    mergedRegionIndex--;
+                }
+            }
+
+            for (int mergedRegionIndex = 0; mergedRegionIndex < sourceRow.Sheet.NumMergedRegions; mergedRegionIndex++)
+            {
+                var mergedRegion = sourceRow.Sheet.GetMergedRegion(mergedRegionIndex);
+                if (mergedRegion.FirstRow == sourceRow.RowNum)
+                {
+                    var newMergedRegion = new CellRangeAddress(
+                        targetRow.RowNum,
+                        targetRow.RowNum + mergedRegion.LastRow - mergedRegion.FirstRow,
+                        mergedRegion.FirstColumn,
+                        mergedRegion.LastColumn
+                    );
+
+                    sheet.AddMergedRegion(newMergedRegion);
+                }
+            }
+
+            return targetRow;
         }
     }
 }
