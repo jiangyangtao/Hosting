@@ -192,5 +192,20 @@ namespace Yangtao.Hosting.NPOI.Extensions
 
             return targetRow;
         }
+
+
+        public static string[] GetColumns(this ISheet sheet, int headRowIndex = 0)
+        {
+            var headerRow = sheet.GetRow(headRowIndex);
+            var cellCount = headerRow.LastCellNum;
+            var excelcolumnNames = new List<string>();
+            for (int i = headerRow.FirstCellNum; i < cellCount; i++)
+            {
+                var cell = headerRow.GetCell(i);
+                excelcolumnNames.Add(cell.StringCellValue);
+            }
+
+            return excelcolumnNames.ToArray();
+        }
     }
 }

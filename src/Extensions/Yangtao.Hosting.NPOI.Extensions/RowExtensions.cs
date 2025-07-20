@@ -10,5 +10,7 @@ namespace Yangtao.Hosting.NPOI.Extensions
         {
             return row.Sheet.CopyRowTo(row.RowNum, targetRowIndex, isCopyCellValue);
         }
+
+        public static bool IsAllBlank(this IRow cells) => cells.All(a => a.CellType == CellType.Blank);
     }
 }

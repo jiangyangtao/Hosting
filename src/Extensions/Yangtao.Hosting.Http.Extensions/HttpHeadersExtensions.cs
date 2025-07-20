@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.Text;
+using System.Web;
 
 namespace Yangtao.Hosting.Extensions
 {
     public static class HttpHeadersExtensions
     {
-
         /// <summary>
         /// 获取当前请求中指定 Header 的值
         /// </summary>
@@ -26,5 +27,15 @@ namespace Yangtao.Hosting.Extensions
         }
 
         public static string GetAuthorization(this IHeaderDictionary headers) => headers.GetValue("authorization");
+
+        public static void SetFileName(this IHeaderDictionary headers, string fileName, string fileNameKey = "filename")
+        {
+            if (fileName.IsNullOrEmpty()) return;
+
+            headers.TryAdd("Access-Control-Expose-Headers", fileNameKey);
+
+            var encode = HttpUtility.UrlEncode(fileName, Encoding.UTF8);
+            headers.TryAdd(fileNameKey, encode);
+        }
     }
 }

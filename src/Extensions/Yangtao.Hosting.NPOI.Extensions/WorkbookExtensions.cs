@@ -14,5 +14,15 @@ namespace Yangtao.Hosting.NPOI.Extensions
 
             return string.Empty;
         }
+
+
+        public static IFont GetHeadRequiredFont(this IWorkbook workbook)
+        {
+            var font = workbook.CreateFont();
+            font.IsBold = true;
+            font.Color = IndexedColors.Red.Index;
+
+            return font;
+        }
     }
 }
