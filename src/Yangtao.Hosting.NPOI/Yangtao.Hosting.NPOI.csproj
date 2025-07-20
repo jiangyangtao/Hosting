@@ -9,6 +9,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Extensions\Yangtao.Hosting.NPOI.Extensions\Yangtao.Hosting.NPOI.Extensions.csproj" />
+		<ProjectReference Include="..\Yangtao.Hosting.Abstractions\Yangtao.Hosting.Abstractions.csproj" />
 	</ItemGroup>
 
 	<ImportGroup>
