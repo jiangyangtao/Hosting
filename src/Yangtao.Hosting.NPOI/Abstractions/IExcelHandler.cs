@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using NPOI.SS.UserModel;
 
-namespace Yangtao.Hosting.NPOI
+namespace Yangtao.Hosting.NPOI.Abstractions
 {
     /// <summary>
-    /// Excel 服务
+    /// Excel 处理接口
     /// </summary>
-    public interface IExcelService
+    public interface IExcelHandler
     {
         /// <summary>
         /// 获取 Excel 列集合

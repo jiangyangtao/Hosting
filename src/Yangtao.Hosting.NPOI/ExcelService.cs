@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
+using Yangtao.Hosting.Core.HttpErrorResult;
 using Yangtao.Hosting.Extensions;
+using Yangtao.Hosting.NPOI.Abstractions;
 using Yangtao.Hosting.NPOI.Attributes;
 using Yangtao.Hosting.NPOI.Extensions;
 
@@ -17,7 +19,7 @@ namespace Yangtao.Hosting.NPOI
         {
             var type = typeof(T);
             var properties = type.GetProperties().Where(a => a.HasAttribute<ExcelColumnAttribute>()).ToArray();
-            if (properties.IsNullOrEmpty()) throw new KeyNotFoundException("Not found ExcelColumnAttribute the filed.");
+            if (properties.IsNullOrEmpty()) throw new HttpErrorResult(400, "Not found ExcelColumnAttribute the filed.");
 
             return new ExcelColumns(properties);
         }
@@ -42,11 +44,11 @@ namespace Yangtao.Hosting.NPOI
 
         public IWorkbook ReadExcel(IFormFileCollection formFiles)
         {
-            if (formFiles.IsNullOrEmpty()) throw new ArgumentException("未检测到上传的文件");
+            if (formFiles.IsNullOrEmpty()) throw new HttpErrorResult(400, "未检测到上传的文件");
 
-            var formFile = formFiles[0] ?? throw new ArgumentException("未检测到上传的文件");
+            var formFile = formFiles[0] ?? throw new HttpErrorResult(400, "未检测到上传的文件");
             var isExcel = formFile.FileName.IsExcel();
-            if (isExcel == false) throw new ArgumentException("请上传 Excel 文件");
+            if (isExcel == false) throw new HttpErrorResult(400, "请上传 Excel 文件");
 
             return ReadExcel(formFile.OpenReadStream());
         }
@@ -54,16 +56,16 @@ namespace Yangtao.Hosting.NPOI
         public IWorkbook ReadExcel(Stream stream)
         {
             var workbook = WorkbookFactory.Create(stream);
-            return workbook ?? throw new ArgumentException("Excel 读取失败，请上传正确的 Excel");
+            return workbook ?? throw new HttpErrorResult(400, "Excel 读取失败，请上传正确的 Excel");
         }
 
         public IWorkbook ReadExcel(string filePath)
         {
             var exist = File.Exists(filePath);
-            if (exist) throw new FileNotFoundException("未找到文件", filePath);
+            if (exist) throw new HttpErrorResult(400, "未找到文件");
 
             var buffer = File.ReadAllBytes(filePath);
-            if (buffer.IsNullOrEmpty()) throw new ArgumentNullException(filePath, "无可用的流");
+            if (buffer.IsNullOrEmpty()) throw new HttpErrorResult(400, "无可用的流");
 
             var stream = new MemoryStream(buffer);
             return ReadExcel(stream);
@@ -72,10 +74,10 @@ namespace Yangtao.Hosting.NPOI
         public async Task<IWorkbook> ReadExcelAsync(string filePath)
         {
             var exist = File.Exists(filePath);
-            if (exist) throw new FileNotFoundException("未找到文件", filePath);
+            if (exist) throw new HttpErrorResult(400, "未找到文件");
 
             var buffer = await File.ReadAllBytesAsync(filePath);
-            if (buffer.IsNullOrEmpty()) throw new ArgumentNullException(filePath, "无效的文件");
+            if (buffer.IsNullOrEmpty()) throw new HttpErrorResult(400, "无效的文件");
 
             var stream = new MemoryStream(buffer);
             return ReadExcel(stream);
@@ -120,11 +122,11 @@ namespace Yangtao.Hosting.NPOI
            Func<ExcelColumn, ICell, int, int, ExcelCellHandleResult>? cellHandle = null,
            Func<T, int, ExcelHandleResult>? rowHandle = null) where T : class, new()
         {
-            var sheet = workbook.GetSheetAt(sheetIndex) ?? throw new ArgumentException("没有可使用的工作簿");
+            var sheet = workbook.GetSheetAt(sheetIndex) ?? throw new HttpErrorResult(400, "没有可使用的工作簿");
             var excelColumns = GetExcelColumns<T>();
             var excelColumnNames = sheet.GetColumns();
             var notExistColumns = excelColumns.GetNotExistColumn(excelColumnNames);
-            if (notExistColumns.NotNullAndEmpty()) throw new ArgumentException($"缺少 {string.Join("、", notExistColumns)} 列");
+            if (notExistColumns.NotNullAndEmpty()) throw new HttpErrorResult(400, $"缺少 {string.Join("、", notExistColumns)} 列");
 
             var headerRow = sheet.GetRow(headRowStartIndex);
             var cellCount = headerRow.LastCellNum;
@@ -153,7 +155,7 @@ namespace Yangtao.Hosting.NPOI
                     if (cellHandle != null)
                     {
                         var handleCellResult = cellHandle(excelColumn, cell, rowIndex, columnIndex);
-                        if (handleCellResult.Result == false) throw new ArgumentException(handleCellResult.ErrorMessage);
+                        if (handleCellResult.Result == false) throw new HttpErrorResult(400, handleCellResult.ErrorMessage);
 
                         cellValue = handleCellResult.Value;
                         breakValidate = handleCellResult.BreakValidate;
@@ -162,7 +164,7 @@ namespace Yangtao.Hosting.NPOI
                     var stringValue = cellValue?.ToString();
                     if (cell == null || cellValue == null || stringValue.IsNullOrEmpty())
                     {
-                        if (excelColumn.Required) throw new ArgumentException($"第 {rowIndex + 1} 行的 {columnName} 不能为空");
+                        if (excelColumn.Required) throw new HttpErrorResult(400, $"第 {rowIndex + 1} 行的 {columnName} 不能为空");
                         continue;
                     }
 
@@ -170,7 +172,7 @@ namespace Yangtao.Hosting.NPOI
                     {
                         stringValue = stringValue.Trim();
                         var r = excelColumn.ValidateCellValue(stringValue, out cellValue);
-                        if (r == false) throw new ArgumentException($"第 {rowIndex + 1} 行的 {columnName} 不是正确的格式");
+                        if (r == false) throw new HttpErrorResult(400, $"第 {rowIndex + 1} 行的 {columnName} 不是正确的格式");
                     }
 
                     excelColumn.Property.SetValue(item, cellValue);
@@ -179,7 +181,7 @@ namespace Yangtao.Hosting.NPOI
                 if (rowHandle != null)
                 {
                     var r = rowHandle(item, rowIndex + 1);
-                    if (r.Result == false) throw new ArgumentException(r.ErrorMessage);
+                    if (r.Result == false) throw new HttpErrorResult(400, r.ErrorMessage);
                 }
 
                 list.Add(item);

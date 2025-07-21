@@ -3,6 +3,9 @@ using Yangtao.Hosting.NPOI.Extensions;
 
 namespace Yangtao.Hosting.NPOI
 {
+    /// <summary>
+    /// Excel 导出提供者
+    /// </summary>
     public class ExcelExportResult
     {
         internal ExcelExportResult(IWorkbook workBook)
