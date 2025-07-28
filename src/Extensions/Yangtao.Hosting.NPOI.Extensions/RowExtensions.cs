@@ -8,7 +8,7 @@ namespace Yangtao.Hosting.NPOI.Extensions
 
         public static IRow CopyTo(this IRow row, int targetRowIndex, bool isCopyCellValue = true)
         {
-            return row.Sheet.CopyRowTo(row.RowNum, targetRowIndex, isCopyCellValue);
+            return row.Sheet.DeepCopyRow(row.RowNum, targetRowIndex, isCopyCellValue);
         }
 
         public static void AddCells(this IRow row, int cellCount)

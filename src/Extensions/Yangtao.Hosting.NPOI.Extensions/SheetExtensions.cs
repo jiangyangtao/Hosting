@@ -139,14 +139,14 @@ namespace Yangtao.Hosting.NPOI.Extensions
         /// <param name="sourceRowIndex">要复制的行索引</param>
         /// <param name="targetRowIndex">目标行索引</param>
         /// <param name="isCopyCellValue">是否复制单元格的值</param>
-        public static IRow CopyRowTo(this ISheet sheet, int sourceRowIndex, int targetRowIndex, bool isCopyCellValue = true)
+        public static IRow DeepCopyRow(this ISheet sheet, int sourceRowIndex, int targetRowIndex, bool isCopyCellValue = true)
         {
             var sourceRow = sheet.GetRow(sourceRowIndex);
             var targetRow = sheet.GetRow(targetRowIndex);
             targetRow ??= sheet.CreateRow(targetRowIndex);
 
             targetRow.Height = sourceRow.Height;
-            targetRow.RowStyle = sourceRow.RowStyle;
+            if (sourceRow.RowStyle != null) targetRow.RowStyle = sourceRow.RowStyle;
 
             for (int cellIndex = 0; cellIndex < sourceRow.LastCellNum; cellIndex++)
             {
