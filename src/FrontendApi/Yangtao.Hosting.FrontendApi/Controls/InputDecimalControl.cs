@@ -8,9 +8,9 @@ using Yangtao.Hosting.Mvc.FormatResult;
 
 namespace Yangtao.Hosting.FrontendApi.Controls
 {
-    internal class InputNumberControl : ControlBase
+    internal class InputDecimalControl : ControlBase
     {
-        public InputNumberControl(PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        public InputDecimalControl(PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
         {
             ChangeStep = 1;
             Min = 0;
@@ -111,6 +111,6 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public override ControlType ControlType => ControlType.InputNumber;
+        public override ControlType ControlType => ControlType.InputDecimal;
     }
 }

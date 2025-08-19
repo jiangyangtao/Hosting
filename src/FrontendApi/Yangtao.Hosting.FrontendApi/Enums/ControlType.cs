@@ -6,6 +6,8 @@
 
         InputNumber,
 
+        InputDecimal,
+
         DatePicker,
 
         Upload,

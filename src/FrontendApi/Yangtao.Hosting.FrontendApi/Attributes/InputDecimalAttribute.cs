@@ -1,9 +1,9 @@
 ﻿namespace Yangtao.Hosting.FrontendApi.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public class InputNumberAttribute : Attribute
+    public class InputDecimalAttribute : Attribute
     {
-        public int Step { set; get; } = 1;
+        public object? Step { set; get; } = 0.1;
 
         public bool Keyboard { set; get; } = true;
 

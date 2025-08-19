@@ -141,7 +141,7 @@ namespace Yangtao.Hosting.NPOI.Extensions
         /// <param name="isCopyCellValue">是否复制单元格的值</param>
         public static IRow DeepCopyRow(this ISheet sheet, int sourceRowIndex, int targetRowIndex, bool isCopyCellValue = true)
         {
-            var sourceRow = sheet.GetRow(sourceRowIndex);
+            var sourceRow = sheet.GetRow(sourceRowIndex) ?? throw new ArgumentOutOfRangeException(nameof(sourceRowIndex), "The source row is null.");
             var targetRow = sheet.GetRow(targetRowIndex);
             targetRow ??= sheet.CreateRow(targetRowIndex);
 
