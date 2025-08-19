@@ -28,5 +28,7 @@ namespace Yangtao.Hosting.Common
         /// <example>10</example>
         [Range(1, 200, ErrorMessage = "size 的值范围 1 - 200")]
         public int size { get; set; } = 10;
+
+        public string? sort { get; set; }
     }
 }
