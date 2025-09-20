@@ -106,12 +106,6 @@ namespace Yangtao.Hosting.Repository.Abstractions
             return queryable.OrderByDescending(a => a.CreateTime).Skip(Start).Take(Size);
         }
 
-        public virtual IQueryable<TEntity> BuildSortPaginationQuery(IEntityRepository<TEntity> repository)
-        {
-            var queryable = BuildSortQuery(repository);
-
-            return queryable.Skip(Start).Take(Size);
-        }
 
         public virtual IQueryable<TEntity> BuildSortQuery(IEntityRepository<TEntity> repository)
         {
@@ -121,6 +115,14 @@ namespace Yangtao.Hosting.Repository.Abstractions
             if (sortExpression.IsNullOrEmpty()) sortExpression = $"{nameof(EntityBase.CreateTime)} desc";
 
             return queryable.OrderBy(sortExpression);
+        }
+
+
+        public virtual IQueryable<TEntity> BuildSortPaginationQuery(IEntityRepository<TEntity> repository)
+        {
+            var queryable = BuildSortQuery(repository);
+
+            return queryable.Skip(Start).Take(Size);
         }
     }
 

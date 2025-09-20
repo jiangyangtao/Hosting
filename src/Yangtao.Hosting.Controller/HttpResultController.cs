@@ -9,40 +9,40 @@ namespace Yangtao.Hosting.Controller
         #region BadRequest  
 
         [NonAction]
-        public HttpBadRequestResult ResponseBadRequest() => new();
+        public static HttpBadRequestResult ResponseBadRequest() => new();
 
         [NonAction]
-        public HttpBadRequestResult ResponseBadRequest(string message) => new(message);
+        public static HttpBadRequestResult ResponseBadRequest(string message) => new(message);
 
         [NonAction]
-        public HttpBadRequestResult ResponseBadRequest(int code, string message) => new(code, message);
+        public static HttpBadRequestResult ResponseBadRequest(int code, string message) => new(code, message);
 
         [NonAction]
-        public TResult ResponseBadRequest<TResult>() => HttpErrorResult.ResponseBadRequest<TResult>();
+        public static TResult ResponseBadRequest<TResult>() => HttpErrorResult.ResponseBadRequest<TResult>();
 
         [NonAction]
-        public TResult ResponseBadRequest<TResult>(string message) => HttpErrorResult.ResponseBadRequest<TResult>(message);
+        public static TResult ResponseBadRequest<TResult>(string message) => HttpErrorResult.ResponseBadRequest<TResult>(message);
 
         [NonAction]
-        public TResult ResponseBadRequest<TResult>(int code, string message) => HttpErrorResult.ResponseBadRequest<TResult>(code, message);
+        public static TResult ResponseBadRequest<TResult>(int code, string message) => HttpErrorResult.ResponseBadRequest<TResult>(code, message);
 
         [NonAction]
-        public Task<HttpBadRequestResult> ResponseBadRequestAsync() => Task.FromResult(new HttpBadRequestResult());
+        public static Task<HttpBadRequestResult> ResponseBadRequestAsync() => Task.FromResult(new HttpBadRequestResult());
 
         [NonAction]
-        public Task<HttpBadRequestResult> ResponseBadRequestAsync(string message) => Task.FromResult(new HttpBadRequestResult(message));
+        public static Task<HttpBadRequestResult> ResponseBadRequestAsync(string message) => Task.FromResult(new HttpBadRequestResult(message));
 
         [NonAction]
-        public Task<HttpBadRequestResult> ResponseBadRequestAsync(int code, string message) => Task.FromResult(new HttpBadRequestResult(code, message));
+        public static Task<HttpBadRequestResult> ResponseBadRequestAsync(int code, string message) => Task.FromResult(new HttpBadRequestResult(code, message));
 
         [NonAction]
-        public Task<TResult> ResponseBadRequestAsync<TResult>() => HttpErrorResult.ResponseBadRequestAsync<TResult>();
+        public static Task<TResult> ResponseBadRequestAsync<TResult>() => HttpErrorResult.ResponseBadRequestAsync<TResult>();
 
         [NonAction]
-        public Task<TResult> ResponseBadRequestAsync<TResult>(string message) => HttpErrorResult.ResponseBadRequestAsync<TResult>(message);
+        public static Task<TResult> ResponseBadRequestAsync<TResult>(string message) => HttpErrorResult.ResponseBadRequestAsync<TResult>(message);
 
         [NonAction]
-        public Task<TResult> ResponseBadRequestAsync<TResult>(int code, string message) => HttpErrorResult.ResponseBadRequestAsync<TResult>(code, message);
+        public static Task<TResult> ResponseBadRequestAsync<TResult>(int code, string message) => HttpErrorResult.ResponseBadRequestAsync<TResult>(code, message);
 
 
         #endregion
@@ -50,22 +50,22 @@ namespace Yangtao.Hosting.Controller
         #region Conflict
 
         [NonAction]
-        public HttpConflictResult ResponseConflict() => new();
+        public static HttpConflictResult ResponseConflict() => new();
 
         [NonAction]
-        public HttpConflictResult ResponseConflict(string message) => new(message);
+        public static HttpConflictResult ResponseConflict(string message) => new(message);
 
         [NonAction]
-        public HttpConflictResult ResponseConflict(int code, string message) => new(code, message);
+        public static HttpConflictResult ResponseConflict(int code, string message) => new(code, message);
 
         [NonAction]
         public TResult ResponseConflict<TResult>() => HttpErrorResult.ResponseConflict<TResult>();
 
         [NonAction]
-        public TResult ResponseConflict<TResult>(string message) => HttpErrorResult.ResponseConflict<TResult>(message);
+        public static TResult ResponseConflict<TResult>(string message) => HttpErrorResult.ResponseConflict<TResult>(message);
 
         [NonAction]
-        public TResult ResponseConflict<TResult>(int code, string message) => HttpErrorResult.ResponseConflict<TResult>(code, message);
+        public static TResult ResponseConflict<TResult>(int code, string message) => HttpErrorResult.ResponseConflict<TResult>(code, message);
 
 
 
@@ -92,41 +92,41 @@ namespace Yangtao.Hosting.Controller
         #region Forbid      
 
         [NonAction]
-        public HttpForbidResult ResponseForbid() => new();
+        public static HttpForbidResult ResponseForbid() => new();
 
         [NonAction]
-        public HttpForbidResult ResponseForbid(string message) => new(message);
+        public static HttpForbidResult ResponseForbid(string message) => new(message);
 
         [NonAction]
-        public HttpForbidResult ResponseForbid(int code, string message) => new(code, message);
+        public static HttpForbidResult ResponseForbid(int code, string message) => new(code, message);
 
         [NonAction]
-        public TResult ResponseForbid<TResult>() => HttpErrorResult.ResponseForbid<TResult>();
+        public static TResult ResponseForbid<TResult>() => HttpErrorResult.ResponseForbid<TResult>();
 
         [NonAction]
-        public TResult ResponseForbid<TResult>(string message) => HttpErrorResult.ResponseForbid<TResult>(message);
+        public static TResult ResponseForbid<TResult>(string message) => HttpErrorResult.ResponseForbid<TResult>(message);
 
         [NonAction]
-        public TResult ResponseForbid<TResult>(int code, string message) => HttpErrorResult.ResponseForbid<TResult>(code, message);
+        public static TResult ResponseForbid<TResult>(int code, string message) => HttpErrorResult.ResponseForbid<TResult>(code, message);
 
 
         [NonAction]
-        public Task<HttpForbidResult> ResponseForbidAsync() => Task.FromResult(new HttpForbidResult());
+        public static Task<HttpForbidResult> ResponseForbidAsync() => Task.FromResult(new HttpForbidResult());
 
         [NonAction]
-        public Task<HttpForbidResult> ResponseForbidAsync(string message) => Task.FromResult(new HttpForbidResult(message));
+        public static Task<HttpForbidResult> ResponseForbidAsync(string message) => Task.FromResult(new HttpForbidResult(message));
 
         [NonAction]
-        public Task<HttpForbidResult> ResponseForbidAsync(int code, string message) => Task.FromResult(new HttpForbidResult(code, message));
+        public static Task<HttpForbidResult> ResponseForbidAsync(int code, string message) => Task.FromResult(new HttpForbidResult(code, message));
 
         [NonAction]
-        public Task<TResult> ResponseForbidAsync<TResult>() => HttpErrorResult.ResponseForbidAsync<TResult>();
+        public static Task<TResult> ResponseForbidAsync<TResult>() => HttpErrorResult.ResponseForbidAsync<TResult>();
 
         [NonAction]
-        public Task<TResult> ResponseForbidAsync<TResult>(string message) => HttpErrorResult.ResponseForbidAsync<TResult>(message);
+        public static Task<TResult> ResponseForbidAsync<TResult>(string message) => HttpErrorResult.ResponseForbidAsync<TResult>(message);
 
         [NonAction]
-        public Task<TResult> ResponseForbidAsync<TResult>(int code, string message) => HttpErrorResult.ResponseForbidAsync<TResult>(code, message);
+        public static Task<TResult> ResponseForbidAsync<TResult>(int code, string message) => HttpErrorResult.ResponseForbidAsync<TResult>(code, message);
 
         #endregion
 
@@ -134,134 +134,134 @@ namespace Yangtao.Hosting.Controller
 
 
         [NonAction]
-        public HttpNotFoundResult ResponseNotFound() => new();
+        public static HttpNotFoundResult ResponseNotFound() => new();
 
         [NonAction]
-        public HttpNotFoundResult ResponseNotFound(string message) => new(message);
+        public static HttpNotFoundResult ResponseNotFound(string message) => new(message);
 
         [NonAction]
-        public HttpNotFoundResult ResponseNotFound(int code, string message) => new(code, message);
+        public static HttpNotFoundResult ResponseNotFound(int code, string message) => new(code, message);
 
         [NonAction]
-        public TResult ResponseNotFound<TResult>() => HttpErrorResult.ResponseNotFound<TResult>();
+        public static TResult ResponseNotFound<TResult>() => HttpErrorResult.ResponseNotFound<TResult>();
 
         [NonAction]
-        public TResult ResponseNotFound<TResult>(string message) => HttpErrorResult.ResponseNotFound<TResult>(message);
+        public static TResult ResponseNotFound<TResult>(string message) => HttpErrorResult.ResponseNotFound<TResult>(message);
 
         [NonAction]
-        public TResult ResponseNotFound<TResult>(int code, string message) => HttpErrorResult.ResponseNotFound<TResult>(code, message);
+        public static TResult ResponseNotFound<TResult>(int code, string message) => HttpErrorResult.ResponseNotFound<TResult>(code, message);
 
 
 
         [NonAction]
-        public Task<HttpNotFoundResult> ResponseNotFoundAsync() => Task.FromResult(new HttpNotFoundResult());
+        public static Task<HttpNotFoundResult> ResponseNotFoundAsync() => Task.FromResult(new HttpNotFoundResult());
 
         [NonAction]
-        public Task<HttpNotFoundResult> ResponseNotFoundAsync(string message) => Task.FromResult(new HttpNotFoundResult(message));
+        public static Task<HttpNotFoundResult> ResponseNotFoundAsync(string message) => Task.FromResult(new HttpNotFoundResult(message));
 
         [NonAction]
-        public Task<HttpNotFoundResult> ResponseNotFoundAsync(int code, string message) => Task.FromResult(new HttpNotFoundResult(code, message));
+        public static Task<HttpNotFoundResult> ResponseNotFoundAsync(int code, string message) => Task.FromResult(new HttpNotFoundResult(code, message));
 
         [NonAction]
-        public Task<TResult> ResponseNotFoundAsync<TResult>() => HttpErrorResult.ResponseNotFoundAsync<TResult>();
+        public static Task<TResult> ResponseNotFoundAsync<TResult>() => HttpErrorResult.ResponseNotFoundAsync<TResult>();
 
         [NonAction]
-        public Task<TResult> ResponseNotFoundAsync<TResult>(string message) => HttpErrorResult.ResponseNotFoundAsync<TResult>(message);
+        public static Task<TResult> ResponseNotFoundAsync<TResult>(string message) => HttpErrorResult.ResponseNotFoundAsync<TResult>(message);
 
         [NonAction]
-        public Task<TResult> ResponseNotFoundAsync<TResult>(int code, string message) => HttpErrorResult.ResponseNotFoundAsync<TResult>(code, message);
+        public static Task<TResult> ResponseNotFoundAsync<TResult>(int code, string message) => HttpErrorResult.ResponseNotFoundAsync<TResult>(code, message);
 
         #endregion
 
         #region ServerError    
 
         [NonAction]
-        public HttpServerErrorResult ResponseServerError(string message) => new(message);
+        public static HttpServerErrorResult ResponseServerError(string message) => new(message);
 
         [NonAction]
-        public HttpServerErrorResult ResponseServerError(int code, string message) => new(code, message);
+        public static HttpServerErrorResult ResponseServerError(int code, string message) => new(code, message);
 
         [NonAction]
-        public TResult ResponseServerError<TResult>(string message) => HttpErrorResult.ResponseServerError<TResult>(message);
+        public static TResult ResponseServerError<TResult>(string message) => HttpErrorResult.ResponseServerError<TResult>(message);
 
         [NonAction]
-        public TResult ResponseServerError<TResult>(int code, string message) => HttpErrorResult.ResponseServerError<TResult>(code, message);
+        public static TResult ResponseServerError<TResult>(int code, string message) => HttpErrorResult.ResponseServerError<TResult>(code, message);
 
 
 
         [NonAction]
-        public Task<HttpServerErrorResult> ResponseServerErrorAsync(string message) => Task.FromResult(new HttpServerErrorResult(message));
+        public static Task<HttpServerErrorResult> ResponseServerErrorAsync(string message) => Task.FromResult(new HttpServerErrorResult(message));
 
         [NonAction]
-        public Task<HttpServerErrorResult> ResponseServerErrorAsync(int code, string message) => Task.FromResult(new HttpServerErrorResult(code, message));
+        public static Task<HttpServerErrorResult> ResponseServerErrorAsync(int code, string message) => Task.FromResult(new HttpServerErrorResult(code, message));
 
         [NonAction]
-        public Task<TResult> ResponseServerErrorAsync<TResult>(string message) => HttpErrorResult.ResponseServerErrorAsync<TResult>(message);
+        public static Task<TResult> ResponseServerErrorAsync<TResult>(string message) => HttpErrorResult.ResponseServerErrorAsync<TResult>(message);
 
         [NonAction]
-        public Task<TResult> ResponseServerErrorAsync<TResult>(int code, string message) => HttpErrorResult.ResponseServerErrorAsync<TResult>(code, message);
+        public static Task<TResult> ResponseServerErrorAsync<TResult>(int code, string message) => HttpErrorResult.ResponseServerErrorAsync<TResult>(code, message);
 
         #endregion
 
         #region Unauthorized 
 
         [NonAction]
-        public HttpUnauthorizedResult ResponseUnauthorized() => new();
+        public static HttpUnauthorizedResult ResponseUnauthorized() => new();
 
         [NonAction]
-        public HttpUnauthorizedResult ResponseUnauthorized(string message) => new(message);
+        public static HttpUnauthorizedResult ResponseUnauthorized(string message) => new(message);
 
         [NonAction]
-        public HttpUnauthorizedResult ResponseUnauthorized(int code, string message) => new(code, message);
+        public static HttpUnauthorizedResult ResponseUnauthorized(int code, string message) => new(code, message);
 
         [NonAction]
-        public TResult ResponseUnauthorized<TResult>() => HttpErrorResult.ResponseUnauthorized<TResult>();
+        public static TResult ResponseUnauthorized<TResult>() => HttpErrorResult.ResponseUnauthorized<TResult>();
 
         [NonAction]
-        public TResult ResponseUnauthorized<TResult>(string message) => HttpErrorResult.ResponseUnauthorized<TResult>(message);
+        public static TResult ResponseUnauthorized<TResult>(string message) => HttpErrorResult.ResponseUnauthorized<TResult>(message);
 
         [NonAction]
-        public TResult ResponseUnauthorized<TResult>(int code, string message) => HttpErrorResult.ResponseUnauthorized<TResult>(code, message);
+        public static TResult ResponseUnauthorized<TResult>(int code, string message) => HttpErrorResult.ResponseUnauthorized<TResult>(code, message);
 
 
 
 
         [NonAction]
-        public Task<HttpUnauthorizedResult> ResponseUnauthorizedAsync() => Task.FromResult(new HttpUnauthorizedResult());
+        public static Task<HttpUnauthorizedResult> ResponseUnauthorizedAsync() => Task.FromResult(new HttpUnauthorizedResult());
 
         [NonAction]
-        public Task<HttpUnauthorizedResult> ResponseUnauthorizedAsync(string message) => Task.FromResult(new HttpUnauthorizedResult(message));
+        public static Task<HttpUnauthorizedResult> ResponseUnauthorizedAsync(string message) => Task.FromResult(new HttpUnauthorizedResult(message));
 
         [NonAction]
-        public Task<HttpUnauthorizedResult> ResponseUnauthorizedAsync(int code, string message) => Task.FromResult(new HttpUnauthorizedResult(code, message));
+        public static Task<HttpUnauthorizedResult> ResponseUnauthorizedAsync(int code, string message) => Task.FromResult(new HttpUnauthorizedResult(code, message));
 
         [NonAction]
-        public Task<TResult> ResponseUnauthorizedAsync<TResult>() => HttpErrorResult.ResponseUnauthorizedAsync<TResult>();
+        public static Task<TResult> ResponseUnauthorizedAsync<TResult>() => HttpErrorResult.ResponseUnauthorizedAsync<TResult>();
 
         [NonAction]
-        public Task<TResult> ResponseUnauthorizedAsync<TResult>(string message) => HttpErrorResult.ResponseUnauthorizedAsync<TResult>(message);
+        public static Task<TResult> ResponseUnauthorizedAsync<TResult>(string message) => HttpErrorResult.ResponseUnauthorizedAsync<TResult>(message);
 
         [NonAction]
-        public Task<TResult> ResponseUnauthorizedAsync<TResult>(int code, string message) => HttpErrorResult.ResponseUnauthorizedAsync<TResult>(code, message);
+        public static Task<TResult> ResponseUnauthorizedAsync<TResult>(int code, string message) => HttpErrorResult.ResponseUnauthorizedAsync<TResult>(code, message);
 
         #endregion
 
         #region Success    
 
         [NonAction]
-        public HttpSuccessResult ResponseSuccess() => new();
+        public static HttpSuccessResult ResponseSuccess() => new();
 
         [NonAction]
-        public HttpSuccessResult<TResult> ResponseSuccess<TResult>(TResult result) => new(result);
+        public static HttpSuccessResult<TResult> ResponseSuccess<TResult>(TResult result) => new(result);
 
         [NonAction]
-        public HttpSuccessResult<TResult> ResponseSuccess<TResult>(TResult result, int count = 0) => new(result, count);
+        public static HttpSuccessResult<TResult> ResponseSuccess<TResult>(TResult result, int count = 0) => new(result, count);
 
         [NonAction]
-        public HttpSuccessResult<TResult> ResponseSuccess<TResult>(IEnumerable<TResult> results) => new(results);
+        public static HttpSuccessResult<TResult> ResponseSuccess<TResult>(IEnumerable<TResult> results) => new(results);
 
         [NonAction]
-        public HttpSuccessResult<TResult> ResponseSuccess<TResult>(IEnumerable<TResult> results, int count = 0) => new(results, count);
+        public static HttpSuccessResult<TResult> ResponseSuccess<TResult>(IEnumerable<TResult> results, int count = 0) => new(results, count);
 
         #endregion
 
