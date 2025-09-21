@@ -29,13 +29,12 @@ namespace Yangtao.Hosting.NPOI
             var excelColumns = GetExcelColumns<T>().OrderBy(a => a.SortIndex);
             var workbook = new XSSFWorkbook();
             var sheet = workbook.CreateSheet();
+            var drawBorderStyle = workbook.CreateDrawBorderStyle();
 
             var headRow = sheet.CreateRow(0);
             foreach (var item in excelColumns)
             {
-                var cell = headRow.CreateStyleCell(headRow.Cells.Count, workbook).DrawBorder();
-                var font = workbook.GetHeadRequiredFont();
-                cell.SetFont(font);
+                var cell = headRow.CreateStyleCell(headRow.Cells.Count, drawBorderStyle).SetBlodFont();
                 cell.SetCellValue(item.Name);
             }
 
