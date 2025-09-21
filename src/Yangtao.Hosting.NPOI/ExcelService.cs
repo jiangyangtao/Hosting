@@ -29,7 +29,7 @@ namespace Yangtao.Hosting.NPOI
             var excelColumns = GetExcelColumns<T>().OrderBy(a => a.SortIndex);
             var workbook = new XSSFWorkbook();
             var sheet = workbook.CreateSheet();
-            var drawBorderStyle = workbook.CreateDrawBorderStyle();
+            var drawBorderStyle = workbook.CreateSolidBorderStyle();
 
             var headRow = sheet.CreateRow(0);
             foreach (var item in excelColumns)

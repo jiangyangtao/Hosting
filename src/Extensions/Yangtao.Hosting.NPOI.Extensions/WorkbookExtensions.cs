@@ -25,7 +25,7 @@ namespace Yangtao.Hosting.NPOI.Extensions
             return font;
         }
 
-        public static ICellStyle CreateDrawBorderStyle(this IWorkbook workbook, BorderStyle border = BorderStyle.Thin)
+        public static ICellStyle CreateSolidBorderStyle(this IWorkbook workbook, BorderStyle border = BorderStyle.Thin)
         {
             var cellStyle = workbook.CreateCellStyle();
             cellStyle.BorderTop = border;

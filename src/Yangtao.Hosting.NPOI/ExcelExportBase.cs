@@ -75,7 +75,7 @@ namespace Yangtao.Hosting.NPOI
                 cellStyle.SetFont(font);
             });
 
-            SolidBorderStyle = Workbook.CreateDrawBorderStyle();
+            SolidBorderStyle = Workbook.CreateSolidBorderStyle();
             Sheet = Workbook.CreateSheet(sheetName);
 
             HeadRow = Sheet.CreateRow(0);
