@@ -6,9 +6,30 @@ namespace Yangtao.Hosting.NPOI.Extensions
     {
         public static ICell Cell(this IRow row, int columnIndex) => row.GetCell(columnIndex) ?? row.CreateCell(columnIndex);
 
+        public static ICell Cell(this IRow row, int columnIndex, ICellStyle cellStyle)
+        {
+            var cell = row.GetCell(columnIndex) ?? row.CreateStyleCell(columnIndex, cellStyle);
+            cell.CellStyle = cellStyle;
+            return cell;
+        }
+
         public static IRow CopyTo(this IRow row, int targetRowIndex, bool isCopyCellValue = true)
         {
             return row.Sheet.DeepCopyRow(row.RowNum, targetRowIndex, isCopyCellValue);
+        }
+
+        public static ICell CreateStyleCell(this IRow row, int index, ICellStyle cellStyle)
+        {
+            var cell = row.CreateCell(index);
+            cell.CellStyle = row.Sheet.Workbook.CreateCellStyle();
+
+            return cell;
+        }
+
+        public static ICell CreateCell(this IRow row, int index)
+        {
+            var cell = row.CreateCell(index);
+            return cell;
         }
 
         public static void AddCells(this IRow row, int cellCount)
@@ -19,11 +40,11 @@ namespace Yangtao.Hosting.NPOI.Extensions
             }
         }
 
-        public static void AddCells(this IRow row, int cellCount, IWorkbook workbook)
+        public static void AddCells(this IRow row, int cellCount, ICellStyle cellStyle)
         {
             for (int i = 0; i < cellCount; i++)
             {
-                row.CreateStyleCell(row.Cells.Count, workbook);
+                row.CreateStyleCell(row.Cells.Count, cellStyle);
             }
         }
 

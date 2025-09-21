@@ -6,36 +6,17 @@ namespace Yangtao.Hosting.NPOI.Extensions
 {
     public static class CellExtensions
     {
-        public static ICell CreateStyleCell(this IRow row, int index, IWorkbook workBook)
-        {
-            var cell = row.CreateCell(index);
-            cell.CellStyle = workBook.CreateCellStyle();
-
-            return cell;
-        }
-
-        public static ICell DrawBorder(this ICell cell, BorderStyle border = BorderStyle.Thin)
-        {
-            cell.CellStyle.BorderTop = border;
-            cell.CellStyle.BorderRight = border;
-            cell.CellStyle.BorderBottom = border;
-            cell.CellStyle.BorderLeft = border;
-
-            return cell;
-        }
-
         public static ICell SetFont(this ICell cell, IFont font)
         {
             cell.CellStyle.SetFont(font);
             return cell;
         }
 
-        public static ICell SetBlodFont(this ICell cell, IWorkbook wrokbook)
+        public static ICell SetBlodFont(this ICell cell)
         {
-            var font = wrokbook.CreateFont();
+            IFont font = cell.Sheet.Workbook.CreateFont();
             font.IsBold = true;
             cell.SetFont(font);
-
             return cell;
         }
 

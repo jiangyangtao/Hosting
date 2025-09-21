@@ -16,7 +16,6 @@ namespace Yangtao.Hosting.NPOI.Extensions
             return string.Empty;
         }
 
-
         public static IFont GetHeadRequiredFont(this IWorkbook workbook)
         {
             var font = workbook.CreateFont();
@@ -26,13 +25,21 @@ namespace Yangtao.Hosting.NPOI.Extensions
             return font;
         }
 
-        private static ICellStyle CellStyle { set; get; }
-
-        public static ICellStyle GetCellStyle(this IWorkbook workbook)
+        public static ICellStyle CreateDrawBorderStyle(this IWorkbook workbook, BorderStyle border = BorderStyle.Thin)
         {
-            CellStyle ??= workbook.CreateCellStyle();
+            var cellStyle = workbook.CreateCellStyle();
+            cellStyle.BorderTop = border;
+            cellStyle.BorderRight = border;
+            cellStyle.BorderBottom = border;
+            cellStyle.BorderLeft = border;
+            return cellStyle;
+        }
 
-            return CellStyle;
+        public static ICellStyle CreateCellStyle(this IWorkbook workbook, Action<ICellStyle> action)
+        {
+            var cellStyle = workbook.CreateCellStyle();
+            action(cellStyle);
+            return cellStyle;
         }
 
         public static void SetAuthor(this IWorkbook workbook, string author)
