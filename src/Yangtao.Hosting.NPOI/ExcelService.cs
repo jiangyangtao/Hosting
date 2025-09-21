@@ -34,7 +34,7 @@ namespace Yangtao.Hosting.NPOI
             var headRow = sheet.CreateRow(0);
             foreach (var item in excelColumns)
             {
-                var cell = headRow.CreateStyleCell(headRow.Cells.Count, drawBorderStyle).SetBlodFont();
+                var cell = headRow.GetOrCreateCell(headRow.Cells.Count, drawBorderStyle).SetBlodFont();
                 cell.SetCellValue(item.Name);
             }
 

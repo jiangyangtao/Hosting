@@ -74,5 +74,39 @@ namespace Yangtao.Hosting.NPOI.Extensions
 
             }
         }
+
+
+        public static ICellStyle CloneStyle(this IWorkbook workbook, ICellStyle cellStyle)
+        {
+            var newCellStyle = workbook.CreateCellStyle();
+
+            newCellStyle.ShrinkToFit = cellStyle.ShrinkToFit;
+            newCellStyle.DataFormat = cellStyle.DataFormat;
+            newCellStyle.IsHidden = cellStyle.IsHidden;
+            newCellStyle.IsLocked = cellStyle.IsLocked;
+            newCellStyle.IsQuotePrefixed = cellStyle.IsQuotePrefixed;
+            newCellStyle.Alignment = cellStyle.Alignment;
+            newCellStyle.WrapText = cellStyle.WrapText;
+            newCellStyle.VerticalAlignment = cellStyle.VerticalAlignment;
+            newCellStyle.Rotation = cellStyle.Rotation;
+            newCellStyle.Indention = cellStyle.Indention;
+            newCellStyle.BorderLeft = cellStyle.BorderLeft;
+            newCellStyle.BorderRight = cellStyle.BorderRight;
+            newCellStyle.BorderTop = cellStyle.BorderTop;
+            newCellStyle.BorderBottom = cellStyle.BorderBottom;
+            newCellStyle.LeftBorderColor = cellStyle.LeftBorderColor;
+            newCellStyle.RightBorderColor = cellStyle.RightBorderColor;
+            newCellStyle.TopBorderColor = cellStyle.TopBorderColor;
+            newCellStyle.BottomBorderColor = cellStyle.BottomBorderColor;
+            newCellStyle.FillPattern = cellStyle.FillPattern;
+            newCellStyle.FillBackgroundColor = cellStyle.FillBackgroundColor;
+            newCellStyle.FillForegroundColor = cellStyle.FillForegroundColor;
+            newCellStyle.BorderDiagonalColor = cellStyle.BorderDiagonalColor;
+            newCellStyle.BorderDiagonalLineStyle = cellStyle.BorderDiagonalLineStyle;
+            newCellStyle.BorderDiagonal = cellStyle.BorderDiagonal;
+            newCellStyle.ReadingOrder = cellStyle.ReadingOrder;
+
+            return newCellStyle;
+        }
     }
 }

@@ -63,7 +63,7 @@ namespace Yangtao.Hosting.NPOI.Extensions
             if (cell == null) throw new ArgumentNullException(nameof(cell));
 
             var targetRow = cell.Row.Sheet.Row(targetRowIndex);
-            var targetCell = targetRow.Cell(targetColumnIndex ?? cell.ColumnIndex);
+            var targetCell = targetRow.GetOrCreateCell(targetColumnIndex ?? cell.ColumnIndex);
 
             CopyCellFormat(cell, targetCell, copyMerge);
             return CopyCellValue(cell, targetCell);
@@ -84,7 +84,7 @@ namespace Yangtao.Hosting.NPOI.Extensions
             if (cell == null) throw new ArgumentNullException(nameof(cell));
 
             var targetRow = cell.Row.Sheet.Row(targetRowIndex);
-            var targetCell = targetRow.Cell(targetColumnIndex ?? cell.ColumnIndex);
+            var targetCell = targetRow.GetOrCreateCell(targetColumnIndex ?? cell.ColumnIndex);
 
             return CopyCellFormat(cell, targetCell, copyMerge);
         }

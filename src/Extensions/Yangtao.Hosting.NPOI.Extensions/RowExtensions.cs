@@ -4,31 +4,24 @@ namespace Yangtao.Hosting.NPOI.Extensions
 {
     public static class RowExtensions
     {
-        public static ICell Cell(this IRow row, int columnIndex) => row.GetCell(columnIndex) ?? row.CreateCell(columnIndex);
-
-        public static ICell Cell(this IRow row, int columnIndex, ICellStyle cellStyle)
-        {
-            var cell = row.GetCell(columnIndex) ?? row.CreateStyleCell(columnIndex, cellStyle);
-            cell.CellStyle = cellStyle;
-            return cell;
-        }
+        /// <summary>
+        /// Get or Create cell, If cell not exist then create
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="columnIndex"></param>
+        /// <returns></returns>
+        public static ICell GetOrCreateCell(this IRow row, int columnIndex) => row.GetCell(columnIndex) ?? row.CreateCell(columnIndex);
 
         public static IRow CopyTo(this IRow row, int targetRowIndex, bool isCopyCellValue = true)
         {
             return row.Sheet.DeepCopyRow(row.RowNum, targetRowIndex, isCopyCellValue);
         }
 
-        public static ICell CreateStyleCell(this IRow row, int index, ICellStyle cellStyle)
+        public static ICell GetOrCreateCell(this IRow row, int index, ICellStyle cellStyle)
         {
-            var cell = row.CreateCell(index);
-            cell.CellStyle = row.Sheet.Workbook.CreateCellStyle();
+            var cell = row.GetOrCreateCell(index);
+            cell.CellStyle = cellStyle;
 
-            return cell;
-        }
-
-        public static ICell CreateCell(this IRow row, int index)
-        {
-            var cell = row.CreateCell(index);
             return cell;
         }
 
@@ -36,7 +29,7 @@ namespace Yangtao.Hosting.NPOI.Extensions
         {
             for (int i = 0; i < cellCount; i++)
             {
-                row.CreateCell(row.Cells.Count);
+                row.GetOrCreateCell(row.Cells.Count);
             }
         }
 
@@ -44,7 +37,7 @@ namespace Yangtao.Hosting.NPOI.Extensions
         {
             for (int i = 0; i < cellCount; i++)
             {
-                row.CreateStyleCell(row.Cells.Count, cellStyle);
+                row.GetOrCreateCell(row.Cells.Count, cellStyle);
             }
         }
 

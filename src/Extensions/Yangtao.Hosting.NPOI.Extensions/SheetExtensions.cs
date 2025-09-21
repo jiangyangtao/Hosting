@@ -32,7 +32,7 @@ namespace Yangtao.Hosting.NPOI.Extensions
                 var row = sheet.Row(rowIndex);
                 for (int columnIndex = columnStartIndex; columnIndex <= columnEndIndex; columnIndex++)
                 {
-                    var cell = row.Cell(columnIndex);
+                    var cell = row.GetOrCreateCell(columnIndex);
                     var targetRowIndex = rowIndex + insertCount;
                     cell.CopyTo(targetRowIndex);
                     cell.ClearValue().ClearMerge();
@@ -50,10 +50,10 @@ namespace Yangtao.Hosting.NPOI.Extensions
 
                 for (int columnIndex = columnStartIndex; columnIndex <= columnEndIndex; columnIndex++)
                 {
-                    var sourceRowCell = sourceRow.Cell(columnIndex);
+                    var sourceRowCell = sourceRow.GetOrCreateCell(columnIndex);
                     if (sourceRowCell.CellStyle == null) continue;
 
-                    var cell = row.Cell(columnIndex);
+                    var cell = sourceRow.GetOrCreateCell(columnIndex);
                     cell.CellStyle = sourceRowCell.CellStyle;
                 }
             }
