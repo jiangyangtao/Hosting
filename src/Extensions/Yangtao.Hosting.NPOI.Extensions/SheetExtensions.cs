@@ -1,5 +1,6 @@
 ﻿using NPOI.SS.UserModel;
 using NPOI.SS.Util;
+using System.Text;
 using Yangtao.Hosting.NPOI.Extensions.Enums;
 
 namespace Yangtao.Hosting.NPOI.Extensions
@@ -206,6 +207,33 @@ namespace Yangtao.Hosting.NPOI.Extensions
             }
 
             return excelcolumnNames.ToArray();
+        }
+
+
+        public static ISheet AutoSizeColumn(this ISheet sheet)
+        {
+            var first = sheet.GetRow(0);
+            if (first == null) return sheet;
+
+            for (int col = 0; col < first.Cells.Count; col++)
+            {
+                sheet.AutoSizeColumn(col);
+                var columnWidth = sheet.GetColumnWidth(col) / 256;
+                for (int rowIndex = 0; rowIndex <= sheet.LastRowNum; rowIndex++)
+                {
+                    var row = sheet.GetRow(rowIndex);
+                    var cell = row.GetCell(col);
+
+                    var content = cell != null ? cell.ToString() : string.Empty;
+                    int contextLength = Encoding.UTF8.GetBytes(content).Length;
+                    columnWidth = columnWidth < contextLength ? contextLength : columnWidth;
+
+                    row.Height = 360;
+                }
+                sheet.SetColumnWidth(col, columnWidth * 256);
+            }
+
+            return sheet;
         }
     }
 }
