@@ -1,4 +1,6 @@
 ﻿
+using System.Reflection;
+
 namespace Yangtao.Hosting.Extensions
 {
     public static class TypeExtensions
@@ -32,6 +34,11 @@ namespace Yangtao.Hosting.Extensions
             if (type == null) return false;
 
             return HasInterface(type, typeof(T));
+        }
+
+        public static bool HasAttribute<TAttribute>(this PropertyInfo property) where TAttribute : Attribute
+        {
+            return property.GetCustomAttribute<TAttribute>() != null;
         }
 
         public static bool BaseTypeEquals(this Type type, Type baseType)
