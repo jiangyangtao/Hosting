@@ -5,6 +5,8 @@
     /// </summary>
     public class SignAuthenticationOptions
     {
+        public string? OptionName { set; get; } = string.Empty;
+
         /// <summary>
         /// 签名验证类型
         /// </summary>

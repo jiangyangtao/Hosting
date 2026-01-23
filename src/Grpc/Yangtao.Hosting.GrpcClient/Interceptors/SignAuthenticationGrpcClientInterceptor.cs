@@ -47,7 +47,8 @@ namespace Yangtao.Hosting.GrpcClient.Interceptors
             }
 
             var now = DateTime.Now.ToFormatDateTime();
-            var authorization = _signAuthenticationProvider.Encrypt(now);
+            var clientName = context.Options.Headers.GetValue("ClientName");
+            var authorization = _signAuthenticationProvider.Encrypt(now, clientName);
             context.Options.Headers.Add("Authorization", authorization);
 
             return base.AsyncUnaryCall(request, context, continuation);

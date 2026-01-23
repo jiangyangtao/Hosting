@@ -13,6 +13,8 @@ namespace Yangtao.Hosting.GrpcServer.Options
             GrpcServiceOptions = new GrpcServiceOptions();
         }
 
+        public string? OptionName { set; get; }
+
         /// <summary>
         /// 原生 <see cref="GrpcServiceOptions"/> 配置
         /// </summary>

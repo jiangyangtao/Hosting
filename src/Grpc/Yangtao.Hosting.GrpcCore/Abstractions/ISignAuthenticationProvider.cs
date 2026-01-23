@@ -9,14 +9,16 @@
         /// 加密
         /// </summary>
         /// <param name="value">明文</param>
+        /// <param name="optionName"></param>
         /// <returns>密文</returns>
-        string Encrypt(string value);
+        string Encrypt(string value, string? optionName);
 
         /// <summary>
         /// 解密
         /// </summary>
         /// <param name="value">密文</param>
+        /// <param name="optionName"></param>
         /// <returns>明文</returns>
-        string Decrypt(string value);
+        string Decrypt(string value, string? optionName = "");
     }
 }

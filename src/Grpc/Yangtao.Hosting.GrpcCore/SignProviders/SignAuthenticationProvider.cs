@@ -11,8 +11,8 @@ namespace Yangtao.Hosting.GrpcCore.SignProviders
             _signProviderFactory = signProviderFactory;
         }
 
-        public string Decrypt(string value) => _signProviderFactory.CreateSignProvider().Decrypt(value);
+        public string Decrypt(string value, string? optionName = "") => _signProviderFactory.CreateSignProvider().Decrypt(value, optionName);
 
-        public string Encrypt(string value) => _signProviderFactory.CreateSignProvider().Encrypt(value);
+        public string Encrypt(string value, string? optionName) => _signProviderFactory.CreateSignProvider().Encrypt(value, optionName);
     }
 }

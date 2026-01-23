@@ -18,6 +18,10 @@ namespace Yangtao.Hosting.GrpcClient.Options
             _signAuthenticationMethods = new List<string>();
         }
 
+
+        public string? OptionName { set; get; } = string.Empty;
+
+
         /// <summary>
         /// 接入点
         /// </summary>
