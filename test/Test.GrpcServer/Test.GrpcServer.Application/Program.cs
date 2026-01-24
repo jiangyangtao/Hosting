@@ -21,6 +21,7 @@ namespace Test.GrpcServer.Application
 
             builder.Services.AddGrpcServer(options =>
             {
+                options.OptionName = "GrpcServer";
                 options.GrpcServiceOptions.EnableDetailedErrors = true;
                 options.SignAuthenticationType = SignAuthenticationType.Aes;
 

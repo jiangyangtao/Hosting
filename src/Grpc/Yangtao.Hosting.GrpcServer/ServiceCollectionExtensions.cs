@@ -24,6 +24,14 @@ namespace Yangtao.Hosting.GrpcServer
             var serverOptions = new GrpcServerOptions();
             action(serverOptions);
 
+            services.Configure<GrpcServerOptions>(options =>
+            {
+                options.OptionName = serverOptions.OptionName;
+                options.SignAuthenticationType = serverOptions.SignAuthenticationType;
+                options.AesSignOptions = serverOptions.AesSignOptions;
+                options.RsaPrivateSignOptions = serverOptions.RsaPrivateSignOptions;
+            });
+
             services.AddGrpc(options =>
              {
                  options.CompressionProviders = serverOptions.GrpcServiceOptions.CompressionProviders;
@@ -58,14 +66,6 @@ namespace Yangtao.Hosting.GrpcServer
                  if (serverOptions.SignAuthenticationType.HasValue)
                      options.Interceptors.Add<SignAuthenticationGrpcServerInterceptor>();
              });
-
-            services.Configure<GrpcServerOptions>(options =>
-            {
-                options.OptionName = serverOptions.OptionName;
-                options.SignAuthenticationType = serverOptions.SignAuthenticationType;
-                options.AesSignOptions = serverOptions.AesSignOptions;
-                options.RsaPrivateSignOptions = serverOptions.RsaPrivateSignOptions;
-            });
 
             if (serverOptions.SignAuthenticationType.HasValue)
             {

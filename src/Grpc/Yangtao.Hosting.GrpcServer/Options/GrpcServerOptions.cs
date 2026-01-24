@@ -8,7 +8,7 @@ namespace Yangtao.Hosting.GrpcServer.Options
     /// </summary>
     public class GrpcServerOptions
     {
-        internal GrpcServerOptions()
+        public GrpcServerOptions()
         {
             GrpcServiceOptions = new GrpcServiceOptions();
         }

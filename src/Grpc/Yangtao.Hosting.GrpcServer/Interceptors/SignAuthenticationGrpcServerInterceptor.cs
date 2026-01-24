@@ -43,6 +43,6 @@ namespace Yangtao.Hosting.GrpcServer.Interceptors
             return base.UnaryServerHandler(request, context, continuation);
         }
 
-        private RpcException UnauthorizedException => new(Status.DefaultCancelled, "Unauthorized");
+        private static RpcException UnauthorizedException => new(Status.DefaultCancelled, "Unauthorized");
     }
 }
