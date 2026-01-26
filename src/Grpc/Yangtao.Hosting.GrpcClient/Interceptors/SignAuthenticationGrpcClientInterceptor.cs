@@ -14,6 +14,7 @@ namespace Yangtao.Hosting.GrpcClient.Interceptors
     {
         private readonly ISignAuthenticationProvider _signAuthenticationProvider;
         private readonly ICollection<string> _signAuthenticationMethods;
+        private const string AuthorizationKey = "Authorization";
 
         /// <summary>
         /// 构建 <see cref="SignAuthenticationGrpcClientInterceptor"/>
@@ -48,9 +49,12 @@ namespace Yangtao.Hosting.GrpcClient.Interceptors
 
             var now = DateTime.Now.ToFormatDateTime();
             var clientName = context.Options.Headers.GetValue("ClientName");
-            var authorization = _signAuthenticationProvider.Encrypt(now, clientName);
-            context.Options.Headers.Add("Authorization", authorization);
+            var authorizationValue = _signAuthenticationProvider.Encrypt(now, clientName);
 
+            var authorizationItem = context.Options.Headers.Get(AuthorizationKey);
+            if (authorizationItem != null) context.Options.Headers.Remove(authorizationItem);
+
+            context.Options.Headers.Add(AuthorizationKey, authorizationValue);
             return base.AsyncUnaryCall(request, context, continuation);
         }
 
