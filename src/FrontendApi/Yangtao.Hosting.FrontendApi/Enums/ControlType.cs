@@ -24,6 +24,8 @@
 
         RadioGroup,
 
-        Segmented
+        Segmented,
+
+        Tags
     }
 }
