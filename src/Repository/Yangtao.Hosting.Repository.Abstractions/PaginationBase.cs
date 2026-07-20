@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
-using Yangtao.Hosting.Common;
 using Yangtao.Hosting.Extensions;
 
 namespace Yangtao.Hosting.Repository.Abstractions
@@ -123,16 +122,6 @@ namespace Yangtao.Hosting.Repository.Abstractions
             var queryable = BuildSortQuery(repository);
 
             return queryable.Skip(Start).Take(Size);
-        }
-    }
-
-    public abstract class QueryParamBase<TEntity> : PaginationBase<TEntity> where TEntity : BaseEntity
-    {
-        protected QueryParamBase(PagingParameter parameter)
-        {
-            Start = parameter.startIndex;
-            Size = parameter.size;
-            Sort = parameter.sort;
         }
     }
 }
