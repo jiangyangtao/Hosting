@@ -12,6 +12,10 @@
 	</ImportGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.3.11" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <ProjectReference Include="..\Extensions\Yangtao.Hosting.Extensions\Yangtao.Hosting.Extensions.csproj" />
 	</ItemGroup>
 	
