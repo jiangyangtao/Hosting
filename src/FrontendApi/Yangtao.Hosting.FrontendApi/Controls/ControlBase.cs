@@ -11,6 +11,9 @@ using Yangtao.Hosting.FrontendApi.Fields;
 
 namespace Yangtao.Hosting.FrontendApi.Controls
 {
+    /// <summary>
+    /// 控件基类
+    /// </summary>
     internal abstract class ControlBase : FieldBase, IControl
     {
         protected ControlBase()
@@ -19,7 +22,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 
         protected ControlBase(PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
         {
-            FieldType = property.PropertyType.GetFieldType();
+            FieldType = property.GetFieldType();
 
             var existValidation = property.GetCustomAttribute<ExistValidationAttribute>();
             if (existValidation != null) ExistValidation = new(existValidation, documentHandler);
@@ -37,6 +40,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 
         public ExistValidation? ExistValidation { get; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public abstract ControlType ControlType { get; }
 
         [JsonConverter(typeof(StringEnumConverter))]

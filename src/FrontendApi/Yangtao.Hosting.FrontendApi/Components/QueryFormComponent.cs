@@ -3,6 +3,9 @@ using Yangtao.Hosting.FrontendApi.Controls;
 
 namespace Yangtao.Hosting.FrontendApi.Components
 {
+    /// <summary>
+    /// 查询组件
+    /// </summary>
     internal class QueryFormComponent : ComponentBase
     {
         protected readonly List<ControlBase> ControlList;

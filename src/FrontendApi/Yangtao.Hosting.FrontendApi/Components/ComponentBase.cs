@@ -5,6 +5,9 @@ using Yangtao.Hosting.FrontendApi.Attributes;
 
 namespace Yangtao.Hosting.FrontendApi.Components
 {
+    /// <summary>
+    /// 组件基类
+    /// </summary>
     internal abstract class ComponentBase : IComponent, IModule
     {
         protected ComponentBase(Type type, DocumentHandler documentHandler)

@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Reflection;
+using System.Reflection.Metadata;
 using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.FrontendApi.Abstractions;
 using Yangtao.Hosting.FrontendApi.Attributes;
@@ -65,9 +66,12 @@ namespace Yangtao.Hosting.FrontendApi
             throw new ArgumentException($"{method.Name} not exist http method the attribute");
         }
 
-        public static FieldType GetFieldType(this Type propertyType)
+        public static FieldType GetFieldType(this PropertyInfo propertyInfo)
         {
-            propertyType = propertyType.GetReadProperty();
+            var propertyType = propertyInfo.PropertyType.GetReadProperty();
+
+            var tagsAttr = propertyInfo.GetCustomAttribute<TagsAttribute>();
+            if (tagsAttr != null) return FieldType.Tags;
 
             if (propertyType == StaticKeys.IntType || propertyType == StaticKeys.IntNullableType) return FieldType.Integer;
             if (propertyType == StaticKeys.DecimalType || propertyType == StaticKeys.DecimalNullableType ||
@@ -90,7 +94,7 @@ namespace Yangtao.Hosting.FrontendApi
             {
                 if (property.DeclaringType == StaticKeys.PaginationType) continue;
 
-                var fieldType = GetFieldType(property.PropertyType);
+                var fieldType = GetFieldType(property);
                 if (fieldType == FieldType.DateTime)
                 {
                     var rangeAttr = property.GetCustomAttribute<RangePickerAttribute>();
@@ -120,7 +124,7 @@ namespace Yangtao.Hosting.FrontendApi
 
         public static ControlBase BuildControl(this PropertyInfo property, DocumentHandler documentHandler)
         {
-            var fieldType = GetFieldType(property.PropertyType);
+            var fieldType = GetFieldType(property);
             return property.BuildControl(fieldType, documentHandler);
         }
 
@@ -158,7 +162,8 @@ namespace Yangtao.Hosting.FrontendApi
             var segmentedAttr = property.GetCustomAttribute<SegmentedAttribute>();
             if (segmentedAttr != null) return new SegmentedControl(segmentedAttr, property, documentHandler);
 
-
+            var tagsAttr = property.GetCustomAttribute<TagsAttribute>();
+            if (tagsAttr != null) return new TagsControl(tagsAttr, property, documentHandler);
 
 
             if (fieldType == FieldType.Boolean) return new SwitchControl(property, documentHandler);
@@ -166,6 +171,7 @@ namespace Yangtao.Hosting.FrontendApi
 
             if (fieldType == FieldType.Integer) return new InputNumberControl(property, documentHandler);
             if (fieldType == FieldType.Decimal) return new InputDecimalControl(property, documentHandler);
+
 
             var textArea = property.GetCustomAttribute<TextAreaAttribute>();
             if (textArea != null) return new TextAreaControl(textArea, property, documentHandler);
@@ -226,7 +232,7 @@ namespace Yangtao.Hosting.FrontendApi
 
         public static FieldBase BuildField(this PropertyInfo property, DocumentHandler documentHandler)
         {
-            var fieldType = property.PropertyType.GetFieldType();
+            var fieldType = property.GetFieldType();
             if (fieldType == FieldType.Enum) return new EnumField(property, documentHandler);
 
             return new Field(fieldType, property, documentHandler);

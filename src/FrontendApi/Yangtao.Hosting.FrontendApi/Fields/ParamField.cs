@@ -14,7 +14,7 @@ namespace Yangtao.Hosting.FrontendApi.Fields
             Name = property.Name;
             Text = documentHandler.GetPropertySummary(property);
 
-            FieldType = property.PropertyType.GetFieldType();
+            FieldType = property.GetFieldType();
 
             var formatAttribute = property.GetCustomAttribute<FormatterAttribute>();
             if (formatAttribute != null) Format = formatAttribute.Formatter;

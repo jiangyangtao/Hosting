@@ -9,6 +9,9 @@ using Yangtao.Hosting.FrontendApi.Fields;
 
 namespace Yangtao.Hosting.FrontendApi.Components
 {
+    /// <summary>
+    /// 表格组件
+    /// </summary>
     internal class TableComponent : ComponentBase
     {
         public TableComponent(Type tableComponentType, DocumentHandler documentHandler) : base(tableComponentType, documentHandler)

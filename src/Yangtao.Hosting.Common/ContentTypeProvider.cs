@@ -2,7 +2,7 @@
 
 namespace Yangtao.Hosting.Common
 {
-    public class ContentTypeHandler
+    public class ContentTypeProvider
     {
         private static FileExtensionContentTypeProvider? _fileExtensionContentTypeProvider { set; get; } = null;
 
@@ -15,6 +15,9 @@ namespace Yangtao.Hosting.Common
                 return _fileExtensionContentTypeProvider;
             }
         }
+
+
+        public static IDictionary<string, string> Mappings => FileExtensionContentTypeProvider.Mappings;
 
         /// <summary>
         /// 

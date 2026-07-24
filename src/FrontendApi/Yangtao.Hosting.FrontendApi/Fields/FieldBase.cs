@@ -5,6 +5,9 @@ using Yangtao.Hosting.FrontendApi.Enums;
 
 namespace Yangtao.Hosting.FrontendApi.Fields
 {
+    /// <summary>
+    /// 字段基类
+    /// </summary>
     internal abstract class FieldBase : IField
     {
         protected FieldBase()

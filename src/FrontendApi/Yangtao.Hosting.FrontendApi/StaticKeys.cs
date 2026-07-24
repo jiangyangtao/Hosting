@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Yangtao.Hosting.Common;
-using Yangtao.Hosting.Mvc.FormatResult;
+using Yangtao.Hosting.FrontendApi.Attributes;
 using Yangtao.Hosting.Mvc.HttpMethods;
 
 namespace Yangtao.Hosting.FrontendApi
@@ -28,7 +28,7 @@ namespace Yangtao.Hosting.FrontendApi
         public static readonly Type BooleanNullableType = typeof(bool?);
         public static readonly Type GuidType = typeof(Guid);
         public static readonly Type GuidNullableType = typeof(Guid?);
-
+        public static readonly Type TagsType = typeof(TagsAttribute);
 
         public static readonly Type PaginationType = typeof(PagingParameter);
         public static readonly Type NullableType = typeof(Nullable<>);

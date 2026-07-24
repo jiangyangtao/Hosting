@@ -2,6 +2,9 @@
 
 namespace Yangtao.Hosting.FrontendApi.Abstractions
 {
+    /// <summary>
+    /// 字段接口
+    /// </summary>
     internal interface IField
     {
         public string? Name { get; }

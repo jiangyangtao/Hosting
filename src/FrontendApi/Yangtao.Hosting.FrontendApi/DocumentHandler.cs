@@ -5,6 +5,9 @@ using Yangtao.Hosting.Extensions;
 
 namespace Yangtao.Hosting.FrontendApi
 {
+    /// <summary>
+    /// 文档处理
+    /// </summary>
     internal class DocumentHandler
     {
         private readonly Dictionary<string, XDocument> XmlDocmentDictionary;

@@ -4,6 +4,9 @@ using Yangtao.Hosting.FrontendApi.Enums;
 
 namespace Yangtao.Hosting.FrontendApi.Abstractions
 {
+    /// <summary>
+    /// Http 操作接口
+    /// </summary>
     internal interface IHttpAction
     {
         public string? ActionApi { get; }
@@ -15,6 +18,9 @@ namespace Yangtao.Hosting.FrontendApi.Abstractions
         public string? ServiceName { get; }
     }
 
+    /// <summary>
+    /// Http 操作
+    /// </summary>
     internal class HttpAction : IHttpAction
     {
         public HttpAction(IHttpAction httpAction, string serviceName = "")

@@ -13,5 +13,7 @@
         Enum,
 
         Boolean,
+
+        Tags,
     }
 }

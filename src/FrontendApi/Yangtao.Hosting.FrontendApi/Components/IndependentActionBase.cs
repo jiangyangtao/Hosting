@@ -9,6 +9,9 @@ using Yangtao.Hosting.FrontendApi.Fields;
 
 namespace Yangtao.Hosting.FrontendApi.Components
 {
+    /// <summary>
+    /// 独立操作基类
+    /// </summary>
     internal abstract class IndependentActionBase : IAction
     {
         private IndependentActionBase()
@@ -45,6 +48,9 @@ namespace Yangtao.Hosting.FrontendApi.Components
         public string? ServiceName { set; get; }
     }
 
+    /// <summary>
+    /// 独立编辑
+    /// </summary>
     internal class IndependentEdit : IndependentActionBase
     {
         public IndependentEdit(PropertyInfo property, IndependentEditAttribute independentEdit, DocumentHandler documentHandler) : base(independentEdit, documentHandler)
@@ -58,6 +64,9 @@ namespace Yangtao.Hosting.FrontendApi.Components
         public override IndependentType IndependentType => IndependentType.Edit;
     }
 
+    /// <summary>
+    /// 存在验证
+    /// </summary>
     internal class ExistValidation : IndependentActionBase
     {
         public ExistValidation(ExistValidationAttribute existValidation, DocumentHandler documentHandler) : base(existValidation, documentHandler)
@@ -68,6 +77,9 @@ namespace Yangtao.Hosting.FrontendApi.Components
         public override IndependentType IndependentType => IndependentType.ExistValidate;
     }
 
+    /// <summary>
+    /// 删除操作
+    /// </summary>
     internal class DeleteAction : IndependentActionBase
     {
         public DeleteAction(DeleteActionAttribute actionAttribute, DocumentHandler documentHandler) : base(actionAttribute, documentHandler)

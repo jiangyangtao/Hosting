@@ -9,6 +9,9 @@ using Yangtao.Hosting.FrontendApi.Enums;
 
 namespace Yangtao.Hosting.FrontendApi.Components
 {
+    /// <summary>
+    /// 表单组件
+    /// </summary>
     internal class FormComponent : QueryFormComponent, IHttpAction
     {
         public FormComponent(Type formType, DocumentHandler documentHandler) : base(formType, documentHandler)
