@@ -84,7 +84,6 @@ namespace Yangtao.Hosting.GrpcServer
                 });
             }
 
-
             return services;
         }
     }

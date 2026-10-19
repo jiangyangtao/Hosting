@@ -38,7 +38,7 @@ namespace Yangtao.Hosting.GrpcServer.Interceptors
             if (parseResult == false) throw UnauthorizedException;
 
             var diff = DateTime.Now.Subtract(d);
-            if (diff.TotalSeconds > 10) throw UnauthorizedException;
+            if (diff.TotalSeconds > 5) throw UnauthorizedException;
 
             return base.UnaryServerHandler(request, context, continuation);
         }

@@ -39,10 +39,10 @@ namespace Yangtao.Hosting.FrontendApi.Components
             var groupAttributes = formType.GetCustomAttributes<FormGroupAttribute>();
             if (groupAttributes.NotNullAndEmpty()) FormGroups = groupAttributes.Select(a => new FormGroup(a));
 
-            var formUpdateAttributes = formType.GetCustomAttributes<FormUploadAttribute>();
-            if (formUpdateAttributes.NotNullAndEmpty())
+            var formUploadAttributes = formType.GetCustomAttributes<FormUploadAttribute>();
+            if (formUploadAttributes.NotNullAndEmpty())
             {
-                var controls = formUpdateAttributes.Select(a => new FormUploadControl(a));
+                var controls = formUploadAttributes.Select(a => new FormUploadControl(a));
                 if (controls.NotNullAndEmpty()) ControlList.AddRange(controls);
             }
         }

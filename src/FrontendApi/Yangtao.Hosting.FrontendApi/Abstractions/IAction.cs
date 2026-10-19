@@ -5,6 +5,6 @@
     /// </summary>
     internal interface IAction : IHttpAction
     {
-        public Type? RequestData { get; }
+        Type? RequestData { get; }
     }
 }
