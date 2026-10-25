@@ -191,7 +191,7 @@ namespace Yangtao.Hosting.FrontendApi
 
             if (enumType.IsEnum == false) return TextValueOption.Empty();
 
-            var options = new Collection<TextValueOption>();
+            var options = new List<TextValueOption>();
             var fields = enumType.GetFields();
             foreach (var field in fields)
             {
