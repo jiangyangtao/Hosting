@@ -2,6 +2,7 @@
 using MimeKit;
 using System.Runtime.CompilerServices;
 using Yangtao.Hosting.Email.Abstractions;
+using Yangtao.Hosting.Extensions;
 
 namespace Yangtao.Hosting.Email.Services
 {
@@ -26,6 +27,8 @@ namespace Yangtao.Hosting.Email.Services
 
         public async Task SendAsync(IEnumerable<MimeMessage> messages, Action<MimeMessage, string>? sendProgress, CancellationToken cancellationToken = default)
         {
+            if (messages.IsNullOrEmpty()) return;
+
             await foreach (var (message, result) in SendAllAsync(messages, cancellationToken))
             {
                 sendProgress?.Invoke(message, result);

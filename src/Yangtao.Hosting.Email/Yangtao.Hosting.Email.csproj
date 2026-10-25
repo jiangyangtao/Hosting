@@ -12,7 +12,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Yangtao.Hosting.Abstractions\Yangtao.Hosting.Abstractions.csproj" />
+	  <ProjectReference Include="..\MessageQueue\Yangtao.Hosting.MessageQueue.BufferQueue\Yangtao.Hosting.MessageQueue.BufferQueue.csproj" />
 	</ItemGroup>
+
+	<ImportGroup>
+		<Import Project="..\..\props\Hosting.Publish.props" />
+		<Import Project="..\..\props\Hosting.Version.props" />
+	</ImportGroup>
 
 </Project>

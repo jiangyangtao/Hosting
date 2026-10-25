@@ -22,6 +22,7 @@ namespace Yangtao.Hosting.Email
                 options.Password = emailOptions.Password;
             });
             services.AddSingleton<IEmailService, EmailService>();
+            services.AddSingleton<IAsyncEmailService, AsyncEmailService>();
             return services;
         }
     }
