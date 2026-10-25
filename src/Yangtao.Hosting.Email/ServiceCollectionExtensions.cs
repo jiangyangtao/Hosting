@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Yangtao.Hosting.Extensions;
+using Yangtao.Hosting.Email.Abstractions;
+using Yangtao.Hosting.Email.Services;
 
-namespace Yangtao.Hosting.Mvc.Email
+namespace Yangtao.Hosting.Email
 {
     public static class ServiceCollectionExtensions
     {
@@ -20,6 +21,7 @@ namespace Yangtao.Hosting.Mvc.Email
                 options.Account = emailOptions.Account;
                 options.Password = emailOptions.Password;
             });
+            services.AddSingleton<IEmailService, EmailService>();
             return services;
         }
     }

@@ -1,7 +1,7 @@
 ﻿using MailKit.Net.Smtp;
 using MimeKit;
 
-namespace Yangtao.Hosting.Mvc.Email.Services
+namespace Yangtao.Hosting.Email.Services
 {
     internal class EmailServiceBase
     {

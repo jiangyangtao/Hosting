@@ -1,6 +1,6 @@
 ﻿using Yangtao.Hosting.Extensions;
 
-namespace Yangtao.Hosting.Mvc.Email
+namespace Yangtao.Hosting.Email
 {
     public class EmailOptions
     {

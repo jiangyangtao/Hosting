@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Yangtao.Hosting.Mvc.Email.Abstractions
+namespace Yangtao.Hosting.Email.Abstractions
 {
     public interface IAsyncEmailService
     {

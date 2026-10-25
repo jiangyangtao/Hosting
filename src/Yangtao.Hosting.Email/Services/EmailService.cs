@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Options;
 using MimeKit;
 using System.Runtime.CompilerServices;
-using Yangtao.Hosting.Mvc.Email.Abstractions;
+using Yangtao.Hosting.Email.Abstractions;
 
-namespace Yangtao.Hosting.Mvc.Email.Services
+namespace Yangtao.Hosting.Email.Services
 {
     internal class EmailService : EmailServiceBase, IEmailService
     {

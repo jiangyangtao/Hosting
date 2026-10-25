@@ -1,6 +1,6 @@
 ﻿using MimeKit;
 
-namespace Yangtao.Hosting.Mvc.Email.Abstractions
+namespace Yangtao.Hosting.Email.Abstractions
 {
     public interface IEmailService
     {
