@@ -11,6 +11,7 @@ namespace Yangtao.Hosting.Email.Services
     {
         private readonly IBufferQueue<MimeMessage> _messageQueue;
         private readonly IBufferQueue<MimeMessage[]> _messagesQueue;
+        private readonly IBufferQueue<EmailMessage> _emailMessageQueue;
 
         private readonly IEmailService _emailService;
         private readonly ILogger<AsyncEmailService> _logger;
@@ -21,13 +22,16 @@ namespace Yangtao.Hosting.Email.Services
             IEmailService emailService,
             ILogger<AsyncEmailService> logger) : base(options.Value)
         {
-            _messageQueue = bufferQueueProvider.CreateBufferQueue<MimeMessage>("EmailMessageQueue", async (item) => await SendAsync(item), 1000);
-            _messagesQueue = bufferQueueProvider.CreateBufferQueue<MimeMessage[]>("EmailMessagesQueue", async (item) => await SendAsync(item), 1, 10000);
+            _messageQueue = bufferQueueProvider.CreateBufferQueue<MimeMessage>("EmailMessageQueue", async (item) => await SendEmailMessageAsync(item), 1000);
+            _messagesQueue = bufferQueueProvider.CreateBufferQueue<MimeMessage[]>("EmailMessagesQueue", async (item) => await SendEmailMessagesAsync(item), 1, 10000);
+            _emailMessageQueue = bufferQueueProvider.CreateBufferQueue<EmailMessage>("CustomOptionsEmailMessagesQueue", async (item) => await SendCustomOptionsEmailMessageAsync(item), 1000);
             _emailService = emailService;
             _logger = logger;
         }
 
         public Task<bool> SendAsync(MimeMessage message, CancellationToken cancellationToken = default) => _messageQueue.PutAsync(message, cancellationToken);
+
+        private Task SendEmailMessageAsync(MimeMessage message) => _emailService.SendAsync(message, default);
 
 
         public async Task<bool> SendAsync(MimeMessage[] messages, CancellationToken cancellationToken = default)
@@ -37,16 +41,33 @@ namespace Yangtao.Hosting.Email.Services
             return await _messagesQueue.PutAsync(messages, cancellationToken);
         }
 
-        private Task SendAsync(MimeMessage message) => _emailService.SendAsync(message, default);
-
-        private async Task SendAsync(MimeMessage[] messages)
+        private async Task SendEmailMessagesAsync(MimeMessage[] messages)
         {
             _logger.LogInformation($"Sending email..., count: {messages.Length}");
 
             await _emailService.SendAsync(messages, (message, result) =>
-             {
-                 _logger.LogInformation($"Email:[{message.Subject}] is sent, response: {result}");
-             }, default);
+            {
+                _logger.LogInformation($"Email:[{message.Subject}] is sent, response: {result}");
+            }, default);
+        }
+
+
+
+        public async Task<bool> SendAsync(EmailMessage emailMessage, CancellationToken cancellationToken = default)
+        {
+            if (emailMessage.Messages.IsNullOrEmpty()) return false;
+
+            return await _emailMessageQueue.PutAsync(emailMessage, cancellationToken);
+        }
+
+        private async Task SendCustomOptionsEmailMessageAsync(EmailMessage emailMessage)
+        {
+            _logger.LogInformation($"Sending custom options email..., count: {emailMessage.Messages.Count}");
+
+            await _emailService.SendAsync(emailMessage, emailMessage.Messages, (message, result) =>
+            {
+                _logger.LogInformation($"Sender: [{emailMessage.EmailName}], Account:[{emailMessage.Account}], Email:[{message.Subject}] is sent, response: {result}");
+            }, default);
         }
     }
 }

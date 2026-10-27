@@ -10,5 +10,7 @@ namespace Yangtao.Hosting.Email.Abstractions
         Task<bool> SendAsync(MimeMessage message, CancellationToken cancellationToken = default);
 
         Task<bool> SendAsync(MimeMessage[] messages, CancellationToken cancellationToken = default);
+
+        Task<bool> SendAsync(EmailMessage emailMessage, CancellationToken cancellationToken = default);
     }
 }

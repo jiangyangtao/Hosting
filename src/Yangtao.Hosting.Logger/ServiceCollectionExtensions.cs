@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Yangtao.Hosting.Email;
 using Yangtao.Hosting.Logger.Abstractions;
 using Yangtao.Hosting.Logger.LoggerProviders;
 using Yangtao.Hosting.Logger.Options;
@@ -12,10 +13,13 @@ namespace Yangtao.Hosting.Logger
     {
         public static IServiceCollection AddCustomLogger(this IServiceCollection services, Action<LoggerOptions> loggerOptionsAction)
         {
+            services.AddEmail();
+
             var loggerOptions = new LoggerOptions();
             loggerOptionsAction(loggerOptions);
 
             services.AddOptions<LoggerOptions>().Configure(options => options.DeepCopy(loggerOptions)).ValidateDataAnnotations();
+            var serviceProvider = services.BuildServiceProvider();
 
             services.AddSingleton<ILoggerProvider, ChannelLoggerProvider>();
             services.AddSingleton<ILoggerProvider, FileLoggerProvider>();

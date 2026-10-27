@@ -13,7 +13,8 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Yangtao.Hosting.Abstractions\Yangtao.Hosting.Abstractions.csproj" />
+    <ProjectReference Include="..\MessageQueue\Yangtao.Hosting.MessageQueue.BufferQueue\Yangtao.Hosting.MessageQueue.BufferQueue.csproj" />
+    <ProjectReference Include="..\Yangtao.Hosting.Email\Yangtao.Hosting.Email.csproj" />
   </ItemGroup>
 
 </Project>

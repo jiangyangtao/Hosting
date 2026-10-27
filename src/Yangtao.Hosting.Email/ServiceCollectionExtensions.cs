@@ -6,6 +6,13 @@ namespace Yangtao.Hosting.Email
 {
     public static class ServiceCollectionExtensions
     {
+        public static IServiceCollection AddEmail(this IServiceCollection services)
+        {
+            services.AddSingleton<IEmailService, EmailService>();
+            services.AddSingleton<IAsyncEmailService, AsyncEmailService>();
+            return services;
+        }
+
         public static IServiceCollection AddEmail(this IServiceCollection services, Action<EmailOptions> optionAction)
         {
             var emailOptions = new EmailOptions();
@@ -21,9 +28,7 @@ namespace Yangtao.Hosting.Email
                 options.Account = emailOptions.Account;
                 options.Password = emailOptions.Password;
             });
-            services.AddSingleton<IEmailService, EmailService>();
-            services.AddSingleton<IAsyncEmailService, AsyncEmailService>();
-            return services;
+            return services.AddEmail();
         }
     }
 }

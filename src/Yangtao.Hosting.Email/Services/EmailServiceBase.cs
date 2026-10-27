@@ -24,5 +24,14 @@ namespace Yangtao.Hosting.Email.Services
 
             return client;
         }
+
+        protected static async Task<SmtpClient> GetClientAsync(EmailOptions emailOptions, CancellationToken cancellationToken = default)
+        {
+            var client = new SmtpClient();
+            await client.ConnectAsync(emailOptions.Server, emailOptions.Port, true, cancellationToken);
+            await client.AuthenticateAsync(emailOptions.Account, emailOptions.Password, cancellationToken);
+
+            return client;
+        }
     }
 }

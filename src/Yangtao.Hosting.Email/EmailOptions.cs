@@ -1,4 +1,5 @@
-﻿using Yangtao.Hosting.Extensions;
+﻿using System.ComponentModel.DataAnnotations;
+using Yangtao.Hosting.Extensions;
 
 namespace Yangtao.Hosting.Email
 {
@@ -7,24 +8,28 @@ namespace Yangtao.Hosting.Email
         /// <summary>
         /// 发送者名称
         /// </summary>
+        [Required]
         public string EmailName { set; get; } = string.Empty;
 
-        public string Server { set; get; } = string.Empty;
+        [Required]
+        public string? Server { set; get; }
 
-        public int Port { set; get; } = -1;
+        [Range(0, 65535)]
+        public int Port { set; get; }
 
         /// <summary>
         /// 发送者账号
         /// </summary>
-        public string Account { set; get; } = string.Empty;
+        [Required]
+        public string? Account { set; get; }
 
         /// <summary>
         /// 密码
         /// </summary>
-        public string Password { set; get; } = string.Empty;
+        [Required]
+        public string? Password { set; get; }
 
-
-        internal void Validate()
+        internal virtual void Validate()
         {
             if (EmailName.IsNullOrEmpty()) throw new ArgumentNullException(EmailName, "can not be empty or null.");
             if (Server.IsNullOrEmpty()) throw new ArgumentNullException(Server, "can not be empty or null.");
