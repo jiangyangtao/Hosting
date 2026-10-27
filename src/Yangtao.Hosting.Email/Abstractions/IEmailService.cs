@@ -2,6 +2,9 @@
 
 namespace Yangtao.Hosting.Email.Abstractions
 {
+    /// <summary>
+    /// 邮件服务
+    /// </summary>
     public interface IEmailService
     {
         Task<string> SendAsync(MimeMessage message, CancellationToken cancellationToken = default);

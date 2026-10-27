@@ -1,0 +1,35 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Yangtao.Hosting.Logger.Options
+{
+    /// <summary>
+    /// 文件日志配置
+    /// </summary>
+    public class FileLogOptions : LoggerOptionsBase
+    {
+        /// <summary>
+        /// 文件路径
+        /// </summary>
+        [Required]
+        public string? FilePath { set; get; }
+
+        /// <summary>
+        /// 文件名
+        /// </summary>
+        [Required]
+        public string? FileName { set; get; }
+
+        /// <summary>
+        /// 队列容量
+        /// </summary>
+        [Range(100, 100000)]
+        public int BufferSize { set; get; } = 5000;
+
+        /// <summary>
+        /// 批量落盘 Flush 间隔。
+        /// 单位：毫秒
+        /// </summary>
+        [Range(10, 60000)]
+        public int FlushIntervalMillisecond { set; get; } = 50;
+    }
+}
