@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Yangtao.Hosting.Email;
 using Yangtao.Hosting.Logger.Abstractions;
@@ -21,14 +22,29 @@ namespace Yangtao.Hosting.Logger
             services.AddOptions<LoggerOptions>().Configure(options => options.DeepCopy(loggerOptions)).ValidateDataAnnotations();
             var serviceProvider = services.BuildServiceProvider();
 
-            services.AddSingleton<ILoggerProvider, ChannelLoggerProvider>();
-            services.AddSingleton<ILoggerProvider, FileLoggerProvider>();
+            if (loggerOptions.EnableChannelLogger && loggerOptions.CanEnableChannel)
+            {
+                if (loggerOptions.RealtimeLoggerOptions != null)
+                {
+                    services.AddSingleton<IRealtimeLoggerService, RealtimeLoggerService>();
+                }
 
-            services.AddSingleton<ILoggerChannelService, LoggerChannelService>();
-            services.AddSingleton<ILoggerNoticeService, LoggerNoticeService>();
+                if (loggerOptions.FileLoggerOptions != null)
+                {
+                    services.AddSingleton<FileLoggerWriterService>();
+                }
 
-            services.AddSingleton<ILoggerNoticeProvider, EmailNoticeProvider>();
-            services.AddSingleton<ILoggerNoticeProvider, LarkNoticeProvider>();
+                services.TryAddSingleton<ILoggerProvider, ChannelLoggerProvider>();
+            }
+
+            if (loggerOptions.EnableLoggerNotice && loggerOptions.CanEnableNotice)
+            {
+                services.AddSingleton<ILoggerProvider, NoticeLoggerProvider>();
+                services.AddSingleton<ILoggerNoticeService, LoggerNoticeService>();
+
+                services.AddSingleton<ILoggerNoticeProvider, EmailNoticeProvider>();
+                services.AddSingleton<ILoggerNoticeProvider, LarkNoticeProvider>();
+            }
 
             return services;
         }

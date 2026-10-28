@@ -5,7 +5,7 @@ namespace Yangtao.Hosting.Logger.Options
     /// <summary>
     /// 文件日志配置
     /// </summary>
-    public class FileLogOptions : LoggerOptionsBase
+    public class FileLoggerOptions : LoggerOptionsBase
     {
         /// <summary>
         /// 文件路径

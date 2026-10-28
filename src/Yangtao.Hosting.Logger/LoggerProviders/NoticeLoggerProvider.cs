@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace Yangtao.Hosting.Logger.LoggerProviders
 {
-    internal class FileLoggerProvider : ILoggerProvider
+    internal class NoticeLoggerProvider : ILoggerProvider
+    {
+    }
+
+    internal sealed class NoticeLogger
     {
     }
 }

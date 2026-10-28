@@ -3,7 +3,7 @@ using Yangtao.Hosting.Logger.Abstractions;
 
 namespace Yangtao.Hosting.Logger
 {
-    internal class LogInfo: ILogInfo
+    public class LogInfo : ILogInfo
     {
         public DateTimeOffset Timestamp { get; set; } = DateTimeOffset.Now;
 
