@@ -65,30 +65,22 @@ namespace Yangtao.Hosting.Logger.LoggerProviders
             var isIsEnabled = IsEnabled(logLevel);
             if (isIsEnabled) return;
 
-            if (_loggerOptions.RealtimeLoggerOptions != null && _loggerOptions.RealtimeLoggerOptions.HasLevel(logLevel))
+            var logInfo = new LogInfo
             {
-                var channelLog = new LogInfo
-                {
-                    Level = logLevel,
-                    Category = _category,
-                    Message = formatter(state, exception),
-                    Timestamp = DateTimeOffset.Now,
-                };
+                Level = logLevel,
+                Category = _category,
+                Message = formatter(state, exception),
+                Timestamp = DateTimeOffset.Now,
+            };
 
-                _realtimeLoggerService?.Publish(channelLog, exception);
+            if (_realtimeLoggerService != null && _loggerOptions.RealtimeLoggerOptions != null && _loggerOptions.RealtimeLoggerOptions.HasLevel(logLevel))
+            {
+                _realtimeLoggerService.Publish(logInfo, exception);
             }
 
-            if (_loggerOptions.FileLoggerOptions != null && _loggerOptions.FileLoggerOptions.HasLevel(logLevel))
+            if (_fileLogWriterService != null && _loggerOptions.FileLoggerOptions != null && _loggerOptions.FileLoggerOptions.HasLevel(logLevel))
             {
-                var channelLog = new LogInfo
-                {
-                    Level = logLevel,
-                    Category = _category,
-                    Message = formatter(state, exception),
-                    Timestamp = DateTimeOffset.Now,
-                };
-
-                _fileLogWriterService?.Write(channelLog, exception);
+                _fileLogWriterService?.Write(logInfo, exception);
             }
         }
     }

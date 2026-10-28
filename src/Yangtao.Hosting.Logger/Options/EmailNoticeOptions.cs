@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Yangtao.Hosting.Email;
 
 namespace Yangtao.Hosting.Logger.Options
 {
-    public class EmailNoticeOptions : LoggerOptionsBase
+    public class EmailNoticeOptions : NoticeLoggerOptionsBase
     {
         /// <summary>
         /// 发送者名称
@@ -27,5 +28,14 @@ namespace Yangtao.Hosting.Logger.Options
         /// </summary>
         [Required]
         public string? Password { set; get; }
+
+        internal EmailOptions EmailOptions => new()
+        {
+            EmailName = EmailName,
+            Server = Server,
+            Port = Port,
+            Account = Account,
+            Password = Password
+        };
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using System.Threading.Channels;
 
 namespace Yangtao.Hosting.Logger.Options
 {
@@ -22,17 +21,6 @@ namespace Yangtao.Hosting.Logger.Options
         public bool EnableLoggerNotice { set; get; } = false;
 
         internal bool CanEnableNotice => LarkNoticeOptions != null && EmailNoticeOptions != null;
-
-
-        /// <summary>
-        /// 中央日志渠道容量
-        /// </summary>
-        public int CentralChannelCapacity { set; get; } = 100000;
-
-        /// <summary>
-        /// 渠道上限模式
-        /// </summary>
-        public BoundedChannelFullMode CentralChannelFullMode { set; get; } = BoundedChannelFullMode.DropOldest;
 
         /// <summary>
         /// 实时日志配置
@@ -71,8 +59,7 @@ namespace Yangtao.Hosting.Logger.Options
         {
             EnableChannelLogger = loggerOptions.EnableChannelLogger;
             EnableLoggerNotice = loggerOptions.EnableLoggerNotice;
-            CentralChannelCapacity = loggerOptions.CentralChannelCapacity;
-            CentralChannelFullMode = loggerOptions.CentralChannelFullMode;
+
 
             if (loggerOptions.RealtimeLoggerOptions != null)
             {
@@ -80,9 +67,13 @@ namespace Yangtao.Hosting.Logger.Options
                 {
                     Format = loggerOptions.RealtimeLoggerOptions.Format,
                     MinLevel = loggerOptions.RealtimeLoggerOptions.MinLevel,
-                    ChannelCapacity = loggerOptions.RealtimeLoggerOptions.ChannelCapacity,
+                    BufferCapacity = loggerOptions.RealtimeLoggerOptions.BufferCapacity,
+                    CentralChannelCapacity = loggerOptions.RealtimeLoggerOptions.CentralChannelCapacity,
+                    CentralChannelFullMode = loggerOptions.RealtimeLoggerOptions.CentralChannelFullMode,
+                    ChannelFullMode = loggerOptions.RealtimeLoggerOptions.ChannelFullMode,
                 };
             }
+            else loggerOptions.RealtimeLoggerOptions = null;
 
             if (loggerOptions.FileLoggerOptions != null)
             {
@@ -92,26 +83,32 @@ namespace Yangtao.Hosting.Logger.Options
                     MinLevel = loggerOptions.FileLoggerOptions.MinLevel,
                     FilePath = loggerOptions.FileLoggerOptions.FilePath,
                     FileName = loggerOptions.FileLoggerOptions.FileName,
-                    BufferSize = loggerOptions.FileLoggerOptions.BufferSize,
+                    BufferCapacity = loggerOptions.FileLoggerOptions.BufferCapacity,
                     FlushIntervalMillisecond = loggerOptions.FileLoggerOptions.FlushIntervalMillisecond,
+                    ChannelFullMode = loggerOptions.FileLoggerOptions.ChannelFullMode,
                 };
             }
+            else loggerOptions.FileLoggerOptions = null;
 
             if (loggerOptions.LarkNoticeOptions != null)
             {
                 LarkNoticeOptions = new LarkNoticeOptions
                 {
+                    BufferCapacity = loggerOptions.LarkNoticeOptions.BufferCapacity,
                     Format = loggerOptions.LarkNoticeOptions.Format,
                     MinLevel = loggerOptions.LarkNoticeOptions.MinLevel,
                     WebhookUrl = loggerOptions.LarkNoticeOptions.WebhookUrl,
                     Secret = loggerOptions.LarkNoticeOptions.Secret,
+                    TitleFormat = loggerOptions.LarkNoticeOptions.TitleFormat,
                 };
             }
+            else loggerOptions.LarkNoticeOptions = null;
 
             if (loggerOptions.EmailNoticeOptions != null)
             {
                 EmailNoticeOptions = new EmailNoticeOptions
                 {
+                    BufferCapacity = loggerOptions.EmailNoticeOptions.BufferCapacity,
                     Format = loggerOptions.EmailNoticeOptions.Format,
                     MinLevel = loggerOptions.EmailNoticeOptions.MinLevel,
                     EmailName = loggerOptions.EmailNoticeOptions.EmailName,
@@ -119,8 +116,10 @@ namespace Yangtao.Hosting.Logger.Options
                     Port = loggerOptions.EmailNoticeOptions.Port,
                     Account = loggerOptions.EmailNoticeOptions.Account,
                     Password = loggerOptions.EmailNoticeOptions.Password,
+                    TitleFormat = loggerOptions.EmailNoticeOptions.TitleFormat,
                 };
             }
+            else loggerOptions.EmailNoticeOptions = null;
         }
     }
 }

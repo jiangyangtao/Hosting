@@ -10,27 +10,22 @@ namespace Yangtao.Hosting.Logger.Services
     /// <summary>
     /// 实时日志服务
     /// </summary>
-    internal class RealtimeLoggerService : IRealtimeLoggerService
+    internal class RealtimeLoggerService : IRealtimeLoggerService, IDisposable
     {
         private readonly ConcurrentDictionary<string, Channel<ILogInfo>> _subscribers = new();
         private readonly Channel<ILogInfo> _centralChannel;
-        private readonly LoggerOptions _loggerOptions;
+        private readonly RealtimeLoggerOptions _realtimeLoggerOptions;
         private readonly LoggerFormatter _loggerFormatter;
 
-        public RealtimeLoggerService(IOptionsMonitor<LoggerOptions> loggerOptions)
+        public RealtimeLoggerService(IOptions<LoggerOptions> loggerOptions)
         {
-            _loggerOptions = loggerOptions.CurrentValue;
-            if (_loggerOptions.RealtimeLoggerOptions == null) throw new NullReferenceException(nameof(LoggerOptions.RealtimeLoggerOptions));
+            var _loggerOptions = loggerOptions.Value ?? throw new NullReferenceException(nameof(LoggerOptions));
+            _realtimeLoggerOptions = _loggerOptions.RealtimeLoggerOptions ?? throw new NullReferenceException(nameof(LoggerOptions.RealtimeLoggerOptions));
 
-            loggerOptions.OnChange(options =>
+            _loggerFormatter = new LoggerFormatter(_realtimeLoggerOptions.Format);
+            _centralChannel = Channel.CreateBounded<ILogInfo>(new BoundedChannelOptions(_realtimeLoggerOptions.CentralChannelCapacity)
             {
-                _loggerOptions.DeepCopy(options);
-            });
-            _loggerFormatter = new LoggerFormatter(_loggerOptions.RealtimeLoggerOptions.Format);
-
-            _centralChannel = Channel.CreateBounded<ILogInfo>(new BoundedChannelOptions(_loggerOptions.CentralChannelCapacity)
-            {
-                FullMode = _loggerOptions.CentralChannelFullMode, // 背压：满了丢弃最旧的，不阻塞日志写入
+                FullMode = _realtimeLoggerOptions.CentralChannelFullMode,
                 SingleReader = false,
                 SingleWriter = false
             });
@@ -49,7 +44,7 @@ namespace Yangtao.Hosting.Logger.Services
 
         public void Publish(LogInfo logInfo, Exception? exception)
         {
-            logInfo.FormattedText = _loggerFormatter.Format(logInfo, exception);
+            logInfo.FormattedText = _loggerFormatter.TextFormat(logInfo, exception);
             _centralChannel.Writer.TryWrite(logInfo);
         }
 
@@ -58,13 +53,12 @@ namespace Yangtao.Hosting.Logger.Services
             if (channelKey.IsNullOrEmpty()) throw new ArgumentNullException(channelKey);
 
             var exist = _subscribers.TryGetValue(channelKey, out Channel<ILogInfo>? channal);
-            if (_loggerOptions.RealtimeLoggerOptions == null) throw new NullReferenceException(nameof(LoggerOptions.RealtimeLoggerOptions));
 
             if (exist == false || channal == null)
             {
-                channal = Channel.CreateBounded<ILogInfo>(new BoundedChannelOptions(_loggerOptions.RealtimeLoggerOptions.ChannelCapacity)
+                channal = Channel.CreateBounded<ILogInfo>(new BoundedChannelOptions(_realtimeLoggerOptions.BufferCapacity)
                 {
-                    FullMode = _loggerOptions.RealtimeLoggerOptions.ChannelFullMode,
+                    FullMode = _realtimeLoggerOptions.ChannelFullMode,
                     SingleReader = true
                 });
                 _subscribers[channelKey] = channal;
@@ -78,6 +72,11 @@ namespace Yangtao.Hosting.Logger.Services
             {
                 channel.Writer.TryComplete();
             }
+        }
+
+        public void Dispose()
+        {
+            _subscribers.Clear();
         }
     }
 }

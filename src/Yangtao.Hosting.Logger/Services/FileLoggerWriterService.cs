@@ -10,36 +10,38 @@ namespace Yangtao.Hosting.Logger.Services
     internal class FileLoggerWriterService : IAsyncDisposable
     {
         private readonly Channel<LogInfo> _channel;
-        private readonly FileLoggerOptions _options;
+        private readonly FileLoggerOptions _fileLoggerOptions;
         private readonly Task _pumpTask;
         private readonly CancellationTokenSource _cts = new();
         private readonly Dictionary<string, (StreamWriter Writer, DateTime LastWrite)> _writers = new();
         private int _disposed;
         private readonly LoggerFormatter _loggerFormatter;
 
-        public FileLoggerWriterService(IOptions<FileLoggerOptions> options)
+        public FileLoggerWriterService(IOptions<LoggerOptions> options)
         {
-            _options = options.Value;
-            _channel = Channel.CreateBounded<LogInfo>(new BoundedChannelOptions(_options.BufferSize)
+            var loggerOptions = options.Value ?? throw new NullReferenceException(nameof(LoggerOptions));
+            _fileLoggerOptions = loggerOptions.FileLoggerOptions ?? throw new NullReferenceException(nameof(LoggerOptions.RealtimeLoggerOptions));
+
+            _channel = Channel.CreateBounded<LogInfo>(new BoundedChannelOptions(_fileLoggerOptions.BufferCapacity)
             {
-                FullMode = BoundedChannelFullMode.DropOldest, // 磁盘慢时丢旧日志，绝不阻塞
+                FullMode = _fileLoggerOptions.ChannelFullMode,  // 磁盘慢时丢旧日志，绝不阻塞
                 SingleReader = true,
                 SingleWriter = false
             });
-            _loggerFormatter = new LoggerFormatter(_options.Format);
+            _loggerFormatter = new LoggerFormatter(_fileLoggerOptions.Format);
             _pumpTask = Task.Run(PumpAsync);
         }
 
         public void Write(LogInfo logInfo, Exception? exception)
         {
-            logInfo.FormattedText = _loggerFormatter.Format(logInfo, exception);
+            logInfo.FormattedText = _loggerFormatter.TextFormat(logInfo, exception);
             _channel.Writer.TryWrite(logInfo);
         }
 
         private async Task PumpAsync()
         {
             var buffer = new List<LogInfo>(256);
-            var flushInterval = TimeSpan.FromMilliseconds(_options.FlushIntervalMillisecond);
+            var flushInterval = TimeSpan.FromMilliseconds(_fileLoggerOptions.FlushIntervalMillisecond);
             var lastFlush = DateTime.UtcNow;
 
             try
@@ -76,7 +78,7 @@ namespace Yangtao.Hosting.Logger.Services
         {
             foreach (var item in batch)
             {
-                var path = ResolvePath(_options.FilePath, item);
+                var path = ResolvePath(_fileLoggerOptions.FilePath, item);
                 if (!_writers.TryGetValue(path, out var slot))
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(path)!);

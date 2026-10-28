@@ -1,17 +1,27 @@
-﻿namespace Yangtao.Hosting.Logger
+﻿using Yangtao.Hosting.Extensions;
+using Yangtao.Hosting.Logger.Abstractions;
+
+namespace Yangtao.Hosting.Logger
 {
     internal class LoggerFormatter
     {
-        private readonly string _template;
+        private readonly string _textTemplate;
+        private readonly string? _titleTemplate;
 
-        public LoggerFormatter(string template)
+        public LoggerFormatter(string textTemplate)
         {
-            _template = template;
+            _textTemplate = textTemplate;
         }
 
-        public string Format(LogInfo log, Exception? exception)
+        public LoggerFormatter(string textTemplate, string titleTemplate)
         {
-            var text = _template
+            _textTemplate = textTemplate;
+            _titleTemplate = titleTemplate;
+        }
+
+        public string TextFormat(ILogInfo log, Exception? exception)
+        {
+            var text = _textTemplate
                 .Replace("{Timestamp:HH:mm:ss}", log.Timestamp.ToString("HH:mm:ss"))
                 .Replace("{Timestamp:yyyy-MM-dd HH:mm:ss.fff}", log.Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff"))
                 .Replace("{Level}", log.Level.ToString())
@@ -20,6 +30,20 @@
 
             if (exception != null)
                 text += Environment.NewLine + exception;
+
+            return text;
+        }
+
+        public string TitleFormat(ILogInfo log)
+        {
+            if (_titleTemplate.IsNullOrEmpty()) return string.Empty;
+
+            var text = _titleTemplate
+                .Replace("{Timestamp:HH:mm:ss}", log.Timestamp.ToString("HH:mm:ss"))
+                .Replace("{Timestamp:yyyy-MM-dd HH:mm:ss.fff}", log.Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff"))
+                .Replace("{Level}", log.Level.ToString())
+                .Replace("{Category}", log.Category)
+                .Replace("{Message}", log.Message);
 
             return text;
         }

@@ -14,6 +14,8 @@ namespace Yangtao.Hosting.Logger.Options
         /// </summary>
         public LogLevel MinLevel { set; get; } = LogLevel.Information;
 
+        public virtual int BufferCapacity { set; get; } = 1000;
+
         internal bool HasLevel(LogLevel logLevel)
         {
             if (logLevel == LogLevel.None) return false;
