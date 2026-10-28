@@ -8,14 +8,16 @@ namespace Yangtao.Hosting.Logger.LoggerProviders
     internal class NoticeLoggerProvider : ILoggerProvider
     {
         private readonly IServiceProvider _serviceProvider;
+        private readonly IEnumerable<ILoggerNoticeProvider> _loggerNoticeProviders;
 
         public NoticeLoggerProvider(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
+            _loggerNoticeProviders = serviceProvider.GetServices<ILoggerNoticeProvider>();
         }
 
         public ILogger CreateLogger(string categoryName) =>
-              new NoticeLogger(categoryName, _serviceProvider);
+              new NoticeLogger(categoryName, _loggerNoticeProviders);
 
         public void Dispose()
         {
@@ -27,10 +29,10 @@ namespace Yangtao.Hosting.Logger.LoggerProviders
         private readonly string _category;
         private readonly IEnumerable<ILoggerNoticeProvider> _loggerNoticeProviders;
 
-        public NoticeLogger(string category, IServiceProvider serviceProvider)
+        public NoticeLogger(string category, IEnumerable<ILoggerNoticeProvider> loggerNoticeProviders)
         {
             _category = category;
-            _loggerNoticeProviders = serviceProvider.GetServices<ILoggerNoticeProvider>();
+            _loggerNoticeProviders = loggerNoticeProviders;
         }
 
         public IDisposable? BeginScope<TState>(TState state) where TState : notnull => null;

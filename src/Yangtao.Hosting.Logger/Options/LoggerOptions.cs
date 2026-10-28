@@ -73,7 +73,7 @@ namespace Yangtao.Hosting.Logger.Options
                     ChannelFullMode = loggerOptions.RealtimeLoggerOptions.ChannelFullMode,
                 };
             }
-            else loggerOptions.RealtimeLoggerOptions = null;
+            else RealtimeLoggerOptions = null;
 
             if (loggerOptions.FileLoggerOptions != null)
             {
@@ -88,7 +88,7 @@ namespace Yangtao.Hosting.Logger.Options
                     ChannelFullMode = loggerOptions.FileLoggerOptions.ChannelFullMode,
                 };
             }
-            else loggerOptions.FileLoggerOptions = null;
+            else FileLoggerOptions = null;
 
             if (loggerOptions.LarkNoticeOptions != null)
             {
@@ -102,7 +102,7 @@ namespace Yangtao.Hosting.Logger.Options
                     TitleFormat = loggerOptions.LarkNoticeOptions.TitleFormat,
                 };
             }
-            else loggerOptions.LarkNoticeOptions = null;
+            else LarkNoticeOptions = null;
 
             if (loggerOptions.EmailNoticeOptions != null)
             {
@@ -119,7 +119,7 @@ namespace Yangtao.Hosting.Logger.Options
                     TitleFormat = loggerOptions.EmailNoticeOptions.TitleFormat,
                 };
             }
-            else loggerOptions.EmailNoticeOptions = null;
+            else EmailNoticeOptions = null;
         }
     }
 }

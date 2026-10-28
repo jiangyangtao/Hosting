@@ -10,12 +10,14 @@ namespace Yangtao.Hosting.Logger.Services
     /// <summary>
     /// 实时日志服务
     /// </summary>
-    internal class RealtimeLoggerService : IRealtimeLoggerService, IDisposable
+    internal class RealtimeLoggerService : IRealtimeLoggerService, IAsyncDisposable
     {
         private readonly ConcurrentDictionary<string, Channel<ILogInfo>> _subscribers = new();
         private readonly Channel<ILogInfo> _centralChannel;
         private readonly RealtimeLoggerOptions _realtimeLoggerOptions;
         private readonly LoggerFormatter _loggerFormatter;
+        private readonly Task _pumpTask;
+        private readonly CancellationTokenSource _cancellationTokenSource = new();
 
         public RealtimeLoggerService(IOptions<LoggerOptions> loggerOptions)
         {
@@ -30,20 +32,29 @@ namespace Yangtao.Hosting.Logger.Services
                 SingleWriter = false
             });
 
-            _ = StartPumpAsync();
+            _pumpTask = Task.Run(() => PumpAsync(_cancellationTokenSource.Token));
         }
 
-        private async Task StartPumpAsync()
+        private async Task PumpAsync(CancellationToken cancellationToken = default)
         {
-            await foreach (var logInfo in _centralChannel.Reader.ReadAllAsync())
+            try
             {
-                foreach (var subscriber in _subscribers.Values)
-                    subscriber.Writer.TryWrite(logInfo); // 非阻塞扇出；慢客户端由自身 Channel 丢弃策略处理
+                await foreach (var logInfo in _centralChannel.Reader.ReadAllAsync())
+                {
+                    foreach (var subscriber in _subscribers.Values)
+                        subscriber.Writer.TryWrite(logInfo); // 非阻塞扇出；慢客户端由自身 Channel 丢弃策略处理
+                }
             }
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+            {
+            }
+            catch (Exception) { throw; }
         }
 
         public void Publish(LogInfo logInfo, Exception? exception)
         {
+            if (_subscribers.IsEmpty) return;
+
             logInfo.FormattedText = _loggerFormatter.TextFormat(logInfo, exception);
             _centralChannel.Writer.TryWrite(logInfo);
         }
@@ -74,9 +85,26 @@ namespace Yangtao.Hosting.Logger.Services
             }
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
             _subscribers.Clear();
+
+            _centralChannel.Writer.TryComplete();
+            _cancellationTokenSource.Cancel();
+
+            try
+            {
+                await _pumpTask.WaitAsync(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException) { }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                _cancellationTokenSource.Dispose();
+            }
         }
     }
 }

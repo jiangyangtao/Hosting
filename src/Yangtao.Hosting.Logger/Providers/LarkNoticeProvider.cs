@@ -24,7 +24,7 @@ namespace Yangtao.Hosting.Logger.Providers
             _loggerMessageQueue = bufferQueueProvider.CreateBufferQueue<LoggerMessage>("LarkLoggerQueue", async (item) => await SendMessageAsync(item), _larkNoticeOptions.BufferCapacity);
         }
 
-        public void Notice(ILogInfo logInfo, Exception? exception)
+        public async void Notice(ILogInfo logInfo, Exception? exception)
         {
             if (_larkNoticeOptions.HasLevel(logInfo.Level) == false) return;
 
@@ -35,7 +35,7 @@ namespace Yangtao.Hosting.Logger.Providers
                 Title = title,
                 Text = logText,
             };
-            _ = _loggerMessageQueue.PutAsync(message, default);
+            await _loggerMessageQueue.PutAsync(message, default);
         }
 
         private async Task SendMessageAsync(LoggerMessage loggerMessage)
@@ -49,6 +49,7 @@ namespace Yangtao.Hosting.Logger.Providers
                 }
             };
             await _httpClientFactory.CreateClient().PostAsync(_larkNoticeOptions.WebhookUrl, new JsonContent(data));
+            await Task.Delay(200);
         }
     }
 }

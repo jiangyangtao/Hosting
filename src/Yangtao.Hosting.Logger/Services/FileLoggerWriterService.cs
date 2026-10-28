@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using System.Threading.Channels;
 using Yangtao.Hosting.Logger.Options;
 
@@ -7,12 +8,12 @@ namespace Yangtao.Hosting.Logger.Services
     /// <summary>
     /// 文件日志服务
     /// </summary>
-    internal class FileLoggerWriterService : IAsyncDisposable
+    internal class FileLoggerWriterService : BackgroundService
     {
         private readonly Channel<LogInfo> _channel;
         private readonly FileLoggerOptions _fileLoggerOptions;
-        private readonly Task _pumpTask;
-        private readonly CancellationTokenSource _cts = new();
+        private readonly CancellationTokenSource cancellationTokenSource = new();
+
         private readonly Dictionary<string, (StreamWriter Writer, DateTime LastWrite)> _writers = new();
         private int _disposed;
         private readonly LoggerFormatter _loggerFormatter;
@@ -29,10 +30,26 @@ namespace Yangtao.Hosting.Logger.Services
                 SingleWriter = false
             });
             _loggerFormatter = new LoggerFormatter(_fileLoggerOptions.Format);
-            _pumpTask = Task.Run(PumpAsync);
         }
 
-        public void Write(LogInfo logInfo, Exception? exception)
+
+        protected override async Task ExecuteAsync(CancellationToken cancellationToken)
+        {
+            try
+            {
+                await PumpAsync();
+            }
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested) { }
+            catch (Exception) { throw; }
+        }
+
+        public override async Task StopAsync(CancellationToken cancellationToken)
+        {
+            _channel.Writer.TryComplete();
+            await base.StopAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        public void TryWrite(LogInfo logInfo, Exception? exception)
         {
             logInfo.FormattedText = _loggerFormatter.TextFormat(logInfo, exception);
             _channel.Writer.TryWrite(logInfo);
@@ -46,7 +63,7 @@ namespace Yangtao.Hosting.Logger.Services
 
             try
             {
-                while (await _channel.Reader.WaitToReadAsync(_cts.Token))
+                while (await _channel.Reader.WaitToReadAsync(cancellationTokenSource.Token))
                 {
                     buffer.Clear();
                     while (buffer.Count < 256 && _channel.Reader.TryRead(out var item))
@@ -130,13 +147,13 @@ namespace Yangtao.Hosting.Logger.Services
             return Path.IsPathRooted(path) ? path : Path.Combine(AppContext.BaseDirectory, path);
         }
 
-        public async ValueTask DisposeAsync()
-        {
-            if (Interlocked.Exchange(ref _disposed, 1) == 1) return;
-            _channel.Writer.TryComplete();
-            _cts.Cancel();
-            try { await _pumpTask; } catch (OperationCanceledException) { }
-            _cts.Dispose();
-        }
+        //public async void Dispose()
+        //{
+        //    if (Interlocked.Exchange(ref _disposed, 1) == 1) return;
+        //    _channel.Writer.TryComplete();
+        //    cancellationTokenSource.Cancel();
+        //    cancellationTokenSource.Dispose();
+        //}
+
     }
 }

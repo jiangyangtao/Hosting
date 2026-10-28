@@ -28,7 +28,7 @@ namespace Yangtao.Hosting.Logger.LoggerProviders
 
         public void Dispose()
         {
-            _fileLogWriterService?.DisposeAsync().AsTask().GetAwaiter().GetResult();
+            _fileLogWriterService?.Dispose();
         }
     }
 
@@ -51,19 +51,17 @@ namespace Yangtao.Hosting.Logger.LoggerProviders
 
         public bool IsEnabled(LogLevel logLevel)
         {
-            if (logLevel != LogLevel.None) return false;
-            if (_loggerOptions.EnableChannelLogger == false) return false;
-            if (_loggerOptions.CanEnableChannel == false) return false;
-            if (_loggerOptions.HasChannelLoggerLevel(logLevel)) return false;
+            if (logLevel == LogLevel.None) return false;
+            if (_loggerOptions.EnableChannelLogger == false || _loggerOptions.CanEnableChannel == false) return false;
 
-            return true;
+            return _loggerOptions.HasChannelLoggerLevel(logLevel);
         }
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state,
             Exception? exception, Func<TState, Exception?, string> formatter)
         {
             var isIsEnabled = IsEnabled(logLevel);
-            if (isIsEnabled) return;
+            if (isIsEnabled == false) return;
 
             var logInfo = new LogInfo
             {
@@ -80,7 +78,7 @@ namespace Yangtao.Hosting.Logger.LoggerProviders
 
             if (_fileLogWriterService != null && _loggerOptions.FileLoggerOptions != null && _loggerOptions.FileLoggerOptions.HasLevel(logLevel))
             {
-                _fileLogWriterService?.Write(logInfo, exception);
+                _fileLogWriterService?.TryWrite(logInfo, exception);
             }
         }
     }

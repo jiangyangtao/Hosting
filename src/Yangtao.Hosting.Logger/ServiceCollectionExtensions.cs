@@ -32,16 +32,17 @@ namespace Yangtao.Hosting.Logger
                 if (loggerOptions.FileLoggerOptions != null)
                 {
                     services.AddSingleton<FileLoggerWriterService>();
+                    services.AddHostedService(serviceProvider => serviceProvider.GetRequiredService<FileLoggerWriterService>());
                 }
 
-                services.TryAddSingleton<ILoggerProvider, ChannelLoggerProvider>();
+                services.TryAddEnumerable(ServiceDescriptor.Singleton<ILoggerProvider, ChannelLoggerProvider>());
             }
 
             if (loggerOptions.EnableLoggerNotice && loggerOptions.CanEnableNotice)
             {
                 services.AddHttpClient();
                 services.AddBufferQueue();
-                services.AddSingleton<ILoggerProvider, NoticeLoggerProvider>();
+                services.TryAddEnumerable(ServiceDescriptor.Singleton<ILoggerProvider, NoticeLoggerProvider>());
 
                 if (loggerOptions.EmailNoticeOptions != null) services.AddSingleton<ILoggerNoticeProvider, EmailNoticeProvider>();
                 if (loggerOptions.LarkNoticeOptions != null) services.AddSingleton<ILoggerNoticeProvider, LarkNoticeProvider>();

@@ -30,7 +30,7 @@ namespace Yangtao.Hosting.Logger.Providers
             _loggerMessageQueue = bufferQueueProvider.CreateBufferQueue<LoggerMessage>("EmailLoggerQueue", async (item) => await SendEmailAsync(item), _emailNoticeOptions.BufferCapacity);
         }
 
-        public void Notice(ILogInfo logInfo, Exception? exception)
+        public async void Notice(ILogInfo logInfo, Exception? exception)
         {
             if (_emailNoticeOptions.HasLevel(logInfo.Level) == false) return;
 
@@ -41,7 +41,7 @@ namespace Yangtao.Hosting.Logger.Providers
                 Title = title,
                 Text = logText,
             };
-            _ = _loggerMessageQueue.PutAsync(message, default);
+            await _loggerMessageQueue.PutAsync(message, default);
         }
 
         private async Task SendEmailAsync(LoggerMessage loggerMessage)
