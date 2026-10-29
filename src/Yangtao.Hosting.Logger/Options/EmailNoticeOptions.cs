@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.Extensions.Logging;
+using System.ComponentModel.DataAnnotations;
 using Yangtao.Hosting.Email;
 
 namespace Yangtao.Hosting.Logger.Options
@@ -28,6 +29,8 @@ namespace Yangtao.Hosting.Logger.Options
         /// </summary>
         [Required]
         public string? Password { set; get; }
+
+        public override LogLevel MinLevel { set; get; } = LogLevel.Error;
 
         internal EmailOptions EmailOptions => new()
         {

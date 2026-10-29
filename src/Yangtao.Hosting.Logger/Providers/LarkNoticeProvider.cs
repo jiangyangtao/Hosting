@@ -12,10 +12,12 @@ namespace Yangtao.Hosting.Logger.Providers
         private readonly LarkNoticeOptions _larkNoticeOptions;
         private readonly LoggerFormatter _loggerFormatter;
         private readonly IBufferQueue<LoggerMessage> _loggerMessageQueue;
+        private readonly HttpClient _larkLoggerClient;
 
         public LarkNoticeProvider(IHttpClientFactory httpClientFactory, IOptions<LoggerOptions> loggerOptions, IBufferQueueProvider bufferQueueProvider)
         {
             _httpClientFactory = httpClientFactory;
+            _larkLoggerClient = httpClientFactory.CreateClient("LarkLoggerClient");
 
             var _loggerOptions = loggerOptions.Value ?? throw new NullReferenceException(nameof(LoggerOptions));
             _larkNoticeOptions = _loggerOptions.LarkNoticeOptions ?? throw new NullReferenceException(nameof(LoggerOptions.LarkNoticeOptions));
@@ -24,7 +26,7 @@ namespace Yangtao.Hosting.Logger.Providers
             _loggerMessageQueue = bufferQueueProvider.CreateBufferQueue<LoggerMessage>("LarkLoggerQueue", async (item) => await SendMessageAsync(item), _larkNoticeOptions.BufferCapacity);
         }
 
-        public async void Notice(ILogInfo logInfo, Exception? exception)
+        public void Notice(ILogInfo logInfo, Exception? exception)
         {
             if (_larkNoticeOptions.HasLevel(logInfo.Level) == false) return;
 
@@ -35,7 +37,7 @@ namespace Yangtao.Hosting.Logger.Providers
                 Title = title,
                 Text = logText,
             };
-            await _loggerMessageQueue.PutAsync(message, default);
+            _loggerMessageQueue.PutAsync(message, default).ConfigureAwait(false);
         }
 
         private async Task SendMessageAsync(LoggerMessage loggerMessage)
@@ -48,8 +50,8 @@ namespace Yangtao.Hosting.Logger.Providers
                     text = $"{loggerMessage.Title} \n\n{loggerMessage.Text}",
                 }
             };
-            await _httpClientFactory.CreateClient().PostAsync(_larkNoticeOptions.WebhookUrl, new JsonContent(data));
-            await Task.Delay(200);
+            await _larkLoggerClient.PostAsync(_larkNoticeOptions.WebhookUrl, new JsonContent(data));
+            await Task.Delay(600);
         }
     }
 }

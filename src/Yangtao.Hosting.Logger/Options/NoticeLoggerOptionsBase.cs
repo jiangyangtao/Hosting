@@ -2,6 +2,6 @@
 {
     public abstract class NoticeLoggerOptionsBase : LoggerOptionsBase
     {
-        public string TitleFormat { set; get; } = " {Category} - {Level,-11}";
+        public string TitleFormat { set; get; } = " {Category} - {Level}";
     }
 }

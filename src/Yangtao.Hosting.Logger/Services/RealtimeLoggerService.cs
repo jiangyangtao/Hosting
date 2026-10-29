@@ -39,7 +39,7 @@ namespace Yangtao.Hosting.Logger.Services
         {
             try
             {
-                await foreach (var logInfo in _centralChannel.Reader.ReadAllAsync())
+                await foreach (var logInfo in _centralChannel.Reader.ReadAllAsync(cancellationToken))
                 {
                     foreach (var subscriber in _subscribers.Values)
                         subscriber.Writer.TryWrite(logInfo); // 非阻塞扇出；慢客户端由自身 Channel 丢弃策略处理
@@ -48,7 +48,6 @@ namespace Yangtao.Hosting.Logger.Services
             catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
             {
             }
-            catch (Exception) { throw; }
         }
 
         public void Publish(LogInfo logInfo, Exception? exception)

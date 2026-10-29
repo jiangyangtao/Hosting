@@ -7,12 +7,12 @@ namespace Yangtao.Hosting.Logger.Options
         /// <summary>
         /// 格式
         /// </summary>
-        public string Format { set; get; } = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level,-11}] {Category} → {Message}";
+        public string Format { set; get; } = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level}] {Category} → {Message}";
 
         /// <summary>
         /// 最低日志级别(含)
         /// </summary>
-        public LogLevel MinLevel { set; get; } = LogLevel.Information;
+        public virtual LogLevel MinLevel { set; get; } = LogLevel.Information;
 
         public virtual int BufferCapacity { set; get; } = 1000;
 

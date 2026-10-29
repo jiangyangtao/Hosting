@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using System.Threading;
 using System.Threading.Channels;
 using Yangtao.Hosting.Logger.Options;
 
@@ -12,16 +13,14 @@ namespace Yangtao.Hosting.Logger.Services
     {
         private readonly Channel<LogInfo> _channel;
         private readonly FileLoggerOptions _fileLoggerOptions;
-        private readonly CancellationTokenSource cancellationTokenSource = new();
 
         private readonly Dictionary<string, (StreamWriter Writer, DateTime LastWrite)> _writers = new();
-        private int _disposed;
         private readonly LoggerFormatter _loggerFormatter;
 
         public FileLoggerWriterService(IOptions<LoggerOptions> options)
         {
             var loggerOptions = options.Value ?? throw new NullReferenceException(nameof(LoggerOptions));
-            _fileLoggerOptions = loggerOptions.FileLoggerOptions ?? throw new NullReferenceException(nameof(LoggerOptions.RealtimeLoggerOptions));
+            _fileLoggerOptions = loggerOptions.FileLoggerOptions ?? throw new NullReferenceException(nameof(LoggerOptions.FileLoggerOptions));
 
             _channel = Channel.CreateBounded<LogInfo>(new BoundedChannelOptions(_fileLoggerOptions.BufferCapacity)
             {
@@ -37,16 +36,16 @@ namespace Yangtao.Hosting.Logger.Services
         {
             try
             {
-                await PumpAsync();
+                await PumpAsync(cancellationToken);
             }
             catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested) { }
-            catch (Exception) { throw; }
         }
 
-        public override async Task StopAsync(CancellationToken cancellationToken)
+        public override async Task StopAsync(CancellationToken stoppingToken)
         {
             _channel.Writer.TryComplete();
-            await base.StopAsync(cancellationToken).ConfigureAwait(false);
+
+            await base.StopAsync(stoppingToken).ConfigureAwait(false);
         }
 
         public void TryWrite(LogInfo logInfo, Exception? exception)
@@ -55,7 +54,7 @@ namespace Yangtao.Hosting.Logger.Services
             _channel.Writer.TryWrite(logInfo);
         }
 
-        private async Task PumpAsync()
+        private async Task PumpAsync(CancellationToken cancellationToken)
         {
             var buffer = new List<LogInfo>(256);
             var flushInterval = TimeSpan.FromMilliseconds(_fileLoggerOptions.FlushIntervalMillisecond);
@@ -63,19 +62,19 @@ namespace Yangtao.Hosting.Logger.Services
 
             try
             {
-                while (await _channel.Reader.WaitToReadAsync(cancellationTokenSource.Token))
+                while (await _channel.Reader.WaitToReadAsync(cancellationToken))
                 {
                     buffer.Clear();
                     while (buffer.Count < 256 && _channel.Reader.TryRead(out var item))
                         buffer.Add(item);
 
                     if (buffer.Count > 0)
-                        await WriteBatchAsync(buffer);
+                        await WriteBatchAsync(buffer).ConfigureAwait(false);
 
                     if (DateTime.UtcNow - lastFlush >= flushInterval)
                     {
-                        await FlushAllAsync();
-                        await CleanupStaleWritersAsync();
+                        await FlushAllAsync().ConfigureAwait(false);
+                        await CleanupStaleWritersAsync().ConfigureAwait(false);
                         lastFlush = DateTime.UtcNow;
                     }
                 }
@@ -86,8 +85,8 @@ namespace Yangtao.Hosting.Logger.Services
                 // 关闭前把 channel 里剩余的全部冲刷
                 var remaining = new List<LogInfo>();
                 while (_channel.Reader.TryRead(out var item)) remaining.Add(item);
-                if (remaining.Count > 0) await WriteBatchAsync(remaining);
-                await CloseAllAsync();
+                if (remaining.Count > 0) await WriteBatchAsync(remaining).ConfigureAwait(false);
+                await CloseAllAsync().ConfigureAwait(false);
             }
         }
 

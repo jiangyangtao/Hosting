@@ -18,9 +18,8 @@ namespace Yangtao.Hosting.Logger.LoggerProviders
             _realtimeLoggerService = serviceProvider.GetService<IRealtimeLoggerService>();
             _fileLogWriterService = serviceProvider.GetService<FileLoggerWriterService>();
 
-            var loggerOptions = serviceProvider.GetRequiredService<IOptionsMonitor<LoggerOptions>>();
-            _loggerOptions = loggerOptions.CurrentValue;
-            loggerOptions.OnChange(options => _loggerOptions.DeepCopy(options));
+            var loggerOptions = serviceProvider.GetRequiredService<IOptions<LoggerOptions>>();
+            _loggerOptions = loggerOptions.Value;
         }
 
         public ILogger CreateLogger(string categoryName) =>
@@ -28,7 +27,6 @@ namespace Yangtao.Hosting.Logger.LoggerProviders
 
         public void Dispose()
         {
-            _fileLogWriterService?.Dispose();
         }
     }
 
@@ -52,7 +50,8 @@ namespace Yangtao.Hosting.Logger.LoggerProviders
         public bool IsEnabled(LogLevel logLevel)
         {
             if (logLevel == LogLevel.None) return false;
-            if (_loggerOptions.EnableChannelLogger == false || _loggerOptions.CanEnableChannel == false) return false;
+            if (_loggerOptions.EnableChannelLogger == false) return false;
+            if (_loggerOptions.CanEnableChannel == false) return false;
 
             return _loggerOptions.HasChannelLoggerLevel(logLevel);
         }

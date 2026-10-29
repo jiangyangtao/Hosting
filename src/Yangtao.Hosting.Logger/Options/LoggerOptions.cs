@@ -12,7 +12,7 @@ namespace Yangtao.Hosting.Logger.Options
         /// </summary>
         public bool EnableChannelLogger { set; get; } = false;
 
-        internal bool CanEnableChannel => RealtimeLoggerOptions != null && FileLoggerOptions != null;
+        internal bool CanEnableChannel => RealtimeLoggerOptions != null || FileLoggerOptions != null;
 
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace Yangtao.Hosting.Logger.Options
         /// </summary>
         public bool EnableLoggerNotice { set; get; } = false;
 
-        internal bool CanEnableNotice => LarkNoticeOptions != null && EmailNoticeOptions != null;
+        internal bool CanEnableNotice => LarkNoticeOptions != null || EmailNoticeOptions != null;
 
         /// <summary>
         /// 实时日志配置
@@ -45,6 +45,7 @@ namespace Yangtao.Hosting.Logger.Options
             return false;
         }
 
+
         /// <summary>
         /// 飞书通知配置
         /// </summary>
@@ -59,7 +60,6 @@ namespace Yangtao.Hosting.Logger.Options
         {
             EnableChannelLogger = loggerOptions.EnableChannelLogger;
             EnableLoggerNotice = loggerOptions.EnableLoggerNotice;
-
 
             if (loggerOptions.RealtimeLoggerOptions != null)
             {

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using MimeKit;
 using MimeKit.Text;
 using Yangtao.Hosting.Email;
@@ -16,8 +17,12 @@ namespace Yangtao.Hosting.Logger.Providers
         private readonly LoggerFormatter _loggerFormatter;
         private readonly IBufferQueue<LoggerMessage> _loggerMessageQueue;
         private readonly EmailOptions _emailOptions;
+        private readonly ILogger<EmailNoticeProvider> _logger;
 
-        public EmailNoticeProvider(IEmailService emailService, IOptions<LoggerOptions> loggerOptions, IBufferQueueProvider bufferQueueProvider)
+        public EmailNoticeProvider(IEmailService emailService,
+            IOptions<LoggerOptions> loggerOptions,
+            IBufferQueueProvider bufferQueueProvider,
+            ILogger<EmailNoticeProvider> logger)
         {
             _emailService = emailService;
 
@@ -28,9 +33,10 @@ namespace Yangtao.Hosting.Logger.Providers
             _emailOptions = _emailNoticeOptions.EmailOptions;
 
             _loggerMessageQueue = bufferQueueProvider.CreateBufferQueue<LoggerMessage>("EmailLoggerQueue", async (item) => await SendEmailAsync(item), _emailNoticeOptions.BufferCapacity);
+            _logger = logger;
         }
 
-        public async void Notice(ILogInfo logInfo, Exception? exception)
+        public void Notice(ILogInfo logInfo, Exception? exception)
         {
             if (_emailNoticeOptions.HasLevel(logInfo.Level) == false) return;
 
@@ -41,7 +47,7 @@ namespace Yangtao.Hosting.Logger.Providers
                 Title = title,
                 Text = logText,
             };
-            await _loggerMessageQueue.PutAsync(message, default);
+            _loggerMessageQueue.PutAsync(message, default).ConfigureAwait(false);
         }
 
         private async Task SendEmailAsync(LoggerMessage loggerMessage)
@@ -52,6 +58,7 @@ namespace Yangtao.Hosting.Logger.Providers
                 Body = new TextPart(TextFormat.Plain) { Text = loggerMessage.Text }
             };
             await _emailService.SendAsync(_emailOptions, message, default);
+            await Task.Delay(1000);
         }
     }
 }

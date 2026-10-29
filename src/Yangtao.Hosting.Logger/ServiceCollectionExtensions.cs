@@ -20,7 +20,7 @@ namespace Yangtao.Hosting.Logger
             var loggerOptions = new LoggerOptions();
             loggerOptionsAction(loggerOptions);
 
-            services.AddOptions<LoggerOptions>().Configure(options => options.DeepCopy(loggerOptions)).ValidateDataAnnotations();
+            services.AddOptions<LoggerOptions>().Configure(options => options.DeepCopy(loggerOptions)).ValidateDataAnnotations().ValidateOnStart();
 
             if (loggerOptions.EnableChannelLogger && loggerOptions.CanEnableChannel)
             {
