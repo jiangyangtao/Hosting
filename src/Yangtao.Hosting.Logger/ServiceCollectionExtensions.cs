@@ -9,6 +9,7 @@ using Yangtao.Hosting.Logger.Providers;
 using Yangtao.Hosting.Logger.Services;
 using Yangtao.Hosting.MessageQueue.BufferQueue;
 
+
 namespace Yangtao.Hosting.Logger
 {
     public static class ServiceCollectionExtensions
@@ -20,13 +21,14 @@ namespace Yangtao.Hosting.Logger
             var loggerOptions = new LoggerOptions();
             loggerOptionsAction(loggerOptions);
 
-            services.AddOptions<LoggerOptions>().Configure(options => options.DeepCopy(loggerOptions)).ValidateDataAnnotations().ValidateOnStart();
+            services.AddOptions<LoggerOptions>().Configure(options => options.DeepCopy(loggerOptions)).ValidateDataAnnotations();
 
             if (loggerOptions.EnableChannelLogger && loggerOptions.CanEnableChannel)
             {
                 if (loggerOptions.RealtimeLoggerOptions != null)
                 {
                     services.AddSingleton<IRealtimeLoggerService, RealtimeLoggerService>();
+                    services.AddSingleton<IRealtimeLoggerProvider, RealtimeLoggerProvider>();
                 }
 
                 if (loggerOptions.FileLoggerOptions != null)
