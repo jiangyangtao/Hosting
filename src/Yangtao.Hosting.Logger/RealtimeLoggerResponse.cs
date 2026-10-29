@@ -17,18 +17,24 @@ namespace Yangtao.Hosting.Logger
         [JsonConverter(typeof(StringEnumConverter))]
         public RealtimeLoggerResponseType ResponseType { set; get; }
 
+
         public string? Result { set; get; }
 
         public string ToJson() => JsonConvert.SerializeObject(this);
 
-        public override string ToString() => $"{ResponseType}:{Result} \n";
+        public override string ToString()
+        {
+            if (ResponseType == RealtimeLoggerResponseType.Log) return $"{ResponseType}: \n{Result}\n";
 
-        public static RealtimeLoggerResponse Event(string result) => new(RealtimeLoggerResponseType.Event, result);
+            return $"{ResponseType}:{Result} \n \n";
+        }
 
-        public static RealtimeLoggerResponse Data(string result) => new(RealtimeLoggerResponseType.Data, result);
+        public static RealtimeLoggerResponse Log(string result) => new(RealtimeLoggerResponseType.Log, result);
 
-        public static RealtimeLoggerResponse Connectioned() => Event("Connected");
+        public static RealtimeLoggerResponse State(string result) => new(RealtimeLoggerResponseType.State, result);
 
-        public static RealtimeLoggerResponse KeepAlive() => Event("keep-alive");
+        public static RealtimeLoggerResponse Connectioned() => State("connectioned");
+
+        public static RealtimeLoggerResponse KeepAlive() => State("keep-alive");
     }
 }

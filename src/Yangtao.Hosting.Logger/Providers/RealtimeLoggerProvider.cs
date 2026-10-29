@@ -10,6 +10,7 @@ namespace Yangtao.Hosting.Logger.Providers
     {
         private readonly IRealtimeLoggerService _realtimeLoggerService;
         private readonly RealtimeLoggerOptions _realtimeLoggerOptions;
+        private const string _channelKey = "RealtimeLogger";
 
         public RealtimeLoggerProvider(IRealtimeLoggerService realtimeLoggerService, IOptions<LoggerOptions> loggerOptions)
         {
@@ -30,14 +31,11 @@ namespace Yangtao.Hosting.Logger.Providers
             // 2) 关闭响应体缓冲，确保每帧立即到达客户端
             context.Features.Get<IHttpResponseBodyFeature>()?.DisableBuffering();
 
-
-
             // 3) 先发一个初始事件，避免浏览器/代理在首帧前挂起
             await context.Response.WriteAsync(ConnectionedResponse, cancellationToken);
             await context.Response.Body.FlushAsync(cancellationToken);
 
-            var channelKey = "RealtimeLogger";
-            var reader = _realtimeLoggerService.Subscribe(channelKey);
+            var reader = _realtimeLoggerService.Subscribe(_channelKey);
 
 
             try
@@ -78,7 +76,7 @@ namespace Yangtao.Hosting.Logger.Providers
             }
             finally
             {
-                _realtimeLoggerService.Unsubscribe(channelKey);
+                _realtimeLoggerService.Unsubscribe(_channelKey);
             }
         }
 
@@ -94,6 +92,6 @@ namespace Yangtao.Hosting.Logger.Providers
 
         private string KeepAliveResponse => BuildResponseResult(RealtimeLoggerResponse.KeepAlive());
 
-        private string BuildDataResponse(string log) => BuildResponseResult(RealtimeLoggerResponse.Data(log));
+        private string BuildDataResponse(string log) => BuildResponseResult(RealtimeLoggerResponse.Log(log));
     }
 }

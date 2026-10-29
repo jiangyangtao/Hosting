@@ -5,8 +5,8 @@
     /// </summary>
     public enum RealtimeLoggerResponseType
     {
-        Event,
+        Log,
 
-        Data
+        State
     }
 }

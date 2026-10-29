@@ -27,6 +27,7 @@ namespace Test.CustomLogger.Application
                     CentralChannelCapacity = 100000,
                     ChannelFullMode = BoundedChannelFullMode.DropOldest,
                     MinLevel = LogLevel.Information,
+                    LoggerResponseType = LoggerResponseType.Text,
                     Format = "{Level}: {Timestamp:yyyy-MM-dd HH:mm:ss.fff} {NewLine} {Category} {NewLine} {Message} {NewLine}"
                 };
             });
