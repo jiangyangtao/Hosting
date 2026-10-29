@@ -60,7 +60,7 @@ namespace Yangtao.Hosting.Logger.Services
 
         public ChannelReader<ILogInfo> Subscribe(string channelKey)
         {
-            if (channelKey.IsNullOrEmpty()) throw new ArgumentNullException(channelKey);
+            if (channelKey.IsNullOrEmpty()) throw new ArgumentNullException(nameof(channelKey));
 
             var exist = _subscribers.TryGetValue(channelKey, out Channel<ILogInfo>? channal);
 
@@ -96,9 +96,8 @@ namespace Yangtao.Hosting.Logger.Services
                 await _pumpTask.WaitAsync(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
             }
             catch (OperationCanceledException) { }
-            catch (Exception)
+            catch (TimeoutException)
             {
-                throw;
             }
             finally
             {

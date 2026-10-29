@@ -14,12 +14,6 @@ namespace Yangtao.Hosting.Logger.Options
         [Required]
         public string? FilePath { set; get; }
 
-        /// <summary>
-        /// 文件名
-        /// </summary>
-        [Required]
-        public string? FileName { set; get; }
-
         [Range(100, 100000)]
         public override int BufferCapacity { set; get; } = 1000;
 

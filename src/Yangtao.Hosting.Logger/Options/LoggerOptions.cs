@@ -82,7 +82,6 @@ namespace Yangtao.Hosting.Logger.Options
                     Format = loggerOptions.FileLoggerOptions.Format,
                     MinLevel = loggerOptions.FileLoggerOptions.MinLevel,
                     FilePath = loggerOptions.FileLoggerOptions.FilePath,
-                    FileName = loggerOptions.FileLoggerOptions.FileName,
                     BufferCapacity = loggerOptions.FileLoggerOptions.BufferCapacity,
                     FlushIntervalMillisecond = loggerOptions.FileLoggerOptions.FlushIntervalMillisecond,
                     ChannelFullMode = loggerOptions.FileLoggerOptions.ChannelFullMode,

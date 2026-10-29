@@ -9,21 +9,23 @@ namespace Yangtao.Hosting.Logger.LoggerProviders
 {
     internal class NoticeLoggerProvider : ILoggerProvider
     {
-        private readonly IServiceProvider _serviceProvider;
         private readonly IEnumerable<ILoggerNoticeProvider> _loggerNoticeProviders;
-        private readonly LoggerOptions _loggerOptions;
+        private readonly LogLevel _minNoticeLevel;
 
         public NoticeLoggerProvider(IServiceProvider serviceProvider)
         {
-            _serviceProvider = serviceProvider;
             _loggerNoticeProviders = serviceProvider.GetServices<ILoggerNoticeProvider>();
 
-            var loggerOptions = serviceProvider.GetRequiredService<IOptions<LoggerOptions>>();
-            _loggerOptions = loggerOptions.Value ?? throw new NullReferenceException(nameof(LoggerOptions));
+            var options = serviceProvider.GetRequiredService<IOptions<LoggerOptions>>();
+            var loggerOptions = options.Value ?? throw new NullReferenceException(nameof(LoggerOptions));
+
+            var larkMin = loggerOptions.LarkNoticeOptions?.MinLevel ?? LogLevel.Error;
+            var emailMin = loggerOptions.EmailNoticeOptions?.MinLevel ?? LogLevel.Error;
+            _minNoticeLevel = larkMin < emailMin ? larkMin : emailMin;
         }
 
         public ILogger CreateLogger(string categoryName) =>
-              new NoticeLogger(categoryName, _loggerOptions, _loggerNoticeProviders);
+              new NoticeLogger(categoryName, _minNoticeLevel, _loggerNoticeProviders);
 
         public void Dispose()
         {
@@ -33,19 +35,14 @@ namespace Yangtao.Hosting.Logger.LoggerProviders
     internal sealed class NoticeLogger : ILogger
     {
         private readonly string _category;
-        private readonly LoggerOptions _loggerOptions;
         private readonly IEnumerable<ILoggerNoticeProvider> _loggerNoticeProviders;
         private readonly LogLevel _minNoticeLevel;
 
-        public NoticeLogger(string category, LoggerOptions loggerOptions, IEnumerable<ILoggerNoticeProvider> loggerNoticeProviders)
+        public NoticeLogger(string category, LogLevel minNoticeLevel, IEnumerable<ILoggerNoticeProvider> loggerNoticeProviders)
         {
             _category = category;
-            _loggerOptions = loggerOptions;
+            _minNoticeLevel = minNoticeLevel;
             _loggerNoticeProviders = loggerNoticeProviders;
-
-            var larkMin = _loggerOptions.LarkNoticeOptions?.MinLevel ?? LogLevel.Error;
-            var emailMin = _loggerOptions.EmailNoticeOptions?.MinLevel ?? LogLevel.Error;
-            _minNoticeLevel = larkMin < emailMin ? larkMin : emailMin;
         }
 
         public IDisposable? BeginScope<TState>(TState state) where TState : notnull => null;

@@ -17,12 +17,11 @@ namespace Yangtao.Hosting.Logger.Providers
         private readonly LoggerFormatter _loggerFormatter;
         private readonly IBufferQueue<LoggerMessage> _loggerMessageQueue;
         private readonly EmailOptions _emailOptions;
-        private readonly ILogger<EmailNoticeProvider> _logger;
+        private int _enqueueFailCount;
 
         public EmailNoticeProvider(IEmailService emailService,
             IOptions<LoggerOptions> loggerOptions,
-            IBufferQueueProvider bufferQueueProvider,
-            ILogger<EmailNoticeProvider> logger)
+            IBufferQueueProvider bufferQueueProvider)
         {
             _emailService = emailService;
 
@@ -33,7 +32,6 @@ namespace Yangtao.Hosting.Logger.Providers
             _emailOptions = _emailNoticeOptions.EmailOptions;
 
             _loggerMessageQueue = bufferQueueProvider.CreateBufferQueue<LoggerMessage>("EmailLoggerQueue", async (item) => await SendEmailAsync(item), _emailNoticeOptions.BufferCapacity);
-            _logger = logger;
         }
 
         public void Notice(ILogInfo logInfo, Exception? exception)
@@ -47,7 +45,11 @@ namespace Yangtao.Hosting.Logger.Providers
                 Title = title,
                 Text = logText,
             };
-            _loggerMessageQueue.PutAsync(message, default).ConfigureAwait(false);
+            _ = Task.Run(async () =>
+            {
+                try { await _loggerMessageQueue.PutAsync(message, default); }
+                catch { Interlocked.Increment(ref _enqueueFailCount); }
+            });
         }
 
         private async Task SendEmailAsync(LoggerMessage loggerMessage)
