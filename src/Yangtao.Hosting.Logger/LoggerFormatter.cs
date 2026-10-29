@@ -71,6 +71,7 @@ namespace Yangtao.Hosting.Logger
                     case "Category": stringBuilder.Append(info.Category); break;
                     case "Message": stringBuilder.Append(info.Message); break; // 正文原样拼接，不会被再解析
                     case "Exception": if (exception != null) stringBuilder.Append(exception); break;
+                    case "NewLine": stringBuilder.Append('\n'); break;
                     default: stringBuilder.Append('{').Append(seg.Field).Append('}'); break; // 未知占位符原样保留
                 }
             }

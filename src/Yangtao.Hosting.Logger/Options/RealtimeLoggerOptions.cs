@@ -21,5 +21,10 @@ namespace Yangtao.Hosting.Logger.Options
         /// 渠道上限模式
         /// </summary>
         public BoundedChannelFullMode CentralChannelFullMode { set; get; } = BoundedChannelFullMode.DropOldest;
+
+        /// <summary>
+        /// 日志输出类型
+        /// </summary>
+        public LoggerResponseType LoggerResponseType = LoggerResponseType.Text;
     }
 }

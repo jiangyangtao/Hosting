@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Yangtao.Hosting.Email.Abstractions;
 using Yangtao.Hosting.Email.Services;
+using Yangtao.Hosting.MessageQueue.BufferQueue;
 
 namespace Yangtao.Hosting.Email
 {
@@ -8,6 +9,7 @@ namespace Yangtao.Hosting.Email
     {
         public static IServiceCollection AddEmail(this IServiceCollection services)
         {
+            services.AddBufferQueue();
             services.AddSingleton<IEmailService, EmailService>();
             services.AddSingleton<IAsyncEmailService, AsyncEmailService>();
             return services;

@@ -71,6 +71,7 @@ namespace Yangtao.Hosting.Logger.Options
                     CentralChannelCapacity = loggerOptions.RealtimeLoggerOptions.CentralChannelCapacity,
                     CentralChannelFullMode = loggerOptions.RealtimeLoggerOptions.CentralChannelFullMode,
                     ChannelFullMode = loggerOptions.RealtimeLoggerOptions.ChannelFullMode,
+                    LoggerResponseType = loggerOptions.RealtimeLoggerOptions.LoggerResponseType,
                 };
             }
             else RealtimeLoggerOptions = null;

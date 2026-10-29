@@ -7,7 +7,6 @@ using Yangtao.Hosting.Logger.LoggerProviders;
 using Yangtao.Hosting.Logger.Options;
 using Yangtao.Hosting.Logger.Providers;
 using Yangtao.Hosting.Logger.Services;
-using Yangtao.Hosting.MessageQueue.BufferQueue;
 
 
 namespace Yangtao.Hosting.Logger
@@ -16,7 +15,7 @@ namespace Yangtao.Hosting.Logger
     {
         public static IServiceCollection AddCustomLogger(this IServiceCollection services, Action<LoggerOptions> loggerOptionsAction)
         {
-            services.AddEmail();
+
 
             var loggerOptions = new LoggerOptions();
             loggerOptionsAction(loggerOptions);
@@ -43,7 +42,7 @@ namespace Yangtao.Hosting.Logger
             if (loggerOptions.EnableLoggerNotice && loggerOptions.CanEnableNotice)
             {
                 services.AddHttpClient();
-                services.AddBufferQueue();
+                services.AddEmail();
                 services.TryAddEnumerable(ServiceDescriptor.Singleton<ILoggerProvider, NoticeLoggerProvider>());
 
                 if (loggerOptions.EmailNoticeOptions != null) services.AddSingleton<ILoggerNoticeProvider, EmailNoticeProvider>();
