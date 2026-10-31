@@ -50,6 +50,7 @@ namespace Yangtao.Hosting.NLog
 
         public static AsyncTargetWrapper BuildFileTarget(FileLayoutType layoutType = FileLayoutType.Custom)
         {
+         
             var fileTarget = new FileTarget
             {
                 FileName = $"{LogPath}" + "${shortdate}.log",

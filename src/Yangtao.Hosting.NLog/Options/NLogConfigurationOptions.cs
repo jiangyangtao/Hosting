@@ -1,10 +1,10 @@
 ﻿using NLog;
 
-namespace Yangtao.Hosting.NLog
+namespace Yangtao.Hosting.NLog.Options
 {
     public class NLogConfigurationOptions
     {
-        internal NLogConfigurationOptions(){ }
+        internal NLogConfigurationOptions() { }
 
         public FileLayoutType FileLayoutType { set; get; } = FileLayoutType.Custom;
 
