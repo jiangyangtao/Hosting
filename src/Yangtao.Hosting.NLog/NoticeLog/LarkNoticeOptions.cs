@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using NLog;
+using System.ComponentModel.DataAnnotations;
 
 namespace Yangtao.Hosting.NLog.NoticeLog
 {
@@ -8,5 +9,9 @@ namespace Yangtao.Hosting.NLog.NoticeLog
         public string? WebhookUrl { set; get; }
 
         public string? Secret { set; get; }
+
+        public override LogLevel MinLevel { set; get; } = LogLevel.Warn;
+
+        public override LogLevel MaxLevel { set; get; } = LogLevel.Fatal;
     }
 }

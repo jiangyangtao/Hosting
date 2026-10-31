@@ -12,7 +12,7 @@ namespace Yangtao.Hosting.NLog.NoticeLog
         private readonly string _serviceName;
         private readonly LarkNoticeOptions _larkNoticeOptions;
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly IBufferQueue<LogInfo> _loggerMessageQueue;
+        private readonly IBufferQueue<LogInfo> _larkLogQueue;
 
         public LarkNoticeLogProvider(IOptions<NLogConfigurationOptions> options, IHttpClientFactory httpClientFactory, IBufferQueueProvider bufferQueueProvider)
         {
@@ -20,7 +20,7 @@ namespace Yangtao.Hosting.NLog.NoticeLog
             _larkNoticeOptions = options.Value.LarkNoticeOptions ?? throw new NullReferenceException(nameof(NLogConfigurationOptions.LarkNoticeOptions));
             _httpClientFactory = httpClientFactory;
 
-            _loggerMessageQueue = bufferQueueProvider.CreateBufferQueue<LogInfo>("LarkLogQueue", async (item) => await SendMessageAsync(item), _larkNoticeOptions.Concurrency, _larkNoticeOptions.QueueCapacity);
+            _larkLogQueue = bufferQueueProvider.CreateBufferQueue<LogInfo>("LarkLogQueue", async (item) => await SendMessageAsync(item), _larkNoticeOptions.Concurrency, _larkNoticeOptions.QueueCapacity);
         }
 
         public Layout Layout => _larkNoticeOptions.Layout ?? throw new NullReferenceException(nameof(LarkNoticeOptions.Layout));
@@ -33,7 +33,7 @@ namespace Yangtao.Hosting.NLog.NoticeLog
                 LoggerName: logEvent.LoggerName ?? string.Empty,
                 Message: formatLog,
                 Exception: logEvent.Exception?.ToString());
-            await _loggerMessageQueue.PutAsync(logInfo, cancellationToken);
+            await _larkLogQueue.PutAsync(logInfo, cancellationToken);
         }
 
         private async Task SendMessageAsync(LogInfo logInfo)
@@ -48,7 +48,7 @@ namespace Yangtao.Hosting.NLog.NoticeLog
                 }
             };
             await _httpClientFactory.CreateClient().PostAsync(_larkNoticeOptions.WebhookUrl, new JsonContent(data));
-            await Task.Delay(600);
+            await Task.Delay(_larkNoticeOptions.AfterAsyncDelay);
         }
     }
 }

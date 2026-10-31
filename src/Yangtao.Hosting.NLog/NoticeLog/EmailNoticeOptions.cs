@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using NLog;
+using System.ComponentModel.DataAnnotations;
 using Yangtao.Hosting.Email;
 
 namespace Yangtao.Hosting.NLog.NoticeLog
@@ -28,6 +29,10 @@ namespace Yangtao.Hosting.NLog.NoticeLog
         /// </summary>
         [Required]
         public string? Password { set; get; }
+
+        public override LogLevel MinLevel { set; get; } = LogLevel.Warn;
+
+        public override LogLevel MaxLevel { set; get; } = LogLevel.Fatal;
 
         internal EmailOptions EmailOptions => new()
         {
