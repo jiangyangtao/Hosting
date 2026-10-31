@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
-using Yangtao.Hosting.NLog.Options;
 
 namespace Yangtao.Hosting.NLog
 {

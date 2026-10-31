@@ -2,9 +2,9 @@
 {
     public interface ILogBufferQueueService 
     {
-        bool TryPublish(LogEntry entry);
+        bool TryPublish(LogInfo entry);
 
-        ILogSubscription Subscribe(CancellationToken cancellationToken);
+        IRealtimeLogSubscription Subscribe(CancellationToken cancellationToken);
 
         internal void Unsubscribe(Guid clientId);
     }

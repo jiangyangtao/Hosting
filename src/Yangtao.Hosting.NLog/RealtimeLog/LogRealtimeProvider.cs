@@ -9,7 +9,7 @@ using Yangtao.Hosting.NLog.Abstractions;
 
 namespace Yangtao.Hosting.NLog.RealtimeLog
 {
-    internal class LogRealtimeProvider : ILogRealtimeProvider
+    internal class LogRealtimeProvider : IRealtimeLogProvider
     {
         private readonly ILogBufferQueueService _logBufferQueueService;
         private static readonly TimeSpan HeartbeatInterval = TimeSpan.FromSeconds(15);
@@ -119,7 +119,7 @@ namespace Yangtao.Hosting.NLog.RealtimeLog
         private static async Task StreamLogsAsync(
             PipeWriter writer,
             SemaphoreSlim gate,
-            ChannelReader<LogEntry> reader,
+            ChannelReader<LogInfo> reader,
             CancellationToken cancellationToken)
         {
             await foreach (var entry in reader.ReadAllAsync(cancellationToken))
@@ -148,7 +148,7 @@ namespace Yangtao.Hosting.NLog.RealtimeLog
         /// LogEntry 字段都是简单类型，正常不会失败；极端场景（未来字段扩展后）
         /// 也不让单条日志抛异常打断整条流。
         /// </summary>
-        private static byte[] SerializeEntry(LogEntry entry)
+        private static byte[] SerializeEntry(LogInfo entry)
         {
             try
             {

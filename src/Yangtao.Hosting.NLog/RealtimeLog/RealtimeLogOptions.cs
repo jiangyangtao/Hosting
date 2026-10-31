@@ -3,7 +3,7 @@ using System.Threading.Channels;
 
 namespace Yangtao.Hosting.NLog.RealtimeLog
 {
-    public class LogRealtimeOptions : LogOptionsBase
+    public class RealtimeLogOptions : LogOptionsBase
     {
         [Range(1000, 100000)]
         public int BufferCapacity { set; get; } = 1000;

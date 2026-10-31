@@ -2,10 +2,10 @@
 
 namespace Yangtao.Hosting.NLog.Abstractions
 {
-    public interface ILogSubscription : IDisposable
+    public interface IRealtimeLogSubscription : IDisposable
     {
         Guid Id { get; }
 
-        ChannelReader<LogEntry> Reader { get; }
+        ChannelReader<LogInfo> Reader { get; }
     }
 }

@@ -9,14 +9,14 @@ namespace Yangtao.Hosting.NLog.RealtimeLog
     {
         // 中心通道：容量 5000，满时丢弃最旧条目。
         // DropOldest 下 TryWrite 不会阻塞，NLog 写路径始终保持快速返回。
-        private readonly Channel<LogEntry> _inbound;
+        private readonly Channel<LogInfo> _inbound;
 
         // 每个 SSE 客户端对应一个订阅通道。客户端断开时从字典移除。
-        private readonly ConcurrentDictionary<Guid, Channel<LogEntry>> _subscribers;
+        private readonly ConcurrentDictionary<Guid, Channel<LogInfo>> _subscribers;
 
         public LogBufferQueueService()
         {
-            _inbound = Channel.CreateBounded<LogEntry>(
+            _inbound = Channel.CreateBounded<LogInfo>(
             new BoundedChannelOptions(5000)
             {
                 FullMode = BoundedChannelFullMode.DropOldest,
@@ -31,19 +31,19 @@ namespace Yangtao.Hosting.NLog.RealtimeLog
         /// NLog 的 Write 回调本身是同步的，没有 CancellationToken 概念，
         /// 取消/背压由 Channel 的 DropOldest 策略承担。
         /// </summary>
-        public bool TryPublish(LogEntry entry) => _inbound.Writer.TryWrite(entry);
+        public bool TryPublish(LogInfo entry) => _inbound.Writer.TryWrite(entry);
 
         /// <summary>
         /// 订阅日志流。返回的 LogSubscription 会在 ct 取消时自动清理，
         /// 调用方用 using 保证正常路径也及时释放。
         /// </summary>
-        public ILogSubscription Subscribe(CancellationToken ct)
+        public IRealtimeLogSubscription Subscribe(CancellationToken ct)
         {
             var clientId = Guid.NewGuid();
 
             // 每个客户端独立的有界通道：慢客户端只丢自己的日志，
             // 不会阻塞广播循环，也不会影响其他客户端。
-            var channel = Channel.CreateBounded<LogEntry>(
+            var channel = Channel.CreateBounded<LogInfo>(
                 new BoundedChannelOptions(1000)
                 {
                     FullMode = BoundedChannelFullMode.DropOldest,
@@ -52,7 +52,7 @@ namespace Yangtao.Hosting.NLog.RealtimeLog
                 });
 
             _subscribers[clientId] = channel;
-            return new LogSubscription(this, clientId, channel, ct);
+            return new RealtimeLogSubscription(this, clientId, channel, ct);
         }
 
         /// <summary>内部清理：从字典移除并完成通道，让读取端优雅退出。</summary>

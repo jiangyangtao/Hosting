@@ -1,5 +1,7 @@
 ﻿using NLog;
+using NLog.Config;
 using NLog.Layouts;
+using NLog.Targets;
 
 namespace Yangtao.Hosting.NLog
 {
@@ -8,18 +10,20 @@ namespace Yangtao.Hosting.NLog
         /// <summary>
         /// 最小级别
         /// </summary>
-        public LogLevel MinLevel { set; get; } = LogLevel.Debug;
+        public virtual LogLevel MinLevel { set; get; } = LogLevel.Debug;
 
         /// <summary>
         /// 最大级别
         /// </summary>
-        public LogLevel MaxLevel { set; get; } = LogLevel.Fatal;
+        public virtual LogLevel MaxLevel { set; get; } = LogLevel.Fatal;
 
-        public string LoggerNamePattern { set; get; } = "*";
+        public virtual string LoggerNamePattern { set; get; } = "*";
 
         /// <summary>
         /// 布局
         /// </summary>
-        public Layout Layout { set; get; } = "${level}: ${longdate} ${newline}      ${callsite}    ${newline}      ${aspnet-request-ip:whenEmpty=localhost} ${newline}      ${message} ${exception:format=tostring}    ${newline}      ${aspnet-request-posted-body}";
+        public virtual Layout? Layout { set; get; } = "${level}: ${longdate} ${newline}      ${callsite}    ${newline}      ${aspnet-request-ip:whenEmpty=localhost} ${newline}      ${message} ${exception:format=tostring}    ${newline}      ${aspnet-request-posted-body}";
+
+        internal virtual LoggingRule BuildLoggingRule(Target target) => new(LoggerNamePattern, MinLevel, MaxLevel, target);
     }
 }

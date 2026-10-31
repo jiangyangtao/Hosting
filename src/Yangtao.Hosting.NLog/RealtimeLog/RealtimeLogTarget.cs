@@ -20,7 +20,7 @@ namespace Yangtao.Hosting.NLog.RealtimeLog
         {
             var message = RenderLogEvent(Layout, logEvent);
 
-            var entry = new LogEntry(
+            var entry = new LogInfo(
                 Timestamp: logEvent.TimeStamp,
                 Level: logEvent.Level.Name,
                 LoggerName: logEvent.LoggerName ?? string.Empty,
