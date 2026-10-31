@@ -1,8 +1,8 @@
 ﻿namespace Yangtao.Hosting.NLog.Abstractions
 {
-    public interface ILogBufferQueueService 
+    public interface ILogBufferQueueService
     {
-        bool TryPublish(LogInfo entry);
+        bool TryPublish(LogInfo logInfo);
 
         IRealtimeLogSubscription Subscribe(CancellationToken cancellationToken);
 

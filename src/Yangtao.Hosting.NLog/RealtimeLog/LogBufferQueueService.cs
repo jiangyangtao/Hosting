@@ -31,7 +31,7 @@ namespace Yangtao.Hosting.NLog.RealtimeLog
         /// NLog 的 Write 回调本身是同步的，没有 CancellationToken 概念，
         /// 取消/背压由 Channel 的 DropOldest 策略承担。
         /// </summary>
-        public bool TryPublish(LogInfo entry) => _inbound.Writer.TryWrite(entry);
+        public bool TryPublish(LogInfo logInfo) => _inbound.Writer.TryWrite(logInfo);
 
         /// <summary>
         /// 订阅日志流。返回的 LogSubscription 会在 ct 取消时自动清理，

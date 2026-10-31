@@ -20,14 +20,14 @@ namespace Yangtao.Hosting.NLog.RealtimeLog
         {
             var message = RenderLogEvent(Layout, logEvent);
 
-            var entry = new LogInfo(
+            var logInfo = new LogInfo(
                 Timestamp: logEvent.TimeStamp,
                 Level: logEvent.Level.Name,
                 LoggerName: logEvent.LoggerName ?? string.Empty,
                 Message: message,
                 Exception: logEvent.Exception?.ToString());
 
-            _logBufferQueueService.TryPublish(entry);
+            _logBufferQueueService.TryPublish(logInfo);
         }
     }
 }

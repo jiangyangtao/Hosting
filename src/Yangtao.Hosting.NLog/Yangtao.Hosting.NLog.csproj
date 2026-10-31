@@ -11,6 +11,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\Yangtao.Hosting.Common\Yangtao.Hosting.Common.csproj" />
 	  <ProjectReference Include="..\Yangtao.Hosting.Email\Yangtao.Hosting.Email.csproj" />
 	</ItemGroup>
 

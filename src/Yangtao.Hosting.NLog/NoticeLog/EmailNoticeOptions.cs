@@ -3,7 +3,7 @@ using Yangtao.Hosting.Email;
 
 namespace Yangtao.Hosting.NLog.NoticeLog
 {
-    public class EmailNoticeOptions : LogOptionsBase
+    public class EmailNoticeOptions : NoticeOptionsBase
     {
         /// <summary>
         /// 发送者名称

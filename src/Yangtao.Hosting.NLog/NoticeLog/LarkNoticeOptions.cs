@@ -2,7 +2,7 @@
 
 namespace Yangtao.Hosting.NLog.NoticeLog
 {
-    public class LarkNoticeOptions : LogOptionsBase
+    public class LarkNoticeOptions : NoticeOptionsBase
     {
         [Required]
         public string? WebhookUrl { set; get; }

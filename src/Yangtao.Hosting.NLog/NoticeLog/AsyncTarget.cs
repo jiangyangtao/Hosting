@@ -23,7 +23,6 @@ namespace Yangtao.Hosting.NLog.NoticeLog
             foreach (var noticeLogProvider in _noticeLogProviders)
             {
                 var formatLog = RenderLogEvent(noticeLogProvider.Layout, logEvent);
-
                 try
                 {
                     await noticeLogProvider.WriteAsync(formatLog, logEvent, cancellationToken);
