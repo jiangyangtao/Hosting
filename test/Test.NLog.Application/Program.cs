@@ -7,7 +7,7 @@ namespace Test.NLog.Application
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Logging.ConfigNLog();
+            builder.Logging.AddCustomNLog("Test.NLog.Application");
 
             // Add services to the container.
 

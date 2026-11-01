@@ -17,9 +17,9 @@ namespace Yangtao.Hosting.NLog
 {
     public static class LoggingBuilderExtensions
     {
-        public static ILoggingBuilder AddCustomNLog(this ILoggingBuilder loggingBuilder, string strviceName) => AddCustomNLog(loggingBuilder, options =>
+        public static ILoggingBuilder AddCustomNLog(this ILoggingBuilder loggingBuilder, string serviceName) => AddCustomNLog(loggingBuilder, options =>
         {
-            options.ServiceName = strviceName;
+            options.ServiceName = serviceName;
         });
 
         public static ILoggingBuilder AddCustomNLog(this ILoggingBuilder loggingBuilder, Action<NLogOptions> action)
