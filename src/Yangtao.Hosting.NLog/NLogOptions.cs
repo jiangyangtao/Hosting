@@ -11,7 +11,6 @@ namespace Yangtao.Hosting.NLog
     /// </summary>
     public class NLogOptions
     {
-        internal NLogOptions() { }
 
         /// <summary>
         /// 服务名

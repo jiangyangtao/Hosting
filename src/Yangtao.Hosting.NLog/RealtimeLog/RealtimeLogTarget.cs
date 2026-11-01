@@ -1,15 +1,14 @@
 ﻿using NLog;
 using NLog.Targets;
-using Yangtao.Hosting.NLog.Abstractions;
 
 namespace Yangtao.Hosting.NLog.RealtimeLog
 {
     [Target("RealtimeLog")]
     internal sealed class RealtimeLogTarget : TargetWithLayout
     {
-        private readonly ILogBufferQueueService _logBufferQueueService;
+        private readonly LogBufferQueueService _logBufferQueueService;
 
-        public RealtimeLogTarget(ILogBufferQueueService logBufferQueueService, RealtimeLogOptions realtimeLogOptions)
+        public RealtimeLogTarget(LogBufferQueueService logBufferQueueService, RealtimeLogOptions realtimeLogOptions)
         {
             _logBufferQueueService = logBufferQueueService;
             Name = "RealtimeLog";

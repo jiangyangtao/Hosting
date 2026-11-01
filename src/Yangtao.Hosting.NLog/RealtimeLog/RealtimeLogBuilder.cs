@@ -1,15 +1,14 @@
 ﻿using NLog.Config;
 using NLog.Layouts;
-using Yangtao.Hosting.NLog.Abstractions;
 
 namespace Yangtao.Hosting.NLog.RealtimeLog
 {
     internal class RealtimeLogBuilder
     {
         private readonly RealtimeLogOptions _realtimeLogOptions;
-        private readonly ILogBufferQueueService _logBufferQueueService;
+        private readonly LogBufferQueueService _logBufferQueueService;
 
-        public RealtimeLogBuilder(RealtimeLogOptions realtimeLogOptions, ILogBufferQueueService logBufferQueueService)
+        public RealtimeLogBuilder(RealtimeLogOptions realtimeLogOptions, LogBufferQueueService logBufferQueueService)
         {
             _realtimeLogOptions = realtimeLogOptions;
             _logBufferQueueService = logBufferQueueService;

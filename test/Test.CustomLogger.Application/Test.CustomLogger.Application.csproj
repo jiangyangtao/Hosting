@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Yangtao.Hosting.Logger\Yangtao.Hosting.Logger.csproj" />
+    <ProjectReference Include="..\..\src\Yangtao.Hosting.NLog\Yangtao.Hosting.NLog.csproj" />
   </ItemGroup>
 
 </Project>

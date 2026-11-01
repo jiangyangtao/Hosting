@@ -31,7 +31,7 @@ namespace Yangtao.Hosting.NLog.FileLog
 
                 var fileTargetWrapper = new AsyncTargetWrapper
                 {
-                    Name = TargetName,
+                    Name = "AsyncLocalFileLog",
                     WrappedTarget = fileTarget,
                 };
 

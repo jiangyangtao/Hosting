@@ -1,22 +1,27 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using NLog.Config;
-using NLog;
-using NLog.Extensions.Logging;
-using Yangtao.Hosting.NLog.RealtimeLog;
-using Microsoft.Extensions.DependencyInjection;
-using Yangtao.Hosting.NLog.Abstractions;
-using Yangtao.Hosting.Email;
-using Yangtao.Hosting.NLog.NoticeLog;
 using Microsoft.Extensions.Options;
+using NLog;
+using NLog.Config;
+using NLog.Extensions.Logging;
+using Yangtao.Hosting.Email;
+using Yangtao.Hosting.NLog.Abstractions;
 using Yangtao.Hosting.NLog.ConsoleLog;
 using Yangtao.Hosting.NLog.FileLog;
+using Yangtao.Hosting.NLog.NoticeLog;
+using Yangtao.Hosting.NLog.RealtimeLog;
 
 namespace Yangtao.Hosting.NLog
 {
     public static class LoggingBuilderExtensions
     {
+        public static ILoggingBuilder AddCustomNLog(this ILoggingBuilder loggingBuilder, string strviceName) => AddCustomNLog(loggingBuilder, options =>
+        {
+            options.ServiceName = strviceName;
+        });
+
         public static ILoggingBuilder AddCustomNLog(this ILoggingBuilder loggingBuilder, Action<NLogOptions> action)
         {
             var nlogOptions = new NLogOptions();
@@ -28,8 +33,9 @@ namespace Yangtao.Hosting.NLog
             loggingBuilder.ClearProviders();
             if (nlogOptions.RealtimeLogOptions != null)
             {
-                services.AddSingleton<ILogBufferQueueService, LogBufferQueueService>();
                 services.AddSingleton<IRealtimeLogProvider, RealtimeLogProvider>();
+                services.AddSingleton<LogBufferQueueService>();
+                services.AddHostedService(sp => sp.GetRequiredService<LogBufferQueueService>());
             }
 
             if (nlogOptions.LarkNoticeOptions != null)
@@ -64,7 +70,7 @@ namespace Yangtao.Hosting.NLog
 
             if (nlogOptions.RealtimeLogOptions != null)
             {
-                var logBufferQueueService = serviceProvider.GetRequiredService<ILogBufferQueueService>();
+                var logBufferQueueService = serviceProvider.GetRequiredService<LogBufferQueueService>();
                 var builder = new RealtimeLogBuilder(nlogOptions.RealtimeLogOptions, logBufferQueueService);
                 builder.ConfigurationRealtimeLog(loggingConfiguration);
             }

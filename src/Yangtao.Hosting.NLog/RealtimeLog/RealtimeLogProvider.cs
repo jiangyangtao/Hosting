@@ -13,7 +13,7 @@ namespace Yangtao.Hosting.NLog.RealtimeLog
 {
     internal class RealtimeLogProvider : IRealtimeLogProvider
     {
-        private readonly ILogBufferQueueService _logBufferQueueService;
+        private readonly LogBufferQueueService _logBufferQueueService;
         private readonly RealtimeLogOptions _realtimeLogOptions;
         private readonly TimeSpan _heartbeatInterval;
 
@@ -22,7 +22,7 @@ namespace Yangtao.Hosting.NLog.RealtimeLog
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping // 关闭非 ASCII 转义
         };
 
-        public RealtimeLogProvider(ILogBufferQueueService logBufferQueueService, IOptions<NLogOptions> options)
+        public RealtimeLogProvider(LogBufferQueueService logBufferQueueService, IOptions<NLogOptions> options)
         {
             _logBufferQueueService = logBufferQueueService;
             _realtimeLogOptions = options.Value.RealtimeLogOptions ?? throw new NullReferenceException(nameof(NLogOptions.RealtimeLogOptions));
@@ -45,7 +45,7 @@ namespace Yangtao.Hosting.NLog.RealtimeLog
             context.Features.Get<IHttpResponseBodyFeature>()?.DisableBuffering();
 
             // 3) 发送初始事件，避免浏览器/代理在连接后挂起
-            await context.Response.WriteAsync("event: connected\ndata: ok\n\n", cancellationToken);
+            await context.Response.Body.WriteAsync(ConnectedBytes, cancellationToken);
             await context.Response.Body.FlushAsync(cancellationToken);
 
 
@@ -65,7 +65,7 @@ namespace Yangtao.Hosting.NLog.RealtimeLog
                 await context.Response.StartAsync(cancellationToken);
 
                 // 连接确认帧（SSE 注释行以 ':' 开头，客户端忽略）
-                await WriteFrameStreamAsync(context.Response.BodyWriter, writeGate, ConnectedBytes, cancellationToken);
+                //await WriteFrameStreamAsync(context.Response.BodyWriter, writeGate, ConnectedBytes, cancellationToken);
 
                 // 异步流任务
                 var mainTask = WriteLogStreamAsync(context.Response.BodyWriter, writeGate, subscription.Reader, cancellationToken);
@@ -110,9 +110,9 @@ namespace Yangtao.Hosting.NLog.RealtimeLog
         {
             get
             {
-                if (_realtimeLogOptions.LorResponseType == LorResponseType.Text) return Encoding.UTF8.GetBytes("event: connected\n\n");
+                if (_realtimeLogOptions.LorResponseType == LorResponseType.Text) return Encoding.UTF8.GetBytes("event: connected\ndata: ok\n\n");
 
-                return Encoding.UTF8.GetBytes("{\"event\": \"connected\"}");
+                return Encoding.UTF8.GetBytes("{\"event\": \"connected\",\"data\":\"ok\"}");
             }
         }
 

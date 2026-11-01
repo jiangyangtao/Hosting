@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Yangtao.Hosting.Logger.Abstractions;
+using Yangtao.Hosting.NLog.Abstractions;
 
 namespace Test.CustomLogger.Application.Controllers
 {
@@ -7,14 +7,14 @@ namespace Test.CustomLogger.Application.Controllers
     [Route("[controller]/[action]")]
     public class LogController : ControllerBase
     {
-        private readonly IRealtimeLoggerProvider _realtimeLoggerProvider;
+        private readonly IRealtimeLogProvider _realtimeLogProvider;
 
-        public LogController(IRealtimeLoggerProvider realtimeLoggerProvider)
+        public LogController(IRealtimeLogProvider realtimeLogProvider)
         {
-            _realtimeLoggerProvider = realtimeLoggerProvider;
+            _realtimeLogProvider = realtimeLogProvider;
         }
 
         [HttpGet]
-        public Task Realtime(CancellationToken cancellationToken) => _realtimeLoggerProvider.SubscribeAsync(HttpContext, cancellationToken);
+        public Task Realtime(CancellationToken cancellationToken) => _realtimeLogProvider.SubscribeAsync(HttpContext, cancellationToken);
     }
 }

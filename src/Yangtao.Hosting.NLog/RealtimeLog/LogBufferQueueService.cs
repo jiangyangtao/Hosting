@@ -6,7 +6,7 @@ using Yangtao.Hosting.NLog.Abstractions;
 
 namespace Yangtao.Hosting.NLog.RealtimeLog
 {
-    internal sealed class LogBufferQueueService : BackgroundService, ILogBufferQueueService
+    internal sealed class LogBufferQueueService : BackgroundService
     {
         private readonly Channel<LogInfo> _mainChannel;
 
