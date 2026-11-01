@@ -5,21 +5,22 @@ using Yangtao.Hosting.NLog.Abstractions;
 namespace Yangtao.Hosting.NLog.RealtimeLog
 {
     [Target("RealtimeLog")]
-    public sealed class RealtimeLogTarget : TargetWithLayout
+    internal sealed class RealtimeLogTarget : TargetWithLayout
     {
         private readonly ILogBufferQueueService _logBufferQueueService;
 
-        public RealtimeLogTarget(ILogBufferQueueService logBufferQueueService)
+        public RealtimeLogTarget(ILogBufferQueueService logBufferQueueService, RealtimeLogOptions realtimeLogOptions)
         {
             _logBufferQueueService = logBufferQueueService;
-            Name = "Realtime";
-            Layout = "${level}: ${longdate} ${newline}      ${callsite}    ${newline}      ${aspnet-request-ip:whenEmpty=localhost} ${newline}      ${message} ${exception:format=tostring}    ${newline}      ${aspnet-request-posted-body}";
+            Name = "RealtimeLog";
+
+            var layout = realtimeLogOptions.Layout ?? RealtimeLogBuilder.DefaultLayout;
+            Layout = layout;
         }
 
         protected override void Write(LogEventInfo logEvent)
         {
             var message = RenderLogEvent(Layout, logEvent);
-
             var logInfo = new LogInfo(
                 Timestamp: logEvent.TimeStamp,
                 Level: logEvent.Level.Name,

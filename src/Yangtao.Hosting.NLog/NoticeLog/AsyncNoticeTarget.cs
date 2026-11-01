@@ -6,14 +6,15 @@ using Yangtao.Hosting.NLog.Abstractions;
 
 namespace Yangtao.Hosting.NLog.NoticeLog
 {
-    internal class AsyncTarget : AsyncTaskTarget
+    [Target("AsyncNoticeLog")]
+    internal class AsyncNoticeTarget : AsyncTaskTarget
     {
-        private readonly IEnumerable<INoticeLogProvider> _noticeLogProviders;
+        private readonly IEnumerable<IAsyncNoticeLogProvider> _noticeLogProviders;
 
-        public AsyncTarget(IServiceProvider serviceProvider)
+        public AsyncNoticeTarget(IServiceProvider serviceProvider)
         {
             Name = "AsyncNoticeLog";
-            _noticeLogProviders = serviceProvider.GetServices<INoticeLogProvider>();
+            _noticeLogProviders = serviceProvider.GetServices<IAsyncNoticeLogProvider>();
         }
 
         protected override async Task WriteAsyncTask(LogEventInfo logEvent, CancellationToken cancellationToken)
@@ -22,6 +23,9 @@ namespace Yangtao.Hosting.NLog.NoticeLog
 
             foreach (var noticeLogProvider in _noticeLogProviders)
             {
+                if (logEvent.Level < noticeLogProvider.MinLevel) continue;
+                if (logEvent.Level > noticeLogProvider.MaxLevel) continue;
+
                 var formatLog = RenderLogEvent(noticeLogProvider.Layout, logEvent);
                 try
                 {

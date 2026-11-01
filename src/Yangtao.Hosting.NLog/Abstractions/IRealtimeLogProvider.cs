@@ -7,6 +7,12 @@ namespace Yangtao.Hosting.NLog.Abstractions
     /// </summary>
     public interface IRealtimeLogProvider
     {
+        /// <summary>
+        /// 订阅
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         Task SubscribeAsync(HttpContext context, CancellationToken cancellationToken);
     }
 }

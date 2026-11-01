@@ -1,23 +1,14 @@
-﻿using Microsoft.Extensions.Logging;
-using NLog;
-using NLog.Layouts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Yangtao.Hosting.Email.Abstractions;
-using Yangtao.Hosting.Email;
-using Yangtao.Hosting.MessageQueue.BufferQueue.Abstracts;
-using Yangtao.Hosting.NLog.Abstractions;
-using Microsoft.Extensions.Options;
-using System.Net.Http;
-using MimeKit.Text;
+﻿using Microsoft.Extensions.Options;
 using MimeKit;
+using MimeKit.Text;
+using NLog;
+using Yangtao.Hosting.Email;
+using Yangtao.Hosting.Email.Abstractions;
+using Yangtao.Hosting.MessageQueue.BufferQueue.Abstracts;
 
 namespace Yangtao.Hosting.NLog.NoticeLog
 {
-    internal class EmailNoticeLogProvider : INoticeLogProvider
+    internal class EmailNoticeLogProvider
     {
         private readonly string _serviceName;
 
@@ -26,16 +17,14 @@ namespace Yangtao.Hosting.NLog.NoticeLog
         private readonly IBufferQueue<LogInfo> _emailLogQueue;
         private readonly EmailOptions _emailOptions;
 
-        public EmailNoticeLogProvider(IOptions<NLogConfigurationOptions> options, IBufferQueueProvider bufferQueueProvider)
+        public EmailNoticeLogProvider(IOptions<NLogOptions> options, IBufferQueueProvider bufferQueueProvider)
         {
             _serviceName = options.Value.ServiceName;
-            _emailNoticeOptions = options.Value.EmailNoticeOptions ?? throw new NullReferenceException(nameof(NLogConfigurationOptions.EmailNoticeOptions));
+            _emailNoticeOptions = options.Value.EmailNoticeOptions ?? throw new NullReferenceException(nameof(NLogOptions.EmailNoticeOptions));
             _emailOptions = _emailNoticeOptions.EmailOptions;
 
             _emailLogQueue = bufferQueueProvider.CreateBufferQueue<LogInfo>("EmailLogQueue", async (item) => await SendEmailAsync(item), _emailNoticeOptions.Concurrency, _emailNoticeOptions.QueueCapacity);
         }
-
-        public Layout Layout => _emailNoticeOptions.Layout ?? throw new NullReferenceException(nameof(EmailNoticeOptions.Layout));
 
         public async Task WriteAsync(string formatLog, LogEventInfo logEvent, CancellationToken cancellationToken)
         {

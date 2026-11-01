@@ -5,8 +5,14 @@
     /// </summary>
     public enum LorResponseType
     {
+        /// <summary>
+        /// 文本
+        /// </summary>
         Text,
 
+        /// <summary>
+        /// json
+        /// </summary>
         Json
     }
 }

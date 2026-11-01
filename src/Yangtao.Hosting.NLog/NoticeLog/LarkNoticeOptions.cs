@@ -13,5 +13,7 @@ namespace Yangtao.Hosting.NLog.NoticeLog
         public override LogLevel MinLevel { set; get; } = LogLevel.Warn;
 
         public override LogLevel MaxLevel { set; get; } = LogLevel.Fatal;
+
+        internal const string LarkHttpClient = "LarkHttpClient";
     }
 }

@@ -31,7 +31,7 @@ namespace Yangtao.Hosting.NLog.FileLog
             {
                 if (Layout != null) return Layout;
 
-                if (LorResponseType == LorResponseType.Json) return NLogBuilder.BuildJsonLayout();
+                if (LorResponseType == LorResponseType.Json) return FileLogBuilder.BuildJsonLayout();
 
                 return FileLogBuilder.DefaultFileLogLayout;
             }

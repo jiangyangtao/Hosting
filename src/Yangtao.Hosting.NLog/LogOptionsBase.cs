@@ -5,6 +5,9 @@ using NLog.Targets;
 
 namespace Yangtao.Hosting.NLog
 {
+    /// <summary>
+    /// 日志配置基类
+    /// </summary>
     public abstract class LogOptionsBase
     {
         /// <summary>

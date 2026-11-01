@@ -1,6 +1,6 @@
 ﻿namespace Yangtao.Hosting.NLog.Abstractions
 {
-    public interface ILogBufferQueueService
+    internal interface ILogBufferQueueService
     {
         bool TryPublish(LogInfo logInfo);
 

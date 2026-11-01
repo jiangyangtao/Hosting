@@ -10,7 +10,7 @@ namespace Yangtao.Hosting.NLog.ConsoleLog
     {
         private readonly ConsoleLogOptions _consoleLogOptions;
 
-        private static Layout DefaultConsoleLayout => "${level}: ${longdate} ${newline}      ${callsite}    ${newline}      ${aspnet-request-ip:whenEmpty=localhost} ${newline}      ${message} ${exception:format=tostring}    ${newline}      ${aspnet-request-posted-body}";
+        private  static Layout DefaultConsoleLayout => "${level}: ${longdate} ${newline}      ${callsite}    ${newline}      ${aspnet-request-ip:whenEmpty=localhost} ${newline}      ${message} ${exception:format=tostring}    ${newline}      ${aspnet-request-posted-body}";
 
         public ConsoleLogBuilder(ConsoleLogOptions consoleLogOptions)
         {
@@ -69,7 +69,7 @@ namespace Yangtao.Hosting.NLog.ConsoleLog
 
         public LoggingRule ConsoleLogRule => _consoleLogOptions.BuildLoggingRule(ConsoleTarget);
 
-        public LoggingConfiguration ConfigurationFileLog(LoggingConfiguration configuration)
+        public LoggingConfiguration ConfigurationConsoleLog(LoggingConfiguration configuration)
         {
             configuration.AddTarget(ConsoleTarget);
             configuration.LoggingRules.Add(ConsoleLogRule);
