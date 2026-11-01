@@ -38,6 +38,8 @@ namespace Yangtao.Hosting.NLog.NoticeLog
         private async Task SendMessageAsync(LogInfo logInfo)
         {
             var title = $"{_serviceName} {logInfo.Level}";
+            if (_larkNoticeOptions.RenderTitle != null) title = _larkNoticeOptions.RenderTitle(logInfo);
+
             var data = new
             {
                 msg_type = "text",

@@ -17,13 +17,14 @@ namespace Yangtao.Hosting.NLog.NoticeLog
         private readonly IBufferQueue<LogInfo> _emailLogQueue;
         private readonly EmailOptions _emailOptions;
 
-        public EmailNoticeLogProvider(IOptions<NLogOptions> options, IBufferQueueProvider bufferQueueProvider)
+        public EmailNoticeLogProvider(IOptions<NLogOptions> options, IBufferQueueProvider bufferQueueProvider, IEmailService emailService)
         {
             _serviceName = options.Value.ServiceName;
             _emailNoticeOptions = options.Value.EmailNoticeOptions ?? throw new NullReferenceException(nameof(NLogOptions.EmailNoticeOptions));
             _emailOptions = _emailNoticeOptions.EmailOptions;
 
             _emailLogQueue = bufferQueueProvider.CreateBufferQueue<LogInfo>("EmailLogQueue", async (item) => await SendEmailAsync(item), _emailNoticeOptions.Concurrency, _emailNoticeOptions.QueueCapacity);
+            _emailService = emailService;
         }
 
         public async Task WriteAsync(string formatLog, LogEventInfo logEvent, CancellationToken cancellationToken)
@@ -40,6 +41,8 @@ namespace Yangtao.Hosting.NLog.NoticeLog
         private async Task SendEmailAsync(LogInfo logInfo)
         {
             var title = $"{_serviceName} {logInfo.Level}";
+            if (_emailNoticeOptions.RenderTitle != null) title = _emailNoticeOptions.RenderTitle(logInfo);
+
             var message = new MimeMessage()
             {
                 Subject = title,

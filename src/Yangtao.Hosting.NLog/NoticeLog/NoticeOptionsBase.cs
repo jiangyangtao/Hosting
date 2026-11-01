@@ -17,5 +17,10 @@
         /// 默认 1000
         /// </summary>
         public int AfterAsyncDelay { set; get; } = 1000;
+
+        /// <summary>
+        /// 渲染 title
+        /// </summary>
+        public Func<LogInfo, string>? RenderTitle;
     }
 }
