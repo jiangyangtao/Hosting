@@ -106,54 +106,22 @@ namespace Yangtao.Hosting.NLog.RealtimeLog
         /// <summary>
         /// 连接数据流
         /// </summary>
-        private byte[] ConnectedBytes
-        {
-            get
-            {
-                if (_realtimeLogOptions.LorResponseType == LorResponseType.Text) return Encoding.UTF8.GetBytes("event: connected\ndata: ok\n\n");
-
-                return Encoding.UTF8.GetBytes("{\"event\": \"connected\",\"data\":\"ok\"}");
-            }
-        }
+        private static byte[] ConnectedBytes => Encoding.UTF8.GetBytes("event: connecteion\ndata: ok\n\n");
 
         /// <summary>
         /// 心跳数据流
         /// </summary>
-        private byte[] HeartbeatBytes
-        {
-            get
-            {
-                if (_realtimeLogOptions.LorResponseType == LorResponseType.Text) return Encoding.UTF8.GetBytes("event: heartbeat\ndata: keep-alive\n\n");
-
-                return Encoding.UTF8.GetBytes("{\"event\": \"heartbeat\",\"data\": \"keep-alive\"}");
-            }
-        }
+        private static byte[] HeartbeatBytes => Encoding.UTF8.GetBytes("event: heartbeat\ndata: keep-alive\n\n");
 
         /// <summary>
         /// 日志前辍数据流
         /// </summary>
-        private byte[] LogPrefixBytes
-        {
-            get
-            {
-                if (_realtimeLogOptions.LorResponseType == LorResponseType.Text) return Encoding.UTF8.GetBytes("event: log\ndata: ");
-
-                return Encoding.UTF8.GetBytes("{\"event\": \"log\",\"data\": ");
-            }
-        }
+        private static byte[] LogPrefixBytes => Encoding.UTF8.GetBytes("event: log\ndata: ");
 
         /// <summary>
         /// 日志后辍数据流
         /// </summary>
-        private byte[] LogSuffixBytes
-        {
-            get
-            {
-                if (_realtimeLogOptions.LorResponseType == LorResponseType.Text) return Encoding.UTF8.GetBytes("\n\n");
-
-                return Encoding.UTF8.GetBytes("}");
-            }
-        }
+        private static byte[] LogSuffixBytes => Encoding.UTF8.GetBytes("\n\n");
 
 
 

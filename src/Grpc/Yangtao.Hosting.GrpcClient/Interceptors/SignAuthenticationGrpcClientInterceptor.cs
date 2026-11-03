@@ -38,7 +38,7 @@ namespace Yangtao.Hosting.GrpcClient.Interceptors
         /// <returns></returns>
         public override AsyncUnaryCall<TResponse> AsyncUnaryCall<TRequest, TResponse>(TRequest request, ClientInterceptorContext<TRequest, TResponse> context, AsyncUnaryCallContinuation<TRequest, TResponse> continuation)
         {
-            var exist = ExisySignAuthMethods(context.Method.Name);
+            var exist = ExistSignAuthMethods(context.Method.Name);
             if (exist == false) return base.AsyncUnaryCall(request, context, continuation);
 
             if (context.Options.Headers == null)
@@ -58,7 +58,7 @@ namespace Yangtao.Hosting.GrpcClient.Interceptors
             return base.AsyncUnaryCall(request, context, continuation);
         }
 
-        private bool ExisySignAuthMethods(string method)
+        private bool ExistSignAuthMethods(string method)
         {
             if (_signAuthenticationMethods.Count == 0) return true;
 

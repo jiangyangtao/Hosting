@@ -386,7 +386,7 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
                 var oldValue = propertyInfo.GetValue(entity);
                 var newValue = propertyInfo.GetValue(cloneEntity);
 
-                if (oldValue != newValue)
+                if (Equals(oldValue, newValue) == false)
                 {
                     propertyInfo.SetValue(entity, newValue);
                     _dbContext.Entry(entity).Property(propertyInfo.Name).IsModified = true;

@@ -6,7 +6,7 @@ namespace Yangtao.Hosting.GrpcServer.Attributes
     /// 签名验证 <see cref="Attribute"/>
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public class SignAuthenticationAttribute : AllowAnonymousAttribute
+    public class SignAuthenticationAttribute : Attribute, IAllowAnonymous
     {
         /// <summary>
         /// 构建 <see cref="SignAuthenticationAttribute"/>
@@ -14,6 +14,5 @@ namespace Yangtao.Hosting.GrpcServer.Attributes
         public SignAuthenticationAttribute()
         {
         }
-
     }
 }
