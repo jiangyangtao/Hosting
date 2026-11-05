@@ -18,6 +18,7 @@
 	</ImportGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\Extensions\Yangtao.Hosting.Http.Extensions\Yangtao.Hosting.Http.Extensions.csproj" />
 		<ProjectReference Include="..\..\Yangtao.Hosting.Abstractions\Yangtao.Hosting.Abstractions.csproj" />
 		<ProjectReference Include="..\..\Yangtao.Hosting.Encryption\Yangtao.Hosting.Encryption.csproj" />
 	</ItemGroup>

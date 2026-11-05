@@ -10,7 +10,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Grpc.Net.ClientFactory" Version="2.50.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.13" />
 	</ItemGroup>
 
 

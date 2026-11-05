@@ -12,6 +12,8 @@ namespace Yangtao.Hosting.GrpcClient
     {
         public static IHttpClientBuilder AddGrpcClientService<TClient>(this IServiceCollection services, Action<GrpcClientOptions> optionAction) where TClient : class
         {
+            services.AddHttpContextAccessor();
+
             var clientOptions = new GrpcClientOptions();
             optionAction(clientOptions);
 

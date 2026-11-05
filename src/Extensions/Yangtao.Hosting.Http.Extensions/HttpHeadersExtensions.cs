@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Net.Http.Headers;
 using System.Text;
 using System.Web;
 
@@ -26,7 +27,7 @@ namespace Yangtao.Hosting.Extensions
             return headers[key].ToString();
         }
 
-        public static string GetAuthorization(this IHeaderDictionary headers) => headers.GetValue("authorization");
+        public static string GetAuthorization(this IHeaderDictionary headers) => headers.GetValue(HeaderNames.Authorization);
 
         public static void SetFileName(this IHeaderDictionary headers, string fileName, string fileNameKey = "filename")
         {

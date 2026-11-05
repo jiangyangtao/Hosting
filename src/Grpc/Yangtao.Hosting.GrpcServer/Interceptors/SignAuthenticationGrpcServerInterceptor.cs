@@ -29,9 +29,9 @@ namespace Yangtao.Hosting.GrpcServer.Interceptors
             var signAuthentication = endpoint.Metadata.GetMetadata<SignAuthenticationAttribute>();
             if (signAuthentication == null) return base.UnaryServerHandler(request, context, continuation);
 
-            if (httpContext.Request.Headers.Authorization.IsNullOrEmpty()) throw UnauthorizedException;
+            var authorization = httpContext.Request.Headers.GetAuthorization();
+            if (authorization.IsNullOrEmpty()) throw UnauthorizedException;
 
-            var authorization = httpContext.Request.Headers.Authorization.ToString();
             var time = _signAuthenticationProvider.Decrypt(authorization, _grpcServerOptions.Value.OptionName);
 
             var parseResult = DateTime.TryParse(time, out DateTime d);
