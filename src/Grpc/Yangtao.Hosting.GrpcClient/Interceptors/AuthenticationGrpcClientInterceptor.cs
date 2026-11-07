@@ -2,6 +2,7 @@
 using Grpc.Core.Interceptors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
+using Microsoft.Net.Http.Headers;
 
 namespace Yangtao.Hosting.GrpcClient.Interceptors
 {
@@ -11,6 +12,7 @@ namespace Yangtao.Hosting.GrpcClient.Interceptors
     public class AuthenticationGrpcClientInterceptor : Interceptor
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private const string authorizationKey = "authorization";
 
         /// <summary>
         /// 构建 <see cref="AuthenticationGrpcClientInterceptor"/>
@@ -38,8 +40,12 @@ namespace Yangtao.Hosting.GrpcClient.Interceptors
                 context = new ClientInterceptorContext<TRequest, TResponse>(context.Method, context.Host, options);
             }
 
-            var authorization = GetAuthorization();
-            context.Options.Headers.Add("Authorization", authorization);
+            var existAuthorization = context.Options.Headers.Any(a => a.Key == authorizationKey);
+            if (existAuthorization == false)
+            {
+                var authorization = GetAuthorization();
+                context.Options.Headers.Add(HeaderNames.Authorization, authorization);
+            }
             return base.AsyncUnaryCall(request, context, continuation);
         }
 
@@ -52,7 +58,7 @@ namespace Yangtao.Hosting.GrpcClient.Interceptors
             if (_httpContextAccessor.HttpContext.Request.Headers.Any() == false) return string.Empty;
 
             var headers = _httpContextAccessor.HttpContext.Request.Headers;
-            var r = headers.TryGetValue("Authorization", out StringValues _value);
+            var r = headers.TryGetValue(HeaderNames.Authorization, out StringValues _value);
             if (r == false) return string.Empty;
 
             var removeChar = "Bearer";
