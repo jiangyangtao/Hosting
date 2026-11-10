@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Yangtao.Hosting.Extensions;
@@ -42,22 +43,22 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
 
         public TEntity[] EmptyArray => Array.Empty<TEntity>();
 
-        public async Task<TEntity> AddAsync(TEntity entity, bool isCommit = true)
+        public async Task<TEntity> AddAsync(TEntity entity, bool isCommit = true, CancellationToken cancellationToken = default)
         {
-            if (entity == null) return null;
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             entity.CreateUser = UserId;
             entity.UpdateUser = UserId;
             entity.CreateTime = DateTime.Now;
             entity.UpdateTime = DateTime.Now;
-            await _dbContext.AddAsync(entity);
+            await _dbContext.AddAsync(entity, cancellationToken);
 
-            if (isCommit) await CommitAsync();
+            if (isCommit) await CommitAsync(cancellationToken);
 
             return entity;
         }
 
-        public async Task<long> AddRangeAsync(TEntity[] entities, bool isCommit = true)
+        public async Task<long> AddRangeAsync(TEntity[] entities, bool isCommit = true, CancellationToken cancellationToken = default)
         {
             if (entities.IsNullOrEmpty()) return 0;
 
@@ -74,57 +75,57 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
             }
 
             _dbContext.ChangeTracker.AutoDetectChangesEnabled = false; // 批量操作需要关闭自动检测
-            await _dbContext.Set<TEntity>().AddRangeAsync(entities);
-            if (isCommit) await CommitAsync();
+            await _dbContext.Set<TEntity>().AddRangeAsync(entities, cancellationToken);
+            if (isCommit) await CommitAsync(cancellationToken);
 
             return entities.Count();
         }
 
-        public async Task<long> CommitAsync()
+        public async Task<long> CommitAsync(CancellationToken cancellationToken = default)
         {
-            return await _dbContext.SaveChangesAsync();
+            return await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public abstract Task DeleteByIdAsync(TKeyType id, bool isCommit = true);
+        public abstract Task DeleteByIdAsync(TKeyType id, bool isCommit = true, CancellationToken cancellationToken = default);
 
 
-        public async Task<long> DeleteIfExistAsync(Expression<Func<TEntity, bool>> predicate, bool isCommit = true)
+        public async Task<long> DeleteIfExistAsync(Expression<Func<TEntity, bool>> predicate, bool isCommit = true, CancellationToken cancellationToken = default)
         {
-            var entities = await Get(predicate).ToArrayAsync();
+            var entities = await Get(predicate).ToArrayAsync(cancellationToken);
             if (entities.IsNullOrEmpty()) return 0;
 
             _dbContext.RemoveRange(entities);
-            if (isCommit) await CommitAsync();
+            if (isCommit) await CommitAsync(cancellationToken);
 
             return entities.Length;
         }
 
-        public async Task<long> DeleteAsync(TEntity entity, bool isCommit = true)
+        public async Task<long> DeleteAsync(TEntity entity, bool isCommit = true, CancellationToken cancellationToken = default)
         {
             if (entity == null) return 0;
 
             _dbContext.Remove(entity);
-            if (isCommit) await CommitAsync();
+            if (isCommit) await CommitAsync(cancellationToken);
 
             return 1;
         }
 
-        public async Task<long> DeleteAllAsync(bool isCommit = true)
+        public async Task<long> DeleteAllAsync(bool isCommit = true, CancellationToken cancellationToken = default)
         {
             var list = _dbContext.Set<TEntity>().ToArray();
-            _dbContext.RemoveRange(list);
+            _dbContext.RemoveRange(list, cancellationToken);
 
-            if (isCommit) await CommitAsync();
+            if (isCommit) await CommitAsync(cancellationToken);
 
             return list.Length;
         }
 
-        public async Task<long> DeleteRangeAsync(ICollection<TEntity> entities, bool isCommit = true)
+        public async Task<long> DeleteRangeAsync(ICollection<TEntity> entities, bool isCommit = true, CancellationToken cancellationToken = default)
         {
             if (entities.IsNullOrEmpty()) return 0;
 
             _dbContext.Set<TEntity>().RemoveRange(entities);
-            if (isCommit) await CommitAsync();
+            if (isCommit) await CommitAsync(cancellationToken);
 
             return entities.Count;
         }
@@ -138,26 +139,28 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
 
         public IQueryable<TEntity> GetNoTracking(Expression<Func<TEntity, bool>> predicate) => _dbContext.Set<TEntity>().Where(predicate).AsNoTracking();
 
-        public Task<TEntity?> GetByIdAsync(Expression<Func<TEntity, bool>> predicate) => _dbContext.Set<TEntity>().Where(predicate).FirstOrDefaultAsync();
+        public Task<TEntity?> GetByIdAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default) =>
+            _dbContext.Set<TEntity>().Where(predicate).FirstOrDefaultAsync(cancellationToken);
 
-        public abstract Task<TEntity?> GetByIdAsync(TKeyType id);
+        public abstract Task<TEntity?> GetByIdAsync(TKeyType id, CancellationToken cancellationToken = default);
 
-        public async Task<TEntity> UpdateAsync(TEntity entity, bool isCommit = true)
+        public async Task<TEntity> UpdateAsync(TEntity entity, bool isCommit = true, CancellationToken cancellationToken = default)
         {
-            if (entity == null) return null;
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             entity.UpdateTime = DateTime.Now;
             entity.UpdateUser = UserId;
             _dbContext.Entry(entity).State = EntityState.Modified;
 
-            if (isCommit) await CommitAsync();
+            if (isCommit) await CommitAsync(cancellationToken);
 
             return entity;
         }
 
-        public Task<TEntity> UpdateAsync(TEntity entity, IEntityColumns<TEntity> updateColumns, bool isCommit = true) => UpdatePartAsync(entity, updateColumns, isCommit);
+        public Task<TEntity> UpdateAsync(TEntity entity, IEntityColumns<TEntity> updateColumns, bool isCommit = true, CancellationToken cancellationToken = default)
+            => UpdatePartAsync(entity, updateColumns, isCommit, cancellationToken);
 
-        public async Task<TEntity> UpdatePartAsync(TEntity entity, Expression<Func<TEntity, object>> updateColumns, bool isCommit = true)
+        public async Task<TEntity> UpdatePartAsync(TEntity entity, Expression<Func<TEntity, object>> updateColumns, bool isCommit = true, CancellationToken cancellationToken = default)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
             if (updateColumns == null) throw new ArgumentNullException(nameof(updateColumns)); ;
@@ -184,19 +187,19 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
             entity.UpdateTime = DateTime.Now;
             _dbContext.Entry(entity).Property(a => a.UpdateTime).IsModified = true;
 
-            if (isCommit) await CommitAsync();
+            if (isCommit) await CommitAsync(cancellationToken);
 
             return entity;
         }
 
-        public async Task<TEntity> UpdatePartAsync(TEntity entity, IEntityColumns<TEntity> updateColumns, bool isCommit = true)
+        public async Task<TEntity> UpdatePartAsync(TEntity entity, IEntityColumns<TEntity> updateColumns, bool isCommit = true, CancellationToken cancellationToken = default)
         {
-            if (entity == null) return null;
-            if (updateColumns.IsNullOrEmpty()) return null;
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
+            if (updateColumns.IsNullOrEmpty()) return entity;
 
 
             var columns = updateColumns.GetColumns();
-            if (columns.IsNullOrEmpty()) return null;
+            if (columns.IsNullOrEmpty()) return entity;
 
             foreach (var column in columns)
             {
@@ -215,7 +218,7 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
             entity.UpdateTime = DateTime.Now;
             _dbContext.Entry(entity).Property(a => a.UpdateTime).IsModified = true;
 
-            if (isCommit) await CommitAsync();
+            if (isCommit) await CommitAsync(cancellationToken);
 
             return entity;
         }
@@ -228,13 +231,13 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
             return string.Empty;
         }
 
-        public async Task<TEntity> UpdatePropertyAsync<TProperty>([NotNull] TEntity entity, Expression<Func<TEntity, TProperty>> propertyExpression, bool isCommit = true)
+        public async Task<TEntity> UpdatePropertyAsync<TProperty>([NotNull] TEntity entity, Expression<Func<TEntity, TProperty>> propertyExpression, bool isCommit = true, CancellationToken cancellationToken = default)
         {
-            if (entity == null) return null;
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             var name = propertyExpression.GetMemberAccess().Name;
             var isValidField = IsValidField(name);
-            if (isValidField == false) return null;
+            if (isValidField == false) return entity;
 
             entity.UpdateTime = DateTime.Now;
             _dbContext.Entry(entity).Property(a => a.UpdateTime).IsModified = true;
@@ -246,12 +249,12 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
 
             _dbContext.Entry(entity).Property(propertyExpression).IsModified = true;
 
-            if (isCommit) await CommitAsync();
+            if (isCommit) await CommitAsync(cancellationToken);
 
             return entity;
         }
 
-        public async Task<long> UpdateRangeAsync(TEntity[] entities, bool isCommit = true)
+        public async Task<long> UpdateRangeAsync(TEntity[] entities, bool isCommit = true, CancellationToken cancellationToken = default)
         {
             foreach (var entity in entities)
             {
@@ -261,12 +264,12 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
             }
 
             _dbContext.UpdateRange(entities);
-            if (isCommit) await CommitAsync();
+            if (isCommit) await CommitAsync(cancellationToken);
 
             return entities.Length;
         }
 
-        public async Task<long> UpdateRangePartAsync(TEntity[] entities, Expression<Func<TEntity, object>> updateColumns, bool isCommit = true)
+        public async Task<long> UpdateRangePartAsync(TEntity[] entities, Expression<Func<TEntity, object>> updateColumns, bool isCommit = true, CancellationToken cancellationToken = default)
         {
             if (entities.IsNullOrEmpty()) return 0;
             if (updateColumns == null) return 0;
@@ -300,12 +303,12 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
                 _dbContext.Entry(entity).Property(a => a.UpdateTime).IsModified = true;
             }
 
-            if (isCommit) await CommitAsync();
+            if (isCommit) await CommitAsync(cancellationToken);
 
             return entities.Count();
         }
 
-        public async Task<long> UpdateRangePartAsync((TEntity entities, IEntityColumns<TEntity> updateColumns)[] values, bool isCommit = true)
+        public async Task<long> UpdateRangePartAsync((TEntity entities, IEntityColumns<TEntity> updateColumns)[] values, bool isCommit = true, CancellationToken cancellationToken = default)
         {
             if (values.IsNullOrEmpty()) return 0;
 
@@ -331,12 +334,12 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
                 }
             }
 
-            if (isCommit) await CommitAsync();
+            if (isCommit) await CommitAsync(cancellationToken);
 
             return values.Length;
         }
 
-        public async Task<long> UpdateRangePropertyAsync<TProperty>(TEntity[] entities, Expression<Func<TEntity, TProperty>> propertyExpression, bool isCommit = true)
+        public async Task<long> UpdateRangePropertyAsync<TProperty>(TEntity[] entities, Expression<Func<TEntity, TProperty>> propertyExpression, bool isCommit = true, CancellationToken cancellationToken = default)
         {
             if (entities.IsNullOrEmpty()) return 0;
 
@@ -357,16 +360,16 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
                 _dbContext.Entry(entity).Property(propertyExpression).IsModified = true;
             }
 
-            if (isCommit) await CommitAsync();
+            if (isCommit) await CommitAsync(cancellationToken);
 
             return entities.Length;
         }
 
-        public abstract Task<TEntity> UpdateIfExistByIdAsync(TKeyType id, Action<TEntity> action, bool isCommit = true);
+        public abstract Task<TEntity> UpdateIfExistByIdAsync(TKeyType id, Action<TEntity> action, bool isCommit = true, CancellationToken cancellationToken = default);
 
-        public async Task<TEntity> UpdateIfExistAsync(Expression<Func<TEntity, bool>> predicate, Action<TEntity> action, bool isCommit = true)
+        public async Task<TEntity> UpdateIfExistAsync(Expression<Func<TEntity, bool>> predicate, Action<TEntity> action, bool isCommit = true, CancellationToken cancellationToken = default)
         {
-            var entity = await Get(predicate).FirstOrDefaultAsync();
+            var entity = await Get(predicate).FirstOrDefaultAsync(cancellationToken);
             if (entity == null) return null;
 
             var cloneEntity = Clone(entity);
@@ -405,7 +408,7 @@ namespace Yangtao.Hosting.Repository.Core.Repositories
             entity.UpdateTime = DateTime.Now;
             _dbContext.Entry(entity).Property(a => a.UpdateTime).IsModified = true;
 
-            if (isCommit) await CommitAsync();
+            if (isCommit) await CommitAsync(cancellationToken);
 
             return cloneEntity;
         }

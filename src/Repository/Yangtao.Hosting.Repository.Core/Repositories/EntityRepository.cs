@@ -11,17 +11,17 @@ namespace Yangtao.Hosting.Repository.Core.Providers
         {
         }
 
-        public override async Task DeleteByIdAsync(string id, bool isCommit = true)
+        public override async Task DeleteByIdAsync(string id, bool isCommit = true, CancellationToken cancellationToken = default)
         {
-            var entity = await GetByIdAsync(id);
-            if (entity != null) await DeleteAsync(entity, isCommit);
+            var entity = await GetByIdAsync(id, cancellationToken);
+            if (entity != null) await DeleteAsync(entity, isCommit, cancellationToken);
         }
 
-        public override async Task<TEntity?> GetByIdAsync(string id) => await _dbContext.Set<TEntity>().FirstOrDefaultAsync(a => a.Id == id);
+        public override async Task<TEntity?> GetByIdAsync(string id, CancellationToken cancellationToken = default) => await _dbContext.Set<TEntity>().FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
 
-        public override async Task<TEntity> UpdateIfExistByIdAsync(string id, Action<TEntity> action, bool isCommit = true)
+        public override async Task<TEntity> UpdateIfExistByIdAsync(string id, Action<TEntity> action, bool isCommit = true, CancellationToken cancellationToken = default)
         {
-            return await UpdateIfExistAsync(a => a.Id == id, action, isCommit);
+            return await UpdateIfExistAsync(a => a.Id == id, action, isCommit, cancellationToken);
         }
     }
 
@@ -31,17 +31,17 @@ namespace Yangtao.Hosting.Repository.Core.Providers
         {
         }
 
-        public override async Task DeleteByIdAsync(Guid id, bool isCommit = true)
+        public override async Task DeleteByIdAsync(Guid id, bool isCommit = true, CancellationToken cancellationToken = default)
         {
-            var entity = await GetByIdAsync(id);
-            if (entity != null) await DeleteAsync(entity, isCommit);
+            var entity = await GetByIdAsync(id, cancellationToken);
+            if (entity != null) await DeleteAsync(entity, isCommit, cancellationToken);
         }
 
-        public override async Task<TEntity?> GetByIdAsync(Guid id) => await _dbContext.Set<TEntity>().FirstOrDefaultAsync(a => a.Id == id);
+        public override async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) => await _dbContext.Set<TEntity>().FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
 
-        public override async Task<TEntity> UpdateIfExistByIdAsync(Guid id, Action<TEntity> action, bool isCommit = true)
+        public override async Task<TEntity> UpdateIfExistByIdAsync(Guid id, Action<TEntity> action, bool isCommit = true, CancellationToken cancellationToken = default)
         {
-            return await UpdateIfExistAsync(a => a.Id == id, action, isCommit);
+            return await UpdateIfExistAsync(a => a.Id == id, action, isCommit, cancellationToken);
         }
     }
 
@@ -51,17 +51,17 @@ namespace Yangtao.Hosting.Repository.Core.Providers
         {
         }
 
-        public override async Task DeleteByIdAsync(int id, bool isCommit = true)
+        public override async Task DeleteByIdAsync(int id, bool isCommit = true, CancellationToken cancellationToken = default)
         {
-            var entity = await GetByIdAsync(id);
-            if (entity != null) await DeleteAsync(entity, isCommit);
+            var entity = await GetByIdAsync(id, cancellationToken);
+            if (entity != null) await DeleteAsync(entity, isCommit, cancellationToken);
         }
 
-        public override async Task<TEntity?> GetByIdAsync(int id) => await _dbContext.Set<TEntity>().FirstOrDefaultAsync(a => a.Id == id);
+        public override async Task<TEntity?> GetByIdAsync(int id, CancellationToken cancellationToken = default) => await _dbContext.Set<TEntity>().FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
 
-        public override async Task<TEntity> UpdateIfExistByIdAsync(int id, Action<TEntity> action, bool isCommit = true)
+        public override async Task<TEntity> UpdateIfExistByIdAsync(int id, Action<TEntity> action, bool isCommit = true, CancellationToken cancellationToken = default)
         {
-            return await UpdateIfExistAsync(a => a.Id == id, action, isCommit);
+            return await UpdateIfExistAsync(a => a.Id == id, action, isCommit, cancellationToken);
         }
     }
 
@@ -71,17 +71,17 @@ namespace Yangtao.Hosting.Repository.Core.Providers
         {
         }
 
-        public override async Task DeleteByIdAsync(long id, bool isCommit = true)
+        public override async Task DeleteByIdAsync(long id, bool isCommit = true, CancellationToken cancellationToken = default)
         {
-            var entity = await GetByIdAsync(id);
-            if (entity != null) await DeleteAsync(entity, isCommit);
+            var entity = await GetByIdAsync(id, cancellationToken);
+            if (entity != null) await DeleteAsync(entity, isCommit, cancellationToken);
         }
 
-        public override async Task<TEntity?> GetByIdAsync(long id) => await _dbContext.Set<TEntity>().FirstOrDefaultAsync(a => a.Id == id);
+        public override Task<TEntity?> GetByIdAsync(long id, CancellationToken cancellationToken = default) => _dbContext.Set<TEntity>().FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
 
-        public override async Task<TEntity> UpdateIfExistByIdAsync(long id, Action<TEntity> action, bool isCommit = true)
+        public override Task<TEntity> UpdateIfExistByIdAsync(long id, Action<TEntity> action, bool isCommit = true, CancellationToken cancellationToken = default)
         {
-            return await UpdateIfExistAsync(a => a.Id == id, action, isCommit);
+            return UpdateIfExistAsync(a => a.Id == id, action, isCommit, cancellationToken);
         }
     }
 }

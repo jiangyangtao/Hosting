@@ -42,6 +42,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
 
         public Type? Source { get; }
 
+        public string? Module { set; get; }
 
         public string BooleanTrueText { set; get; }
 

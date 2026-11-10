@@ -57,6 +57,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
             ActionApi = selectAttribute.ActionApi;
             SourceType = selectAttribute.SourceType;
             HttpMethodType = selectAttribute.HttpMethodType;
+            Module = selectAttribute.Module;
             ServiceName = documentHandler.GetServiceName(selectAttribute.ServiceName);
 
             Bordered = selectAttribute.Bordered;
@@ -101,6 +102,8 @@ namespace Yangtao.Hosting.FrontendApi.Controls
         public ApiVersion ApiVersion { set; get; } = ApiVersion.v1;
 
         public string? ServiceName { set; get; }
+
+        public string? Module { set; get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public override ControlType ControlType => ControlType.Select;

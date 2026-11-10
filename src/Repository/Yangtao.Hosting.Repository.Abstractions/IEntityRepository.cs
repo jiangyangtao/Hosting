@@ -13,7 +13,7 @@ namespace Yangtao.Hosting.Repository.Abstractions
         /// <param name="entity"></param>
         /// <param name="isCommit"></param>
         /// <returns></returns>
-        Task<TEntity> AddAsync(TEntity entity, bool isCommit = true);
+        Task<TEntity> AddAsync(TEntity entity, bool isCommit = true, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 批量添加
@@ -22,7 +22,7 @@ namespace Yangtao.Hosting.Repository.Abstractions
         /// <param name="entities"></param>
         /// <param name="isCommit"></param>
         /// <returns></returns>
-        Task<long> AddRangeAsync(TEntity[] entities, bool isCommit = true);
+        Task<long> AddRangeAsync(TEntity[] entities, bool isCommit = true, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 修改
@@ -31,23 +31,23 @@ namespace Yangtao.Hosting.Repository.Abstractions
         /// <param name="entity"></param>
         /// <param name="isCommit"></param>
         /// <returns></returns>
-        Task<TEntity> UpdateAsync(TEntity entity, bool isCommit = true);
+        Task<TEntity> UpdateAsync(TEntity entity, bool isCommit = true, CancellationToken cancellationToken = default);
 
-        Task<TEntity> UpdatePartAsync(TEntity entity, Expression<Func<TEntity, object>> updateColumns, bool isCommit = true);
+        Task<TEntity> UpdatePartAsync(TEntity entity, Expression<Func<TEntity, object>> updateColumns, bool isCommit = true, CancellationToken cancellationToken = default);
 
-        Task<TEntity> UpdatePartAsync(TEntity entity, IEntityColumns<TEntity> updateColumns, bool isCommit = true);
+        Task<TEntity> UpdatePartAsync(TEntity entity, IEntityColumns<TEntity> updateColumns, bool isCommit = true, CancellationToken cancellationToken = default);
 
-        Task<TEntity> UpdatePropertyAsync<TProperty>(TEntity entity, Expression<Func<TEntity, TProperty>> propertyExpression, bool isCommit = true);
+        Task<TEntity> UpdatePropertyAsync<TProperty>(TEntity entity, Expression<Func<TEntity, TProperty>> propertyExpression, bool isCommit = true, CancellationToken cancellationToken = default);
 
-        Task<long> UpdateRangePartAsync(TEntity[] entities, Expression<Func<TEntity, object>> updateColumns, bool isCommit = true);
+        Task<long> UpdateRangePartAsync(TEntity[] entities, Expression<Func<TEntity, object>> updateColumns, bool isCommit = true, CancellationToken cancellationToken = default);
 
-        Task<long> UpdateRangePartAsync((TEntity entities, IEntityColumns<TEntity> updateColumns)[] values, bool isCommit = true);
+        Task<long> UpdateRangePartAsync((TEntity entities, IEntityColumns<TEntity> updateColumns)[] values, bool isCommit = true, CancellationToken cancellationToken = default);
 
-        Task<long> UpdateRangePropertyAsync<TProperty>(TEntity[] entities, Expression<Func<TEntity, TProperty>> propertyExpression, bool isCommit = true);
+        Task<long> UpdateRangePropertyAsync<TProperty>(TEntity[] entities, Expression<Func<TEntity, TProperty>> propertyExpression, bool isCommit = true, CancellationToken cancellationToken = default);
 
-        Task<TEntity> UpdateIfExistByIdAsync(TKeyType id, Action<TEntity> action, bool isCommit = true);
+        Task<TEntity> UpdateIfExistByIdAsync(TKeyType id, Action<TEntity> action, bool isCommit = true, CancellationToken cancellationToken = default);
 
-        Task<TEntity> UpdateIfExistAsync(Expression<Func<TEntity, bool>> predicate, Action<TEntity> action, bool isCommit = true);
+        Task<TEntity> UpdateIfExistAsync(Expression<Func<TEntity, bool>> predicate, Action<TEntity> action, bool isCommit = true, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 批量修改
@@ -55,7 +55,7 @@ namespace Yangtao.Hosting.Repository.Abstractions
         /// <param name="entities"></param>
         /// <param name="isCommit"></param>
         /// <returns></returns>
-        Task<long> UpdateRangeAsync(TEntity[] entities, bool isCommit = true);
+        Task<long> UpdateRangeAsync(TEntity[] entities, bool isCommit = true, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 根据条件删除
@@ -64,7 +64,7 @@ namespace Yangtao.Hosting.Repository.Abstractions
         /// <param name="predicate"></param>
         /// <param name="isCommit"></param>
         /// <returns></returns>
-        Task<long> DeleteIfExistAsync(Expression<Func<TEntity, bool>> predicate, bool isCommit = true);
+        Task<long> DeleteIfExistAsync(Expression<Func<TEntity, bool>> predicate, bool isCommit = true, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 根据 Id 删除
@@ -72,7 +72,7 @@ namespace Yangtao.Hosting.Repository.Abstractions
         /// <param name="id"></param>
         /// <param name="isCommit"></param>
         /// <returns></returns>
-        Task DeleteByIdAsync(TKeyType id, bool isCommit = true);
+        Task DeleteByIdAsync(TKeyType id, bool isCommit = true, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 删除一条数据
@@ -81,7 +81,7 @@ namespace Yangtao.Hosting.Repository.Abstractions
         /// <param name="entity"></param>
         /// <param name="isCommit"></param>
         /// <returns></returns>
-        Task<long> DeleteAsync(TEntity entity, bool isCommit = true);
+        Task<long> DeleteAsync(TEntity entity, bool isCommit = true, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 删除一个对象的所有数据
@@ -89,7 +89,7 @@ namespace Yangtao.Hosting.Repository.Abstractions
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="isCommit"></param>
         /// <returns></returns>
-        Task<long> DeleteAllAsync(bool isCommit = true);
+        Task<long> DeleteAllAsync(bool isCommit = true, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 批量删除
@@ -98,13 +98,13 @@ namespace Yangtao.Hosting.Repository.Abstractions
         /// <param name="entities"></param>
         /// <param name="isCommit"></param>
         /// <returns></returns>
-        Task<long> DeleteRangeAsync(ICollection<TEntity> entities, bool isCommit = true);
+        Task<long> DeleteRangeAsync(ICollection<TEntity> entities, bool isCommit = true, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 提交
         /// </summary>
         /// <returns></returns>
-        Task<long> CommitAsync();
+        Task<long> CommitAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取一条数据
@@ -112,7 +112,7 @@ namespace Yangtao.Hosting.Repository.Abstractions
         /// <typeparam name="TSource"></typeparam>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        Task<TEntity?> GetByIdAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity?> GetByIdAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取一条数据
@@ -120,7 +120,7 @@ namespace Yangtao.Hosting.Repository.Abstractions
         /// <typeparam name="TSource"></typeparam>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<TEntity?> GetByIdAsync(TKeyType id);
+        Task<TEntity?> GetByIdAsync(TKeyType id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取一个 IQueryable
@@ -140,7 +140,6 @@ namespace Yangtao.Hosting.Repository.Abstractions
         /// </summary>
         /// <typeparam name="TSource"></typeparam>
         /// <param name="predicate"></param>
-        /// <param name="include"></param>
         /// <returns></returns>
         IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate);
 
