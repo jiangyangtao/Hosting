@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Yangtao.Hosting.FrontendApi
 {
@@ -22,14 +24,20 @@ namespace Yangtao.Hosting.FrontendApi
 
         private static IEndpointRouteBuilder UseFrontendConfiguration(this IEndpointRouteBuilder endpointRouteBuilder, FrontendApiConfigurationOptions options)
         {
+            var loggerFactory = endpointRouteBuilder.ServiceProvider.GetRequiredService<ILoggerFactory>();
+            var logger = loggerFactory.CreateLogger("FrontendApi");
+
             var result = new FrontendComponentBuilder(options).BuildJson();
-            var routeHandlerBuilder = endpointRouteBuilder.MapGet(options.Endpoint, async (HttpResponse response) =>
+            var routeHandlerBuilder = endpointRouteBuilder.MapGet(options.Endpoint, async (HttpResponse response, CancellationToken cancellationToken) =>
             {
                 response.ContentType = options.ResponseContentType;
-                await response.WriteAsync(result);
+                await response.WriteAsync(result, cancellationToken);
+                await response.CompleteAsync();
             });
 
             if (options.RequireAuthorization) routeHandlerBuilder.RequireAuthorization();
+
+            logger.LogInformation("Registered FrontendApi, ServiceName:{ServiceName}.", options.DefaultServiceName);
             return endpointRouteBuilder;
         }
     }

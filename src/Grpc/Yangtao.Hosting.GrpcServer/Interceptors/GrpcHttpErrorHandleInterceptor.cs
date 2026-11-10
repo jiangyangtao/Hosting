@@ -1,5 +1,6 @@
 ﻿using Grpc.Core;
 using Grpc.Core.Interceptors;
+using Microsoft.Extensions.Logging;
 using Yangtao.Hosting.Core.HttpErrorResult;
 using Yangtao.Hosting.Extensions;
 
@@ -10,8 +11,11 @@ namespace Yangtao.Hosting.GrpcServer.Interceptors
     /// </summary>
     internal class GrpcHttpErrorHandleInterceptor : Interceptor
     {
-        public GrpcHttpErrorHandleInterceptor()
+        private readonly ILogger<GrpcHttpErrorHandleInterceptor> _logger;
+
+        public GrpcHttpErrorHandleInterceptor(ILogger<GrpcHttpErrorHandleInterceptor> logger)
         {
+            _logger = logger;
         }
 
         public override async Task<TResponse> UnaryServerHandler<TRequest, TResponse>(TRequest request, ServerCallContext context, UnaryServerMethod<TRequest, TResponse> continuation)
@@ -23,6 +27,7 @@ namespace Yangtao.Hosting.GrpcServer.Interceptors
             catch (Exception e)
             {
                 var (code, message) = GetErrorResult(e);
+                _logger.LogError(e, "error message:{message}", message);
                 var response = CreateErrorResponse(continuation, code, message);
                 if (response == null) throw;
 

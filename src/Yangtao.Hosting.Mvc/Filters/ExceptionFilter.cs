@@ -47,6 +47,7 @@ namespace Yangtao.Hosting.Mvc.Filters
 
             context.HttpContext.Response.ContentType = MediaTypeNames.Application.Json;
             await context.HttpContext.Response.WriteAsync(result);
+            await context.HttpContext.Response.CompleteAsync();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Grpc.Core;
 using Grpc.Core.Interceptors;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.GrpcCore.Abstractions;
@@ -13,11 +14,16 @@ namespace Yangtao.Hosting.GrpcServer.Interceptors
     {
         private readonly ISignAuthenticationProvider _signAuthenticationProvider;
         private readonly IOptions<GrpcServerOptions> _grpcServerOptions;
+        private readonly ILogger<SignAuthenticationGrpcServerInterceptor> _logger;
 
-        public SignAuthenticationGrpcServerInterceptor(ISignAuthenticationProvider signAuthenticationProvider, IOptions<GrpcServerOptions> grpcServerOptions)
+        public SignAuthenticationGrpcServerInterceptor(
+            ISignAuthenticationProvider signAuthenticationProvider,
+            IOptions<GrpcServerOptions> grpcServerOptions,
+            ILogger<SignAuthenticationGrpcServerInterceptor> logger)
         {
             _signAuthenticationProvider = signAuthenticationProvider;
             _grpcServerOptions = grpcServerOptions;
+            _logger = logger;
         }
 
         public override Task<TResponse> UnaryServerHandler<TRequest, TResponse>(TRequest request, ServerCallContext context, UnaryServerMethod<TRequest, TResponse> continuation)
@@ -30,15 +36,26 @@ namespace Yangtao.Hosting.GrpcServer.Interceptors
             if (signAuthentication == null) return base.UnaryServerHandler(request, context, continuation);
 
             var authorization = httpContext.Request.Headers.GetAuthorization();
-            if (authorization.IsNullOrEmpty()) throw UnauthorizedException;
+            if (authorization.IsNullOrEmpty())
+            {
+                _logger.LogWarning("The authorization for the request header is empty, endpoint:{endpoint}.", endpoint.DisplayName);
+                throw UnauthorizedException;
+            }
 
             var time = _signAuthenticationProvider.Decrypt(authorization, _grpcServerOptions.Value.OptionName);
-
             var parseResult = DateTime.TryParse(time, out DateTime d);
-            if (parseResult == false) throw UnauthorizedException;
+            if (parseResult == false)
+            {
+                _logger.LogWarning("The authorization conversion DateTime failed, endpoint:{endpoint}.", endpoint.DisplayName);
+                throw UnauthorizedException;
+            }
 
             var diff = DateTime.Now.Subtract(d);
-            if (diff.TotalSeconds > 5) throw UnauthorizedException;
+            if (diff.TotalSeconds > 5)
+            {
+                _logger.LogWarning("The authorization timeout, total seconds:{TotalSeconds}, endpoint:{endpoint}.", diff.TotalSeconds, endpoint.DisplayName);
+                throw UnauthorizedException;
+            }
 
             return base.UnaryServerHandler(request, context, continuation);
         }

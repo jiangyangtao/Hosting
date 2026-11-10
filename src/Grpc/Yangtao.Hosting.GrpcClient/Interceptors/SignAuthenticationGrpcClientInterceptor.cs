@@ -1,5 +1,6 @@
 ﻿using Grpc.Core;
 using Grpc.Core.Interceptors;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using Yangtao.Hosting.Extensions;
@@ -15,16 +16,22 @@ namespace Yangtao.Hosting.GrpcClient.Interceptors
     {
         private readonly ISignAuthenticationProvider _signAuthenticationProvider;
         private readonly ICollection<string> _signAuthenticationMethods;
+        private readonly ILogger<SignAuthenticationGrpcClientInterceptor> _logger;
 
         /// <summary>
         /// 构建 <see cref="SignAuthenticationGrpcClientInterceptor"/>
         /// </summary>
         /// <param name="signAuthenticationProvider"></param>
         /// <param name="clientOptions"></param>
-        public SignAuthenticationGrpcClientInterceptor(ISignAuthenticationProvider signAuthenticationProvider, IOptions<GrpcClientOptions> clientOptions)
+        /// <param name="logger"></param>
+        public SignAuthenticationGrpcClientInterceptor(
+            ISignAuthenticationProvider signAuthenticationProvider,
+            IOptions<GrpcClientOptions> clientOptions,
+            ILogger<SignAuthenticationGrpcClientInterceptor> logger)
         {
             _signAuthenticationProvider = signAuthenticationProvider;
             _signAuthenticationMethods = clientOptions.Value.SignAuthenticationMethods;
+            _logger = logger;
         }
 
         /// <summary>
@@ -55,6 +62,8 @@ namespace Yangtao.Hosting.GrpcClient.Interceptors
             if (authorizationItem != null) context.Options.Headers.Remove(authorizationItem);
 
             context.Options.Headers.Add(HeaderNames.Authorization, authorizationValue);
+
+            _logger.LogInformation("Request {method} to use sign authentication.", context.Method.FullName);
             return base.AsyncUnaryCall(request, context, continuation);
         }
 

@@ -1,8 +1,10 @@
 ﻿using Grpc.Core;
 using Grpc.Core.Interceptors;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Microsoft.Net.Http.Headers;
+using Yangtao.Hosting.Extensions;
 
 namespace Yangtao.Hosting.GrpcClient.Interceptors
 {
@@ -13,14 +15,17 @@ namespace Yangtao.Hosting.GrpcClient.Interceptors
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private const string authorizationKey = "authorization";
+        private readonly ILogger<AuthenticationGrpcClientInterceptor> _logger;
 
         /// <summary>
         /// 构建 <see cref="AuthenticationGrpcClientInterceptor"/>
         /// </summary>
         /// <param name="httpContextAccessor"></param>
-        public AuthenticationGrpcClientInterceptor(IHttpContextAccessor httpContextAccessor)
+        /// <param name="logger"></param>
+        public AuthenticationGrpcClientInterceptor(IHttpContextAccessor httpContextAccessor, ILogger<AuthenticationGrpcClientInterceptor> logger)
         {
             _httpContextAccessor = httpContextAccessor;
+            _logger = logger;
         }
 
         /// <summary>
@@ -40,12 +45,14 @@ namespace Yangtao.Hosting.GrpcClient.Interceptors
                 context = new ClientInterceptorContext<TRequest, TResponse>(context.Method, context.Host, options);
             }
 
-            var existAuthorization = context.Options.Headers.Any(a => a.Key == authorizationKey);
-            if (existAuthorization == false)
+            var authorization = context.Options.Headers.FirstOrDefault(a => a.Key == authorizationKey);
+            if (authorization == null || authorization.Value.IsNullOrEmpty())
             {
-                var authorization = GetAuthorization();
-                context.Options.Headers.Add(HeaderNames.Authorization, authorization);
+                var token = GetAuthorization();
+                if (token.NotNullAndEmpty()) context.Options.Headers.Add(HeaderNames.Authorization, token);
             }
+
+            _logger.LogInformation("Request {method} to use native authentication.", context.Method.FullName);
             return base.AsyncUnaryCall(request, context, continuation);
         }
 

@@ -88,6 +88,23 @@ namespace Yangtao.Hosting.NLog
             var lifetime = applicationBuilder.ApplicationServices.GetRequiredService<IHostApplicationLifetime>();
             lifetime.ApplicationStopping.Register(static () => LogManager.Shutdown());
 
+            var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+            var logger = loggerFactory.CreateLogger("LogBuilder");
+            if (nlogOptions.ConsoleLogOptions != null)
+                logger.LogInformation("Registered nlog the ColoredConsole, minLevel:{minLevel}, maxLevel:{maxLevel}.", nlogOptions.ConsoleLogOptions.MinLevel, nlogOptions.ConsoleLogOptions.MaxLevel);
+
+            if (nlogOptions.RealtimeLogOptions != null)
+                logger.LogInformation("Registered realtime log, minLevel:{minLevel}, maxLevel:{maxLevel}.", nlogOptions.RealtimeLogOptions.MinLevel, nlogOptions.RealtimeLogOptions.MaxLevel);
+
+            if (nlogOptions.FileLogOptions != null)
+                logger.LogInformation("Registered file log, minLevel:{minLevel}, maxLevel:{maxLevel}.", nlogOptions.FileLogOptions.MinLevel, nlogOptions.FileLogOptions.MaxLevel);
+
+            if (nlogOptions.EmailNoticeOptions != null)
+                logger.LogInformation("Registered email log, minLevel:{minLevel}, maxLevel:{maxLevel}.", nlogOptions.EmailNoticeOptions.MinLevel, nlogOptions.EmailNoticeOptions.MaxLevel);
+
+            if (nlogOptions.LarkNoticeOptions != null)
+                logger.LogInformation("Registered lark log, minLevel:{minLevel}, maxLevel:{maxLevel}.", nlogOptions.LarkNoticeOptions.MinLevel, nlogOptions.LarkNoticeOptions.MaxLevel);
+
             return applicationBuilder;
         }
     }

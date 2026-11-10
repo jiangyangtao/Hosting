@@ -30,7 +30,7 @@ namespace Yangtao.Hosting.NLog.NoticeLog
                 var rule = _nlogOptions.EmailNoticeOptions.BuildLoggingRule(emailNoticeTarget);
 
                 configuration.AddTarget(emailNoticeTarget);
-                configuration.LoggingRules.Add(rule);
+                configuration.LoggingRules.Add(rule);               
             }
 
             if (_nlogOptions.LarkNoticeOptions != null)
