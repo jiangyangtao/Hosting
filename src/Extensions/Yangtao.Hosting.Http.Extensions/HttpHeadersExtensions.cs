@@ -29,14 +29,15 @@ namespace Yangtao.Hosting.Extensions
 
         public static string GetAuthorization(this IHeaderDictionary headers) => headers.GetValue(HeaderNames.Authorization);
 
-        public static void SetFileName(this IHeaderDictionary headers, string fileName, string fileNameKey = "filename")
+        public static void SetFileName(this IHeaderDictionary headers, string fileName, string fileNameKey = "filename", bool inlineDisposition = true)
         {
             if (fileName.IsNullOrEmpty()) return;
 
-            headers.TryAdd("Access-Control-Expose-Headers", fileNameKey);
+            var encodeFileName = HttpUtility.UrlEncode(fileName, Encoding.UTF8);
+            headers.Add("Access-Control-Expose-Headers", "filename");
 
-            var encode = HttpUtility.UrlEncode(fileName, Encoding.UTF8);
-            headers.TryAdd(fileNameKey, encode);
+            if (inlineDisposition) headers.Add("Content-Disposition", $"inline;filename=${encodeFileName}");
+            headers.Add(fileNameKey, encodeFileName);
         }
     }
 }

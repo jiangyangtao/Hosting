@@ -20,12 +20,12 @@ namespace Yangtao.Hosting.FrontendApi.Controls
         {
         }
 
-        protected ControlBase(PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        protected ControlBase(PropertyInfo property) : base(property)
         {
             FieldType = property.GetFieldType();
 
             var existValidation = property.GetCustomAttribute<ExistValidationAttribute>();
-            if (existValidation != null) ExistValidation = new(existValidation, documentHandler);
+            if (existValidation != null) ExistValidation = new(existValidation);
 
             var requiredAttr = property.GetCustomAttribute<RequiredAttribute>();
             if (requiredAttr != null) Required = true;

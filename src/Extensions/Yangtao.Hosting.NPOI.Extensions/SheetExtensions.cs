@@ -23,8 +23,8 @@ namespace Yangtao.Hosting.NPOI.Extensions
         {
             if (columnStartIndex > columnEndIndex) throw new ArgumentOutOfRangeException(nameof(columnEndIndex), "");
 
-            if (columnStartIndex < 0) throw new ArgumentOutOfRangeException(nameof(columnStartIndex), "The column start index can not less than 0");
-            if (columnStartIndex > columnEndIndex) throw new ArgumentException("The column end index can not less than column start index", nameof(columnEndIndex));
+            if (columnStartIndex < 0) throw new ArgumentOutOfRangeException(nameof(columnStartIndex), "Column start index can not less than 0");
+            if (columnStartIndex > columnEndIndex) throw new ArgumentException("Column end index can not less than column start index", nameof(columnEndIndex));
 
 
             var endRowIndex = sheet.LastRowNum;
@@ -142,7 +142,7 @@ namespace Yangtao.Hosting.NPOI.Extensions
         /// <param name="isCopyCellValue">是否复制单元格的值</param>
         public static IRow DeepCopyRow(this ISheet sheet, int sourceRowIndex, int targetRowIndex, bool isCopyCellValue = true)
         {
-            var sourceRow = sheet.GetRow(sourceRowIndex) ?? throw new ArgumentOutOfRangeException(nameof(sourceRowIndex), "The source row is null.");
+            var sourceRow = sheet.GetRow(sourceRowIndex) ?? throw new ArgumentOutOfRangeException(nameof(sourceRowIndex), "Row is null.");
             var targetRow = sheet.GetRow(targetRowIndex);
             targetRow ??= sheet.CreateRow(targetRowIndex);
 

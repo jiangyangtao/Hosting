@@ -52,7 +52,7 @@ namespace Yangtao.Hosting.GrpcClient.Interceptors
                 if (token.NotNullAndEmpty()) context.Options.Headers.Add(HeaderNames.Authorization, token);
             }
 
-            _logger.LogInformation("Request {method} to use native authentication.", context.Method.FullName);
+            _logger.LogInformation("Request {method} match native authentication.", context.Method.FullName);
             return base.AsyncUnaryCall(request, context, continuation);
         }
 

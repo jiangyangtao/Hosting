@@ -22,7 +22,7 @@ namespace Yangtao.Hosting.Cache.Memory
 
             var sizeString = sizeConfig.Get<string>();
             var parseResult = int.TryParse(sizeString, out int size);
-            if (parseResult == false) throw new KeyNotFoundException("The MemoryCache limit of capacity must be integer.");
+            if (parseResult == false) throw new KeyNotFoundException("MemoryCache limit of capacity must be integer.");
 
             return services.AddMemoryCache(size);
         }

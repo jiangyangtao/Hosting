@@ -8,10 +8,10 @@ namespace Yangtao.Hosting.FrontendApi.Fields
 {
     internal class EnumField : Field
     {
-        public EnumField(PropertyInfo property, DocumentHandler documentHandler) : base(FieldType.Enum, property, documentHandler)
+        public EnumField(PropertyInfo property) : base(FieldType.Enum, property)
         {
             FieldType = FieldType.Enum;
-            ValueOptions = property.PropertyType.GetValueOptions(documentHandler);
+            ValueOptions = property.PropertyType.GetValueOptions();
         }
 
         public IEnumerable<TextValueOption> ValueOptions { set; get; }

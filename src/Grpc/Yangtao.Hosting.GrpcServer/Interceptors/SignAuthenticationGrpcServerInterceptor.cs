@@ -38,7 +38,7 @@ namespace Yangtao.Hosting.GrpcServer.Interceptors
             var authorization = httpContext.Request.Headers.GetAuthorization();
             if (authorization.IsNullOrEmpty())
             {
-                _logger.LogWarning("The authorization for the request header is empty, endpoint:{endpoint}.", endpoint.DisplayName);
+                _logger.LogWarning("Authorization for the request header is empty, endpoint:{endpoint}.", endpoint.DisplayName);
                 throw UnauthorizedException;
             }
 
@@ -46,14 +46,14 @@ namespace Yangtao.Hosting.GrpcServer.Interceptors
             var parseResult = DateTime.TryParse(time, out DateTime d);
             if (parseResult == false)
             {
-                _logger.LogWarning("The authorization conversion DateTime failed, endpoint:{endpoint}.", endpoint.DisplayName);
+                _logger.LogWarning("Authorization conversion DateTime failed, endpoint:{endpoint}.", endpoint.DisplayName);
                 throw UnauthorizedException;
             }
 
             var diff = DateTime.Now.Subtract(d);
             if (diff.TotalSeconds > 5)
             {
-                _logger.LogWarning("The authorization timeout, total seconds:{TotalSeconds}, endpoint:{endpoint}.", diff.TotalSeconds, endpoint.DisplayName);
+                _logger.LogWarning("Authorization timeout, total seconds:{TotalSeconds}, endpoint:{endpoint}.", diff.TotalSeconds, endpoint.DisplayName);
                 throw UnauthorizedException;
             }
 

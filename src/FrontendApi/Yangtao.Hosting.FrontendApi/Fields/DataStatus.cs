@@ -9,7 +9,7 @@ namespace Yangtao.Hosting.FrontendApi.Fields
 {
     internal class DataStatus : FieldBase, IDataStatus
     {
-        public DataStatus(PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        public DataStatus(PropertyInfo property) : base(property)
         {
             RequestParams = new Collection<ParamField>();
 
@@ -19,15 +19,15 @@ namespace Yangtao.Hosting.FrontendApi.Fields
             RequestData = dataStatusAttribute.RequestData;
 
             var enableHttpAction = new HttpAction(dataStatusAttribute.EnableHttpAction);
-            enableHttpAction.ServiceName = documentHandler.GetServiceName(enableHttpAction.ServiceName);
+            enableHttpAction.ServiceName = StaticDocument.DocumentHandler.GetServiceName(enableHttpAction.ServiceName);
 
             var disableHttpAction = new HttpAction(dataStatusAttribute.DisableHttpAction);
-            disableHttpAction.ServiceName = documentHandler.GetServiceName(disableHttpAction.ServiceName);
+            disableHttpAction.ServiceName = StaticDocument.DocumentHandler.GetServiceName(disableHttpAction.ServiceName);
 
             EnableHttpAction = enableHttpAction;
             DisableHttpAction = disableHttpAction;
 
-            if (RequestData != null) RequestParams = RequestData.BuildParamFields(documentHandler);
+            if (RequestData != null) RequestParams = RequestData.BuildParamFields();
         }
 
         [JsonIgnore]

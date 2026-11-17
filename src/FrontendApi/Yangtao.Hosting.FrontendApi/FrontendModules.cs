@@ -19,19 +19,21 @@ namespace Yangtao.Hosting.FrontendApi
             Assemblies = assemblies;
 
             var documentHandler = new DocumentHandler(options);
-            BuildTableComponent(documentHandler);
-            BuildFormComponent(documentHandler);
-            BuildQueryFormComponent(documentHandler);
+            StaticDocument.SetDocumentHandler(documentHandler);
+
+            BuildTableComponent();
+            BuildFormComponent();
+            BuildQueryFormComponent();
         }
 
-        private void BuildTableComponent(DocumentHandler documentHandler)
+        private void BuildTableComponent()
         {
             var tableComponentTypes = GetTypes(typeof(TableComponentAttribute));
             if (tableComponentTypes.IsNullOrEmpty()) return;
 
             foreach (var tableComponentType in tableComponentTypes)
             {
-                var tableComponent = new TableComponent(tableComponentType, documentHandler);
+                var tableComponent = new TableComponent(tableComponentType);
                 if (tableComponent.Module.IsNullOrEmpty()) continue;
 
                 var module = GetModule(tableComponent.Module);
@@ -39,14 +41,14 @@ namespace Yangtao.Hosting.FrontendApi
             }
         }
 
-        private void BuildFormComponent(DocumentHandler documentHandler)
+        private void BuildFormComponent()
         {
             var formComponentTypes = GetTypes(typeof(FormAttribute));
             if (formComponentTypes.IsNullOrEmpty()) return;
 
             foreach (var formComponentType in formComponentTypes)
             {
-                var form = new FormComponent(formComponentType, documentHandler);
+                var form = new FormComponent(formComponentType);
                 if (form.IsEmptyModule) continue;
 
                 var module = GetModule(form.Module);
@@ -54,14 +56,14 @@ namespace Yangtao.Hosting.FrontendApi
             }
         }
 
-        private void BuildQueryFormComponent(DocumentHandler documentHandler)
+        private void BuildQueryFormComponent()
         {
             var queryFormComponentTypes = GetTypes(typeof(QueryFormAttribute));
             if (queryFormComponentTypes.IsNullOrEmpty()) return;
 
             foreach (var queryFormComponentType in queryFormComponentTypes)
             {
-                var queryForm = new QueryFormComponent(queryFormComponentType, documentHandler);
+                var queryForm = new QueryFormComponent(queryFormComponentType);
                 if (queryForm.IsEmptyModule) continue;
 
                 var module = GetModule(queryForm.Module);

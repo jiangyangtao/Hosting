@@ -10,13 +10,13 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 {
     internal class RadioGroupControl : ControlBase
     {
-        public RadioGroupControl(RadioGroupAttribute radioGroupAttribute, PropertyInfo property, FieldType fieldType, DocumentHandler documentHandler) : base(property, documentHandler)
+        public RadioGroupControl(RadioGroupAttribute radioGroupAttribute, PropertyInfo property, FieldType fieldType) : base(property)
         {
             RadioGroupType = radioGroupAttribute.RadioGroupType;
             ActionApi = radioGroupAttribute.ActionApi;
             SourceType = radioGroupAttribute.SourceType;
             HttpMethodType = radioGroupAttribute.HttpMethodType;
-            ServiceName = documentHandler.GetServiceName(radioGroupAttribute.ServiceName);
+            ServiceName = StaticDocument.DocumentHandler.GetServiceName(radioGroupAttribute.ServiceName);
 
 
             if (fieldType == FieldType.Boolean)
@@ -27,11 +27,11 @@ namespace Yangtao.Hosting.FrontendApi.Controls
             if (radioGroupAttribute.SourceType == SelectSourceType.Enum)
             {
                 var type = radioGroupAttribute.Source ?? property.PropertyType;
-                EnumOptions = type.GetValueOptions(documentHandler);
+                EnumOptions = type.GetValueOptions();
             }
         }
 
-        public RadioGroupControl(DictionaryOptionsAttribute dictionaryAttribute, PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        public RadioGroupControl(DictionaryOptionsAttribute dictionaryAttribute, PropertyInfo property) : base(property)
         {
             if (dictionaryAttribute.OptionsType == DictionaryOptionsType.RadioGroup) RadioGroupType = RadioGroupType.RadioGroup;
             if (dictionaryAttribute.OptionsType == DictionaryOptionsType.RadioGroupBtn) RadioGroupType = RadioGroupType.RadioGroupBtn;
@@ -45,15 +45,15 @@ namespace Yangtao.Hosting.FrontendApi.Controls
                 ActionApi = dictionaryAttribute.ActionApi;
                 HttpMethodType = dictionaryAttribute.HttpMethodType;
                 ApiVersion = dictionaryAttribute.ApiVersion;
-                ServiceName = documentHandler.GetServiceName(dictionaryAttribute.ServiceName);
+                ServiceName = StaticDocument.DocumentHandler.GetServiceName(dictionaryAttribute.ServiceName);
             }
 
-            if (documentHandler.DictionaryConfig != null && dictionaryAttribute.ActionApi.IsNullOrEmpty() && dictionaryAttribute.ServiceName.IsNullOrEmpty())
+            if (StaticDocument.DocumentHandler.DictionaryConfig != null && dictionaryAttribute.ActionApi.IsNullOrEmpty() && dictionaryAttribute.ServiceName.IsNullOrEmpty())
             {
-                ActionApi = documentHandler.DictionaryConfig.ActionApi;
-                ApiVersion = documentHandler.DictionaryConfig.ApiVersion;
-                HttpMethodType = documentHandler.DictionaryConfig.HttpMethodType;
-                ServiceName = documentHandler.DictionaryConfig.ServiceName;
+                ActionApi = StaticDocument.DocumentHandler.DictionaryConfig.ActionApi;
+                ApiVersion = StaticDocument.DocumentHandler.DictionaryConfig.ApiVersion;
+                HttpMethodType = StaticDocument.DocumentHandler.DictionaryConfig.HttpMethodType;
+                ServiceName = StaticDocument.DocumentHandler.DictionaryConfig.ServiceName;
             }
         }
 

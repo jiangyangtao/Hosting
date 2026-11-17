@@ -1,5 +1,8 @@
 ﻿namespace Yangtao.Hosting.FrontendApi.Attributes
 {
+    /// <summary>
+    /// 表格组件
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class TableComponentAttribute : Attribute
     {

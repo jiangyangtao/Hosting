@@ -18,7 +18,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
             Required = formUploadAttr.Required;
         }
 
-        public FormUploadControl(PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        public FormUploadControl(PropertyInfo property) : base(property)
         {
         }
 

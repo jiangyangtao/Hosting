@@ -10,11 +10,11 @@ namespace Yangtao.Hosting.FrontendApi.Components
     {
         protected readonly List<ControlBase> ControlList;
 
-        public QueryFormComponent(Type formType, DocumentHandler documentHandler) : base(formType, documentHandler)
+        public QueryFormComponent(Type formType) : base(formType)
         {
             ControlList = new();
 
-            var controls = formType.BuildControls(documentHandler);
+            var controls = formType.BuildControls();
             if (controls.NotNullAndEmpty()) ControlList.AddRange(controls);
         }
 

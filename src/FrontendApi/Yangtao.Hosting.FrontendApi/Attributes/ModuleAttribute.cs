@@ -1,5 +1,8 @@
 ﻿namespace Yangtao.Hosting.FrontendApi.Attributes
 {
+    /// <summary>
+    /// 模块
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class ModuleAttribute : Attribute
     {

@@ -8,7 +8,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 {
     internal class DatePickerControl : ControlBase
     {
-        public DatePickerControl(PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        public DatePickerControl(PropertyInfo property) : base(property)
         {
             var datePickerAttr = property.GetCustomAttribute<DatePickerAttribute>();
             if (datePickerAttr != null)

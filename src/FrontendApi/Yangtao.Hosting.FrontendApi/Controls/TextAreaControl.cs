@@ -9,7 +9,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 {
     internal class TextAreaControl : ControlBase
     {
-        public TextAreaControl(TextAreaAttribute textAreaAttr, PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        public TextAreaControl(TextAreaAttribute textAreaAttr, PropertyInfo property) : base(property)
         {
             Rows = textAreaAttr.Rows;
             ShowCount = textAreaAttr.ShowCount;

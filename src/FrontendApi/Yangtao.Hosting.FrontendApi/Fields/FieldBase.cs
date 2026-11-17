@@ -14,11 +14,11 @@ namespace Yangtao.Hosting.FrontendApi.Fields
         {
         }
 
-        protected FieldBase(PropertyInfo property, DocumentHandler documentHandler)
+        protected FieldBase(PropertyInfo property)
         {
 
             Name = property.Name;
-            Text = documentHandler.GetPropertySummary(property);
+            Text = StaticDocument.DocumentHandler.GetPropertySummary(property);
 
             var formatAttribute = property.GetCustomAttribute<FormatterAttribute>();
             if (formatAttribute != null) Format = formatAttribute.Formatter;

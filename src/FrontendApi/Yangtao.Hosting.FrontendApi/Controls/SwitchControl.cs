@@ -9,7 +9,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 {
     internal class SwitchControl : ControlBase, ISwitch
     {
-        public SwitchControl(PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        public SwitchControl(PropertyInfo property) : base(property)
         {
             CheckedValue = true;
             UnCheckedValue = false;
@@ -17,7 +17,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
             UnCheckedChildren = "否";
         }
 
-        public SwitchControl(SwitchAttribute switchAttribute, PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        public SwitchControl(SwitchAttribute switchAttribute, PropertyInfo property) : base(property)
         {
             if (switchAttribute.IsEmpty == false)
             {
@@ -31,8 +31,8 @@ namespace Yangtao.Hosting.FrontendApi.Controls
             {
                 if (switchAttribute.IsEmpty && FieldType != FieldType.Enum) throw new Exception("Cannot infer the properties of the Switch control");
 
-                var valueOptions = property.PropertyType.GetValueOptions(documentHandler);
-                if (valueOptions.Count() != 2) throw new Exception($"The properties of the switch control cannot be inferred from the field collection of the {property.PropertyType.Name}.");
+                var valueOptions = property.PropertyType.GetValueOptions();
+                if (valueOptions.Count() != 2) throw new Exception($"Properties of the switch control cannot be inferred from the field collection of the {property.PropertyType.Name}.");
 
                 var options = valueOptions.ToArray();
                 CheckedValue = options[0].Value;

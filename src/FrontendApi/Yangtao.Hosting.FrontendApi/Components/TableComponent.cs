@@ -14,7 +14,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
     /// </summary>
     internal class TableComponent : ComponentBase
     {
-        public TableComponent(Type tableComponentType, DocumentHandler documentHandler) : base(tableComponentType, documentHandler)
+        public TableComponent(Type tableComponentType) : base(tableComponentType)
         {
             var httpActionAttribute = tableComponentType.GetCustomAttribute<HttpActionAttribute>();
             if (httpActionAttribute != null)
@@ -22,10 +22,10 @@ namespace Yangtao.Hosting.FrontendApi.Components
                 ActionApi = httpActionAttribute.ActionApi;
                 HttpMethodType = httpActionAttribute.HttpMethodType;
                 ApiVersion = httpActionAttribute.ApiVersion;
-                ServiceName = documentHandler.GetServiceName(httpActionAttribute.ServiceName);
+                ServiceName = StaticDocument.DocumentHandler.GetServiceName(httpActionAttribute.ServiceName);
             }
 
-            Fields = tableComponentType.BuildFields(documentHandler);
+            Fields = tableComponentType.BuildFields();
 
             var tableComponentAttribute = tableComponentType.GetCustomAttribute<TableComponentAttribute>() ??
                 throw new ArgumentException($"{nameof(tableComponentType)} not exist {nameof(TableComponentAttribute)}");
@@ -34,7 +34,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
             {
                 IsPagination = IsPaginationType(tableComponentAttribute.QueryForm);
 
-                QueryForm = new(tableComponentAttribute.QueryForm, documentHandler);
+                QueryForm = new(tableComponentAttribute.QueryForm);
                 if (QueryForm.Module.IsNullOrEmpty())
                 {
                     QueryForm.Module = Module;
@@ -44,7 +44,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
 
             if (tableComponentAttribute.AddForm != null)
             {
-                AddForm = new(tableComponentAttribute.AddForm, documentHandler);
+                AddForm = new(tableComponentAttribute.AddForm);
                 if (AddForm.Module.IsNullOrEmpty())
                 {
                     AddForm.Module = Module;
@@ -54,7 +54,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
 
             if (tableComponentAttribute.EditForm != null)
             {
-                EditForm = new(tableComponentAttribute.EditForm, documentHandler);
+                EditForm = new(tableComponentAttribute.EditForm);
                 if (EditForm.Module.IsNullOrEmpty())
                 {
                     EditForm.Module = Module;
@@ -64,10 +64,19 @@ namespace Yangtao.Hosting.FrontendApi.Components
 
             var properties = tableComponentType.GetProperties();
             var dataStatusProperty = properties.FirstOrDefault(a => a.GetCustomAttribute<DataStatusAttribute>() != null);
-            if (dataStatusProperty != null) DataStatus = new DataStatus(dataStatusProperty, documentHandler);
+            if (dataStatusProperty != null) DataStatus = new DataStatus(dataStatusProperty);
 
             var deleteAction = tableComponentType.GetCustomAttribute<DeleteActionAttribute>();
-            if (deleteAction != null) DeleteAction = new(deleteAction, documentHandler);
+            if (deleteAction != null) DeleteAction = new(deleteAction);
+
+            var batchDeleteAction = tableComponentType.GetCustomAttribute<BatchDeleteActionAttribute>();
+            if (batchDeleteAction != null) BatchDeleteAction = new(batchDeleteAction);
+
+            var importAction = tableComponentType.GetCustomAttribute<ImportActionAttribute>();
+            if (importAction != null) ImportAction = new(importAction);
+
+            var exportAction = tableComponentType.GetCustomAttribute<ExportActionAttribute>();
+            if (exportAction != null) ExportAction = new(exportAction);
         }
 
         private static bool IsPaginationType(Type? type)
@@ -88,6 +97,12 @@ namespace Yangtao.Hosting.FrontendApi.Components
         public IDataStatus? DataStatus { set; get; }
 
         public DeleteAction? DeleteAction { set; get; }
+
+        public BatchDeleteAction? BatchDeleteAction { set; get; }
+
+        public ImportAction? ImportAction { set; get; }
+
+        public ExportAction? ExportAction { set; get; }
 
 
         public string? ActionApi { set; get; }

@@ -6,7 +6,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 {
     internal class TagsControl : ControlBase
     {
-        public TagsControl(TagsAttribute tagsAttribute, PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        public TagsControl(TagsAttribute tagsAttribute, PropertyInfo property) : base(property)
         {
 
         }

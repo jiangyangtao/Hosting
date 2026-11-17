@@ -57,7 +57,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
             RangeEndDateControls.Add(r);
         }
 
-        public IEnumerable<RangePickerControl> BuildRangePickerControls(DocumentHandler documentHandler)
+        public IEnumerable<RangePickerControl> BuildRangePickerControls()
         {
             if (RangeControls.IsNullOrEmpty()) return Array.Empty<RangePickerControl>();
 
@@ -67,7 +67,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
                 var endDate = RangeEndDateControls.FirstOrDefault(a => a.RangeName == rangeControl.RangeName);
                 if (endDate == null) continue;
 
-                var rangePickerControl = new RangePickerControl(rangeControl, rangeControl, documentHandler);
+                var rangePickerControl = new RangePickerControl(rangeControl, rangeControl);
                 controls.Add(rangePickerControl);
             }
 

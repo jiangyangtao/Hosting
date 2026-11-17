@@ -88,4 +88,14 @@ namespace Yangtao.Hosting.FrontendApi
             return CurrentServiceName;
         }
     }
+
+    /// <summary>
+    /// 静态文档
+    /// </summary>
+    internal static class StaticDocument
+    {
+        public static DocumentHandler DocumentHandler { private set; get; }
+
+        public static void SetDocumentHandler(DocumentHandler documentHandler) => DocumentHandler = documentHandler;
+    }
 }

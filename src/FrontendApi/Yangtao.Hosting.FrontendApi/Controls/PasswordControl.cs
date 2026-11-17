@@ -8,7 +8,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 {
     internal class PasswordControl : ControlBase
     {
-        public PasswordControl(PasswordAttribute passwordAttr, PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        public PasswordControl(PasswordAttribute passwordAttr, PropertyInfo property) : base(property)
         {
             CanVisible = passwordAttr.CanVisible;
             Bordered = passwordAttr.Bordered;

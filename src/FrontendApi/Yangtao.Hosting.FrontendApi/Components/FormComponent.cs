@@ -14,7 +14,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
     /// </summary>
     internal class FormComponent : QueryFormComponent, IHttpAction
     {
-        public FormComponent(Type formType, DocumentHandler documentHandler) : base(formType, documentHandler)
+        public FormComponent(Type formType) : base(formType)
         {
             var formAttr = formType.GetCustomAttribute<FormAttribute>();
             if (formAttr != null)
@@ -22,7 +22,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
                 DisplayMode = formAttr.DisplayMode;
                 ActionApi = formAttr.ActionApi;
                 HttpMethodType = formAttr.HttpMethodType;
-                ServiceName = documentHandler.GetServiceName(formAttr.ServiceName);
+                ServiceName = StaticDocument.DocumentHandler.GetServiceName(formAttr.ServiceName);
             }
 
             var httpActionAttribute = formType.GetCustomAttribute<HttpActionAttribute>();
@@ -31,7 +31,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
                 ActionApi = httpActionAttribute.ActionApi;
                 HttpMethodType = httpActionAttribute.HttpMethodType;
                 ApiVersion = httpActionAttribute.ApiVersion;
-                ServiceName = documentHandler.GetServiceName(httpActionAttribute.ServiceName);
+                ServiceName = StaticDocument.DocumentHandler.GetServiceName(httpActionAttribute.ServiceName);
             }
 
             FormGroups = Array.Empty<IFieldGroup>();

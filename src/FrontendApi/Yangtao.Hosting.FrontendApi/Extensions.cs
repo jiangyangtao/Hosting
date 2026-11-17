@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Reflection;
-using System.Reflection.Metadata;
+﻿using System.Reflection;
 using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.FrontendApi.Abstractions;
 using Yangtao.Hosting.FrontendApi.Attributes;
@@ -85,7 +83,7 @@ namespace Yangtao.Hosting.FrontendApi
             return FieldType.String;
         }
 
-        public static IEnumerable<ControlBase> BuildControls(this Type formType, DocumentHandler documentHandler)
+        public static IEnumerable<ControlBase> BuildControls(this Type formType)
         {
             var properties = formType.GetProperties();
             var controls = new List<ControlBase>();
@@ -112,80 +110,80 @@ namespace Yangtao.Hosting.FrontendApi
                     }
                 }
 
-                var control = property.BuildControl(fieldType, documentHandler);
+                var control = property.BuildControl(fieldType);
                 controls.Add(control);
             }
 
-            var rangeControls = rangeControlCollection.BuildRangePickerControls(documentHandler);
+            var rangeControls = rangeControlCollection.BuildRangePickerControls();
             if (rangeControls.NotNullAndEmpty()) controls.AddRange(rangeControls);
 
             return controls;
         }
 
-        public static ControlBase BuildControl(this PropertyInfo property, DocumentHandler documentHandler)
+        public static ControlBase BuildControl(this PropertyInfo property)
         {
             var fieldType = GetFieldType(property);
-            return property.BuildControl(fieldType, documentHandler);
+            return property.BuildControl(fieldType);
         }
 
-        private static ControlBase BuildControl(this PropertyInfo property, FieldType fieldType, DocumentHandler documentHandler)
+        private static ControlBase BuildControl(this PropertyInfo property, FieldType fieldType)
         {
             if (fieldType == FieldType.Enum)
             {
                 var switchAttr = property.GetCustomAttribute<SwitchAttribute>();
-                if (switchAttr != null) return new SwitchControl(switchAttr, property, documentHandler);
+                if (switchAttr != null) return new SwitchControl(switchAttr, property);
 
                 var radioGroupAttribute = property.GetCustomAttribute<RadioGroupAttribute>();
                 if (radioGroupAttribute != null)
                 {
-                    return new RadioGroupControl(radioGroupAttribute, property, fieldType, documentHandler);
+                    return new RadioGroupControl(radioGroupAttribute, property, fieldType);
                 }
 
-                return new SelectControl(property, fieldType, documentHandler);
+                return new SelectControl(property, fieldType);
             }
 
             var selectAttr = property.GetCustomAttribute<SelectAttribute>();
-            if (selectAttr != null) return new SelectControl(selectAttr, property, fieldType, documentHandler);
+            if (selectAttr != null) return new SelectControl(selectAttr, property, fieldType);
 
             var dictionaryAttr = property.GetCustomAttribute<DictionaryOptionsAttribute>();
             if (dictionaryAttr != null)
             {
-                if (dictionaryAttr.OptionsType == DictionaryOptionsType.Select) return new SelectControl(dictionaryAttr, property, documentHandler);
-                if (dictionaryAttr.OptionsType == DictionaryOptionsType.Segmented) return new SegmentedControl(dictionaryAttr, property, documentHandler);
+                if (dictionaryAttr.OptionsType == DictionaryOptionsType.Select) return new SelectControl(dictionaryAttr, property);
+                if (dictionaryAttr.OptionsType == DictionaryOptionsType.Segmented) return new SegmentedControl(dictionaryAttr, property);
 
-                return new RadioGroupControl(dictionaryAttr, property, documentHandler);
+                return new RadioGroupControl(dictionaryAttr, property);
             }
 
             var radioGroupAttr = property.GetCustomAttribute<RadioGroupAttribute>();
-            if (radioGroupAttr != null) return new RadioGroupControl(radioGroupAttr, property, fieldType, documentHandler);
+            if (radioGroupAttr != null) return new RadioGroupControl(radioGroupAttr, property, fieldType);
 
             var segmentedAttr = property.GetCustomAttribute<SegmentedAttribute>();
-            if (segmentedAttr != null) return new SegmentedControl(segmentedAttr, property, documentHandler);
+            if (segmentedAttr != null) return new SegmentedControl(segmentedAttr, property);
 
             var tagsAttr = property.GetCustomAttribute<TagsAttribute>();
-            if (tagsAttr != null) return new TagsControl(tagsAttr, property, documentHandler);
+            if (tagsAttr != null) return new TagsControl(tagsAttr, property);
 
 
-            if (fieldType == FieldType.Boolean) return new SwitchControl(property, documentHandler);
-            if (fieldType == FieldType.DateTime) return new DatePickerControl(property, documentHandler);
+            if (fieldType == FieldType.Boolean) return new SwitchControl(property);
+            if (fieldType == FieldType.DateTime) return new DatePickerControl(property);
 
-            if (fieldType == FieldType.Integer) return new InputNumberControl(property, documentHandler);
-            if (fieldType == FieldType.Decimal) return new InputDecimalControl(property, documentHandler);
+            if (fieldType == FieldType.Integer) return new InputNumberControl(property);
+            if (fieldType == FieldType.Decimal) return new InputDecimalControl(property);
 
 
             var textArea = property.GetCustomAttribute<TextAreaAttribute>();
-            if (textArea != null) return new TextAreaControl(textArea, property, documentHandler);
+            if (textArea != null) return new TextAreaControl(textArea, property);
 
             var uploadAttr = property.GetCustomAttribute<UploadAttribute>();
-            if (uploadAttr != null) return new UploadControl(uploadAttr, property, documentHandler);
+            if (uploadAttr != null) return new UploadControl(uploadAttr, property);
 
             var passwordAttr = property.GetCustomAttribute<PasswordAttribute>();
-            if (passwordAttr != null) return new PasswordControl(passwordAttr, property, documentHandler);
+            if (passwordAttr != null) return new PasswordControl(passwordAttr, property);
 
-            return new InputControl(property, documentHandler);
+            return new InputControl(property);
         }
 
-        public static IEnumerable<TextValueOption> GetValueOptions(this Type enumType, DocumentHandler documentHandler)
+        public static IEnumerable<TextValueOption> GetValueOptions(this Type enumType)
         {
             enumType = enumType.GetReadProperty();
 
@@ -197,7 +195,7 @@ namespace Yangtao.Hosting.FrontendApi
             {
                 if (field.FieldType.IsEnum == false) continue;
 
-                var text = documentHandler.GetFieldSummary(field);
+                var text = StaticDocument.DocumentHandler.GetFieldSummary(field);
                 var textValueOption = new TextValueOption(field.Name, text);
                 options.Add(textValueOption);
             }
@@ -220,22 +218,22 @@ namespace Yangtao.Hosting.FrontendApi
 
         public static string RemoveController(this string controller) => controller.Replace(StaticKeys.ControllerKey, "");
 
-        public static IEnumerable<FieldBase> BuildFields(this Type dataType, DocumentHandler documentHandler)
+        public static IEnumerable<FieldBase> BuildFields(this Type dataType)
         {
-            return dataType.GetProperties().Select(a => a.BuildField(documentHandler));
+            return dataType.GetProperties().Select(a => a.BuildField());
         }
 
-        public static IEnumerable<ParamField> BuildParamFields(this Type dataType, DocumentHandler documentHandler)
+        public static IEnumerable<ParamField> BuildParamFields(this Type dataType)
         {
-            return dataType.GetProperties().Select(property => new ParamField(property, documentHandler));
+            return dataType.GetProperties().Select(property => new ParamField(property));
         }
 
-        public static FieldBase BuildField(this PropertyInfo property, DocumentHandler documentHandler)
+        public static FieldBase BuildField(this PropertyInfo property)
         {
             var fieldType = property.GetFieldType();
-            if (fieldType == FieldType.Enum) return new EnumField(property, documentHandler);
+            if (fieldType == FieldType.Enum) return new EnumField(property);
 
-            return new Field(fieldType, property, documentHandler);
+            return new Field(fieldType, property);
         }
     }
 }

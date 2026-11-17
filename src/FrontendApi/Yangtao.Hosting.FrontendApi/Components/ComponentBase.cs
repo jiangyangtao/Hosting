@@ -10,7 +10,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
     /// </summary>
     internal abstract class ComponentBase : IComponent, IModule
     {
-        protected ComponentBase(Type type, DocumentHandler documentHandler)
+        protected ComponentBase(Type type)
         {
             ComponentName = type.Name;
 
@@ -18,7 +18,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
             if (moudleAttribute != null)
             {
                 Module = moudleAttribute.ModuleType.Name.RemoveController();
-                ModuleName = documentHandler.GetModuleSummary(moudleAttribute.ModuleType);
+                ModuleName = StaticDocument.DocumentHandler.GetModuleSummary(moudleAttribute.ModuleType);
             }
         }
 

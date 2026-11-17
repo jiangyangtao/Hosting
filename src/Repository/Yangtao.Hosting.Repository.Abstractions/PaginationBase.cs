@@ -81,10 +81,10 @@ namespace Yangtao.Hosting.Repository.Abstractions
     {
         public abstract IQueryable<TEntity> BuildQuery(IEntityRepository<TEntity> repository);
 
-        public virtual Task<int> GetCountAsync(IEntityRepository<TEntity> repository)
+        public virtual Task<int> GetCountAsync(IEntityRepository<TEntity> repository, CancellationToken cancellationToken = default)
         {
             var queryable = BuildQuery(repository);
-            return queryable.CountAsync();
+            return queryable.CountAsync(cancellationToken);
         }
 
         public virtual IQueryable<TEntity> BuildPaginationQuery(IEntityRepository<TEntity> repository)

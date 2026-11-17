@@ -8,27 +8,27 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 {
     internal class SegmentedControl : ControlBase, IHttpAction
     {
-        public SegmentedControl(SegmentedAttribute segmentedAttribute, PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        public SegmentedControl(SegmentedAttribute segmentedAttribute, PropertyInfo property) : base(property)
         {
             Block = segmentedAttribute.Block;
         }
 
-        public SegmentedControl(DictionaryOptionsAttribute dictionaryAttribute, PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        public SegmentedControl(DictionaryOptionsAttribute dictionaryAttribute, PropertyInfo property) : base(property)
         {
             if (dictionaryAttribute.ActionApi.NotNullAndEmpty() && dictionaryAttribute.ServiceName.NotNullAndEmpty())
             {
                 ActionApi = dictionaryAttribute.ActionApi;
                 HttpMethodType = dictionaryAttribute.HttpMethodType;
                 ApiVersion = dictionaryAttribute.ApiVersion;
-                ServiceName = documentHandler.GetServiceName(dictionaryAttribute.ServiceName);
+                ServiceName = StaticDocument.DocumentHandler.GetServiceName(dictionaryAttribute.ServiceName);
             }
 
-            if (documentHandler.DictionaryConfig != null && dictionaryAttribute.ActionApi.IsNullOrEmpty() && dictionaryAttribute.ServiceName.IsNullOrEmpty())
+            if (StaticDocument.DocumentHandler.DictionaryConfig != null && dictionaryAttribute.ActionApi.IsNullOrEmpty() && dictionaryAttribute.ServiceName.IsNullOrEmpty())
             {
-                ActionApi = documentHandler.DictionaryConfig.ActionApi;
-                ApiVersion = documentHandler.DictionaryConfig.ApiVersion;
-                HttpMethodType = documentHandler.DictionaryConfig.HttpMethodType;
-                ServiceName = documentHandler.DictionaryConfig.ServiceName;
+                ActionApi = StaticDocument.DocumentHandler.DictionaryConfig.ActionApi;
+                ApiVersion = StaticDocument.DocumentHandler.DictionaryConfig.ApiVersion;
+                HttpMethodType = StaticDocument.DocumentHandler.DictionaryConfig.HttpMethodType;
+                ServiceName = StaticDocument.DocumentHandler.DictionaryConfig.ServiceName;
             }
         }
 

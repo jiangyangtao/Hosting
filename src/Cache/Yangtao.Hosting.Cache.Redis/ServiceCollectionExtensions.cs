@@ -18,7 +18,7 @@ namespace Yangtao.Hosting.Cache.Redis
             redisConfig ??= connectionStringsConfig.GetSection("redis");
 
             if (redisConfig == null) throw new KeyNotFoundException("In configuration not found Redis or redis of ConnectionStrings");
-            if (redisConfig.Value.IsNullOrEmpty()) throw new KeyNotFoundException("The ConnectionString can not be null or empty.");
+            if (redisConfig.Value.IsNullOrEmpty()) throw new KeyNotFoundException("ConnectionString can not be null or empty.");
 
             return services.AddRedisCache(redisConfig.Value);
         }

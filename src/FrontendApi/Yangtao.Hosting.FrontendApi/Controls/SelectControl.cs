@@ -11,21 +11,21 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 {
     internal class SelectControl : ControlBase, IHttpAction
     {
-        public SelectControl(PropertyInfo property, FieldType fieldType, DocumentHandler documentHandler) : base(property, documentHandler)
+        public SelectControl(PropertyInfo property, FieldType fieldType) : base(property)
         {
             SourceType = SelectSourceType.Enum;
-            EnumOptions = property.PropertyType.GetValueOptions(documentHandler);
+            EnumOptions = property.PropertyType.GetValueOptions();
 
             var selectAttr = property.GetCustomAttribute<SelectAttribute>();
-            if (selectAttr != null) InitSelectAttribute(selectAttr, property, fieldType, documentHandler);
+            if (selectAttr != null) InitSelectAttribute(selectAttr, property, fieldType);
         }
 
-        public SelectControl(SelectAttribute selectAttribute, PropertyInfo property, FieldType fieldType, DocumentHandler documentHandler) : base(property, documentHandler)
+        public SelectControl(SelectAttribute selectAttribute, PropertyInfo property, FieldType fieldType) : base(property)
         {
-            InitSelectAttribute(selectAttribute, property, fieldType, documentHandler);
+            InitSelectAttribute(selectAttribute, property, fieldType);
         }
 
-        public SelectControl(DictionaryOptionsAttribute dictionaryAttribute, PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        public SelectControl(DictionaryOptionsAttribute dictionaryAttribute, PropertyInfo property) : base(property)
         {
             SelectMode = dictionaryAttribute.SelectMode;
             SourceType = dictionaryAttribute.SourceType;
@@ -35,15 +35,15 @@ namespace Yangtao.Hosting.FrontendApi.Controls
                 ActionApi = dictionaryAttribute.ActionApi;
                 HttpMethodType = dictionaryAttribute.HttpMethodType;
                 ApiVersion = dictionaryAttribute.ApiVersion;
-                ServiceName = documentHandler.GetServiceName(dictionaryAttribute.ServiceName);
+                ServiceName = StaticDocument.DocumentHandler.GetServiceName(dictionaryAttribute.ServiceName);
             }
 
-            if (documentHandler.DictionaryConfig != null && dictionaryAttribute.ActionApi.IsNullOrEmpty() && dictionaryAttribute.ServiceName.IsNullOrEmpty())
+            if (StaticDocument.DocumentHandler.DictionaryConfig != null && dictionaryAttribute.ActionApi.IsNullOrEmpty() && dictionaryAttribute.ServiceName.IsNullOrEmpty())
             {
-                ActionApi = documentHandler.DictionaryConfig.ActionApi;
-                ApiVersion = documentHandler.DictionaryConfig.ApiVersion;
-                HttpMethodType = documentHandler.DictionaryConfig.HttpMethodType;
-                ServiceName = documentHandler.DictionaryConfig.ServiceName;
+                ActionApi = StaticDocument.DocumentHandler.DictionaryConfig.ActionApi;
+                ApiVersion = StaticDocument.DocumentHandler.DictionaryConfig.ApiVersion;
+                HttpMethodType = StaticDocument.DocumentHandler.DictionaryConfig.HttpMethodType;
+                ServiceName = StaticDocument.DocumentHandler.DictionaryConfig.ServiceName;
             }
 
             Bordered = dictionaryAttribute.Bordered;
@@ -51,14 +51,14 @@ namespace Yangtao.Hosting.FrontendApi.Controls
             AllowClear = dictionaryAttribute.AllowClear;
         }
 
-        private void InitSelectAttribute(SelectAttribute selectAttribute, PropertyInfo property, FieldType fieldType, DocumentHandler documentHandler)
+        private void InitSelectAttribute(SelectAttribute selectAttribute, PropertyInfo property, FieldType fieldType)
         {
             SelectMode = selectAttribute.SelectMode;
             ActionApi = selectAttribute.ActionApi;
             SourceType = selectAttribute.SourceType;
             HttpMethodType = selectAttribute.HttpMethodType;
             Module = selectAttribute.Module;
-            ServiceName = documentHandler.GetServiceName(selectAttribute.ServiceName);
+            ServiceName = StaticDocument.DocumentHandler.GetServiceName(selectAttribute.ServiceName);
 
             Bordered = selectAttribute.Bordered;
             ShowSearch = selectAttribute.ShowSearch;
@@ -74,7 +74,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
             if (fieldType == FieldType.Enum && selectAttribute.SourceType == SelectSourceType.Enum)
             {
                 var type = selectAttribute.Source ?? property.PropertyType;
-                EnumOptions = type.GetValueOptions(documentHandler);
+                EnumOptions = type.GetValueOptions();
             }
         }
 

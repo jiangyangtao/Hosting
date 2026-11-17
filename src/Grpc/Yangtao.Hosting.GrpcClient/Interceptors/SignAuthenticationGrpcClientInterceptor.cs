@@ -63,7 +63,7 @@ namespace Yangtao.Hosting.GrpcClient.Interceptors
 
             context.Options.Headers.Add(HeaderNames.Authorization, authorizationValue);
 
-            _logger.LogInformation("Request {method} to use sign authentication.", context.Method.FullName);
+            _logger.LogInformation("Request {method} match sign authentication.", context.Method.FullName);
             return base.AsyncUnaryCall(request, context, continuation);
         }
 

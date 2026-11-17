@@ -6,7 +6,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 {
     internal class RangePickerControl : ControlBase
     {
-        public RangePickerControl(RangeControlInfo rangeControlInfo, RangeEndDateControlInfo endDateControlInfo, DocumentHandler documentHandler) : base(rangeControlInfo.Property, documentHandler)
+        public RangePickerControl(RangeControlInfo rangeControlInfo, RangeEndDateControlInfo endDateControlInfo) : base(rangeControlInfo.Property)
         {
             BeginDate = rangeControlInfo.Property.Name;
             RangeName = rangeControlInfo.RangeName;

@@ -7,5 +7,11 @@
         ExistValidate,
 
         Delete,
+
+        BatchDelete,
+
+        Import,
+
+        Export
     }
 }

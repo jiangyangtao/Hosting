@@ -9,12 +9,12 @@ namespace Yangtao.Hosting.FrontendApi.Fields
 {
     internal class Field : FieldBase
     {
-        public Field(FieldType fieldType, PropertyInfo property, DocumentHandler documentHandler) : base(property, documentHandler)
+        public Field(FieldType fieldType, PropertyInfo property) : base(property)
         {
             FieldType = fieldType;
 
             var independentEdit = property.GetCustomAttribute<IndependentEditAttribute>();
-            if (independentEdit != null) IndependentEdit = new IndependentEdit(property, independentEdit, documentHandler);
+            if (independentEdit != null) IndependentEdit = new IndependentEdit(property, independentEdit);
         }
 
         public IndependentEdit? IndependentEdit { set; get; }

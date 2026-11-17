@@ -11,7 +11,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
 
         protected HttpActionAttributeBase(Type controller, string methodName)
         {
-            var method = controller.GetMethod(methodName) ?? throw new ArgumentException($"${methodName} not exist {controller.Name}");
+            var method = controller.GetMethod(methodName) ?? throw new ArgumentException($"${methodName} does not exist in the {controller.Name}");
             var action = method.GetHttpAction();
 
             ActionApi = action.ActionApi;
@@ -33,12 +33,15 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
         public string? ServiceName { set; get; }
     }
 
+    /// <summary>
+    /// http 操作
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class HttpActionAttribute : HttpActionAttributeBase
     {
         public HttpActionAttribute(Type controller, string methodName) : base(controller, methodName)
         {
-            
+
         }
 
         public HttpActionAttribute(string? actionApi, HttpMethodType httpMethodType) : base(actionApi, httpMethodType)
