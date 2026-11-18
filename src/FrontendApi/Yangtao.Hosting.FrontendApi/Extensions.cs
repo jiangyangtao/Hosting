@@ -164,7 +164,14 @@ namespace Yangtao.Hosting.FrontendApi
             if (tagsAttr != null) return new TagsControl(tagsAttr, property);
 
 
-            if (fieldType == FieldType.Boolean) return new SwitchControl(property);
+            if (fieldType == FieldType.Boolean)
+            {
+                var switchAttr = property.GetCustomAttribute<SwitchAttribute>();
+                if (switchAttr != null) return new SwitchControl(switchAttr, property);
+
+                return new SwitchControl(property);
+            }
+
             if (fieldType == FieldType.DateTime) return new DatePickerControl(property);
 
             if (fieldType == FieldType.Integer) return new InputNumberControl(property);
@@ -232,6 +239,12 @@ namespace Yangtao.Hosting.FrontendApi
         {
             var fieldType = property.GetFieldType();
             if (fieldType == FieldType.Enum) return new EnumField(property);
+
+            if (fieldType == FieldType.Boolean)
+            {
+                var booleanAttr = property.GetCustomAttribute<BooleanFieldAttribute>();
+                if (booleanAttr != null) return new BooleanField(booleanAttr, property);
+            }
 
             return new Field(fieldType, property);
         }

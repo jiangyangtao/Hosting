@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using Yangtao.Hosting.FrontendApi.Abstractions;
@@ -39,6 +40,7 @@ namespace Yangtao.Hosting.FrontendApi.Fields
 
         public IHttpAction DisableHttpAction { get; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public override FieldType FieldType => FieldType.Enum;
     }
 }

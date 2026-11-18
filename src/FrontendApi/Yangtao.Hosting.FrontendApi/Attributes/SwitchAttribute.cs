@@ -25,6 +25,8 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
 
         public object? UnCheckedChildren { set; get; }
 
+        public object? DefaultValue { set; get; }
+
         internal bool IsEmpty
         {
             get

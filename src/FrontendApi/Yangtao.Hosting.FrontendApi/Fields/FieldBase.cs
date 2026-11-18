@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Reflection;
 using Yangtao.Hosting.FrontendApi.Abstractions;
 using Yangtao.Hosting.FrontendApi.Attributes;
 using Yangtao.Hosting.FrontendApi.Enums;
@@ -39,6 +41,7 @@ namespace Yangtao.Hosting.FrontendApi.Fields
 
         public string? Format { protected set; get; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public abstract FieldType FieldType { get; }
 
         public string? GroupName { protected set; get; }

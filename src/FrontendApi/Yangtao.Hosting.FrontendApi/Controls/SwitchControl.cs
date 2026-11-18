@@ -19,6 +19,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 
         public SwitchControl(SwitchAttribute switchAttribute, PropertyInfo property) : base(property)
         {
+            DefaultValue = switchAttribute.DefaultValue;
             if (switchAttribute.IsEmpty == false)
             {
                 CheckedValue = switchAttribute.CheckedValue;
