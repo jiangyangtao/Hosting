@@ -64,7 +64,7 @@ namespace Yangtao.Hosting.Repository.Abstractions
         /// <param name="predicate"></param>
         /// <param name="isCommit"></param>
         /// <returns></returns>
-        Task<long> DeleteIfExistAsync(Expression<Func<TEntity, bool>> predicate, bool isCommit = true, CancellationToken cancellationToken = default);
+        Task<long> DeleteIfExistAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 根据 Id 删除
@@ -89,7 +89,7 @@ namespace Yangtao.Hosting.Repository.Abstractions
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="isCommit"></param>
         /// <returns></returns>
-        Task<long> DeleteAllAsync(bool isCommit = true, CancellationToken cancellationToken = default);
+        Task<long> DeleteAllAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 批量删除

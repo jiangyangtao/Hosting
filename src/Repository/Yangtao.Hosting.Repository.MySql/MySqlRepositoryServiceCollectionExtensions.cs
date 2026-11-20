@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Yangtao.Hosting.Extensions;
+using Microsoft.Extensions.Logging;
 using Yangtao.Hosting.Repository.Core;
 using Yangtao.Hosting.Repository.Core.Builders;
 
@@ -23,13 +23,19 @@ namespace Yangtao.Hosting.Repository.MySql
 
         public static IServiceCollection AddRepository(this IServiceCollection services, string connectionString)
         {
-            services.AddRepositoryCore(options => options.UseLazyLoadingProxies().UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+            services.AddRepositoryCore(options => options.UseLazyLoadingProxies()
+                                                        .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
+                                                        .LogTo(Console.WriteLine, LogLevel.Information)
+                                                        .EnableSensitiveDataLogging());
             return services;
         }
 
         public static IServiceCollection AddRepository(this IServiceCollection services, string connectionString, Action<DbContextBuilder> builderAction)
         {
-            services.AddRepositoryCore(options => options.UseLazyLoadingProxies().UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)), builderAction);
+            services.AddRepositoryCore(options => options.UseLazyLoadingProxies()
+                                                        .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
+                                                        .LogTo(Console.WriteLine, LogLevel.Information)
+                                                        .EnableSensitiveDataLogging(), builderAction);
             return services;
         }
 
@@ -37,16 +43,10 @@ namespace Yangtao.Hosting.Repository.MySql
         {
             var serviceProvider = services.BuildServiceProvider();
             var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-            var connectionStringsConfig = configuration.GetSection("ConnectionStrings") ?? throw new KeyNotFoundException("In configuration not found ConnectionStrings");
-
-            var mysqlConnectionStringConfig = connectionStringsConfig.GetSection("MySql");
-            mysqlConnectionStringConfig ??= connectionStringsConfig.GetSection("Mysql");
-            mysqlConnectionStringConfig ??= connectionStringsConfig.GetSection("mysql");
-
-            if (mysqlConnectionStringConfig == null) throw new KeyNotFoundException("In configuration not found MySql or Mysql or mysql of ConnectionStrings");
-            if (mysqlConnectionStringConfig.Value.IsNullOrEmpty()) throw new KeyNotFoundException("The ConnectionString can not be null or empty.");
-
-            return mysqlConnectionStringConfig.Value;
+            return configuration.GetConnectionString("MySql") ??
+                                            configuration.GetConnectionString("mysql") ??
+                                            configuration.GetConnectionString("Mysql") ??
+                                            throw new KeyNotFoundException("In configuration not found MySql or Mysql or mysql of ConnectionStrings");
         }
     }
 }

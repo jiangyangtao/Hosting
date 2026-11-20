@@ -8,4 +8,13 @@ namespace Test.Repository.Application.Models
 
         public string? ProductName { set; get; }
     }
+
+    public class ProductQueryParam : PaginationBase<Product>
+    {
+
+        public override IQueryable<Product> BuildQuery(IEntityRepository<Product> repository)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

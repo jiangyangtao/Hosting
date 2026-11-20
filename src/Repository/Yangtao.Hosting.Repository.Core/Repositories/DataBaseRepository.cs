@@ -17,7 +17,7 @@ namespace Yangtao.Hosting.Repository.Core.Providers
 
         public IQueryable<TResult> SqlQuery<TResult>(FormattableString sql) => _dbContext.Database.SqlQuery<TResult>(sql);
 
-        public IQueryable<TResult> SqlQueryRaw<TResult>(string sql, params object[] parameters) => _dbContext.Database.SqlQueryRaw<TResult>(sql);
+        public IQueryable<TResult> SqlQueryRaw<TResult>(string sql, params object[] parameters) => _dbContext.Database.SqlQueryRaw<TResult>(sql, parameters);
 
         public Task<int> ExecuteSqlInterpolatedAsync(FormattableString sql, CancellationToken cancellationToken = default) =>
            _dbContext.Database.ExecuteSqlInterpolatedAsync(sql, cancellationToken);

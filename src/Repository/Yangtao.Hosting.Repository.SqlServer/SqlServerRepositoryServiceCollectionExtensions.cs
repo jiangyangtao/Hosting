@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Yangtao.Hosting.Extensions;
+using Microsoft.Extensions.Logging;
 using Yangtao.Hosting.Repository.Core;
 using Yangtao.Hosting.Repository.Core.Builders;
 
@@ -25,7 +25,7 @@ namespace Yangtao.Hosting.Repository.SqlServer
         {
             services.AddRepositoryCore(options =>
             {
-                options.UseLazyLoadingProxies().UseSqlServer(connectionString);
+                options.UseLazyLoadingProxies().UseSqlServer(connectionString).LogTo(Console.WriteLine, LogLevel.Information).EnableSensitiveDataLogging();
             });
 
             return services;
@@ -33,7 +33,10 @@ namespace Yangtao.Hosting.Repository.SqlServer
 
         public static IServiceCollection AddRepository(this IServiceCollection services, string connectionString, Action<DbContextBuilder> builderAction)
         {
-            services.AddRepositoryCore(options => options.UseLazyLoadingProxies().UseSqlServer(connectionString), builderAction);
+            services.AddRepositoryCore(options => options.UseLazyLoadingProxies().
+                                                        UseSqlServer(connectionString).
+                                                        LogTo(Console.WriteLine, LogLevel.Information).
+                                                        EnableSensitiveDataLogging(), builderAction);
             return services;
         }
 
@@ -41,16 +44,10 @@ namespace Yangtao.Hosting.Repository.SqlServer
         {
             var serviceProvider = services.BuildServiceProvider();
             var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-            var connectionStringsConfig = configuration.GetSection("ConnectionStrings") ?? throw new KeyNotFoundException("In configuration not found ConnectionStrings");
-
-            var mysqlConnectionStringConfig = connectionStringsConfig.GetSection("SqlServer");
-            mysqlConnectionStringConfig ??= connectionStringsConfig.GetSection("sqlserver");
-            mysqlConnectionStringConfig ??= connectionStringsConfig.GetSection("Sqlserver");
-
-            if (mysqlConnectionStringConfig == null) throw new KeyNotFoundException("In configuration not found SqlServer or sqlserver or Sqlserver of ConnectionStrings");
-            if (mysqlConnectionStringConfig.Value.IsNullOrEmpty()) throw new KeyNotFoundException("The ConnectionString can not be null or empty.");
-
-            return mysqlConnectionStringConfig.Value;
+            return configuration.GetConnectionString("SqlServer") ??
+                                       configuration.GetConnectionString("sqlserver") ??
+                                       configuration.GetConnectionString("Sqlserver") ??
+                                       throw new KeyNotFoundException("In configuration not found SqlServer or sqlserver or Sqlserver of ConnectionStrings");
         }
     }
 }

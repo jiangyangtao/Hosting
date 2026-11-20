@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Yangtao.Hosting.Extensions;
@@ -26,7 +27,8 @@ namespace Yangtao.Hosting.Repository.Core
             {
                 var contextBuilder = new DbContextBuilder();
                 builderAction(contextBuilder);
-                optionsBuilder.Options.WithExtension(contextBuilder);
+                ((IDbContextOptionsBuilderInfrastructure)optionsBuilder)
+                .AddOrUpdateExtension(contextBuilder);
 
                 optionsAction(optionsBuilder);
             });
