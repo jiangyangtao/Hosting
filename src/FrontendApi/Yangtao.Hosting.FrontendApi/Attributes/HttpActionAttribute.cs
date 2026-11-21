@@ -15,6 +15,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
             var action = method.GetHttpAction();
 
             ActionApi = action.ActionApi;
+            ApiVersion = action.ApiVersion;
             HttpMethodType = action.HttpMethodType;
         }
 

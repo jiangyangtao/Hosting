@@ -27,16 +27,16 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
 
         public object? DefaultValue { set; get; }
 
-        internal bool IsEmpty
+        internal bool IsValid
         {
             get
             {
-                if (CheckedValue != null) return false;
-                if (UnCheckedValue != null) return false;
-                if (CheckedChildren != null) return false;
-                if (UnCheckedChildren != null) return false;
+                if (CheckedValue != null) return true;
+                if (UnCheckedValue != null) return true;
+                if (CheckedChildren != null) return true;
+                if (UnCheckedChildren != null) return true;
 
-                return true;
+                return false;
             }
         }
     }
