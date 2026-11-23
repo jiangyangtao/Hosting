@@ -1,6 +1,4 @@
-﻿using Yangtao.Hosting.FrontendApi.Enums;
-
-namespace Yangtao.Hosting.FrontendApi.Attributes
+﻿namespace Yangtao.Hosting.FrontendApi.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class RangePickerAttribute : Attribute
@@ -11,8 +9,6 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
         }
 
         public string? RangeName { set; get; }
-
-        public string? Separator { set; get; }
 
         public bool ShowTime { set; get; } = false;
 

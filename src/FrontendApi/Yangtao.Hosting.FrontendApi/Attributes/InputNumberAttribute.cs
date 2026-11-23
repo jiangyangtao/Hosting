@@ -9,6 +9,6 @@
 
         public bool ShowNumberControls { set; get; } = true;
 
-        public bool Bordered { get; } = true;
+        public bool Bordered { set; get; } = true;
     }
 }

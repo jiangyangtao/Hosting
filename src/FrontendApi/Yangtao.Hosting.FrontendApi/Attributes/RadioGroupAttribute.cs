@@ -12,7 +12,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
             ServiceName = serviceName;
         }
 
-        public RadioGroupAttribute(Type controller, string methodName, RadioGroupType radioGroupType = RadioGroupType.RadioGroupDeepBtn) : base(controller, methodName)
+        public RadioGroupAttribute(Type controllerType, string methodName, RadioGroupType radioGroupType = RadioGroupType.RadioGroupDeepBtn) : base(controllerType, methodName)
         {
             SourceType = SelectSourceType.API;
             RadioGroupType = radioGroupType;
@@ -28,9 +28,11 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
 
         public SelectSourceType SourceType { get; }
 
-
         public RadioGroupType RadioGroupType { set; get; }
 
+        public string? TrueText { set; get; } = "是";
+
+        public string? FalseText { set; get; } = "否";
 
         public Type? Source { get; }
     }

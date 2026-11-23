@@ -7,6 +7,6 @@
 
         public bool AllowClear { set; get; } = true;
 
-        public bool Bordered { get; } = true;
+        public bool Bordered { set; get; } = true;
     }
 }

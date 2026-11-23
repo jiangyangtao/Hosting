@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using Microsoft.Extensions.Logging;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.FrontendApi.Abstractions;
 using Yangtao.Hosting.FrontendApi.Attributes;
@@ -16,9 +18,10 @@ namespace Yangtao.Hosting.FrontendApi
             var controller = method.DeclaringType.Name.RemoveController();
 
             (HttpMethodType httpType, bool isDefault) = method.GetHttpType();
-            if (isDefault) return new HttpAction(httpType, controller, version, serviceName);
+            var api = $"{controller}/{method.Name}";
+            if (isDefault) api = controller;
 
-            return new HttpAction(httpType, $"{controller}/{method.Name}");
+            return new HttpAction(httpType, api, version, serviceName);
         }
 
         private static (HttpMethodType httpType, bool isDefault) GetHttpType(this MethodInfo method)
@@ -71,14 +74,22 @@ namespace Yangtao.Hosting.FrontendApi
             var tagsAttr = propertyInfo.GetCustomAttribute<TagsAttribute>();
             if (tagsAttr != null) return FieldType.Tags;
 
-            if (propertyType == StaticKeys.IntType || propertyType == StaticKeys.IntNullableType) return FieldType.Integer;
+            if (propertyType == StaticKeys.ShortType || propertyType == StaticKeys.ShortNullableType ||
+                propertyType == StaticKeys.IntType || propertyType == StaticKeys.IntNullableType ||
+                propertyType == StaticKeys.Int64Type || propertyType == StaticKeys.Int64NullableType) return FieldType.Integer;
             if (propertyType == StaticKeys.DecimalType || propertyType == StaticKeys.DecimalNullableType ||
-                    propertyType == StaticKeys.DoubleType || propertyType == StaticKeys.DoubleNullableType ||
-                    propertyType == StaticKeys.FloatType || propertyType == StaticKeys.FloatNullableType) return FieldType.Decimal;
+                propertyType == StaticKeys.DoubleType || propertyType == StaticKeys.DoubleNullableType ||
+                propertyType == StaticKeys.FloatType || propertyType == StaticKeys.FloatNullableType) return FieldType.Decimal;
 
             if (propertyType == StaticKeys.DateTimeType || propertyType == StaticKeys.DateTimeNullableType) return FieldType.DateTime;
             if (propertyType.IsEnum) return FieldType.Enum;
             if (propertyType == StaticKeys.BooleanType || propertyType == StaticKeys.BooleanNullableType) return FieldType.Boolean;
+            if (propertyType.IsArray) return FieldType.Set;
+            if (propertyType.IsGenericType)
+            {
+                var gengericType = propertyType.GetGenericTypeDefinition();
+                if (gengericType == StaticKeys.GenericListType || gengericType == StaticKeys.GenericEnumerableType) return FieldType.Set;
+            }
 
             return FieldType.String;
         }
@@ -87,47 +98,51 @@ namespace Yangtao.Hosting.FrontendApi
         {
             var properties = formType.GetProperties();
             var controls = new List<ControlBase>();
-            var rangeControlCollection = new RangeControlCollection();
             foreach (var property in properties)
             {
                 if (property.DeclaringType == StaticKeys.PaginationType) continue;
 
-                var fieldType = GetFieldType(property);
-                if (fieldType == FieldType.DateTime)
-                {
-                    var rangeAttr = property.GetCustomAttribute<RangePickerAttribute>();
-                    if (rangeAttr != null)
-                    {
-                        rangeControlCollection.AddRangeControl(rangeAttr, property);
-                        continue;
-                    }
-
-                    var endDateAttr = property.GetCustomAttribute<RangeEndDateAttribute>();
-                    if (endDateAttr != null)
-                    {
-                        rangeControlCollection.AddRangeEndDateControl(endDateAttr, property);
-                        continue;
-                    }
-                }
-
-                var control = property.BuildControl(fieldType);
+                var control = property.BuildPropertyControl();
                 controls.Add(control);
             }
-
-            var rangeControls = rangeControlCollection.BuildRangePickerControls();
-            if (rangeControls.NotNullAndEmpty()) controls.AddRange(rangeControls);
 
             return controls;
         }
 
         public static ControlBase BuildControl(this PropertyInfo property)
         {
-            var fieldType = GetFieldType(property);
-            return property.BuildControl(fieldType);
+            return property.BuildPropertyControl();
         }
 
-        private static ControlBase BuildControl(this PropertyInfo property, FieldType fieldType)
+        private static ControlBase BuildPropertyControl(this PropertyInfo property)
         {
+            var fieldType = GetFieldType(property);
+
+            var rangePickerAttr = property.GetCustomAttribute<RangePickerAttribute>();
+            if (rangePickerAttr != null) return new RangePickerControl(rangePickerAttr, property);
+
+            var selectAttr = property.GetCustomAttribute<SelectAttribute>();
+            if (selectAttr != null) return new SelectControl(selectAttr, property, fieldType);
+
+            var radioGroupAttr = property.GetCustomAttribute<RadioGroupAttribute>();
+            if (radioGroupAttr != null) return new RadioGroupControl(radioGroupAttr, property, fieldType);
+
+            var segmentedAttr = property.GetCustomAttribute<SegmentedAttribute>();
+            if (segmentedAttr != null) return new SegmentedControl(segmentedAttr, property);
+
+            var tagsAttr = property.GetCustomAttribute<TagsAttribute>();
+            if (tagsAttr != null) return new TagsControl(tagsAttr, property);
+            if (fieldType == FieldType.DateTime) return new DatePickerControl(property);
+            if (fieldType == FieldType.Integer) return new InputNumberControl(property);
+            if (fieldType == FieldType.Decimal) return new InputDecimalControl(property);
+            if (fieldType == FieldType.Boolean)
+            {
+                var switchAttr = property.GetCustomAttribute<SwitchAttribute>();
+                if (switchAttr != null) return new SwitchControl(switchAttr, property);
+
+                return new SwitchControl(property);
+            }
+
             if (fieldType == FieldType.Enum)
             {
                 var switchAttr = property.GetCustomAttribute<SwitchAttribute>();
@@ -141,42 +156,6 @@ namespace Yangtao.Hosting.FrontendApi
 
                 return new SelectControl(property, fieldType);
             }
-
-            var selectAttr = property.GetCustomAttribute<SelectAttribute>();
-            if (selectAttr != null) return new SelectControl(selectAttr, property, fieldType);
-
-            var dictionaryAttr = property.GetCustomAttribute<DictionaryOptionsAttribute>();
-            if (dictionaryAttr != null)
-            {
-                if (dictionaryAttr.OptionsType == DictionaryOptionsType.Select) return new SelectControl(dictionaryAttr, property);
-                if (dictionaryAttr.OptionsType == DictionaryOptionsType.Segmented) return new SegmentedControl(dictionaryAttr, property);
-
-                return new RadioGroupControl(dictionaryAttr, property);
-            }
-
-            var radioGroupAttr = property.GetCustomAttribute<RadioGroupAttribute>();
-            if (radioGroupAttr != null) return new RadioGroupControl(radioGroupAttr, property, fieldType);
-
-            var segmentedAttr = property.GetCustomAttribute<SegmentedAttribute>();
-            if (segmentedAttr != null) return new SegmentedControl(segmentedAttr, property);
-
-            var tagsAttr = property.GetCustomAttribute<TagsAttribute>();
-            if (tagsAttr != null) return new TagsControl(tagsAttr, property);
-
-
-            if (fieldType == FieldType.Boolean)
-            {
-                var switchAttr = property.GetCustomAttribute<SwitchAttribute>();
-                if (switchAttr != null) return new SwitchControl(switchAttr, property);
-
-                return new SwitchControl(property);
-            }
-
-            if (fieldType == FieldType.DateTime) return new DatePickerControl(property);
-
-            if (fieldType == FieldType.Integer) return new InputNumberControl(property);
-            if (fieldType == FieldType.Decimal) return new InputDecimalControl(property);
-
 
             var textArea = property.GetCustomAttribute<TextAreaAttribute>();
             if (textArea != null) return new TextAreaControl(textArea, property);
@@ -202,8 +181,19 @@ namespace Yangtao.Hosting.FrontendApi
             {
                 if (field.FieldType.IsEnum == false) continue;
 
-                var text = StaticDocument.DocumentHandler.GetFieldSummary(field);
-                var textValueOption = new TextValueOption(field.Name, text);
+                var text = string.Empty;
+                var description = string.Empty;
+
+                var display = field.GetCustomAttribute<DisplayAttribute>();
+                if (display != null)
+                {
+                    text = display.Name;
+                    description = display.Description;
+                }
+                if (text.IsNullOrEmpty()) text = StaticDocument.DocumentHandler.GetFieldSummary(field);
+                if (text.IsNullOrEmpty()) StaticDocument.Logger.LogError("{fieldFullName}.{fieldName} not DisplayAttribute or summary.", field.FieldType.FullName, field.Name);
+
+                var textValueOption = new TextValueOption(field.Name, text, description);
                 options.Add(textValueOption);
             }
 
@@ -247,6 +237,11 @@ namespace Yangtao.Hosting.FrontendApi
             }
 
             return new Field(fieldType, property);
+        }
+
+        public static void ValidateControllerType(this Type controllerType)
+        {
+            if (controllerType.IsSubclassOf(StaticKeys.ControllerBaseType) == false) throw new InvalidOperationException($"{controllerType.FullName} only supports inheritance from the Microsoft.AspNetCore.Mvc.ControllerBase.");
         }
     }
 }

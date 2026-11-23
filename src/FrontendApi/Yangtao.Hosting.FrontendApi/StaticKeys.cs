@@ -33,6 +33,23 @@ namespace Yangtao.Hosting.FrontendApi
         public static readonly Type PaginationType = typeof(PagingParameter);
         public static readonly Type NullableType = typeof(Nullable<>);
 
+        public static readonly Type DateTimeArrayType = typeof(DateTime[]);
+        public static readonly Type DateTimeOffsetArrayType = typeof(DateTimeOffset[]);
+
+        public static readonly Type DateTimeListType = typeof(List<DateTime>);
+        public static readonly Type DateTimeOffsetListType = typeof(List<DateTimeOffset>);
+
+        public static readonly Type DateTimeEnumerableType = typeof(IEnumerable<DateTime>);
+        public static readonly Type DateTimeOffsetEnumerableType = typeof(IEnumerable<DateTimeOffset>);
+
+        public static readonly Type GenericListType = typeof(IList<>);
+        public static readonly Type GenericEnumerableType = typeof(IEnumerable<>);
+
+        public static readonly Type ControllerBaseType = typeof(ControllerBase);
+
+        public static readonly Type TableComponentAttributeType = typeof(TableComponentAttribute);
+        public static readonly Type FormAttributeType = typeof(FormAttribute);
+        public static readonly Type QueryFormAttributeType = typeof(QueryFormAttribute);
 
         public static readonly Type HttpGetType = typeof(HttpGetAttribute);
         public static readonly Type HttpDefaultGetType = typeof(HttpGetDefaultAttribute);

@@ -13,8 +13,8 @@ namespace Yangtao.Hosting.FrontendApi.Controls
             var datePickerAttr = property.GetCustomAttribute<DatePickerAttribute>();
             if (datePickerAttr != null)
             {
-                AllowClear = datePickerAttr.AllowClear; ;
-                ShowToday = datePickerAttr.ShowToday; ;
+                AllowClear = datePickerAttr.AllowClear;
+                ShowToday = datePickerAttr.ShowToday;
                 TimeUnit = datePickerAttr.TimeUnit;
                 Bordered = datePickerAttr.Bordered;
             }

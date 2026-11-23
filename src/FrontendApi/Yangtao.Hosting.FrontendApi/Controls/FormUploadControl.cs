@@ -11,10 +11,9 @@ namespace Yangtao.Hosting.FrontendApi.Controls
         public FormUploadControl(FormUploadAttribute formUploadAttr)
         {
             Text = formUploadAttr.Text;
-            Name = formUploadAttr.Text;
+            Name = formUploadAttr.Name;
             UploadCount = formUploadAttr.UploadCount;
             Bordered = formUploadAttr.Bordered;
-            GroupName = formUploadAttr.GroupName;
             Required = formUploadAttr.Required;
         }
 

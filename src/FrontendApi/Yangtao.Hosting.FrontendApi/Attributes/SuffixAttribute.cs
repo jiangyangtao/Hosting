@@ -12,11 +12,11 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
 
         public SuffixAttribute(string value, AffixType affixType) : this(value)
         {
-            PrefixType = affixType;
+            SuffixType = affixType;
         }
 
         public string? Value { get; }
 
-        public AffixType PrefixType { get; } = AffixType.Text;
+        public AffixType SuffixType { get; } = AffixType.Text;
     }
 }

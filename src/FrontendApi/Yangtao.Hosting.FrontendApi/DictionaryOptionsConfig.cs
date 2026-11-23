@@ -7,7 +7,7 @@ namespace Yangtao.Hosting.FrontendApi
     {
         public string? ActionApi { set; get; }
 
-        public HttpMethodType? HttpMethodType { set; get; } = Enums.HttpMethodType.Get;
+        public HttpMethodType HttpMethodType { set; get; } = Enums.HttpMethodType.Get;
 
         public ApiVersion ApiVersion { set; get; } = ApiVersion.v1;
 

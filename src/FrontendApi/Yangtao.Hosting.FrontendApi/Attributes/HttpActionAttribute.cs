@@ -1,17 +1,21 @@
-﻿using Yangtao.Hosting.FrontendApi.Abstractions;
+﻿using Yangtao.Hosting.Extensions;
+using Yangtao.Hosting.FrontendApi.Abstractions;
 using Yangtao.Hosting.FrontendApi.Enums;
 
 namespace Yangtao.Hosting.FrontendApi.Attributes
 {
     public abstract class HttpActionAttributeBase : Attribute, IHttpAction
     {
+
         protected HttpActionAttributeBase()
         {
         }
 
-        protected HttpActionAttributeBase(Type controller, string methodName)
+        protected HttpActionAttributeBase(Type controllerType, string methodName)
         {
-            var method = controller.GetMethod(methodName) ?? throw new ArgumentException($"${methodName} does not exist in the {controller.Name}");
+            controllerType.ValidateControllerType();
+
+            var method = controllerType.GetMethod(methodName) ?? throw new ArgumentException($"${methodName} does not exist in the {controllerType.FullName}");
             var action = method.GetHttpAction();
 
             ActionApi = action.ActionApi;
@@ -27,11 +31,18 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
 
         public string? ActionApi { set; get; }
 
-        public HttpMethodType? HttpMethodType { set; get; }
+        public HttpMethodType HttpMethodType { set; get; } = HttpMethodType.Get;
 
         public ApiVersion ApiVersion { set; get; } = ApiVersion.v1;
 
         public string? ServiceName { set; get; }
+
+        /// <summary>
+        /// 是否可用
+        /// <para>true 可用</para>
+        /// <para>false 不可用</para>
+        /// </summary>
+        public bool IsValid => ActionApi.NotNullAndEmpty();
     }
 
     /// <summary>
@@ -40,7 +51,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
     [AttributeUsage(AttributeTargets.Class)]
     public class HttpActionAttribute : HttpActionAttributeBase
     {
-        public HttpActionAttribute(Type controller, string methodName) : base(controller, methodName)
+        public HttpActionAttribute(Type controllerType, string methodName) : base(controllerType, methodName)
         {
 
         }

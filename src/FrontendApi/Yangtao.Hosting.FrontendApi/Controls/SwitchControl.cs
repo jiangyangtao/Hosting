@@ -29,7 +29,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
                 if (FieldType == FieldType.Enum)
                 {
                     var valueOptions = property.PropertyType.GetValueOptions();
-                    if (valueOptions.Count() != 2) throw new Exception($"Properties of the switch control cannot be inferred from the field collection of the {property.PropertyType.Name}.");
+                    if (valueOptions.Count() != 2) throw new InvalidOperationException($"Properties of the switch control cannot be inferred from the field collection of the {property.PropertyType.FullName}.");
 
                     var options = valueOptions.ToArray();
                     CheckedValue = options[0].Value;

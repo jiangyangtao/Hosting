@@ -3,11 +3,6 @@
     public enum DictionaryOptionsType
     {
         /// <summary>
-        /// 下拉框
-        /// </summary>
-        Select,
-
-        /// <summary>
         /// 按钮式的单选框
         /// </summary>
         RadioGroupBtn,
@@ -26,10 +21,5 @@
         /// 垂直的单选框
         /// </summary>
         RadioGroupVertical,
-
-        /// <summary>
-        /// 分段控制器
-        /// </summary>
-        Segmented
     }
 }

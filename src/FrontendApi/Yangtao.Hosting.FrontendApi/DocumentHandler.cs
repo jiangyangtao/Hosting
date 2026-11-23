@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using Microsoft.Extensions.Logging;
+using System.Reflection;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using Yangtao.Hosting.Extensions;
@@ -14,14 +15,10 @@ namespace Yangtao.Hosting.FrontendApi
 
         private readonly string CurrentServiceName;
 
-        public readonly DictionaryOptionsConfig? DictionaryConfig;
-
         public DocumentHandler(FrontendApiConfigurationOptions options)
         {
             XmlDocmentDictionary = new();
-
             CurrentServiceName = options.DefaultServiceName;
-            DictionaryConfig = options.DictionaryOptionsConfig;
         }
 
         public string? GetFieldSummary(FieldInfo field)
@@ -81,7 +78,7 @@ namespace Yangtao.Hosting.FrontendApi
             return xmlDoc;
         }
 
-        public string GetServiceName(string serviceName = "")
+        public string GetServiceName(string? serviceName = "")
         {
             if (serviceName.NotNullAndEmpty()) return serviceName;
 
@@ -96,6 +93,12 @@ namespace Yangtao.Hosting.FrontendApi
     {
         public static DocumentHandler DocumentHandler { private set; get; }
 
-        public static void SetDocumentHandler(DocumentHandler documentHandler) => DocumentHandler = documentHandler;
+        public static void SetDocumentHandler(DocumentHandler documentHandler, ILogger logger)
+        {
+            DocumentHandler = documentHandler;
+            Logger = logger;
+        }
+
+        public static ILogger Logger { private set; get; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Reflection;
@@ -10,102 +11,124 @@ namespace Yangtao.Hosting.FrontendApi
 {
     internal class FrontendModules : IEnumerable<FrontendModule>
     {
-        private readonly IDictionary<string, FrontendModule> frontendModules;
-        private readonly IEnumerable<Assembly> Assemblies;
+        private readonly IDictionary<string, FrontendModule> _frontendModules;
+        private readonly IEnumerable<Assembly> _assemblies;
+        private readonly ICollection<ComponentTypeInfo<TableComponentAttribute>> _tableComponentTypes;
+        private readonly ICollection<ComponentTypeInfo<FormAttribute>> _formComponentTypes;
+        private readonly ICollection<ComponentTypeInfo<QueryFormAttribute>> _queryFormComponentTypes;
 
-        public FrontendModules(IEnumerable<Assembly> assemblies, FrontendApiConfigurationOptions options)
+        private FrontendModules()
         {
-            frontendModules = new Dictionary<string, FrontendModule>();
-            Assemblies = assemblies;
+            _tableComponentTypes = new Collection<ComponentTypeInfo<TableComponentAttribute>>();
+            _formComponentTypes = new Collection<ComponentTypeInfo<FormAttribute>>();
+            _queryFormComponentTypes = new Collection<ComponentTypeInfo<QueryFormAttribute>>();
 
+            _assemblies = Array.Empty<Assembly>();
+            _frontendModules = new Dictionary<string, FrontendModule>();
+        }
+
+        public FrontendModules(IEnumerable<Assembly> assemblies, FrontendApiConfigurationOptions options, ILogger logger) : this()
+        {
+            _assemblies = assemblies;
             var documentHandler = new DocumentHandler(options);
-            StaticDocument.SetDocumentHandler(documentHandler);
+            StaticDocument.SetDocumentHandler(documentHandler, logger);
 
+            InitAttributeType();
             BuildTableComponent();
             BuildFormComponent();
             BuildQueryFormComponent();
         }
 
+        private void InitAttributeType()
+        {
+            foreach (var assembly in _assemblies)
+            {
+                Type[] assemblyTypes;
+                try { assemblyTypes = assembly.GetTypes(); }
+                catch (ReflectionTypeLoadException ex) { assemblyTypes = ex.Types!.Where(t => t != null).ToArray()!; }
+
+                foreach (var assemblyType in assemblyTypes)
+                {
+                    var tableComponentAttribute = assemblyType.GetCustomAttribute<TableComponentAttribute>(false);
+                    if (tableComponentAttribute != null) _tableComponentTypes.Add(new ComponentTypeInfo<TableComponentAttribute>(assemblyType, tableComponentAttribute));
+
+                    var formComponentAttribute = assemblyType.GetCustomAttribute<FormAttribute>(false);
+                    if (formComponentAttribute != null) _formComponentTypes.Add(new ComponentTypeInfo<FormAttribute>(assemblyType, formComponentAttribute));
+
+                    var queryFormComponentAttribute = assemblyType.GetCustomAttribute<QueryFormAttribute>(false);
+                    if (queryFormComponentAttribute != null) _queryFormComponentTypes.Add(new ComponentTypeInfo<QueryFormAttribute>(assemblyType, queryFormComponentAttribute));
+                }
+            }
+        }
+
         private void BuildTableComponent()
         {
-            var tableComponentTypes = GetTypes(typeof(TableComponentAttribute));
-            if (tableComponentTypes.IsNullOrEmpty()) return;
+            if (_tableComponentTypes.IsNullOrEmpty()) return;
 
-            foreach (var tableComponentType in tableComponentTypes)
+            foreach (var tableComponentType in _tableComponentTypes)
             {
                 var tableComponent = new TableComponent(tableComponentType);
-                if (tableComponent.Module.IsNullOrEmpty()) continue;
-
-                var module = GetModule(tableComponent.Module);
-                module.AddTable(tableComponent);
+                AddTable(tableComponent);
             }
         }
 
         private void BuildFormComponent()
         {
-            var formComponentTypes = GetTypes(typeof(FormAttribute));
-            if (formComponentTypes.IsNullOrEmpty()) return;
+            if (_formComponentTypes.IsNullOrEmpty()) return;
 
-            foreach (var formComponentType in formComponentTypes)
+            foreach (var formComponentType in _formComponentTypes)
             {
-                var form = new FormComponent(formComponentType);
-                if (form.IsEmptyModule) continue;
-
-                var module = GetModule(form.Module);
-                module.AddForm(form);
+                var form = new FormComponent(formComponentType.ComponentType, formComponentType.ComponentAttribute);
+                form.ValidateModule(formComponentType.ComponentType);
+                AddForm(form);
             }
         }
 
         private void BuildQueryFormComponent()
         {
-            var queryFormComponentTypes = GetTypes(typeof(QueryFormAttribute));
-            if (queryFormComponentTypes.IsNullOrEmpty()) return;
+            if (_queryFormComponentTypes.IsNullOrEmpty()) return;
 
-            foreach (var queryFormComponentType in queryFormComponentTypes)
+            foreach (var queryFormComponentType in _queryFormComponentTypes)
             {
-                var queryForm = new QueryFormComponent(queryFormComponentType);
-                if (queryForm.IsEmptyModule) continue;
-
-                var module = GetModule(queryForm.Module);
-                module.AddQueryForm(queryForm);
+                var queryForm = new QueryFormComponent(queryFormComponentType.ComponentType);
+                queryForm.ValidateModule(queryFormComponentType.ComponentType);
+                AddQueryForm(queryForm);
             }
         }
 
-        private IEnumerable<Type> GetTypes(Type targetType)
+        private void AddTable(TableComponent tableComponent)
         {
-            var types = new Collection<Type>();
-            foreach (var assembly in Assemblies)
-            {
-                var assemblyTypes = assembly.GetTypes();
-                foreach (var assemblyType in assemblyTypes)
-                {
-                    var r = assemblyType.GetCustomAttribute(targetType, false);
-                    if (r == null) continue;
-
-                    types.Add(assemblyType);
-                }
-            }
-
-            return types;
+            var module = GetModule(tableComponent.Module);
+            module.AddTable(tableComponent);
         }
 
-        private bool ExistModule(string module) => frontendModules.ContainsKey(module);
+        private void AddForm(FormComponent formComponent)
+        {
+            var module = GetModule(formComponent.Module);
+            module.AddForm(formComponent);
+        }
+
+        private void AddQueryForm(QueryFormComponent queryFormComponent)
+        {
+            var module = GetModule(queryFormComponent.Module);
+            module.AddQueryForm(queryFormComponent);
+        }
 
         private FrontendModule GetModule(string module)
         {
-            var exist = ExistModule(module);
-            if (exist) return frontendModules[module];
+            var exist = _frontendModules.ContainsKey(module);
+            if (exist) return _frontendModules[module];
 
             var r = new FrontendModule(module);
-            frontendModules.Add(module, r);
+            _frontendModules.Add(module, r);
 
             return r;
         }
 
-        public IEnumerator<FrontendModule> GetEnumerator() => frontendModules.Values.GetEnumerator();
+        public IEnumerator<FrontendModule> GetEnumerator() => _frontendModules.Values.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public string ToJson() => JsonConvert.SerializeObject(frontendModules.Values);
+        public string ToJson() => JsonConvert.SerializeObject(_frontendModules.Values);
     }
 }

@@ -17,7 +17,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
             ServiceName = serviceName;
         }
 
-        public SelectAttribute(Type controller, string methodName, SelectMode mode = SelectMode.Tags) : base(controller, methodName)
+        public SelectAttribute(Type controllerType, string methodName, SelectMode mode = SelectMode.Tags) : base(controllerType, methodName)
         {
             SourceType = SelectSourceType.API;
             SelectMode = mode;

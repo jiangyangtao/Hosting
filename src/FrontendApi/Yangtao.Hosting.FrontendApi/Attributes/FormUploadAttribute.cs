@@ -13,12 +13,10 @@
 
         public string? Name { set; get; }
 
-        public bool Required { get; }
+        public bool Required { set; get; }
 
         public int UploadCount { set; get; } = 1;
 
         public bool Bordered { set; get; } = true;
-
-        public string? GroupName { get; }
     }
 }

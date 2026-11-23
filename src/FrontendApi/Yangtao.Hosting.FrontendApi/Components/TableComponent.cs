@@ -12,29 +12,28 @@ namespace Yangtao.Hosting.FrontendApi.Components
     /// <summary>
     /// 表格组件
     /// </summary>
-    internal class TableComponent : ComponentBase
+    internal class TableComponent : ComponentBase, IHttpAction
     {
-        public TableComponent(Type tableComponentType) : base(tableComponentType)
+        public TableComponent(ComponentTypeInfo<TableComponentAttribute> tableComponentType) : base(tableComponentType.ComponentType)
         {
-            var httpActionAttribute = tableComponentType.GetCustomAttribute<HttpActionAttribute>();
+            ServiceName = StaticDocument.DocumentHandler.GetServiceName();
+
+            var httpActionAttribute = tableComponentType.ComponentType.GetCustomAttribute<HttpActionAttribute>();
             if (httpActionAttribute != null)
             {
+                IsValidHttpAction = true;
                 ActionApi = httpActionAttribute.ActionApi;
                 HttpMethodType = httpActionAttribute.HttpMethodType;
                 ApiVersion = httpActionAttribute.ApiVersion;
                 ServiceName = StaticDocument.DocumentHandler.GetServiceName(httpActionAttribute.ServiceName);
             }
 
-            Fields = tableComponentType.BuildFields();
-
-            var tableComponentAttribute = tableComponentType.GetCustomAttribute<TableComponentAttribute>() ??
-                throw new ArgumentException($"{nameof(tableComponentType)} not exist {nameof(TableComponentAttribute)}");
-
-            if (tableComponentAttribute.QueryForm != null)
+            Fields = tableComponentType.ComponentType.BuildFields();
+            if (tableComponentType.ComponentAttribute.QueryForm != null)
             {
-                IsPagination = IsPaginationType(tableComponentAttribute.QueryForm);
+                IsPagination = IsPaginationType(tableComponentType.ComponentAttribute.QueryForm);
 
-                QueryForm = new(tableComponentAttribute.QueryForm);
+                QueryForm = new(tableComponentType.ComponentAttribute.QueryForm);
                 if (QueryForm.Module.IsNullOrEmpty())
                 {
                     QueryForm.Module = Module;
@@ -42,9 +41,9 @@ namespace Yangtao.Hosting.FrontendApi.Components
                 }
             }
 
-            if (tableComponentAttribute.AddForm != null)
+            if (tableComponentType.ComponentAttribute.AddForm != null)
             {
-                AddForm = new(tableComponentAttribute.AddForm);
+                AddForm = new(tableComponentType.ComponentAttribute.AddForm);
                 if (AddForm.Module.IsNullOrEmpty())
                 {
                     AddForm.Module = Module;
@@ -52,9 +51,9 @@ namespace Yangtao.Hosting.FrontendApi.Components
                 }
             }
 
-            if (tableComponentAttribute.EditForm != null)
+            if (tableComponentType.ComponentAttribute.EditForm != null)
             {
-                EditForm = new(tableComponentAttribute.EditForm);
+                EditForm = new(tableComponentType.ComponentAttribute.EditForm);
                 if (EditForm.Module.IsNullOrEmpty())
                 {
                     EditForm.Module = Module;
@@ -62,21 +61,23 @@ namespace Yangtao.Hosting.FrontendApi.Components
                 }
             }
 
-            var properties = tableComponentType.GetProperties();
+            var properties = tableComponentType.ComponentType.GetProperties();
             var dataStatusProperty = properties.FirstOrDefault(a => a.GetCustomAttribute<DataStatusAttribute>() != null);
             if (dataStatusProperty != null) DataStatus = new DataStatus(dataStatusProperty);
 
-            var deleteAction = tableComponentType.GetCustomAttribute<DeleteActionAttribute>();
+            var deleteAction = tableComponentType.ComponentType.GetCustomAttribute<DeleteActionAttribute>();
             if (deleteAction != null) DeleteAction = new(deleteAction);
 
-            var batchDeleteAction = tableComponentType.GetCustomAttribute<BatchDeleteActionAttribute>();
+            var batchDeleteAction = tableComponentType.ComponentType.GetCustomAttribute<BatchDeleteActionAttribute>();
             if (batchDeleteAction != null) BatchDeleteAction = new(batchDeleteAction);
 
-            var importAction = tableComponentType.GetCustomAttribute<ImportActionAttribute>();
-            if (importAction != null) ImportAction = new(importAction);
+            var importAction = tableComponentType.ComponentType.GetCustomAttribute<ImportActionAttribute>();
+            if (importAction != null) ImportAction = new(importAction, tableComponentType.ComponentType);
 
-            var exportAction = tableComponentType.GetCustomAttribute<ExportActionAttribute>();
+            var exportAction = tableComponentType.ComponentType.GetCustomAttribute<ExportActionAttribute>();
             if (exportAction != null) ExportAction = new(exportAction);
+
+            Validate(tableComponentType.ComponentType);
         }
 
         private static bool IsPaginationType(Type? type)
@@ -104,11 +105,10 @@ namespace Yangtao.Hosting.FrontendApi.Components
 
         public ExportAction? ExportAction { set; get; }
 
-
         public string? ActionApi { set; get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public HttpMethodType? HttpMethodType { set; get; } = Enums.HttpMethodType.Get;
+        public HttpMethodType HttpMethodType { set; get; } = Enums.HttpMethodType.Get;
 
         public IEnumerable<FieldBase> Fields { set; get; }
 
@@ -118,5 +118,15 @@ namespace Yangtao.Hosting.FrontendApi.Components
         public ApiVersion ApiVersion { set; get; } = ApiVersion.v1;
 
         public string? ServiceName { set; get; }
+
+        [JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
+        public bool IsValidHttpAction { get; } = false;
+
+        private void Validate(Type componentType)
+        {
+            base.ValidateModule(componentType);
+            if (IsValidHttpAction == false) throw new InvalidOperationException($"{componentType.FullName} must specify set HttpAction or config HttpActionAttribute.");
+        }
     }
 }

@@ -14,30 +14,25 @@ namespace Yangtao.Hosting.FrontendApi.Components
     /// </summary>
     internal class FormComponent : QueryFormComponent, IHttpAction
     {
-        public FormComponent(Type formType) : base(formType)
+        public FormComponent(Type formType, FormAttribute? formAttr = null) : base(formType)
         {
-            var formAttr = formType.GetCustomAttribute<FormAttribute>();
+            ServiceName = StaticDocument.DocumentHandler.GetServiceName();
+
+            formAttr ??= formType.GetCustomAttribute<FormAttribute>();
             if (formAttr != null)
             {
                 DisplayMode = formAttr.DisplayMode;
                 ActionApi = formAttr.ActionApi;
+                ApiVersion = formAttr.ApiVersion;
                 HttpMethodType = formAttr.HttpMethodType;
-                ServiceName = StaticDocument.DocumentHandler.GetServiceName(formAttr.ServiceName);
             }
 
-            var httpActionAttribute = formType.GetCustomAttribute<HttpActionAttribute>();
-            if (httpActionAttribute != null)
-            {
-                ActionApi = httpActionAttribute.ActionApi;
-                HttpMethodType = httpActionAttribute.HttpMethodType;
-                ApiVersion = httpActionAttribute.ApiVersion;
-                ServiceName = StaticDocument.DocumentHandler.GetServiceName(httpActionAttribute.ServiceName);
-            }
+            var httpActionAttribute = formType.GetCustomAttribute<HttpActionAttribute>() ?? throw new InvalidOperationException($"{formType.FullName} must specify set HttpAction or config HttpActionAttribute.");
 
-            FormGroups = Array.Empty<IFieldGroup>();
-
-            var groupAttributes = formType.GetCustomAttributes<FormGroupAttribute>();
-            if (groupAttributes.NotNullAndEmpty()) FormGroups = groupAttributes.Select(a => new FormGroup(a));
+            ActionApi = httpActionAttribute.ActionApi;
+            HttpMethodType = httpActionAttribute.HttpMethodType;
+            ApiVersion = httpActionAttribute.ApiVersion;
+            ServiceName = StaticDocument.DocumentHandler.GetServiceName(httpActionAttribute.ServiceName);
 
             var formUploadAttributes = formType.GetCustomAttributes<FormUploadAttribute>();
             if (formUploadAttributes.NotNullAndEmpty())
@@ -53,26 +48,17 @@ namespace Yangtao.Hosting.FrontendApi.Components
         public string? ActionApi { set; get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public HttpMethodType? HttpMethodType { set; get; }
-
-        public IEnumerable<IFieldGroup> FormGroups { set; get; }
+        public HttpMethodType HttpMethodType { set; get; } = HttpMethodType.Post;
 
         [JsonConverter(typeof(StringEnumConverter))]
         public ApiVersion ApiVersion { set; get; } = ApiVersion.v1;
 
         public string? ServiceName { set; get; }
-    }
 
-    internal class FormGroup : IFieldGroup
-    {
-        public FormGroup(FormGroupAttribute formGroup)
-        {
-            GroupName = formGroup.GroupName;
-            SortIndex = formGroup.SortIndex;
-        }
 
-        public string? GroupName { set; get; }
 
-        public int SortIndex { set; get; }
+        [JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
+        private bool IsValidHttpAction => ActionApi.NotNullAndEmpty() && ServiceName.NotNullAndEmpty();
     }
 }

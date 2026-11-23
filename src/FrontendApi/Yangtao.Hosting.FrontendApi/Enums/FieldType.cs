@@ -15,5 +15,7 @@
         Boolean,
 
         Tags,
+
+        Set
     }
 }

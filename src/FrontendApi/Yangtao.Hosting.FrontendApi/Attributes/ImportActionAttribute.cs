@@ -16,15 +16,9 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
             RequestData = requestData;
         }
 
-        public ImportActionAttribute(Type controller, string methodName, Type? requestData = null) : base(controller, methodName)
+        public ImportActionAttribute(Type controllerType, string methodName, Type? requestData = null) : base(controllerType, methodName)
         {
             RequestData = requestData;
         }
-
-        public Type? ImportTemplateController { set; get; }
-
-        public string ImportTemplateMethod { set; get; } = string.Empty;
-
-        public bool HasImportTemplate => ImportTemplateController != null && ImportTemplateMethod.NotNullAndEmpty();
     }
 }

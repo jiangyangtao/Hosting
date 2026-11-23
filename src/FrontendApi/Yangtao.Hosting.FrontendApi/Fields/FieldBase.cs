@@ -17,8 +17,7 @@ namespace Yangtao.Hosting.FrontendApi.Fields
         }
 
         protected FieldBase(PropertyInfo property)
-        {
-
+        {       
             Name = property.Name;
             Text = StaticDocument.DocumentHandler.GetPropertySummary(property);
 
@@ -27,12 +26,6 @@ namespace Yangtao.Hosting.FrontendApi.Fields
 
             var uniqueKey = property.GetCustomAttribute<UniqueKeyAttribute>();
             if (uniqueKey != null) IsKey = true;
-
-            var fieldItemAttribute = property.GetCustomAttribute<FieldGroupItemAttribute>();
-            if (fieldItemAttribute != null)
-            {
-                GroupName = fieldItemAttribute.GroupName;
-            }
         }
 
         public string? Name { protected set; get; }
@@ -43,8 +36,6 @@ namespace Yangtao.Hosting.FrontendApi.Fields
 
         [JsonConverter(typeof(StringEnumConverter))]
         public abstract FieldType FieldType { get; }
-
-        public string? GroupName { protected set; get; }
 
         public bool IsKey { protected set; get; }
     }

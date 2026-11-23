@@ -5,17 +5,12 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
     [AttributeUsage(AttributeTargets.Property)]
     public class UploadAttribute : HttpActionAttributeBase
     {
-        public UploadAttribute(int uploadCount = 1)
+        public UploadAttribute(string? actionApi = "", HttpMethodType httpActionType = HttpMethodType.Put, int uploadCount = 1) : base(actionApi, httpActionType)
         {
             UploadCount = uploadCount;
         }
 
-        public UploadAttribute(string? actionApi = "", HttpMethodType httpActionType = Enums.HttpMethodType.Put, int uploadCount = 1) : base(actionApi, httpActionType)
-        {
-            UploadCount = uploadCount;
-        }
-
-        public UploadAttribute(Type controller, string methodName, int uploadCount = 1) : base(controller, methodName)
+        public UploadAttribute(Type controllerType, string methodName, int uploadCount = 1) : base(controllerType, methodName)
         {
             UploadCount = uploadCount;
         }

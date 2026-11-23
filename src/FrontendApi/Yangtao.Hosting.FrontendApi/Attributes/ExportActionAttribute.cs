@@ -16,7 +16,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
             RequestData = requestData;
         }
 
-        public ExportActionAttribute(Type controller, string methodName, Type? requestData = null) : base(controller, methodName)
+        public ExportActionAttribute(Type controllerType, string methodName, Type? requestData = null) : base(controllerType, methodName)
         {
             RequestData = requestData;
         }

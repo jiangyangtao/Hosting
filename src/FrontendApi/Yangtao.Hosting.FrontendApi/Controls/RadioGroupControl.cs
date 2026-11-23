@@ -1,19 +1,20 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Reflection;
-using Yangtao.Hosting.Extensions;
+using Yangtao.Hosting.FrontendApi.Abstractions;
 using Yangtao.Hosting.FrontendApi.Attributes;
 using Yangtao.Hosting.FrontendApi.Enums;
 using Yangtao.Hosting.Mvc.FormatResult;
 
 namespace Yangtao.Hosting.FrontendApi.Controls
 {
-    internal class RadioGroupControl : ControlBase
+    internal class RadioGroupControl : ControlBase, IHttpAction
     {
         public RadioGroupControl(RadioGroupAttribute radioGroupAttribute, PropertyInfo property, FieldType fieldType) : base(property)
         {
             RadioGroupType = radioGroupAttribute.RadioGroupType;
             ActionApi = radioGroupAttribute.ActionApi;
+            ApiVersion = radioGroupAttribute.ApiVersion;
             SourceType = radioGroupAttribute.SourceType;
             HttpMethodType = radioGroupAttribute.HttpMethodType;
             ServiceName = StaticDocument.DocumentHandler.GetServiceName(radioGroupAttribute.ServiceName);
@@ -21,7 +22,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 
             if (fieldType == FieldType.Boolean)
             {
-                EnumOptions = new TextValueOption[] { new("true", "否"), new("false", "是") };
+                EnumOptions = new TextValueOption[] { new("true", radioGroupAttribute.TrueText), new("false", radioGroupAttribute.FalseText) };
             }
 
             if (radioGroupAttribute.SourceType == SelectSourceType.Enum)
@@ -31,34 +32,10 @@ namespace Yangtao.Hosting.FrontendApi.Controls
             }
         }
 
-        public RadioGroupControl(DictionaryOptionsAttribute dictionaryAttribute, PropertyInfo property) : base(property)
-        {
-            if (dictionaryAttribute.OptionsType == DictionaryOptionsType.RadioGroup) RadioGroupType = RadioGroupType.RadioGroup;
-            if (dictionaryAttribute.OptionsType == DictionaryOptionsType.RadioGroupBtn) RadioGroupType = RadioGroupType.RadioGroupBtn;
-            if (dictionaryAttribute.OptionsType == DictionaryOptionsType.RadioGroupDeepBtn) RadioGroupType = RadioGroupType.RadioGroupDeepBtn;
-            if (dictionaryAttribute.OptionsType == DictionaryOptionsType.RadioGroupVertical) RadioGroupType = RadioGroupType.RadioGroupVertical;
-
-            SourceType = dictionaryAttribute.SourceType;
-
-            if (dictionaryAttribute.ActionApi.NotNullAndEmpty() && dictionaryAttribute.ServiceName.NotNullAndEmpty())
-            {
-                ActionApi = dictionaryAttribute.ActionApi;
-                HttpMethodType = dictionaryAttribute.HttpMethodType;
-                ApiVersion = dictionaryAttribute.ApiVersion;
-                ServiceName = StaticDocument.DocumentHandler.GetServiceName(dictionaryAttribute.ServiceName);
-            }
-
-            if (StaticDocument.DocumentHandler.DictionaryConfig != null && dictionaryAttribute.ActionApi.IsNullOrEmpty() && dictionaryAttribute.ServiceName.IsNullOrEmpty())
-            {
-                ActionApi = StaticDocument.DocumentHandler.DictionaryConfig.ActionApi;
-                ApiVersion = StaticDocument.DocumentHandler.DictionaryConfig.ApiVersion;
-                HttpMethodType = StaticDocument.DocumentHandler.DictionaryConfig.HttpMethodType;
-                ServiceName = StaticDocument.DocumentHandler.DictionaryConfig.ServiceName;
-            }
-        }
-
+        [JsonConverter(typeof(StringEnumConverter))]
         public RadioGroupType RadioGroupType { set; get; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public override ControlType ControlType => ControlType.RadioGroup;
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -69,7 +46,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
         public string? ActionApi { set; get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public HttpMethodType? HttpMethodType { set; get; }
+        public HttpMethodType HttpMethodType { set; get; } = HttpMethodType.Get;
 
         [JsonConverter(typeof(StringEnumConverter))]
         public ApiVersion ApiVersion { set; get; } = ApiVersion.v1;

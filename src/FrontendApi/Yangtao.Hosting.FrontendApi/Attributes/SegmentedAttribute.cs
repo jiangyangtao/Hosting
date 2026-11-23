@@ -7,6 +7,6 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
     {
         public bool Block { set; get; } = false;
 
-        public SelectSourceType SourceType { get; }
+        public SelectSourceType SourceType { set; get; }
     }
 }

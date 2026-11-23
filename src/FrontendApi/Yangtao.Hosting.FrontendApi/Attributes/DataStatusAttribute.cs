@@ -17,10 +17,12 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
         {
             RequestData = requestData;
 
-            var enableMethod = controller.GetMethod(enableAction) ?? throw new ArgumentException($"${enableAction} not exist {controller.Name}");
+            controller.ValidateControllerType();
+
+            var enableMethod = controller.GetMethod(enableAction) ?? throw new ArgumentException($"${enableAction} not exist {controller.FullName}");
             EnableHttpAction = enableMethod.GetHttpAction(enableActionVersion, serviceName);
 
-            var disableMethod = controller.GetMethod(disableAction) ?? throw new ArgumentException($"${disableAction} not exist {controller.Name}");
+            var disableMethod = controller.GetMethod(disableAction) ?? throw new ArgumentException($"${disableAction} not exist {controller.FullName}");
             DisableHttpAction = disableMethod.GetHttpAction(disableActionVersion, serviceName);
         }
 

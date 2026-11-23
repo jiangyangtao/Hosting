@@ -208,7 +208,7 @@ namespace Yangtao.Hosting.Extensions
         /// </summary>
         /// <param name="input">要转换的字符串</param>
         /// <returns></returns>
-        public static string ToMd5(string input)
+        public static string ToMd5(this string input)
         {
             var inputBytes = Encoding.UTF8.GetBytes(input);
             var hashBytes = MD5.HashData(inputBytes);

@@ -5,7 +5,6 @@ using Yangtao.Hosting.FrontendApi.Abstractions;
 using Yangtao.Hosting.FrontendApi.Attributes;
 using Yangtao.Hosting.FrontendApi.Controls;
 using Yangtao.Hosting.FrontendApi.Enums;
-using Yangtao.Hosting.FrontendApi.Fields;
 
 namespace Yangtao.Hosting.FrontendApi.Components
 {
@@ -14,19 +13,9 @@ namespace Yangtao.Hosting.FrontendApi.Components
     /// </summary>
     internal abstract class IndependentActionBase : ActionBase
     {
-        protected IndependentActionBase()
+        protected IndependentActionBase(IAction action) : base(action)
         {
-            RequestParams = Array.Empty<ParamField>();
-        }
 
-        protected IndependentActionBase(IAction action) : this()
-        {
-            ActionApi = action.ActionApi;
-            HttpMethodType = action.HttpMethodType;
-            ApiVersion = action.ApiVersion;
-            ServiceName = StaticDocument.DocumentHandler.GetServiceName(action.ServiceName);
-
-            if (action.RequestData != null) RequestParams = action.RequestData.BuildParamFields();
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -87,12 +76,10 @@ namespace Yangtao.Hosting.FrontendApi.Components
 
     internal class ImportAction : IndependentActionBase
     {
-        public ImportAction(ImportActionAttribute actionAttribute) : base(actionAttribute)
+        public ImportAction(ImportActionAttribute actionAttribute, Type componentType) : base(actionAttribute)
         {
-            if (actionAttribute.HasImportTemplate)
-            {
-                TemplateAction = new ImportTemplateAction(actionAttribute.ImportTemplateController, actionAttribute.ImportTemplateMethod);
-            }
+            var importTemplateActionAttr = componentType.GetCustomAttribute<ImportTemplateActionAttribute>();
+            if (importTemplateActionAttr != null) TemplateAction = new(importTemplateActionAttr);
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -105,15 +92,9 @@ namespace Yangtao.Hosting.FrontendApi.Components
 
         public class ImportTemplateAction : ActionBase
         {
-            internal ImportTemplateAction(Type controller, string methodName)
+            internal ImportTemplateAction(ImportTemplateActionAttribute action) : base(action)
             {
-                var method = controller.GetMethod(methodName) ?? throw new ArgumentException($"${methodName} does not exist in the {controller.Name}");
-                var action = method.GetHttpAction();
 
-                ActionApi = action.ActionApi;
-                HttpMethodType = action.HttpMethodType;
-                ActionApi = action.ActionApi;
-                ServiceName = StaticDocument.DocumentHandler.GetServiceName(action.ServiceName);
             }
 
             [JsonIgnore]

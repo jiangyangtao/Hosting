@@ -5,7 +5,7 @@ namespace Yangtao.Hosting.FrontendApi
     public class FrontendApiConfigurationOptions
     {
         /// <summary>
-        /// Get Frontend Configuration the endpoint,Default "//Frontend/Configuration"
+        /// Get Frontend Configuration the endpoint,Default "/Frontend/Configuration"
         /// </summary>
         public string Endpoint { set; get; } = "/Frontend/Configuration";
 
@@ -17,8 +17,5 @@ namespace Yangtao.Hosting.FrontendApi
         /// Enum Result the ContentType,Default application/json
         /// </summary>
         public string ResponseContentType { set; get; } = MediaTypeNames.Application.Json;
-
-
-        public DictionaryOptionsConfig? DictionaryOptionsConfig { set; get; }
     }
 }

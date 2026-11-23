@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Reflection;
-using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.FrontendApi.Abstractions;
 using Yangtao.Hosting.FrontendApi.Attributes;
 using Yangtao.Hosting.FrontendApi.Enums;
@@ -25,36 +24,11 @@ namespace Yangtao.Hosting.FrontendApi.Controls
             InitSelectAttribute(selectAttribute, property, fieldType);
         }
 
-        public SelectControl(DictionaryOptionsAttribute dictionaryAttribute, PropertyInfo property) : base(property)
-        {
-            SelectMode = dictionaryAttribute.SelectMode;
-            SourceType = dictionaryAttribute.SourceType;
-
-            if (dictionaryAttribute.ActionApi.NotNullAndEmpty() && dictionaryAttribute.ServiceName.NotNullAndEmpty())
-            {
-                ActionApi = dictionaryAttribute.ActionApi;
-                HttpMethodType = dictionaryAttribute.HttpMethodType;
-                ApiVersion = dictionaryAttribute.ApiVersion;
-                ServiceName = StaticDocument.DocumentHandler.GetServiceName(dictionaryAttribute.ServiceName);
-            }
-
-            if (StaticDocument.DocumentHandler.DictionaryConfig != null && dictionaryAttribute.ActionApi.IsNullOrEmpty() && dictionaryAttribute.ServiceName.IsNullOrEmpty())
-            {
-                ActionApi = StaticDocument.DocumentHandler.DictionaryConfig.ActionApi;
-                ApiVersion = StaticDocument.DocumentHandler.DictionaryConfig.ApiVersion;
-                HttpMethodType = StaticDocument.DocumentHandler.DictionaryConfig.HttpMethodType;
-                ServiceName = StaticDocument.DocumentHandler.DictionaryConfig.ServiceName;
-            }
-
-            Bordered = dictionaryAttribute.Bordered;
-            ShowSearch = dictionaryAttribute.ShowSearch;
-            AllowClear = dictionaryAttribute.AllowClear;
-        }
-
         private void InitSelectAttribute(SelectAttribute selectAttribute, PropertyInfo property, FieldType fieldType)
         {
             SelectMode = selectAttribute.SelectMode;
             ActionApi = selectAttribute.ActionApi;
+            ApiVersion = selectAttribute.ApiVersion;
             SourceType = selectAttribute.SourceType;
             HttpMethodType = selectAttribute.HttpMethodType;
             Module = selectAttribute.Module;
@@ -96,7 +70,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
         public string? ActionApi { set; get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public HttpMethodType? HttpMethodType { set; get; }
+        public HttpMethodType HttpMethodType { set; get; } = HttpMethodType.Get;
 
         [JsonConverter(typeof(StringEnumConverter))]
         public ApiVersion ApiVersion { set; get; } = ApiVersion.v1;

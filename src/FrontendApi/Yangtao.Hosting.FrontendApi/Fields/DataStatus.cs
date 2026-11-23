@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System.Collections.ObjectModel;
 using System.Reflection;
 using Yangtao.Hosting.FrontendApi.Abstractions;
 using Yangtao.Hosting.FrontendApi.Attributes;
@@ -12,10 +11,14 @@ namespace Yangtao.Hosting.FrontendApi.Fields
     {
         public DataStatus(PropertyInfo property) : base(property)
         {
-            RequestParams = new Collection<ParamField>();
+            var fieldType = property.GetFieldType();
+            if (fieldType != FieldType.Enum && fieldType != FieldType.Boolean) throw new InvalidOperationException($"{property.Name} the DataStatus only supports Enum or Boolean.");
+
+            FieldType = fieldType;
+            RequestParams = Array.Empty<ParamField>();
 
             var dataStatusAttribute = property.GetCustomAttribute<DataStatusAttribute>() ??
-                throw new ArgumentException($"{nameof(property)} not exist {nameof(DataStatusAttribute)}", nameof(property));
+                throw new InvalidOperationException($"{property.Name} not exist [DataStatusAttribute].");
 
             RequestData = dataStatusAttribute.RequestData;
 
@@ -36,11 +39,11 @@ namespace Yangtao.Hosting.FrontendApi.Fields
 
         public IEnumerable<ParamField> RequestParams { set; get; }
 
-        public IHttpAction EnableHttpAction { get; }
+        public IHttpAction EnableHttpAction { set; get; }
 
-        public IHttpAction DisableHttpAction { get; }
+        public IHttpAction DisableHttpAction { set; get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public override FieldType FieldType => FieldType.Enum;
+        public override FieldType FieldType { get; }
     }
 }

@@ -22,7 +22,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
         public string? ActionApi { set; get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public HttpMethodType? HttpMethodType { set; get; }
+        public HttpMethodType HttpMethodType { set; get; } = HttpMethodType.Post;
 
         [JsonConverter(typeof(StringEnumConverter))]
         public ApiVersion ApiVersion { set; get; } = ApiVersion.v1;

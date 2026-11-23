@@ -1,26 +1,23 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Reflection;
+using Yangtao.Hosting.FrontendApi.Attributes;
 using Yangtao.Hosting.FrontendApi.Enums;
 
 namespace Yangtao.Hosting.FrontendApi.Controls
 {
     internal class RangePickerControl : ControlBase
     {
-        public RangePickerControl(RangeControlInfo rangeControlInfo, RangeEndDateControlInfo endDateControlInfo) : base(rangeControlInfo.Property)
+        public RangePickerControl(RangePickerAttribute rangePickerAttribute, PropertyInfo property) : base(property)
         {
-            BeginDate = rangeControlInfo.Property.Name;
-            RangeName = rangeControlInfo.RangeName;
-            AllowClear = rangeControlInfo.RangePickerAttr.AllowClear;
-            Bordered = rangeControlInfo.RangePickerAttr.Bordered;
-            Separator = rangeControlInfo.RangePickerAttr.Separator;
-            ShowTime = rangeControlInfo.RangePickerAttr.ShowTime;
+            var isValidPropertyType = IsValidPropertyType(property.PropertyType);
+            if (isValidPropertyType == false) throw new InvalidOperationException("RangePickerAttribute only supports DateTime[] or DateTimeOffset[] or List<DateTime> or List<DateTimeOffset> or IEnumerable<DateTime> or IEnumerable<DateTimeOffset>.");
 
-            EndDate = endDateControlInfo.Property.Name;
+            RangeName = rangePickerAttribute.RangeName;
+            AllowClear = rangePickerAttribute.AllowClear;
+            Bordered = rangePickerAttribute.Bordered;
+            ShowTime = rangePickerAttribute.ShowTime;
         }
-
-        public string? BeginDate { set; get; }
-
-        public string? EndDate { set; get; }
 
         public string? RangeName { set; get; }
 
@@ -28,11 +25,19 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 
         public bool Bordered { set; get; } = true;
 
-        public string? Separator { set; get; }
-
         public bool ShowTime { set; get; } = false;
 
         [JsonConverter(typeof(StringEnumConverter))]
         public override ControlType ControlType => ControlType.RangePicker;
+
+        private static bool IsValidPropertyType(Type propertyType)
+        {
+            return propertyType == StaticKeys.DateTimeArrayType ||
+                propertyType == StaticKeys.DateTimeOffsetArrayType ||
+                propertyType == StaticKeys.DateTimeListType ||
+                propertyType == StaticKeys.DateTimeOffsetListType ||
+                propertyType == StaticKeys.DateTimeEnumerableType ||
+                propertyType == StaticKeys.DateTimeOffsetEnumerableType;
+        }
     }
 }

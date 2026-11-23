@@ -13,7 +13,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
             RequestData = requestData;
         }
 
-        public BatchDeleteActionAttribute(Type? requestData, Type controller, string methodName) : base(controller, methodName)
+        public BatchDeleteActionAttribute(Type? requestData, Type controllerType, string methodName) : base(controllerType, methodName)
         {
             RequestData = requestData;
         }

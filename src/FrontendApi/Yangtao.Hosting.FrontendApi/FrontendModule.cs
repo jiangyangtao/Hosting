@@ -1,5 +1,4 @@
-﻿using Yangtao.Hosting.Extensions;
-using Yangtao.Hosting.FrontendApi.Components;
+﻿using Yangtao.Hosting.FrontendApi.Components;
 
 namespace Yangtao.Hosting.FrontendApi
 {
@@ -24,12 +23,12 @@ namespace Yangtao.Hosting.FrontendApi
         public void AddTable(TableComponent tableComponent)
         {
             if (tableComponent == null) return;
-            if (tableComponent.ComponentName.IsNullOrEmpty()) return;
+            if (tableComponent.IsValidName == false) return;
 
-            var exist = Tables.ContainsKey(tableComponent.ComponentName);
-            if (exist) return;
+            var exist = Tables.ContainsKey(tableComponent.ComponentTypeFullName);
+            if (exist) throw new InvalidOperationException($"{tableComponent.ComponentTypeFullName} repeated registration.");
 
-            Tables.TryAdd(tableComponent.ComponentName, tableComponent);
+            Tables.Add(tableComponent.ComponentTypeFullName, tableComponent);
             AddForm(tableComponent.AddForm);
             AddForm(tableComponent.EditForm);
             AddQueryForm(tableComponent.QueryForm);
@@ -38,23 +37,23 @@ namespace Yangtao.Hosting.FrontendApi
         public void AddForm(FormComponent? component)
         {
             if (component == null) return;
-            if (component.ComponentName.IsNullOrEmpty()) return;
+            if (component.IsValidName == false) return;
 
-            var exist = Forms.ContainsKey(component.ComponentName);
+            var exist = Forms.ContainsKey(component.ComponentTypeFullName);
             if (exist) return;
 
-            Forms.TryAdd(component.ComponentName, component);
+            Forms.TryAdd(component.ComponentTypeFullName, component);
         }
 
         public void AddQueryForm(QueryFormComponent? queryForm)
         {
             if (queryForm == null) return;
-            if (queryForm.ComponentName.IsNullOrEmpty()) return;
+            if (queryForm.IsValidName == false) return;
 
-            var exist = QueryForms.ContainsKey(queryForm.ComponentName);
+            var exist = QueryForms.ContainsKey(queryForm.ComponentTypeFullName);
             if (exist) return;
 
-            QueryForms.TryAdd(queryForm.ComponentName, queryForm);
+            QueryForms.TryAdd(queryForm.ComponentTypeFullName, queryForm);
         }
 
         public IEnumerable<TableComponent> TableComponents => Tables.Values;

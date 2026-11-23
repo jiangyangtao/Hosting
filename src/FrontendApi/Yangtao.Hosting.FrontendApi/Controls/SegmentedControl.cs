@@ -1,5 +1,6 @@
-﻿using System.Reflection;
-using Yangtao.Hosting.Extensions;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Reflection;
 using Yangtao.Hosting.FrontendApi.Abstractions;
 using Yangtao.Hosting.FrontendApi.Attributes;
 using Yangtao.Hosting.FrontendApi.Enums;
@@ -11,35 +12,29 @@ namespace Yangtao.Hosting.FrontendApi.Controls
         public SegmentedControl(SegmentedAttribute segmentedAttribute, PropertyInfo property) : base(property)
         {
             Block = segmentedAttribute.Block;
+            if (segmentedAttribute.IsValid == false) throw new InvalidOperationException($"{property.Name} the SegmentedAttribute http action api not config.");
+
+            SourceType = segmentedAttribute.SourceType;
+            ActionApi = segmentedAttribute.ActionApi;
+            HttpMethodType = segmentedAttribute.HttpMethodType;
+            ApiVersion = segmentedAttribute.ApiVersion;
+            ServiceName = StaticDocument.DocumentHandler.GetServiceName(segmentedAttribute.ServiceName);
         }
 
-        public SegmentedControl(DictionaryOptionsAttribute dictionaryAttribute, PropertyInfo property) : base(property)
-        {
-            if (dictionaryAttribute.ActionApi.NotNullAndEmpty() && dictionaryAttribute.ServiceName.NotNullAndEmpty())
-            {
-                ActionApi = dictionaryAttribute.ActionApi;
-                HttpMethodType = dictionaryAttribute.HttpMethodType;
-                ApiVersion = dictionaryAttribute.ApiVersion;
-                ServiceName = StaticDocument.DocumentHandler.GetServiceName(dictionaryAttribute.ServiceName);
-            }
-
-            if (StaticDocument.DocumentHandler.DictionaryConfig != null && dictionaryAttribute.ActionApi.IsNullOrEmpty() && dictionaryAttribute.ServiceName.IsNullOrEmpty())
-            {
-                ActionApi = StaticDocument.DocumentHandler.DictionaryConfig.ActionApi;
-                ApiVersion = StaticDocument.DocumentHandler.DictionaryConfig.ApiVersion;
-                HttpMethodType = StaticDocument.DocumentHandler.DictionaryConfig.HttpMethodType;
-                ServiceName = StaticDocument.DocumentHandler.DictionaryConfig.ServiceName;
-            }
-        }
-
+        [JsonConverter(typeof(StringEnumConverter))]
         public override ControlType ControlType => ControlType.Segmented;
 
         public bool Block { set; get; } = false;
 
+        [JsonConverter(typeof(StringEnumConverter))]
+        public SelectSourceType SourceType { set; get; }
+
         public string? ActionApi { set; get; }
 
-        public HttpMethodType? HttpMethodType { set; get; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public HttpMethodType HttpMethodType { set; get; } = HttpMethodType.Get;
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public ApiVersion ApiVersion { set; get; }
 
         public string? ServiceName { set; get; }

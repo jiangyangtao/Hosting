@@ -4,17 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using Yangtao.Hosting.FrontendApi.Attributes;
 using Yangtao.Hosting.FrontendApi.Enums;
-using Yangtao.Hosting.Mvc.FormatResult;
 
 namespace Yangtao.Hosting.FrontendApi.Controls
 {
-    internal class InputDecimalControl : ControlBase
+    internal class InputDecimalControl : PrefixSuffixControlBase
     {
         public InputDecimalControl(PropertyInfo property) : base(property)
         {
-            ChangeStep = 1;
-            Min = 0;
-            Max = int.MaxValue;
+            ChangeStep = 1L;
 
             var rangeAttr = property.GetCustomAttribute<RangeAttribute>();
             if (rangeAttr != null)
@@ -38,33 +35,6 @@ namespace Yangtao.Hosting.FrontendApi.Controls
                 ShowNumberControls = inputNumberAttr.ShowNumberControls;
                 Bordered = inputNumberAttr.Bordered;
             }
-
-            var prefixAttr = property.GetCustomAttribute<PrefixAttribute>();
-            if (prefixAttr != null)
-            {
-                Prefix = prefixAttr.Value;
-                PrefixType = prefixAttr.PrefixType;
-            }
-
-            var addOnBeforeAttr = property.GetCustomAttribute<AddOnBeforeAttribute>();
-            if (addOnBeforeAttr != null)
-            {
-                AddOnBefore = addOnBeforeAttr.Value;
-                AddOnBeforeType = addOnBeforeAttr.AddOnBeforeType;
-
-                if (addOnBeforeAttr.AddOnBeforeType == AddOnType.Enum && addOnBeforeAttr.AddOnBeforeSource != null)
-                    AddOnBeforeOptions = addOnBeforeAttr.AddOnBeforeSource.GetValueOptions();
-            }
-
-            var addOnAfterAttr = property.GetCustomAttribute<AddOnAfterAttribute>();
-            if (addOnAfterAttr != null)
-            {
-                AddOnAfter = addOnAfterAttr.Value;
-                AddOnAfterType = addOnAfterAttr.AddOnAfterType;
-
-                if (addOnAfterAttr.AddOnAfterType == AddOnType.Enum && addOnAfterAttr.AddOnAfterSource != null)
-                    AddOnAfterOptions = addOnAfterAttr.AddOnAfterSource.GetValueOptions();
-            }
         }
 
         public bool ShowNumberControls { set; get; } = true;
@@ -73,42 +43,11 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 
         public bool Bordered { set; get; } = true;
 
-        public object? ChangeStep { set; get; }
+        public decimal ChangeStep { set; get; }
 
         public object? Max { set; get; }
 
         public object? Min { set; get; }
-
-        /// <summary>
-        /// 前缀
-        /// </summary>
-        public string? Prefix { set; get; }
-
-        [JsonConverter(typeof(StringEnumConverter))]
-        public AffixType? PrefixType { set; get; }
-
-
-        /// <summary>
-        /// 后置
-        /// </summary>
-        public string? AddOnBefore { set; get; }
-
-        [JsonConverter(typeof(StringEnumConverter))]
-        public AddOnType? AddOnBeforeType { set; get; }
-
-        public IEnumerable<TextValueOption> AddOnBeforeOptions { set; get; } = TextValueOption.Empty();
-
-
-        /// <summary>
-        /// 后置
-        /// </summary>
-        public string? AddOnAfter { set; get; }
-
-        [JsonConverter(typeof(StringEnumConverter))]
-        public AddOnType? AddOnAfterType { set; get; }
-
-        public IEnumerable<TextValueOption> AddOnAfterOptions { set; get; } = TextValueOption.Empty();
-
 
         [JsonConverter(typeof(StringEnumConverter))]
         public override ControlType ControlType => ControlType.InputDecimal;
