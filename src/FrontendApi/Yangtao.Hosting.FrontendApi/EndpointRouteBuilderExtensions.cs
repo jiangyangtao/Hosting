@@ -27,11 +27,12 @@ namespace Yangtao.Hosting.FrontendApi
             var loggerFactory = endpointRouteBuilder.ServiceProvider.GetRequiredService<ILoggerFactory>();
             var logger = loggerFactory.CreateLogger("FrontendApi");
 
-            var result = new FrontendComponentBuilder(options, logger).BuildJson();
+            var componentBuilder = new FrontendComponentBuilder(options, logger);
             var routeHandlerBuilder = endpointRouteBuilder.MapGet(options.Endpoint, async (HttpResponse response, CancellationToken cancellationToken) =>
             {
-                response.ContentType = $"{options.ResponseContentType}; charset=utf-8";
-                await response.WriteAsync(result, cancellationToken);
+                var jsonResult = componentBuilder.GetJsonResult();
+                response.ContentType = options.ResponseContentType;
+                await response.WriteAsync(jsonResult, cancellationToken);
                 await response.CompleteAsync();
             });
 

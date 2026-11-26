@@ -35,5 +35,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
         public string? FalseText { set; get; } = "否";
 
         public Type? Source { get; }
+
+        public override HttpMethodType HttpMethodType { set; get; } = HttpMethodType.Get;
     }
 }

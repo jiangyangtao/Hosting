@@ -15,7 +15,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
         {
             controllerType.ValidateControllerType();
 
-            var method = controllerType.GetMethod(methodName) ?? throw new ArgumentException($"${methodName} does not exist in the {controllerType.FullName}");
+            var method = controllerType.GetMethod(methodName) ?? throw new ArgumentException($"{methodName} does not exist in the {controllerType.FullName}");
             var action = method.GetHttpAction();
 
             ActionApi = action.ActionApi;
@@ -31,7 +31,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
 
         public string? ActionApi { set; get; }
 
-        public HttpMethodType HttpMethodType { set; get; } = HttpMethodType.Get;
+        public virtual HttpMethodType HttpMethodType { set; get; } = HttpMethodType.Get;
 
         public ApiVersion ApiVersion { set; get; } = ApiVersion.v1;
 

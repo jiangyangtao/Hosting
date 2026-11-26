@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Reflection;
+using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.FrontendApi.Abstractions;
 using Yangtao.Hosting.FrontendApi.Attributes;
 using Yangtao.Hosting.FrontendApi.Enums;
@@ -13,23 +14,32 @@ namespace Yangtao.Hosting.FrontendApi.Controls
         public RadioGroupControl(RadioGroupAttribute radioGroupAttribute, PropertyInfo property, FieldType fieldType) : base(property)
         {
             RadioGroupType = radioGroupAttribute.RadioGroupType;
-            ActionApi = radioGroupAttribute.ActionApi;
-            ApiVersion = radioGroupAttribute.ApiVersion;
             SourceType = radioGroupAttribute.SourceType;
-            HttpMethodType = radioGroupAttribute.HttpMethodType;
-            ServiceName = StaticDocument.DocumentHandler.GetServiceName(radioGroupAttribute.ServiceName);
 
-
-            if (fieldType == FieldType.Boolean)
+            if (radioGroupAttribute.SourceType == SelectSourceType.API)
             {
-                EnumOptions = new TextValueOption[] { new("true", radioGroupAttribute.TrueText), new("false", radioGroupAttribute.FalseText) };
+                if (radioGroupAttribute.ActionApi.IsNullOrEmpty()) throw new InvalidOperationException($"{property.Name} the SourceType is API, must config http action.");
+
+                ActionApi = radioGroupAttribute.ActionApi;
+                ApiVersion = radioGroupAttribute.ApiVersion;
+                HttpMethodType = radioGroupAttribute.HttpMethodType;
+                ServiceName = StaticDocument.DocumentHandler.GetServiceName(radioGroupAttribute.ServiceName);
             }
 
-            if (radioGroupAttribute.SourceType == SelectSourceType.Enum)
+            if(radioGroupAttribute.SourceType == SelectSourceType.Enum)
             {
-                var type = radioGroupAttribute.Source ?? property.PropertyType;
-                EnumOptions = type.GetValueOptions();
-            }
+                if (fieldType != FieldType.Enum && fieldType != FieldType.Boolean) throw new InvalidOperationException($"{property.Name} the SourceType is Enum, only supports Enum or Boolean.");
+                if (fieldType == FieldType.Boolean)
+                {
+                    EnumOptions = new TextValueOption[] { new("true", radioGroupAttribute.TrueText), new("false", radioGroupAttribute.FalseText) };
+                }
+
+                if (radioGroupAttribute.SourceType == SelectSourceType.Enum)
+                {
+                    var type = radioGroupAttribute.Source ?? property.PropertyType;
+                    EnumOptions = type.GetValueOptions();
+                }
+            }           
         }
 
         [JsonConverter(typeof(StringEnumConverter))]

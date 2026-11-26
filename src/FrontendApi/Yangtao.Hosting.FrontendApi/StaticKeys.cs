@@ -24,6 +24,8 @@ namespace Yangtao.Hosting.FrontendApi
         public static readonly Type DecimalNullableType = typeof(decimal?);
         public static readonly Type DateTimeType = typeof(DateTime);
         public static readonly Type DateTimeNullableType = typeof(DateTime?);
+        public static readonly Type DateTimeOffsetType = typeof(DateTimeOffset);
+        public static readonly Type DateTimeOffsetNullableType = typeof(DateTimeOffset?);
         public static readonly Type BooleanType = typeof(bool);
         public static readonly Type BooleanNullableType = typeof(bool?);
         public static readonly Type GuidType = typeof(Guid);
@@ -42,7 +44,8 @@ namespace Yangtao.Hosting.FrontendApi
         public static readonly Type DateTimeEnumerableType = typeof(IEnumerable<DateTime>);
         public static readonly Type DateTimeOffsetEnumerableType = typeof(IEnumerable<DateTimeOffset>);
 
-        public static readonly Type GenericListType = typeof(IList<>);
+        public static readonly Type GenericListType = typeof(List<>);
+        public static readonly Type GenericIListType = typeof(IList<>);
         public static readonly Type GenericEnumerableType = typeof(IEnumerable<>);
 
         public static readonly Type ControllerBaseType = typeof(ControllerBase);
@@ -50,6 +53,10 @@ namespace Yangtao.Hosting.FrontendApi
         public static readonly Type TableComponentAttributeType = typeof(TableComponentAttribute);
         public static readonly Type FormAttributeType = typeof(FormAttribute);
         public static readonly Type QueryFormAttributeType = typeof(QueryFormAttribute);
+
+        public static readonly Type NewtonsoftJsonIgnoreType = typeof(Newtonsoft.Json.JsonIgnoreAttribute);
+        public static readonly Type SerializationJsonIgnoreType = typeof(System.Text.Json.Serialization.JsonIgnoreAttribute);
+        public static readonly Type IgnoreDataMemberType = typeof(System.Runtime.Serialization.IgnoreDataMemberAttribute);
 
         public static readonly Type HttpGetType = typeof(HttpGetAttribute);
         public static readonly Type HttpDefaultGetType = typeof(HttpGetDefaultAttribute);

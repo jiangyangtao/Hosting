@@ -14,32 +14,55 @@ namespace Yangtao.Hosting.FrontendApi.Components
     /// </summary>
     internal class FormComponent : QueryFormComponent, IHttpAction
     {
-        public FormComponent(Type formType, FormAttribute? formAttr = null) : base(formType)
+        /// <summary>
+        /// 独立注册，无须指定 <see cref="HttpActionAttribute"/>
+        /// </summary>
+        /// <param name="formType"></param>
+        /// <param name="formAttr"></param>
+        public FormComponent(Type formType, FormAttribute formAttr) : base(formType)
         {
-            ServiceName = StaticDocument.DocumentHandler.GetServiceName();
+            SetHttpAction(formAttr);
+            DisplayMode = formAttr.DisplayMode;
 
-            formAttr ??= formType.GetCustomAttribute<FormAttribute>();
-            if (formAttr != null)
-            {
-                DisplayMode = formAttr.DisplayMode;
-                ActionApi = formAttr.ActionApi;
-                ApiVersion = formAttr.ApiVersion;
-                HttpMethodType = formAttr.HttpMethodType;
-            }
+            InitFormComponent(formType);
 
-            var httpActionAttribute = formType.GetCustomAttribute<HttpActionAttribute>() ?? throw new InvalidOperationException($"{formType.FullName} must specify set HttpAction or config HttpActionAttribute.");
+            if (ActionApi.IsNullOrEmpty()) throw new InvalidOperationException($"{formType} must specify set HttpAction or config FormAttribute.");
+        }
 
-            ActionApi = httpActionAttribute.ActionApi;
-            HttpMethodType = httpActionAttribute.HttpMethodType;
-            ApiVersion = httpActionAttribute.ApiVersion;
-            ServiceName = StaticDocument.DocumentHandler.GetServiceName(httpActionAttribute.ServiceName);
+        /// <summary>
+        /// 内部注册，无 <see cref="FormAttribute"/>，必须指定 <see cref="HttpActionAttribute"/>
+        /// </summary>
+        /// <param name="formType"></param>
+        /// <exception cref="InvalidOperationException"></exception>
+        public FormComponent(Type formType) : base(formType)
+        {
+            var httpActionAttribute = formType.GetCustomAttribute<HttpActionAttribute>(false) ?? throw new InvalidOperationException($"{formType.FullName} must config HttpActionAttribute.");
+            SetHttpAction(httpActionAttribute);
+            InitFormComponent(formType);
+        }
 
-            var formUploadAttributes = formType.GetCustomAttributes<FormUploadAttribute>();
+        /// <summary>
+        /// 初始化表单的文件上传
+        /// </summary>
+        /// <param name="formType"></param>
+        private void InitFormComponent(Type formType)
+        {
+            var formUploadAttributes = formType.GetCustomAttributes<FormUploadAttribute>(false);
             if (formUploadAttributes.NotNullAndEmpty())
             {
                 var controls = formUploadAttributes.Select(a => new FormUploadControl(a));
                 if (controls.NotNullAndEmpty()) ControlList.AddRange(controls);
             }
+        }
+
+        private void SetHttpAction(IHttpAction httpAction)
+        {
+            if (ActionApi.NotNullAndEmpty()) return;
+
+            ActionApi = httpAction.ActionApi;
+            HttpMethodType = httpAction.HttpMethodType;
+            ApiVersion = httpAction.ApiVersion;
+            ServiceName = StaticDocument.DocumentHandler.GetServiceName(httpAction.ServiceName);
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -54,11 +77,5 @@ namespace Yangtao.Hosting.FrontendApi.Components
         public ApiVersion ApiVersion { set; get; } = ApiVersion.v1;
 
         public string? ServiceName { set; get; }
-
-
-
-        [JsonIgnore]
-        [System.Text.Json.Serialization.JsonIgnore]
-        private bool IsValidHttpAction => ActionApi.NotNullAndEmpty() && ServiceName.NotNullAndEmpty();
     }
 }

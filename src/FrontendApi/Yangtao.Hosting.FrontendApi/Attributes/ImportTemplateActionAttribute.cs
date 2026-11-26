@@ -1,10 +1,12 @@
 ﻿using Yangtao.Hosting.FrontendApi.Abstractions;
+using Yangtao.Hosting.FrontendApi.Enums;
 
 namespace Yangtao.Hosting.FrontendApi.Attributes
 {
     /// <summary>
     /// 导入模板操作
     /// </summary>
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class ImportTemplateActionAttribute : HttpActionAttributeBase, IAction
     {
         public Type? RequestData { get; }
@@ -18,5 +20,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
         {
             RequestData = requestData;
         }
+
+        public override HttpMethodType HttpMethodType { set; get; } = HttpMethodType.Get;
     }
 }

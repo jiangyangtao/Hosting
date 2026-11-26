@@ -4,6 +4,7 @@ using System.Reflection;
 using Yangtao.Hosting.FrontendApi.Abstractions;
 using Yangtao.Hosting.FrontendApi.Attributes;
 using Yangtao.Hosting.FrontendApi.Enums;
+using Yangtao.Hosting.Mvc.FormatResult;
 
 namespace Yangtao.Hosting.FrontendApi.Controls
 {
@@ -11,9 +12,16 @@ namespace Yangtao.Hosting.FrontendApi.Controls
     {
         public SegmentedControl(SegmentedAttribute segmentedAttribute, PropertyInfo property) : base(property)
         {
-            Block = segmentedAttribute.Block;
-            if (segmentedAttribute.IsValid == false) throw new InvalidOperationException($"{property.Name} the SegmentedAttribute http action api not config.");
+            if (segmentedAttribute.SourceType == SelectSourceType.API && segmentedAttribute.IsValid == false)
+                throw new InvalidOperationException($"{property.Name} the SegmentedAttribute http action api not config.");
 
+            if (segmentedAttribute.SourceType == SelectSourceType.Enum)
+            {
+                if (FieldType != FieldType.Enum) throw new InvalidOperationException($"{property.Name} the SegmentedAttribute SourceType is Enum, property type must be Enum.");
+                EnumOptions = property.PropertyType.GetValueOptions();
+            }
+
+            Block = segmentedAttribute.Block;
             SourceType = segmentedAttribute.SourceType;
             ActionApi = segmentedAttribute.ActionApi;
             HttpMethodType = segmentedAttribute.HttpMethodType;
@@ -38,5 +46,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
         public ApiVersion ApiVersion { set; get; }
 
         public string? ServiceName { set; get; }
+
+        public IEnumerable<TextValueOption> EnumOptions { set; get; } = TextValueOption.Empty();
     }
 }

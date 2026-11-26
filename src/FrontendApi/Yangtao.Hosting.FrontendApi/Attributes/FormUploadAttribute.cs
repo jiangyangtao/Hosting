@@ -1,5 +1,9 @@
 ﻿namespace Yangtao.Hosting.FrontendApi.Attributes
 {
+    /// <summary>
+    /// 表单上传
+    /// <para>用于无字段的文件上传</para>
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class FormUploadAttribute : Attribute
     {

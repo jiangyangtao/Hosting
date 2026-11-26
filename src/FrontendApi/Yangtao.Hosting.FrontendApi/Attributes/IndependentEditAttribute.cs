@@ -17,5 +17,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
         }
 
         public Type? RequestData { set; get; }
+
+        public override HttpMethodType HttpMethodType { set; get; } = HttpMethodType.Patch;
     }
 }

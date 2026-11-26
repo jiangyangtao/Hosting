@@ -11,7 +11,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
     {
         public InputDecimalControl(PropertyInfo property) : base(property)
         {
-            ChangeStep = 1L;
+            ChangeStep = 1M;
 
             var rangeAttr = property.GetCustomAttribute<RangeAttribute>();
             if (rangeAttr != null)
@@ -27,7 +27,7 @@ namespace Yangtao.Hosting.FrontendApi.Controls
                 Max = percentageRangeAttr.Maximum;
             }
 
-            var inputNumberAttr = property.GetCustomAttribute<InputNumberAttribute>();
+            var inputNumberAttr = property.GetCustomAttribute<InputDecimalAttribute>();
             if (inputNumberAttr != null)
             {
                 ChangeStep = inputNumberAttr.Step;

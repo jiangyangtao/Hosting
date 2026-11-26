@@ -25,7 +25,7 @@ namespace Yangtao.Hosting.FrontendApi
         public string? ActionApi { protected set; get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public HttpMethodType HttpMethodType { protected set; get; } = HttpMethodType.Get;
+        public virtual HttpMethodType HttpMethodType { protected set; get; } = HttpMethodType.Get;
 
         [JsonConverter(typeof(StringEnumConverter))]
         public ApiVersion ApiVersion { protected set; get; } = ApiVersion.v1;

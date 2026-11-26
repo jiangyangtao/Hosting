@@ -16,16 +16,15 @@ namespace Yangtao.Hosting.FrontendApi.Components
     {
         public TableComponent(ComponentTypeInfo<TableComponentAttribute> tableComponentType) : base(tableComponentType.ComponentType)
         {
-            ServiceName = StaticDocument.DocumentHandler.GetServiceName();
+            var httpActionAttr = tableComponentType.ComponentType.GetCustomAttribute<HttpActionAttribute>(false) ?? throw new InvalidOperationException($"{tableComponentType.ComponentType} must config HttpActionAttribute.");
+            SetHttpAction(httpActionAttr);
+            if (ActionApi.IsNullOrEmpty()) throw new InvalidOperationException($"{tableComponentType.ComponentType} the HttpActionAttribute must specify set HttpAction.");
 
-            var httpActionAttribute = tableComponentType.ComponentType.GetCustomAttribute<HttpActionAttribute>();
-            if (httpActionAttribute != null)
+            if (tableComponentType.ComponentAttribute.AddForm != null &&
+                tableComponentType.ComponentAttribute.EditForm != null &&
+                tableComponentType.ComponentAttribute.AddForm.FullName == tableComponentType.ComponentAttribute.EditForm.FullName)
             {
-                IsValidHttpAction = true;
-                ActionApi = httpActionAttribute.ActionApi;
-                HttpMethodType = httpActionAttribute.HttpMethodType;
-                ApiVersion = httpActionAttribute.ApiVersion;
-                ServiceName = StaticDocument.DocumentHandler.GetServiceName(httpActionAttribute.ServiceName);
+                throw new InvalidOperationException($"AddForm:[{tableComponentType.ComponentAttribute.AddForm.FullName}] and EditForm:[{tableComponentType.ComponentAttribute.EditForm.FullName}] are prohibited from using the same class.");
             }
 
             Fields = tableComponentType.ComponentType.BuildFields();
@@ -33,51 +32,56 @@ namespace Yangtao.Hosting.FrontendApi.Components
             {
                 IsPagination = IsPaginationType(tableComponentType.ComponentAttribute.QueryForm);
 
-                QueryForm = new(tableComponentType.ComponentAttribute.QueryForm);
-                if (QueryForm.Module.IsNullOrEmpty())
+                QueryForm = new(tableComponentType.ComponentAttribute.QueryForm)
                 {
-                    QueryForm.Module = Module;
-                    QueryForm.ModuleName = ModuleName;
-                }
+                    Module = Module,
+                    ModuleName = ModuleName,
+                };
             }
 
             if (tableComponentType.ComponentAttribute.AddForm != null)
             {
-                AddForm = new(tableComponentType.ComponentAttribute.AddForm);
-                if (AddForm.Module.IsNullOrEmpty())
+                AddForm = new(tableComponentType.ComponentAttribute.AddForm)
                 {
-                    AddForm.Module = Module;
-                    AddForm.ModuleName = ModuleName;
-                }
+                    Module = Module,
+                    ModuleName = ModuleName
+                };
             }
 
             if (tableComponentType.ComponentAttribute.EditForm != null)
             {
-                EditForm = new(tableComponentType.ComponentAttribute.EditForm);
-                if (EditForm.Module.IsNullOrEmpty())
+                EditForm = new(tableComponentType.ComponentAttribute.EditForm)
                 {
-                    EditForm.Module = Module;
-                    EditForm.ModuleName = ModuleName;
-                }
+                    Module = Module,
+                    ModuleName = ModuleName
+                };
             }
 
             var properties = tableComponentType.ComponentType.GetProperties();
-            var dataStatusProperty = properties.FirstOrDefault(a => a.GetCustomAttribute<DataStatusAttribute>() != null);
+            var dataStatusProperty = properties.FirstOrDefault(a => a.GetCustomAttribute<DataStatusAttribute>(false) != null);
             if (dataStatusProperty != null) DataStatus = new DataStatus(dataStatusProperty);
 
-            var deleteAction = tableComponentType.ComponentType.GetCustomAttribute<DeleteActionAttribute>();
+            var deleteAction = tableComponentType.ComponentType.GetCustomAttribute<DeleteActionAttribute>(false);
             if (deleteAction != null) DeleteAction = new(deleteAction);
 
-            var batchDeleteAction = tableComponentType.ComponentType.GetCustomAttribute<BatchDeleteActionAttribute>();
+            var batchDeleteAction = tableComponentType.ComponentType.GetCustomAttribute<BatchDeleteActionAttribute>(false);
             if (batchDeleteAction != null) BatchDeleteAction = new(batchDeleteAction);
 
-            var importAction = tableComponentType.ComponentType.GetCustomAttribute<ImportActionAttribute>();
+            var importAction = tableComponentType.ComponentType.GetCustomAttribute<ImportActionAttribute>(false);
             if (importAction != null) ImportAction = new(importAction, tableComponentType.ComponentType);
 
-            var exportAction = tableComponentType.ComponentType.GetCustomAttribute<ExportActionAttribute>();
+            var exportAction = tableComponentType.ComponentType.GetCustomAttribute<ExportActionAttribute>(false);
             if (exportAction != null) ExportAction = new(exportAction);
 
-            Validate(tableComponentType.ComponentType);
+            ValidateModule(tableComponentType.ComponentType);
+        }
+
+        private void SetHttpAction(HttpActionAttributeBase httpAction)
+        {
+            ActionApi = httpAction.ActionApi;
+            HttpMethodType = httpAction.HttpMethodType;
+            ApiVersion = httpAction.ApiVersion;
+            ServiceName = StaticDocument.DocumentHandler.GetServiceName(httpAction.ServiceName);
         }
 
         private static bool IsPaginationType(Type? type)
@@ -108,7 +112,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
         public string? ActionApi { set; get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public HttpMethodType HttpMethodType { set; get; } = Enums.HttpMethodType.Get;
+        public HttpMethodType HttpMethodType { set; get; } = HttpMethodType.Get;
 
         public IEnumerable<FieldBase> Fields { set; get; }
 
@@ -118,15 +122,5 @@ namespace Yangtao.Hosting.FrontendApi.Components
         public ApiVersion ApiVersion { set; get; } = ApiVersion.v1;
 
         public string? ServiceName { set; get; }
-
-        [JsonIgnore]
-        [System.Text.Json.Serialization.JsonIgnore]
-        public bool IsValidHttpAction { get; } = false;
-
-        private void Validate(Type componentType)
-        {
-            base.ValidateModule(componentType);
-            if (IsValidHttpAction == false) throw new InvalidOperationException($"{componentType.FullName} must specify set HttpAction or config HttpActionAttribute.");
-        }
     }
 }

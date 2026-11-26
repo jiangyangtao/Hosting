@@ -23,12 +23,12 @@ namespace Yangtao.Hosting.FrontendApi.Abstractions
     /// </summary>
     internal class HttpAction : IHttpAction
     {
-        public HttpAction(IHttpAction httpAction, string serviceName = "")
+        public HttpAction(IHttpAction httpAction)
         {
             HttpMethodType = httpAction.HttpMethodType;
             ActionApi = httpAction.ActionApi;
             ApiVersion = httpAction.ApiVersion;
-            ServiceName = serviceName;
+            ServiceName = httpAction.ServiceName;
         }
 
         public HttpAction(HttpMethodType httpMethodType, string? actionApi, ApiVersion version = ApiVersion.v1, string serviceName = "")

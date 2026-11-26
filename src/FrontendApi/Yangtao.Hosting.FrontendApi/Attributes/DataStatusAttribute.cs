@@ -8,7 +8,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
     {
         public DataStatusAttribute(
             Type requestData,
-            Type controller,
+            Type controllerApi,
             string? enableAction,
             string? disableAction,
             ApiVersion enableActionVersion = ApiVersion.v1,
@@ -17,19 +17,23 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
         {
             RequestData = requestData;
 
-            controller.ValidateControllerType();
+            controllerApi.ValidateControllerType();
 
-            var enableMethod = controller.GetMethod(enableAction) ?? throw new ArgumentException($"${enableAction} not exist {controller.FullName}");
+            var enableMethod = controllerApi.GetMethod(enableAction) ?? throw new ArgumentException($"{enableAction} not exist {controllerApi.FullName}");
             EnableHttpAction = enableMethod.GetHttpAction(enableActionVersion, serviceName);
 
-            var disableMethod = controller.GetMethod(disableAction) ?? throw new ArgumentException($"${disableAction} not exist {controller.FullName}");
+            var disableMethod = controllerApi.GetMethod(disableAction) ?? throw new ArgumentException($"{disableAction} not exist {controllerApi.FullName}");
             DisableHttpAction = disableMethod.GetHttpAction(disableActionVersion, serviceName);
         }
 
-        public Type? RequestData { set; get; }
+        public Type? RequestData { get; }
 
         internal IHttpAction EnableHttpAction { get; }
 
         internal IHttpAction DisableHttpAction { get; }
+
+        public string TrueText { set; get; }
+
+        public string FalseText { set; get; }
     }
 }

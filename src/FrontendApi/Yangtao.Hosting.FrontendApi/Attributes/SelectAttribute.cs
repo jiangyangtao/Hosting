@@ -10,7 +10,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
             SourceType = SelectSourceType.Enum;
         }
 
-        public SelectAttribute(string serviceName, string apiSource, HttpMethodType actionType = Enums.HttpMethodType.Get, SelectMode mode = SelectMode.Tags) : base(apiSource, actionType)
+        public SelectAttribute(string serviceName, string apiSource, HttpMethodType actionType = HttpMethodType.Get, SelectMode mode = SelectMode.Tags) : base(apiSource, actionType)
         {
             SourceType = SelectSourceType.API;
             SelectMode = mode;
@@ -34,6 +34,8 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
 
         public SelectSourceType SourceType { get; }
 
+        public override HttpMethodType HttpMethodType { set; get; } = HttpMethodType.Get;
+
         public bool Bordered { set; get; } = true;
 
         public bool AllowClear { set; get; } = true;
@@ -42,10 +44,8 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
 
         public Type? Source { get; }
 
-        public string? Module { set; get; }
+        public string TrueText { set; get; }
 
-        public string BooleanTrueText { set; get; }
-
-        public string BooleanFalseText { set; get; }
+        public string FalseText { set; get; }
     }
 }

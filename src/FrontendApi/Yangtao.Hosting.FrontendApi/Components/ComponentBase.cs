@@ -10,19 +10,38 @@ namespace Yangtao.Hosting.FrontendApi.Components
     /// </summary>
     internal abstract class ComponentBase : IComponent, IModule
     {
-        protected ComponentBase(Type type)
+        protected ComponentBase(Type type, IModuleType? module = null)
         {
             ComponentName = type.Name;
             ComponentTypeFullName = type.FullName;
 
-            var moudleAttribute = type.GetCustomAttribute<ModuleAttribute>();
-            if (moudleAttribute != null)
+            SetModule(module);
+            if (HasModule == false)
             {
-                Module = moudleAttribute.ModuleType.Name.RemoveController();
-                ModuleName = StaticDocument.DocumentHandler.GetModuleSummary(moudleAttribute.ModuleType);
+                var moduleAttr = type.GetCustomAttribute<ModuleAttribute>(false);
+                SetModule(moduleAttr);
+            }
+        }
+
+        private void SetModule(IModuleType? module)
+        {
+            if (module == null) return;
+            if (HasModule) return;
+
+            if (module.Module.NotNullAndEmpty())
+            {
+                Module = module.Module;
+                ModuleName = module.ModuleName;
             }
 
+            if (module.ModuleType != null)
+            {
+                Module = module.ModuleType.Name.RemoveController();
+                ModuleName = StaticDocument.DocumentHandler.GetModuleSummary(module.ModuleType);
+            }
         }
+
+        private bool HasModule => Module.NotNullAndEmpty();
 
         [Newtonsoft.Json.JsonIgnore]
         [System.Text.Json.Serialization.JsonIgnore]
@@ -45,7 +64,7 @@ namespace Yangtao.Hosting.FrontendApi.Components
 
         public virtual void ValidateModule(Type componentType)
         {
-            if (Module.IsNullOrEmpty()) throw new InvalidOperationException($"{componentType.FullName} must specify set Module or config ModuleAttribute.");
+            if (HasModule == false) throw new InvalidOperationException($"{componentType.FullName} must specify set Module or config ModuleAttribute.");
         }
     }
 }

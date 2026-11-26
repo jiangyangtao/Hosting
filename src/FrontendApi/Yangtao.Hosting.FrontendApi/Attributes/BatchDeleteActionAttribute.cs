@@ -1,11 +1,12 @@
 ﻿using Yangtao.Hosting.FrontendApi.Abstractions;
+using Yangtao.Hosting.FrontendApi.Enums;
 
 namespace Yangtao.Hosting.FrontendApi.Attributes
 {
     /// <summary>
     /// 批量删除
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class BatchDeleteActionAttribute : HttpActionAttributeBase, IAction
     {
         public BatchDeleteActionAttribute(Type? requestData, string? actionApi) : base(actionApi, Enums.HttpMethodType.Delete)
@@ -19,5 +20,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
         }
 
         public Type? RequestData { get; }
+
+        public override HttpMethodType HttpMethodType { set; get; } = HttpMethodType.Delete;
     }
 }

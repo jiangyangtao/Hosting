@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Reflection;
+using Yangtao.Hosting.Extensions;
 using Yangtao.Hosting.FrontendApi.Abstractions;
 using Yangtao.Hosting.FrontendApi.Attributes;
 using Yangtao.Hosting.FrontendApi.Enums;
@@ -26,29 +27,37 @@ namespace Yangtao.Hosting.FrontendApi.Controls
 
         private void InitSelectAttribute(SelectAttribute selectAttribute, PropertyInfo property, FieldType fieldType)
         {
-            SelectMode = selectAttribute.SelectMode;
-            ActionApi = selectAttribute.ActionApi;
-            ApiVersion = selectAttribute.ApiVersion;
             SourceType = selectAttribute.SourceType;
-            HttpMethodType = selectAttribute.HttpMethodType;
-            Module = selectAttribute.Module;
-            ServiceName = StaticDocument.DocumentHandler.GetServiceName(selectAttribute.ServiceName);
-
             Bordered = selectAttribute.Bordered;
             ShowSearch = selectAttribute.ShowSearch;
             AllowClear = selectAttribute.AllowClear;
 
-            if (fieldType == FieldType.Boolean)
+            if (selectAttribute.SourceType == SelectSourceType.API)
             {
-                selectAttribute.BooleanTrueText ??= "是";
-                selectAttribute.BooleanFalseText ??= "否";
-                EnumOptions = new TextValueOption[] { new("true", selectAttribute.BooleanTrueText), new("false", selectAttribute.BooleanFalseText) };
+                if (selectAttribute.ActionApi.IsNullOrEmpty()) throw new InvalidOperationException($"{property.Name} the SourceType is API, must config http action.");
+
+                SelectMode = selectAttribute.SelectMode;
+                ActionApi = selectAttribute.ActionApi;
+                ApiVersion = selectAttribute.ApiVersion;
+                HttpMethodType = selectAttribute.HttpMethodType;
+                ServiceName = StaticDocument.DocumentHandler.GetServiceName(selectAttribute.ServiceName);
             }
 
-            if (fieldType == FieldType.Enum && selectAttribute.SourceType == SelectSourceType.Enum)
+            if (selectAttribute.SourceType == SelectSourceType.Enum)
             {
-                var type = selectAttribute.Source ?? property.PropertyType;
-                EnumOptions = type.GetValueOptions();
+                if (fieldType != FieldType.Enum && fieldType != FieldType.Boolean) throw new InvalidOperationException($"{property.Name} the SourceType is Enum, only supports Enum or Boolean.");
+                if (fieldType == FieldType.Boolean)
+                {
+                    selectAttribute.TrueText ??= "是";
+                    selectAttribute.FalseText ??= "否";
+                    EnumOptions = new TextValueOption[] { new("true", selectAttribute.TrueText), new("false", selectAttribute.FalseText) };
+                }
+
+                if (fieldType == FieldType.Enum && selectAttribute.SourceType == SelectSourceType.Enum)
+                {
+                    var type = selectAttribute.Source ?? property.PropertyType;
+                    EnumOptions = type.GetValueOptions();
+                }
             }
         }
 
@@ -76,8 +85,6 @@ namespace Yangtao.Hosting.FrontendApi.Controls
         public ApiVersion ApiVersion { set; get; } = ApiVersion.v1;
 
         public string? ServiceName { set; get; }
-
-        public string? Module { set; get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public override ControlType ControlType => ControlType.Select;

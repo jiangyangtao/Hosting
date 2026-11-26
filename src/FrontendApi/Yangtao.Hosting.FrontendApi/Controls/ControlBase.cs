@@ -43,7 +43,12 @@ namespace Yangtao.Hosting.FrontendApi.Controls
         [JsonConverter(typeof(StringEnumConverter))]
         public abstract ControlType ControlType { get; }
 
-        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public override FieldType FieldType { get; }
+
+        [JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
+        public override bool IsKey { get => base.IsKey; protected set => base.IsKey = value; }
     }
 }

@@ -58,10 +58,18 @@ namespace Yangtao.Hosting.FrontendApi
 
         private string? GetSummaryText(string assemblyName, string memberName)
         {
-            var xmlDoc = GetXmlDocument(assemblyName);
-            if (xmlDoc == null) return string.Empty;
+            try
+            {
+                var xmlDoc = GetXmlDocument(assemblyName);
+                if (xmlDoc == null) return string.Empty;
 
-            return xmlDoc.XPathEvaluate($"normalize-space(//member[@name = '{memberName}']/summary/text())") as string;
+                return xmlDoc.XPathEvaluate($"normalize-space(//member[@name = '{memberName}']/summary/text())") as string;
+            }
+            catch (Exception e)
+            {
+                StaticDocument.Logger.LogError(e, "{assemblyName} the {memberName}", assemblyName, memberName);
+                return string.Empty;
+            }
         }
 
         private XDocument? GetXmlDocument(string assemblyName)

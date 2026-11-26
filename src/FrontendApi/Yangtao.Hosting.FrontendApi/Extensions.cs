@@ -81,14 +81,17 @@ namespace Yangtao.Hosting.FrontendApi
                 propertyType == StaticKeys.DoubleType || propertyType == StaticKeys.DoubleNullableType ||
                 propertyType == StaticKeys.FloatType || propertyType == StaticKeys.FloatNullableType) return FieldType.Decimal;
 
-            if (propertyType == StaticKeys.DateTimeType || propertyType == StaticKeys.DateTimeNullableType) return FieldType.DateTime;
+            if (propertyType == StaticKeys.DateTimeType ||
+                propertyType == StaticKeys.DateTimeNullableType ||
+                propertyType == StaticKeys.DateTimeOffsetType ||
+                propertyType == StaticKeys.DateTimeOffsetNullableType) return FieldType.DateTime;
             if (propertyType.IsEnum) return FieldType.Enum;
             if (propertyType == StaticKeys.BooleanType || propertyType == StaticKeys.BooleanNullableType) return FieldType.Boolean;
             if (propertyType.IsArray) return FieldType.Set;
             if (propertyType.IsGenericType)
             {
                 var gengericType = propertyType.GetGenericTypeDefinition();
-                if (gengericType == StaticKeys.GenericListType || gengericType == StaticKeys.GenericEnumerableType) return FieldType.Set;
+                if (gengericType == StaticKeys.GenericIListType || gengericType == StaticKeys.GenericListType || gengericType == StaticKeys.GenericEnumerableType) return FieldType.Set;
             }
 
             return FieldType.String;
@@ -100,6 +103,7 @@ namespace Yangtao.Hosting.FrontendApi
             var controls = new List<ControlBase>();
             foreach (var property in properties)
             {
+                if (property.HasIgnoreAttribute()) continue;
                 if (property.DeclaringType == StaticKeys.PaginationType) continue;
 
                 var control = property.BuildPropertyControl();
@@ -217,12 +221,22 @@ namespace Yangtao.Hosting.FrontendApi
 
         public static IEnumerable<FieldBase> BuildFields(this Type dataType)
         {
-            return dataType.GetProperties().Select(a => a.BuildField());
+            return dataType.GetProperties().Where(property => property.HasIgnoreAttribute() == false).Select(a => a.BuildField());
+        }
+
+        public static bool HasIgnoreAttribute(this PropertyInfo property)
+        {
+            if (property.GetIndexParameters().Length > 0) return true;
+            if (property.GetCustomAttribute(StaticKeys.NewtonsoftJsonIgnoreType) != null) return true;
+            if (property.GetCustomAttribute(StaticKeys.SerializationJsonIgnoreType) != null) return true;
+            if (property.GetCustomAttribute(StaticKeys.IgnoreDataMemberType) != null) return true;
+
+            return false;
         }
 
         public static IEnumerable<ParamField> BuildParamFields(this Type dataType)
         {
-            return dataType.GetProperties().Select(property => new ParamField(property));
+            return dataType.GetProperties().Where(property => property.HasIgnoreAttribute() == false).Select(property => new ParamField(property));
         }
 
         public static FieldBase BuildField(this PropertyInfo property)

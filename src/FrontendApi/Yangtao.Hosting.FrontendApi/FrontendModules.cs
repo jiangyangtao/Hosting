@@ -90,7 +90,7 @@ namespace Yangtao.Hosting.FrontendApi
 
             foreach (var queryFormComponentType in _queryFormComponentTypes)
             {
-                var queryForm = new QueryFormComponent(queryFormComponentType.ComponentType);
+                var queryForm = new QueryFormComponent(queryFormComponentType.ComponentType, queryFormComponentType.ComponentAttribute);
                 queryForm.ValidateModule(queryFormComponentType.ComponentType);
                 AddQueryForm(queryForm);
             }

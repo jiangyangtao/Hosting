@@ -37,6 +37,6 @@ namespace Yangtao.Hosting.FrontendApi.Fields
         [JsonConverter(typeof(StringEnumConverter))]
         public abstract FieldType FieldType { get; }
 
-        public bool IsKey { protected set; get; }
+        public virtual bool IsKey { protected set; get; }
     }
 }

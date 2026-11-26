@@ -26,9 +26,14 @@ namespace Yangtao.Hosting.FrontendApi
             if (tableComponent.IsValidName == false) return;
 
             var exist = Tables.ContainsKey(tableComponent.ComponentTypeFullName);
-            if (exist) throw new InvalidOperationException($"{tableComponent.ComponentTypeFullName} repeated registration.");
+            if (exist) throw new InvalidOperationException($"{Module} has registered {tableComponent.ComponentTypeFullName}.");
+
+            var existComponent = Tables.Values.Any(a => a.ComponentName == tableComponent.ComponentName);
+            if (existComponent) throw new InvalidOperationException($"{Module} has registered {tableComponent.ComponentName}.");
 
             Tables.Add(tableComponent.ComponentTypeFullName, tableComponent);
+
+            // 同时在模块上注册，增加定位入口
             AddForm(tableComponent.AddForm);
             AddForm(tableComponent.EditForm);
             AddQueryForm(tableComponent.QueryForm);
@@ -40,9 +45,12 @@ namespace Yangtao.Hosting.FrontendApi
             if (component.IsValidName == false) return;
 
             var exist = Forms.ContainsKey(component.ComponentTypeFullName);
-            if (exist) return;
+            if (exist) throw new InvalidOperationException($"{Module} has registered {component.ComponentTypeFullName}.");
 
-            Forms.TryAdd(component.ComponentTypeFullName, component);
+            var existComponent = Forms.Values.Any(a => a.ComponentName == component.ComponentName);
+            if (existComponent) throw new InvalidOperationException($"{Module} has registered {component.ComponentName}.");
+
+            Forms.Add(component.ComponentTypeFullName, component);
         }
 
         public void AddQueryForm(QueryFormComponent? queryForm)
@@ -51,9 +59,12 @@ namespace Yangtao.Hosting.FrontendApi
             if (queryForm.IsValidName == false) return;
 
             var exist = QueryForms.ContainsKey(queryForm.ComponentTypeFullName);
-            if (exist) return;
+            if (exist) throw new InvalidOperationException($"{Module} has registered {queryForm.ComponentTypeFullName}.");
 
-            QueryForms.TryAdd(queryForm.ComponentTypeFullName, queryForm);
+            var existComponent = QueryForms.Values.Any(a => a.ComponentName == queryForm.ComponentName);
+            if (existComponent) throw new InvalidOperationException($"{Module} has registered {queryForm.ComponentName}.");
+
+            QueryForms.Add(queryForm.ComponentTypeFullName, queryForm);
         }
 
         public IEnumerable<TableComponent> TableComponents => Tables.Values;

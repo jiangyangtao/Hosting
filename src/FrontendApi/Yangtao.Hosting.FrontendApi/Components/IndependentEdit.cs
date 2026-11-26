@@ -49,6 +49,9 @@ namespace Yangtao.Hosting.FrontendApi.Components
 
         [JsonConverter(typeof(StringEnumConverter))]
         public override IndependentType IndependentType => IndependentType.ExistValidate;
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public override HttpMethodType HttpMethodType { protected set; get; } = HttpMethodType.Get;
     }
 
     /// <summary>
@@ -62,8 +65,14 @@ namespace Yangtao.Hosting.FrontendApi.Components
 
         [JsonConverter(typeof(StringEnumConverter))]
         public override IndependentType IndependentType => IndependentType.Delete;
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public override HttpMethodType HttpMethodType { protected set; get; } = HttpMethodType.Delete;
     }
 
+    /// <summary>
+    /// 批量删除操作
+    /// </summary>
     internal class BatchDeleteAction : IndependentActionBase
     {
         public BatchDeleteAction(BatchDeleteActionAttribute actionAttribute) : base(actionAttribute)
@@ -72,18 +81,24 @@ namespace Yangtao.Hosting.FrontendApi.Components
 
         [JsonConverter(typeof(StringEnumConverter))]
         public override IndependentType IndependentType => IndependentType.BatchDelete;
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public override HttpMethodType HttpMethodType { protected set; get; } = HttpMethodType.Delete;
     }
 
     internal class ImportAction : IndependentActionBase
     {
         public ImportAction(ImportActionAttribute actionAttribute, Type componentType) : base(actionAttribute)
         {
-            var importTemplateActionAttr = componentType.GetCustomAttribute<ImportTemplateActionAttribute>();
+            var importTemplateActionAttr = componentType.GetCustomAttribute<ImportTemplateActionAttribute>(false);
             if (importTemplateActionAttr != null) TemplateAction = new(importTemplateActionAttr);
         }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public override IndependentType IndependentType => IndependentType.Import;
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public override HttpMethodType HttpMethodType { protected set; get; } = HttpMethodType.Post;
 
         public ImportTemplateAction? TemplateAction { get; }
 
@@ -99,6 +114,9 @@ namespace Yangtao.Hosting.FrontendApi.Components
 
             [JsonIgnore]
             public override Type? RequestData { protected set; get; } = null;
+
+            [JsonConverter(typeof(StringEnumConverter))]
+            public override HttpMethodType HttpMethodType { protected set; get; } = HttpMethodType.Get;
         }
     }
 
@@ -109,7 +127,11 @@ namespace Yangtao.Hosting.FrontendApi.Components
 
         }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public override IndependentType IndependentType => IndependentType.Export;
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public override HttpMethodType HttpMethodType { protected set; get; } = HttpMethodType.Get;
 
         [JsonIgnore]
         public override Type? RequestData { protected set; get; } = null;

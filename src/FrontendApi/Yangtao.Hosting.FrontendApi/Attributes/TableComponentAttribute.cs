@@ -3,7 +3,7 @@
     /// <summary>
     /// 表格组件
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class TableComponentAttribute : Attribute
     {
         public Type? QueryForm { set; get; }

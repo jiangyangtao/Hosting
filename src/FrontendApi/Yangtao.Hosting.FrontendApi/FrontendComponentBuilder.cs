@@ -22,7 +22,7 @@ namespace Yangtao.Hosting.FrontendApi
 
         private string JsonData { set; get; } = string.Empty;
 
-        public string BuildJson()
+        public string GetJsonResult()
         {
             if (JsonData.IsNullOrEmpty()) JsonData = frontendModules.ToJson();
 

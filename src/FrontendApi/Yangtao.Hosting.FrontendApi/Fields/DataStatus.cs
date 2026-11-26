@@ -21,7 +21,7 @@ namespace Yangtao.Hosting.FrontendApi.Fields
                 throw new InvalidOperationException($"{property.Name} not exist [DataStatusAttribute].");
 
             RequestData = dataStatusAttribute.RequestData;
-
+                        
             var enableHttpAction = new HttpAction(dataStatusAttribute.EnableHttpAction);
             enableHttpAction.ServiceName = StaticDocument.DocumentHandler.GetServiceName(enableHttpAction.ServiceName);
 
@@ -35,6 +35,7 @@ namespace Yangtao.Hosting.FrontendApi.Fields
         }
 
         [JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public Type? RequestData { set; get; }
 
         public IEnumerable<ParamField> RequestParams { set; get; }

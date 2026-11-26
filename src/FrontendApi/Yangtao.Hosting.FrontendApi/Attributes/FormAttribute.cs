@@ -15,11 +15,13 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
             DisplayMode = displayMode;
         }
 
-        public FormAttribute(Type controllerType, string methodName, FormDisplayMode displayMode = FormDisplayMode.Drawer) : base(controllerType, methodName)
+        public FormAttribute(Type controller, string methodName, FormDisplayMode displayMode = FormDisplayMode.Drawer) : base(controller, methodName)
         {
             DisplayMode = displayMode;
         }
 
         public FormDisplayMode DisplayMode { set; get; }
+
+        public override HttpMethodType HttpMethodType { set; get; } = HttpMethodType.Post;
     }
 }

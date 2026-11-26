@@ -16,6 +16,6 @@ namespace Yangtao.Hosting.FrontendApi
         /// <summary>
         /// Enum Result the ContentType,Default application/json
         /// </summary>
-        public string ResponseContentType { set; get; } = MediaTypeNames.Application.Json;
+        public string ResponseContentType { set; get; } = $"{MediaTypeNames.Application.Json};charset=utf-8";
     }
 }

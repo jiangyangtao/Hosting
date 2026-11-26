@@ -1,14 +1,14 @@
 ﻿using Yangtao.Hosting.FrontendApi.Abstractions;
+using Yangtao.Hosting.FrontendApi.Enums;
 
 namespace Yangtao.Hosting.FrontendApi.Attributes
 {
     /// <summary>
     /// 导出操作
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class ExportActionAttribute : HttpActionAttributeBase, IAction
     {
-
         public Type? RequestData { get; }
 
         public ExportActionAttribute(string? actionApi, Type? requestData) : base(actionApi, Enums.HttpMethodType.Post)
@@ -20,5 +20,7 @@ namespace Yangtao.Hosting.FrontendApi.Attributes
         {
             RequestData = requestData;
         }
+
+        public override HttpMethodType HttpMethodType { get; set; } = HttpMethodType.Get;
     }
 }
